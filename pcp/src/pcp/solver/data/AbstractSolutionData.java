@@ -1,4 +1,4 @@
-package pcp.solver;
+package pcp.solver.data;
 
 import static pcp.utils.DoubleUtils.doubleEquals;
 import static pcp.utils.DoubleUtils.isTrue;

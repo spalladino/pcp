@@ -1,4 +1,4 @@
-package pcp.solver;
+package pcp.solver.data;
 
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
