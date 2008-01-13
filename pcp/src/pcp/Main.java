@@ -10,26 +10,36 @@ import pcp.interfaces.IFactory;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
 import pcp.model.ModelBuilder;
-import pcp.solver.Printer;
+import pcp.solver.Kind;
 import pcp.solver.Solver;
+import pcp.solver.io.Printer;
 public class Main {
 
-	static String solutionPath = "../sol/";
-	
 	public static void main(String[] args) throws Exception {
-		solve(args[0], args[1]);
+		String filename, runId;
+		Settings.load("run");
+		
+		if (args.length >= 2) {
+			filename = args[0];
+			runId = args[1];
+		} else {
+			filename = Settings.get().getString("run.filename");
+			runId = Settings.get().getString("run.id");
+		}
+		
+		solve(filename, runId);
 		System.exit(0);
 	}
 	
 	private static void solve(String filename, String runId) throws Exception {
 		IFactory factory = Factory.get();
-		BuilderStrategy strategy = BuilderStrategy.createDefault();
+		BuilderStrategy strategy = BuilderStrategy.fromSettings();
 
 		PartitionedGraph graph;
 		Model model;
 		
 		PartitionedGraphBuilder builder = factory.getGraphBuilder(filename);
-		Solver solver = factory.createSolver();
+		Solver solver = factory.createSolver(Settings.get().getEnum("solver.kind", Kind.class));
 		
 		try {
 			graph = new Preprocessor(builder).preprocess().getGraph();
@@ -41,7 +51,9 @@ public class Main {
 			return;
 		}
 		
-		exportModel(solver, filename);
+		if (Settings.get().getBoolean("output.exportModel")) {
+			exportModel(solver, filename);
+		}
 		
 		System.out.println("Solving " + filename + " with " + graph.getNodes().length + " nodes and " + graph.getEdges().length + " edges.");
 		solver.getCplex().setParam(IntParam.MIPDisplay, 3);
@@ -50,7 +62,12 @@ public class Main {
 		if (solver.isSolved()) {
 			new Printer(solver).printSolution(true);
 			new Verifier(solver).verify();
-			solver.getCplex().writeSolution(solutionPath + "run" + runId + ".sol");
+			
+			if (Settings.get().getBoolean("output.exportSol")) {
+				String solDir = Settings.get().getString("output.solutionDir");
+				solver.getCplex().writeSolution(solDir + "run" + runId + ".sol");
+			}
+			
 			System.out.println("Chromatic number is " + solver.getChi());
 			System.out.println("Solved in " + solver.getTime() + " ticks");
 		} else {

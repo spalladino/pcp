@@ -11,6 +11,8 @@ import pcp.entities.PartitionedGraph;
 import pcp.entities.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
 import pcp.parsing.DimacsParser;
+import pcp.solver.BranchAndBoundSolver;
+import pcp.solver.PcpCutAndBranchSolver;
 import pcp.solver.Solver;
 
 
@@ -46,9 +48,16 @@ public class Factory implements IFactory {
 		}
 	}
 	
-	public Solver createSolver() throws Exception {
+	public Solver createSolver(pcp.solver.Kind kind) throws Exception {
 		try {
-			return new Solver();
+			switch (kind) {
+				case BranchAndBound:
+					return new BranchAndBoundSolver();
+				case PcpCutAndBranch:
+					return new PcpCutAndBranchSolver();
+				default:
+					return new Solver();
+			}
 		} catch (Exception e) {
 			System.err.println("Error initializing solver");
 			System.err.println(e.getMessage());

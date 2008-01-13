@@ -12,5 +12,5 @@ public interface IFactory {
 
 	public PartitionedGraphBuilder getGraphBuilder(String filename) throws Exception;
 
-	public Solver createSolver() throws Exception;
+	public Solver createSolver(pcp.solver.Kind kind) throws Exception;
 }

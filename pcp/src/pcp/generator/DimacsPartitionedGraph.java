@@ -8,10 +8,9 @@ import java.util.Random;
 
 class DimacsPartitionedGraph {
 
-	private static final Integer base = 0;
-	
 	private int minPartition, maxPartition;
 	private int nodes;
+	private int base;
 	
 	private double edgeProb;
 	private Random random;
@@ -59,6 +58,7 @@ class DimacsPartitionedGraph {
 		this.minPartition = props.minPartition;
 		this.edgeProb = props.edgeProb;
 		this.name = props.name;
+		this.base = props.base;
 		
 		this.random = new Random(System.currentTimeMillis());
 		this.edgeList = new ArrayList<Edge>();

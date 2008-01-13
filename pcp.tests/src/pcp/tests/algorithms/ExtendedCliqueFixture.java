@@ -9,8 +9,8 @@ import pcp.algorithms.data.StubModelData;
 import pcp.entities.PartitionedGraph;
 import pcp.entities.PartitionedGraphBuilder;
 import pcp.model.Model;
-import pcp.solver.Iteration;
 import pcp.solver.cuts.StubCutBuilder;
+import pcp.solver.data.Iteration;
 
 
 public class ExtendedCliqueFixture {

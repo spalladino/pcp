@@ -79,6 +79,10 @@ public class ExtendedCliqueDetector {
 		
 	}
 
+	public IAlgorithmBounder getBounder() {
+		return bounder;
+	}
+
 	private void clique(int initialIndex, int color) {
 		// Initialize clique with initial node
 		Node initial = nodes[initialIndex];

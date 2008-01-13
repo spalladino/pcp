@@ -11,6 +11,11 @@ public class ModelData implements IModelData {
 	public ModelData() {
 	}
 	
+	public ModelData(double[][] xs, double[] ws) {
+		this.xs = xs;
+		this.ws = ws;
+	}
+
 	@Override
 	public double w(int j) {
 		return ws[j];

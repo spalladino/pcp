@@ -5,6 +5,7 @@ import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.solver.data.AbstractSolutionData;
 
 
 public class Solver extends AbstractSolutionData {
@@ -21,6 +22,7 @@ public class Solver extends AbstractSolutionData {
 	}
 	
 	public boolean solve() throws IloException {
+		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
 		long start = System.currentTimeMillis();
 		solved = this.cplex.solve();

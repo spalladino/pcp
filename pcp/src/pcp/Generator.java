@@ -48,6 +48,7 @@ public class Generator {
 		gp.setNodeCount(getInteger(props, "generator.nodes"));
 		gp.setMinPartition(getInteger(props, "generator.minpartition"));
 		gp.setMaxPartition(getInteger(props, "generator.maxpartition"));
+		gp.setBase(getInteger(props, "generator.base"));
 		return gp;
 	}
 

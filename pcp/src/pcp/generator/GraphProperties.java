@@ -7,16 +7,18 @@ public class GraphProperties implements Cloneable {
 	protected int nodeCount;
 	protected int minPartition;
 	protected int maxPartition;
+	protected int base;
 
 	public GraphProperties() {
 	}
 	
-	public GraphProperties(String name, double edgeProb, int nodeCount, int minPartition, int maxPartition) {
+	public GraphProperties(String name, double edgeProb, int nodeCount, int minPartition, int maxPartition, int base) {
 		this.name = name;
 		this.edgeProb = edgeProb;
 		this.nodeCount = nodeCount;
 		this.minPartition = minPartition;
 		this.maxPartition = maxPartition;
+		this.base = base;
 	}
 
 	public String getName() {
@@ -43,6 +45,14 @@ public class GraphProperties implements Cloneable {
 		this.nodeCount = nodeCount;
 	}
 
+	public int getBase() {
+		return base;
+	}
+
+	public void setBase(int base) {
+		this.base = base;
+	}
+
 	public int getMinPartition() {
 		return minPartition;
 	}
@@ -61,7 +71,7 @@ public class GraphProperties implements Cloneable {
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		return new GraphProperties(name, edgeProb, nodeCount, minPartition, maxPartition);
+		return new GraphProperties(name, edgeProb, nodeCount, minPartition, maxPartition, base);
 	}
 	
 }

@@ -1,7 +1,7 @@
 package pcp.algorithms.data;
 
-import pcp.model.Model;
 import ilog.cplex.IloCplex;
+import pcp.model.Model;
 
 
 public class CplexCachedModelData extends ModelData {

@@ -46,7 +46,7 @@ public class BuilderStrategy  {
 	}
 
 	public static BuilderStrategy createDefault() {
-		return new BuilderStrategy(Partition.PaintExactlyOne, Adjacency.AdjacentsLeqColor, Symmetry.None, Coloring.Nodes);
+		return new BuilderStrategy(Partition.PaintExactlyOne, Adjacency.AdjacentsLeqColor, Symmetry.UseLowerLabelFirst, Coloring.Partitions);
 	}
 	
 	public static BuilderStrategy fromSettings() {
