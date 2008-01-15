@@ -3,6 +3,7 @@ package pcp.solver.callbacks;
 import ilog.concert.IloException;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
+import ilog.concert.IloRange;
 import ilog.cplex.IloCplex;
 
 import java.util.List;
@@ -11,16 +12,15 @@ import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.entities.Node;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
-import pcp.interfaces.ISolutionData;
 import pcp.model.Model;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
-import pcp.solver.io.Printer;
 
 
 public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IModelData {
 
-	boolean logIneqs = true;
+	boolean logIneqs = false;
+	boolean logIterData = false;
 	
 	Iteration iteration;
 	Model model;
@@ -40,18 +40,20 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	@Override
 	protected void main() throws IloException {
 		// Only cuts on initial node
-		if (super.getNnodes() > 0) return;
+		if (super.getNnodes() > 10) return;
 		
 		setupIterationData();
 		
-		System.out.println("Current data:");
-		new IterationPrinter(this, iteration.getModel().getGraph()).printVerboseIteration();
-		System.out.println();
+		if (logIterData) { 
+			System.out.println("Current data:");
+			new IterationPrinter(this, iteration.getModel().getGraph()).printVerboseIteration();
+			System.out.println();
+		}
 		
 		cliques = new ExtendedCliqueDetector(iteration);
 		cliques.run();
 		
-		System.out.println("Detected " + cliqueCount + " cliques in " + cliques.getBounder().getMillis() + " millis.");
+		System.out.println("Detected a total of " + cliqueCount + " cliques in " + cliques.getBounder().getMillis() + " millis.");
 	}
 
 	@Override
@@ -67,13 +69,12 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			}
 			
 			expr.addTerm(model.w(color), -1);
-			values += "-" + String.valueOf(this.w(color)) + " <= 0";
-			modeler.addLe(expr, 0, name);
+			IloRange range = modeler.le(expr, 0, name);
+			add(range);
 			cliqueCount++;
 			
 			if (logIneqs) {
-				System.out.println(expr.toString());
-				System.out.println(values);
+				System.out.println(range.toString());
 			}
 			
 		} catch (Exception ex) {
