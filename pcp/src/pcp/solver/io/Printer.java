@@ -12,8 +12,10 @@ import pcp.interfaces.ISolutionData;
 public class Printer {
 
 	ISolutionData solver;
+	
 	PrintStream out = System.out;
 	
+		
 	public Printer(ISolutionData solver) {
 		this.solver = solver;
 	}
@@ -25,7 +27,7 @@ public class Printer {
 			printShortSolution();
 		}
 	}
-
+	
 	public void printVerboseSolution() throws IloException {
 		out.println("Solution values:");
 		out.println("W: " + Arrays.toString(solver.ws()));

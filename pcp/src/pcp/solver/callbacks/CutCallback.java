@@ -11,8 +11,11 @@ import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.entities.Node;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
+import pcp.interfaces.ISolutionData;
 import pcp.model.Model;
 import pcp.solver.data.Iteration;
+import pcp.solver.io.IterationPrinter;
+import pcp.solver.io.Printer;
 
 
 public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IModelData {
@@ -41,6 +44,10 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 		
 		setupIterationData();
 		
+		System.out.println("Current data:");
+		new IterationPrinter(this, iteration.getModel().getGraph()).printVerboseIteration();
+		System.out.println();
+		
 		cliques = new ExtendedCliqueDetector(iteration);
 		cliques.run();
 		
@@ -53,16 +60,20 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("CLIQUE[%1$d]", color);
+			String values = "";
 			for (Node n : nodes) {
 				expr.addTerm(model.x(n.index(),color), 1);
+				values += String.valueOf(this.x(n.index(), color)) + " + ";
 			}
 			
 			expr.addTerm(model.w(color), -1);
+			values += "-" + String.valueOf(this.w(color)) + " <= 0";
 			modeler.addLe(expr, 0, name);
 			cliqueCount++;
 			
 			if (logIneqs) {
 				System.out.println(expr.toString());
+				System.out.println(values);
 			}
 			
 		} catch (Exception ex) {

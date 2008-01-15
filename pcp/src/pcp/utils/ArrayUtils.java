@@ -1,5 +1,7 @@
 package pcp.utils;
 
+import java.text.DecimalFormat;
+
 public class ArrayUtils {
 
 	public static boolean areEqual(Object[] a1, Object[] a2) {
@@ -31,9 +33,34 @@ public class ArrayUtils {
 	}
 	
 	public static <T> T[] concat(T[] a, T[] b, T[] target) {
-		   T[] c = target;
-		   System.arraycopy(a, 0, c, 0, a.length);
-		   System.arraycopy(b, 0, c, a.length, b.length);
-		   return c;
-		}
+	   T[] c = target;
+	   System.arraycopy(a, 0, c, 0, a.length);
+	   System.arraycopy(b, 0, c, a.length, b.length);
+	   return c;
+	}
+	
+	public static String toString(double[] a) {
+		return toString(a, null);
+	}
+	
+	 public static String toString(double[] a, String format) {
+		if (format == null)
+			format = "0.00";
+		DecimalFormat fmt = new DecimalFormat(format);
+		 
+		if (a == null)
+            return "null";
+		int iMax = a.length - 1;
+		if (iMax == -1)
+            return "[]";
+
+        StringBuilder b = new StringBuilder();
+        b.append('[');
+        for (int i = 0; ; i++) {
+            b.append(fmt.format(a[i]));
+            if (i == iMax)		
+            	return b.append(']').toString();
+            b.append(", ");
+        }
+	 }
 }
