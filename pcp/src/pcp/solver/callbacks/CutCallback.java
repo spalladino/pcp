@@ -17,6 +17,8 @@ import pcp.solver.data.Iteration;
 
 public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IModelData {
 
+	boolean logIneqs = true;
+	
 	Iteration iteration;
 	Model model;
 	IloMPModeler modeler;
@@ -48,6 +50,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	@Override
 	public void addClique(List<Node> nodes, int color) {
 		try {
+			
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("CLIQUE[%1$d]", color);
 			for (Node n : nodes) {
@@ -57,6 +60,11 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			expr.addTerm(model.w(color), -1);
 			modeler.addLe(expr, 0, name);
 			cliqueCount++;
+			
+			if (logIneqs) {
+				System.out.println(expr.toString());
+			}
+			
 		} catch (Exception ex) {
 			System.err.println("Could not generate clique cut: " + ex.getMessage());
 		}

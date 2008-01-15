@@ -148,7 +148,12 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	@Override
 	public boolean areAdjacent(Node n1, Node n2) {
-		return areAdjacent(n1, n2);
+		return graph.areAdjacent(n1, n2);
+	}
+
+	@Override
+	public boolean areInSamePartition(Node n1, Node n2) {
+		return graph.areInSamePartition(n1, n2);
 	}
 
 	@Override

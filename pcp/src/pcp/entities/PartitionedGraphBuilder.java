@@ -227,6 +227,11 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	}
 
 	@Override
+	public boolean areInSamePartition(Node n1, Node n2) {
+		return nodePartition.get(n1).name == nodePartition.get(n2).name;
+	}
+
+	@Override
 	public Edge[] getEdges() {
 		return (Edge[]) edges.toArray(new Edge[edges.size()]);
 	}

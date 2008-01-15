@@ -19,6 +19,8 @@ import pcp.utils.Def;
  */
 public class ExtendedCliqueDetector {
 
+	boolean checkClique = true;
+	
 	SortedPartitionedGraph graph;
 	
 	IAlgorithmSource provider;
@@ -132,6 +134,7 @@ public class ExtendedCliqueDetector {
 
 	private void breakingClique(LinkedList<Node> candidates, int color) {
 		if (candidates.isEmpty()) {
+			if (checkClique) checkCliqueValid(color);
 			provider.getCutBuilder().addClique(clique, color);
 			if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
 		} else {
@@ -139,14 +142,31 @@ public class ExtendedCliqueDetector {
 			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y));
 			clique.add(y);
 			breakingClique(candidates, color);
+			
 			if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+			
+			clique.remove(clique.size()-1);
 			if (!removed.isEmpty()) {
 				candidates.addAll(removed);
-				clique.remove(clique.size()-1);
 				breakingClique(candidates, color);
+				
 				if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
 			}
 		}
+	}
+
+	private void checkCliqueValid(int color) {
+		
+		for (int i = 0; i < clique.size(); i++) {
+			for (int j = i+1; j < clique.size(); j++) {
+				if (!(graph.areAdjacent(clique.get(i), clique.get(j)) ||
+					graph.areInSamePartition(clique.get(i), clique.get(j)))) {
+					System.err.println("Invalid clique: " + clique);
+					System.err.println("Nodes " + clique.get(i) + " and " + clique.get(j) + " are not adjacent.");
+				}
+			}
+		}
+		
 	}
 
 	// TODO: Optimize based on sorting!
@@ -155,7 +175,7 @@ public class ExtendedCliqueDetector {
 		List<Node> retain = Arrays.asList(toRetain);
 		LinkedList<Node> clone = (LinkedList<Node>) nodes.clone();
 		nodes.retainAll(retain);
-		clone.removeAll(retain);
+		clone.removeAll(nodes);
 		
 		return clone;
 	}

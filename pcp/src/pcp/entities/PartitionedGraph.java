@@ -84,4 +84,9 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	public Node getNode(int index) {
 		return this.nodes[index];
 	}
+
+	@Override
+	public boolean areInSamePartition(Node n1, Node n2) {
+		return this.nodePartition[n1.name].name == this.nodePartition[n2.name].name;
+	}
 }

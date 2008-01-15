@@ -60,7 +60,7 @@ public class Main {
 		solver.solve();
 		
 		if (solver.isSolved()) {
-			new Printer(solver).printSolution(true);
+			new Printer(solver).printSolution(false);
 			new Verifier(solver).verify();
 			
 			if (Settings.get().getBoolean("output.exportSol")) {
