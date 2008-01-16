@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.common.Predicate;
 import pcp.entities.Node;
@@ -38,17 +39,18 @@ public class ExtendedCliqueDetector {
 	double valueSumXij;
 	
 	int colorCount = 0;
-	int maxColorCount = Integer.MAX_VALUE;
-	
 	int cliquesFromBrokenCount = 0;
-	int maxCliquesFromBroken = Integer.MAX_VALUE;
+	int cliquesFromInitialCount = 0;
+
+	static double maxColorValue = 1.0;
+	static double minColorValue = Def.Epsilon;
+	static double minInitialNodeValue = 0.001;
+	static double minCandidateNodeValue = 0.0001;
 	
-	double maxColorValue = 1.0;
-	double minColorValue = Def.Epsilon;
-	double minInitialNodeValue = 0.001;
-	double minCandidateNodeValue = 0.0001;
+	static int maxColorCount = Settings.get().getInteger("clique.maxColorCount");
+	static int maxCliquesFromBroken = Settings.get().getInteger("clique.maxCliquesFromBroken");
+	static boolean backtrackLastCandidate = Settings.get().getBoolean("clique.backtrackLastCandidate");
 	
-	boolean backtrackLastCandidate = true;
 	boolean eachVertexInAtMostOneBrokenIneq = false; // TODO: Implement true!
 	
 	public ExtendedCliqueDetector(IAlgorithmSource provider) {
@@ -60,11 +62,11 @@ public class ExtendedCliqueDetector {
 	}
 	
 	public void run() {
-		
+		bounder.start();
 		for (Integer color : this.colors) {
 			valueWj = data.w(color);
 			if (valueWj < minColorValue) continue;
-			if (this.colorCount++ > maxColorCount || valueWj > maxColorValue) return; 
+			if (this.colorCount++ > maxColorCount || valueWj > maxColorValue) break; 
 			
 			// Initializations for current color
 			this.graph = provider.getSorted().getSortedGraph(color, Def.DESC);
@@ -79,7 +81,7 @@ public class ExtendedCliqueDetector {
 				clique(initial, color);
 			}
 		}
-		
+		bounder.stop();
 	}
 
 	public IAlgorithmBounder getBounder() {
@@ -97,8 +99,6 @@ public class ExtendedCliqueDetector {
 		
 		// Iterate while we have candidates
 		while (candidates.size() > 0) {
-			
-			if (!bounder.incIters()) return;
 			
 			// Add first candidate to clique
 			Node y = candidates.poll();
@@ -181,14 +181,6 @@ public class ExtendedCliqueDetector {
 	}
 
 
-	private Predicate<Node> createExcludeVisitedIndicesPredicate(final boolean[] visited) {
-		return new Predicate<Node>() {
-			public boolean evaluate(Node obj) {
-				return visited[obj.index()];
-			}
-		};
-	}
-	
 
 }
 
