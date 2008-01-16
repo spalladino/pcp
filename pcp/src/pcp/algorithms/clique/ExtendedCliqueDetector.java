@@ -73,9 +73,10 @@ public class ExtendedCliqueDetector {
 			
 			// Iterate over every initial node
 			for (int i = 0; i < nodes.length; i++) {
-				if (data.x(i, color) < minInitialNodeValue) continue;
+				Node initial = nodes[i];
+				if (data.x(initial.index(), color) < minInitialNodeValue) continue;
 				clique = new ArrayList<Node>(nodes.length/2);
-				clique(i, color);
+				clique(initial, color);
 			}
 		}
 		
@@ -85,9 +86,8 @@ public class ExtendedCliqueDetector {
 		return bounder;
 	}
 
-	private void clique(int initialIndex, int color) {
+	private void clique(Node initial, int color) {
 		// Initialize clique with initial node
-		Node initial = nodes[initialIndex];
 		clique.add(initial);
 		valueSumXij = data.x(initial.index(), color);
 		visited[initial.index()] = true;

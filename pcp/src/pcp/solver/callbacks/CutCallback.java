@@ -40,7 +40,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	@Override
 	protected void main() throws IloException {
 		// Only cuts on initial node
-		if (super.getNnodes() > 10) return;
+		if (super.getNnodes() > 0) return;
 		
 		setupIterationData();
 		

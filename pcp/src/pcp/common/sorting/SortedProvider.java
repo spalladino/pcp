@@ -41,8 +41,11 @@ public class SortedProvider implements ISortedProvider {
 	@Override
 	public NodeColorValueComparator getNodeComparator(int color, boolean asc) {
 		NodeColorValueComparator[] comparators = asc ? ascNodeComparators : descNodeComparators;
-		if (comparators[color] == null) comparators[color] = new NodeColorValueComparator(data, color);
-		return comparators[color];
+		if (comparators[color] == null) { 
+			comparators[color] = asc
+				? new NodeColorValueComparator(data, color)
+				: new ReverseNodeColorValueComparator(data, color);
+		} return comparators[color];
 	}
 
 	@Override
