@@ -8,7 +8,7 @@ public class BoxInt extends Box<Integer> {
 	}
 	
 	public Integer incData() {
-		return this.data++;
+		return ++this.data;
 	}
 	
 }

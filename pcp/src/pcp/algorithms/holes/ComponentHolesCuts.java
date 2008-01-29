@@ -10,6 +10,9 @@ import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
+import pcp.utils.DataUtils;
+import pcp.utils.Def;
+import pcp.utils.IntUtils;
 
 public class ComponentHolesCuts {
 
@@ -32,14 +35,14 @@ public class ComponentHolesCuts {
 	int color;
 	int maxHoles;
 	
-	final BoxInt holeCount;
+	int holeCount;
 	
 	public ComponentHolesCuts(IAlgorithmSource provider) {
 		super();
 		this.provider = provider;
 		this.data = provider.getData();
-		this.maxHoles = (int) Math.ceil(maxHolesRateToPartitionsPerColor * this.graph.P());
-		this.holeCount = new BoxInt(0);
+		this.maxHoles = (int) Math.ceil(maxHolesRateToPartitionsPerColor * provider.getModel().getGraph().P());
+		this.holeCount = 0;
 	}
 	
 	public ComponentHolesCuts run() {
@@ -59,8 +62,10 @@ public class ComponentHolesCuts {
 			
 			detector.holes(new IHoleHandler() {
 				public boolean handle(final List<Node> hole) {
-					provider.getCutBuilder().addHole(hole, color);
-					return (holeCount.incData() <= maxHoles);
+					if (DataUtils.sumXi(hole, color, data) + Def.Epsilon > IntUtils.floorhalf(hole.size()) * data.w(color)) {
+						provider.getCutBuilder().addHole(hole, color);
+						return (++holeCount <= maxHoles);
+					} return true;
 				}
 			}, ComponentHolesDetector.AllFilter);
 		}
@@ -70,6 +75,6 @@ public class ComponentHolesCuts {
 	}
 	
 	public IAlgorithmBounder getBounder() {
-		return this.getBounder();
+		return this.provider.getBounder();
 	}
 }

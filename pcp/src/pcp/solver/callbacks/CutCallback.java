@@ -8,6 +8,7 @@ import ilog.cplex.IloCplex;
 
 import java.util.List;
 
+import pcp.Settings;
 import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.entities.Node;
@@ -21,8 +22,8 @@ import pcp.utils.IntUtils;
 
 public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IModelData {
 
-	boolean logIneqs = false;
-	boolean logIterData = false;
+	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
+	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	
 	Iteration iteration;
 	Model model;

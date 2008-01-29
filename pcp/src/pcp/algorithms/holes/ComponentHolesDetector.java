@@ -19,6 +19,8 @@ public class ComponentHolesDetector implements IHolesDetector {
 	static boolean check = Settings.get().getBoolean("holes.check");
 	static boolean storeVisited = Settings.get().getBoolean("holes.storeVisited");
 	
+	static boolean printHoles = false;
+	
     private IPartitionedGraph graph;
 
     private boolean[][][] notInHole;
@@ -230,7 +232,9 @@ public class ComponentHolesDetector implements IHolesDetector {
         	assert visited.contains(x): ("Error checking hole " + listHole(hole));
         }
         
-        System.out.println(listHole(hole));
+        if (printHoles) {
+        	System.out.println(listHole(hole));
+        }
     }
 
 	private static class ProcessResult
