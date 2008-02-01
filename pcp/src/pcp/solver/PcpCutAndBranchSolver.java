@@ -1,8 +1,8 @@
 package pcp.solver;
 
+import ilog.concert.IloException;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
-import ilog.concert.IloException;
 
 public class PcpCutAndBranchSolver extends BranchAndBoundSolver {
 
@@ -19,5 +19,11 @@ public class PcpCutAndBranchSolver extends BranchAndBoundSolver {
 	public void setModel(Model model) {
 		super.setModel(model);
 		callback.setModel(model);
+	}
+	
+	@Override
+	protected void beforeSolve() {
+		super.beforeSolve();
+		super.addInitialCuts();
 	}
 }

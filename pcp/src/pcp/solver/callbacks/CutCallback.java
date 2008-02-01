@@ -9,7 +9,7 @@ import ilog.cplex.IloCplex;
 import java.util.List;
 
 import pcp.Settings;
-import pcp.algorithms.block.BlockColor;
+import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.entities.Node;
@@ -33,7 +33,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	
 	ExtendedCliqueDetector cliques;
 	ComponentHolesCuts holes;
-	BlockColor blocks;
+	BlockColorCuts blocks;
 	
 	double[] ws;
 	double[][] xs;
@@ -61,7 +61,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 		
 		cliques = new ExtendedCliqueDetector(iteration).run();
 		holes = new ComponentHolesCuts(iteration).run();
-		blocks = new BlockColor(iteration).run();
+		blocks = new BlockColorCuts(iteration).run();
 		
 		System.out.println("Detected a total of " + cliqueCount + " cliques in " + cliques.getBounder().getMillis() + " millis.");
 		System.out.println("Detected a total of " + holeCount + " holes in " + holes.getBounder().getMillis() + " millis.");

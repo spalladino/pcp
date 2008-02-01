@@ -15,6 +15,7 @@ import pcp.entities.Node;
 import pcp.entities.PartitionedGraphBuilder;
 
 
+@SuppressWarnings("deprecation")
 public class HolesDetectorFixture {
 
 	PartitionedGraphBuilder builder;

@@ -1,8 +1,6 @@
 package pcp.tests.algorithms;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -13,7 +11,7 @@ import org.junit.Test;
 import pcp.Settings;
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.holes.ComponentHolesDetector;
-import pcp.algorithms.holes.HolesDetector;
+import pcp.algorithms.holes.IHolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.common.BoxInt;
@@ -222,7 +220,7 @@ public class ComponentHolesDetectorFixture {
 				Assert.assertEquals(5, hole.size());
 				return false;
 			}
-		}, HolesDetector.AllFilter);
+		}, IHolesDetector.AllFilter);
 	}
 	
 	private void assertCount(int expected, IHoleFilter filter) throws AlgorithmException {
@@ -243,7 +241,7 @@ public class ComponentHolesDetectorFixture {
 	}
 	
 	private void assertCount(int expected) throws AlgorithmException {
-		assertCount(expected, HolesDetector.AllFilter);
+		assertCount(expected, IHolesDetector.AllFilter);
 	}
 	
 	private void assertHoles(IHoleHandler handler, IHoleFilter filter) throws AlgorithmException {
