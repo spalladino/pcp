@@ -1,6 +1,7 @@
 package pcp.algorithms.block;
 
 import pcp.Settings;
+import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.Node;
 import pcp.entities.Partition;
 import pcp.entities.PartitionedGraph;
@@ -12,7 +13,7 @@ public class BlockColor {
 	IAlgorithmSource provider;
 	PartitionedGraph graph;
 
-	static boolean enabled = Settings.get().getBoolean("blockColor.enabled");
+	static boolean enabled = Settings.get().getBoolean("blockColor.enabled") && !Settings.get().getBoolean("blockColor.usePool");
 	
 	static int maxColorsCount = Settings.get().getInteger("blockColor.maxColorsCount");
 	
@@ -22,9 +23,8 @@ public class BlockColor {
 		this.graph = provider.getModel().getGraph();
 	}
 	
-	// TODO: Should we keep these ones in a pool?
-	public void run() {
-		if (!enabled) return;
+	public BlockColor run() {
+		if (!enabled) return this;
 		provider.getBounder().start();
 		
 		// Check ineqs for every initial color
@@ -39,16 +39,24 @@ public class BlockColor {
 				// Sum over colors greater than the initial
 				for (int j = j0 + 1; j < provider.getModel().getColorCount(); j++) {
 					// Add all nodes in the partition for that color
-					// TODO: When to break? iterSum == 0 too early?
-					double iterSum = 0;
 					for (Node node : partition.getNodes()) {
-						iterSum += provider.getData().x(node.index(), j);
-					} sum += iterSum; 
+						sum += provider.getData().x(node.index(), j);
+					}  
 				}
-				// TODO: Add ineq if broken
+				// If broken, add it
+				if (sum > Def.Epsilon + wj0) {
+					provider.getCutBuilder().addBlockColor(partition, j0);
+				}
 			}
 		}
+		
 		provider.getBounder().stop();
+		return this;
+	}
+	
+
+	public IAlgorithmBounder getBounder() {
+		return this.provider.getBounder();
 	}
 	
 }

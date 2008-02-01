@@ -2,17 +2,15 @@ package pcp.algorithms.holes;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 import pcp.Settings;
 import pcp.entities.Edge;
 import pcp.entities.Node;
 import pcp.interfaces.IPartitionedGraph;
+import pcp.utils.GraphUtils;
 
 public class ComponentHolesDetector implements IHolesDetector {
 
@@ -69,8 +67,9 @@ public class ComponentHolesDetector implements IHolesDetector {
             && node.getPartition() != ev2.getPartition()
             && ev1.getPartition() != ev2.getPartition())
 		{
+			inPath = new int[graph.getNodes().length];
 		    inPath[u] = 1;
-		    inPath[ev1.index()] = 1;
+		    inPath[ev1.index()] = 2;
 
 		    pathPartitions = new boolean[graph.getPartitions().length];
 		    pathPartitions[node.getPartition().index()] = true;
@@ -87,19 +86,20 @@ public class ComponentHolesDetector implements IHolesDetector {
 		    if (result.success)
 		    {
 		        List<Node> hole = getHole(inPath[result.nodeE.index()], result.k);
+
+		        if (check && !checkHole(hole)) {
+        			return false;
+	        	}
 		        
 		        if (storeVisited) {
 		        	List<Node> sorted = new ArrayList<Node>(hole);
 		        	Collections.sort(sorted);
 		        	if (visited.contains(sorted)) {
-		        		return false;
-		        	}
+		        		return true;
+		        	} visited.add(sorted);
 		        }
 		        
 	        	if (filter.use(hole)) { 
-		        	if (check) {
-		        		checkHole(hole);
-		        	}
 		            if (!handler.handle(hole)) {
 		            	return false;
 		            }
@@ -193,48 +193,17 @@ public class ComponentHolesDetector implements IHolesDetector {
         return builder.toString();
     }
 
-    private void checkHole(List<Node> hole)
-    {
-        Set<Node> visited = new HashSet<Node>();
-        Map<Node, Node> parent = new HashMap<Node, Node>();
-        Stack<Node> stack = new Stack<Node>();
-        stack.push(hole.get(0));
-
-        int cycle = 0;
-
-        while (stack.size() > 0) {
-     
-        	Node node = stack.pop();
-            if (visited.contains(node)) continue;
-            visited.add(node);
-
-            for (Node adj : graph.getNeighbours(node)) {
-                boolean added = false;
-                if (hole.contains(adj) &&
-                    (!parent.containsKey(node) || parent.get(node) != adj))
-                {
-                    if (!visited.contains(adj)) {
-                        assert (!added): ("Error checking hole " + listHole(hole));
-                        added = true;
-                        parent.put(adj, node);
-                        stack.push(adj);
-                    }
-                    else {
-                        cycle++;
-                    }
-                }
-            }
-        }
-
-    	assert cycle == 1: "Error checking hole " + listHole(hole);
-
-        for (Node x : hole) {
-        	assert visited.contains(x): ("Error checking hole " + listHole(hole));
-        }
+    public boolean checkHole(List<Node> hole) {
         
+    	if (!GraphUtils.checkComponentHole(graph, hole)) {
+    		return false;
+    	}
+    	
         if (printHoles) {
         	System.out.println(listHole(hole));
         }
+        
+        return true;
     }
 
 	private static class ProcessResult

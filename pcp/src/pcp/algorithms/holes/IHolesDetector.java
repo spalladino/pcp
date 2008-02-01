@@ -2,7 +2,6 @@ package pcp.algorithms.holes;
 
 import java.util.List;
 
-import pcp.algorithms.AlgorithmException;
 import pcp.entities.Node;
 
 public interface IHolesDetector {
@@ -21,5 +20,5 @@ public interface IHolesDetector {
 		}
     };
 	
-    void holes(IHoleHandler handler, IHoleFilter filter) throws AlgorithmException;
+    void holes(IHoleHandler handler, IHoleFilter filter);
 }

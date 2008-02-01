@@ -1,11 +1,16 @@
 package pcp.tests.algorithms;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pcp.Settings;
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.holes.ComponentHolesDetector;
 import pcp.algorithms.holes.HolesDetector;
@@ -13,6 +18,7 @@ import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.common.BoxInt;
 import pcp.entities.Node;
+import pcp.entities.PartitionedGraph;
 import pcp.entities.PartitionedGraphBuilder;
 
 
@@ -20,6 +26,12 @@ public class ComponentHolesDetectorFixture {
 
 	PartitionedGraphBuilder builder;
 	ComponentHolesDetector detector;
+	private PartitionedGraph graph;
+	
+	@BeforeClass
+	public static void settings() throws Exception {
+		Settings.load("test");
+	}
 	
 	@Before
 	public void setup() {
@@ -152,6 +164,14 @@ public class ComponentHolesDetectorFixture {
 		builder.addEdge(5, 2);
 
 		assertCount(1);
+		
+		assertNotHole(0, 1, 2, 3, 4, 5);
+		assertNotHole(0, 1, 2, 3, 4, 5, 0);
+		assertNotHole(0, 1, 2, 3);
+		assertNotHole(0, 2, 3, 4);
+		assertNotHole(2, 5, 8, 9, 7, 6);
+		
+		assertHole(0, 1, 2, 3, 4);
 	}
 	
 	@Test
@@ -215,7 +235,8 @@ public class ComponentHolesDetectorFixture {
 			}
 		};
 		
-		detector = new ComponentHolesDetector(builder.getGraph());
+		graph = builder.getGraph();
+		detector = new ComponentHolesDetector(graph);
 		detector.holes(handler, filter);
 		
 		Assert.assertEquals(expected, count.getData());
@@ -229,6 +250,27 @@ public class ComponentHolesDetectorFixture {
 		System.out.println("Running...");
 		detector = new ComponentHolesDetector(builder.getGraph());
 		detector.holes(handler, filter);
+	}
+	
+	private void assertNotHole(Integer... nodes) {
+		assertIsHole(false, nodes);
+	}
+	
+	private void assertHole(Integer... nodes) {
+		assertIsHole(true, nodes);
+	}
+	
+	private void assertIsHole(boolean isHole, Integer... nodes) {
+		List<Node> list = new ArrayList<Node>(nodes.length);
+		for(Integer node : nodes) {
+			list.add(graph.getNode(node));
+		}
+		
+		if (isHole) {
+			Assert.assertTrue(detector.checkHole(list));
+		} else {
+			Assert.assertFalse(detector.checkHole(list));
+		}
 	}
 	
 	

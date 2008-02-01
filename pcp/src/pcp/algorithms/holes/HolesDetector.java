@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import pcp.algorithms.AlgorithmException;
 import pcp.entities.Edge;
 import pcp.entities.Node;
 import pcp.interfaces.IPartitionedGraph;
 
 
+@Deprecated
 public class HolesDetector implements IHolesDetector {
 
 	static final boolean check = true;
@@ -32,7 +32,7 @@ public class HolesDetector implements IHolesDetector {
         this.graph = g;
     }
     
-    public void holes(IHoleHandler handler, IHoleFilter filter) throws AlgorithmException {
+    public void holes(IHoleHandler handler, IHoleFilter filter) {
         int n = graph.getNodes().length;    
     	notInHole = new boolean[n][n][n];
         inPath = new int[n];
@@ -56,15 +56,15 @@ public class HolesDetector implements IHolesDetector {
         }
     }
 
-	private boolean processEdge(IHoleHandler handler, IHoleFilter filter, Node node, int u, Node ev1, Node ev2)
-			throws AlgorithmException {
+	private boolean processEdge(IHoleHandler handler, IHoleFilter filter, Node node, int u, Node ev1, Node ev2) {
 		if (node != ev1 && node != ev2
 		    && graph.areAdjacent(node, ev1)
 		    && !graph.areAdjacent(node, ev2)
 		    && !notInHole[node.index()][ev1.index()][ev2.index()])
 		{
+			inPath = new int[graph.getNodes().length];
 		    inPath[u] = 1;
-		    inPath[ev1.index()] = 1;
+		    inPath[ev1.index()] = 2;
 
 		    pathVertex.clear();
 		    pathVertex.add(node);
@@ -169,8 +169,7 @@ public class HolesDetector implements IHolesDetector {
         return builder.toString();
     }
 
-    private void checkHole(List<Node> hole) throws AlgorithmException
-    {
+    private void checkHole(List<Node> hole) {
         Set<Node> visited = new HashSet<Node>();
         Map<Node, Node> parent = new HashMap<Node, Node>();
         Stack<Node> stack = new Stack<Node>();
@@ -190,7 +189,7 @@ public class HolesDetector implements IHolesDetector {
                     (!parent.containsKey(node) || parent.get(node) != adj))
                 {
                     if (!visited.contains(adj)) {
-                        if (added) throw new AlgorithmException("Error checking hole " + listHole(hole));
+                        if (added) System.err.println("Error checking hole " + listHole(hole));
                         added = true;
                         parent.put(adj, node);
                         stack.push(adj);
@@ -203,12 +202,12 @@ public class HolesDetector implements IHolesDetector {
         }
 
         if (cycle != 1) { 
-        	throw new AlgorithmException("Error checking hole " + listHole(hole));
+        	System.err.println("Error checking hole " + listHole(hole));
         }
 
         for (Node x : hole) {
             if (!visited.contains(x)) { 
-            	throw new AlgorithmException("Error checking hole " + listHole(hole));
+            	System.err.println("Error checking hole " + listHole(hole));
             }
         }
 
@@ -221,7 +220,7 @@ public class HolesDetector implements IHolesDetector {
 //		}
 //        this.returnedHoles.add(new ArrayList<Node>(hole));
         
-        System.out.println(listHole(hole));
+        //System.out.println(listHole(hole));
     }
 
 	private static class ProcessResult

@@ -5,7 +5,6 @@ import java.util.List;
 import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
-import pcp.common.BoxInt;
 import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
@@ -27,7 +26,7 @@ public class ComponentHolesCuts {
 	IAlgorithmSource provider;
 	IModelData data;
 
-	ComponentHolesDetector detector;
+	IHolesDetector detector;
 	SortedPartitionedGraph graph;
 	
 	int colorCount = 0;
@@ -62,12 +61,12 @@ public class ComponentHolesCuts {
 			
 			detector.holes(new IHoleHandler() {
 				public boolean handle(final List<Node> hole) {
-					if (DataUtils.sumXi(hole, color, data) + Def.Epsilon > IntUtils.floorhalf(hole.size()) * data.w(color)) {
+					if (DataUtils.sumXi(hole, color, data) - Def.Epsilon > IntUtils.floorhalf(hole.size()) * data.w(color)) {
 						provider.getCutBuilder().addHole(hole, color);
 						return (++holeCount <= maxHoles);
 					} return true;
 				}
-			}, ComponentHolesDetector.AllFilter);
+			}, IHolesDetector.AllFilter);
 		}
 		
 		provider.getBounder().stop();

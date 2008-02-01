@@ -9,9 +9,11 @@ import ilog.cplex.IloCplex;
 import java.util.List;
 
 import pcp.Settings;
+import pcp.algorithms.block.BlockColor;
 import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.entities.Node;
+import pcp.entities.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
 import pcp.model.Model;
@@ -31,12 +33,14 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	
 	ExtendedCliqueDetector cliques;
 	ComponentHolesCuts holes;
+	BlockColor blocks;
 	
 	double[] ws;
 	double[][] xs;
 	
 	int cliqueCount = 0;
 	int holeCount = 0;
+	int blockCount = 0;
 	
 	public CutCallback(IloMPModeler modeler) {
 		this.modeler = modeler;
@@ -57,9 +61,11 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 		
 		cliques = new ExtendedCliqueDetector(iteration).run();
 		holes = new ComponentHolesCuts(iteration).run();
+		blocks = new BlockColor(iteration).run();
 		
 		System.out.println("Detected a total of " + cliqueCount + " cliques in " + cliques.getBounder().getMillis() + " millis.");
 		System.out.println("Detected a total of " + holeCount + " holes in " + holes.getBounder().getMillis() + " millis.");
+		System.out.println("Detected a total of " + blockCount + " block color in " + blocks.getBounder().getMillis() + " millis.");
 	}
 
 	@Override
@@ -109,6 +115,33 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 		}
 	}
 	
+	@Override
+	public void addBlockColor(Partition partition, int color) {
+		try {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("BLOCK[%1$d]", color);
+			
+			for (int j = color + 1; j < model.getColorCount(); j++) {
+				for (Node node : partition.getNodes()) {
+					expr.addTerm(model.x(node.index(), j), 1);
+				}  
+			}
+			
+			expr.addTerm(model.w(color), -1);
+			
+			IloRange range = modeler.le(expr, 0, name);
+			add(range);
+			blockCount++;
+			
+			if (logIneqs) {
+				System.out.println(range.toString());
+			}
+			
+		} catch (Exception ex) {
+			System.err.println("Could not generate block color cut: " + ex.getMessage());
+		}
+	}
+
 	@Override
 	public double w(int j) {
 		return ws[j];
