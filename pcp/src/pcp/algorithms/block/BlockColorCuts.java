@@ -2,19 +2,20 @@ package pcp.algorithms.block;
 
 import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
+import pcp.algorithms.bounding.IBoundedAlgorithm;
+import pcp.definitions.Constants;
+import pcp.definitions.Cuts;
 import pcp.entities.Node;
 import pcp.entities.Partition;
 import pcp.entities.PartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
-import pcp.utils.Def;
 
-public class BlockColorCuts {
+public class BlockColorCuts implements Constants, Cuts, IBoundedAlgorithm {
 
 	IAlgorithmSource provider;
 	PartitionedGraph graph;
 
 	static boolean enabled = Settings.get().getBoolean("blockColor.enabled") && !Settings.get().getBoolean("blockColor.usePool");
-	
 	static int maxColorsCount = Settings.get().getInteger("blockColor.maxColorsCount");
 	
 	public BlockColorCuts(IAlgorithmSource provider) {
@@ -31,7 +32,7 @@ public class BlockColorCuts {
 		for (int j0 = 0; j0 < provider.getModel().getColorCount() - 1; j0++) {
 			if (j0 > maxColorsCount) break;
 			double wj0 = provider.getData().w(j0);
-			if (wj0 < Def.Epsilon) break;
+			if (wj0 < Epsilon) break;
 			
 			// Iterate for each partition to see if we break the ineq
 			for (Partition partition : graph.getPartitions()) {
@@ -44,7 +45,7 @@ public class BlockColorCuts {
 					}  
 				}
 				// If broken, add it
-				if (sum > Def.Epsilon + wj0) {
+				if (sum > Epsilon + wj0) {
 					provider.getCutBuilder().addBlockColor(partition, j0);
 				}
 			}
@@ -57,6 +58,11 @@ public class BlockColorCuts {
 
 	public IAlgorithmBounder getBounder() {
 		return this.provider.getBounder();
+	}
+
+	@Override
+	public Integer getIdentifier() {
+		return BlockColor;
 	}
 	
 }

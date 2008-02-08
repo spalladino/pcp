@@ -4,15 +4,15 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import pcp.definitions.Constants;
 import pcp.entities.Edge;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IModelData;
 import pcp.interfaces.ISortedProvider;
 import pcp.model.Model;
-import pcp.utils.Def;
 
 
-public class SortedProvider implements ISortedProvider {
+public class SortedProvider implements ISortedProvider, Constants {
 
 	private IModelData data;
 	private Model model;
@@ -102,7 +102,7 @@ public class SortedProvider implements ISortedProvider {
 	
 	public void fillSortedColors(LinkedList<Integer> list, boolean asc, boolean onlyFrac) {
 		for (int j = 0; j < model.getColorCount(); j++) {
-			if (!onlyFrac || (data.w(j) >= Def.Epsilon && data.w(j) <= (1-Def.Epsilon))) {
+			if (!onlyFrac || (data.w(j) >= Epsilon && data.w(j) <= (1-Epsilon))) {
 				int index = 0;
 				while (index < list.size() && (asc 
 						? data.w(list.get(index)) <= data.w(j) 

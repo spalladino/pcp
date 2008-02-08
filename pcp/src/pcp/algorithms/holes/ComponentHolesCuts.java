@@ -4,16 +4,18 @@ import java.util.List;
 
 import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
+import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
+import pcp.definitions.Constants;
+import pcp.definitions.Cuts;
 import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 import pcp.utils.DataUtils;
-import pcp.utils.Def;
 import pcp.utils.IntUtils;
 
-public class ComponentHolesCuts {
+public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 
 	static boolean enabled = Settings.get().getBoolean("holes.enabled");
 	
@@ -61,7 +63,7 @@ public class ComponentHolesCuts {
 			
 			detector.holes(new IHoleHandler() {
 				public boolean handle(final List<Node> hole) {
-					if (DataUtils.sumXi(hole, color, data) - Def.Epsilon > IntUtils.floorhalf(hole.size()) * data.w(color)) {
+					if (DataUtils.sumXi(hole, color, data) - Epsilon > IntUtils.floorhalf(hole.size()) * data.w(color)) {
 						provider.getCutBuilder().addHole(hole, color);
 						return (++holeCount <= maxHoles);
 					} return true;
@@ -75,5 +77,10 @@ public class ComponentHolesCuts {
 	
 	public IAlgorithmBounder getBounder() {
 		return this.provider.getBounder();
+	}
+
+	@Override
+	public Integer getIdentifier() {
+		return Holes;
 	}
 }

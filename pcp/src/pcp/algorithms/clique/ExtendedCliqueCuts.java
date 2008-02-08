@@ -8,18 +8,21 @@ import java.util.ListIterator;
 
 import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
+import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.common.iterate.ArrayIterator;
+import pcp.definitions.Constants;
+import pcp.definitions.Cuts;
+import pcp.definitions.Sorting;
 import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
-import pcp.utils.Def;
 
 /**
  * Detects subsets of nodes in a graph in which every pair is either adjacent 
  * or in the same partition. 
  */
-public class ExtendedCliqueDetector {
+public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlgorithm {
 	boolean checkClique = true;
 	
 	SortedPartitionedGraph graph;
@@ -45,7 +48,7 @@ public class ExtendedCliqueDetector {
 	int cliquesFromInitialCount = 0;
 
 	static double maxColorValue = 1.0;
-	static double minColorValue = Def.Epsilon;
+	static double minColorValue = Epsilon;
 	
 	static double minInitialNodeValue = Settings.get().getDouble("clique.minInitialNodeValue");
 	static double minCandidateNodeValue = Settings.get().getDouble("clique.minCandidateNodeValue");
@@ -58,7 +61,7 @@ public class ExtendedCliqueDetector {
 	static boolean enabled = Settings.get().getBoolean("clique.enabled");
 	static boolean colorsAsc = Settings.get().getBoolean("clique.colorsAsc");
 	
-	public ExtendedCliqueDetector(IAlgorithmSource provider) {
+	public ExtendedCliqueCuts(IAlgorithmSource provider) {
 		super();
 		this.provider = provider;
 		this.bounder = provider.getBounder();
@@ -66,7 +69,7 @@ public class ExtendedCliqueDetector {
 		this.colors = provider.getSorted().getSortedColors(colorsAsc);
 	}
 	
-	public ExtendedCliqueDetector run() {
+	public ExtendedCliqueCuts run() {
 		if (!enabled) return this;
 		bounder.start();
 		for (Integer color : this.colors) {
@@ -78,7 +81,7 @@ public class ExtendedCliqueDetector {
 			if (this.colorCount++ > maxColorCount) break;
 			
 			// Initializations for current color
-			this.graph = provider.getSorted().getSortedGraph(color, Def.DESC);
+			this.graph = provider.getSorted().getSortedGraph(color, Desc);
 			this.nodes = this.graph.getNodes();
 			this.visited = new int[nodes.length];
 			this.edgesVisited = new int[nodes.length][nodes.length];
@@ -97,6 +100,33 @@ public class ExtendedCliqueDetector {
 
 	public IAlgorithmBounder getBounder() {
 		return bounder;
+	}
+
+	@Override
+	public Integer getIdentifier() {
+		return Cliques;
+	}
+
+	public LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] nodesToRetain, Node currentNode) {
+		ListIterator<Node> it = nodes.listIterator();
+		LinkedList<Node> removed = new LinkedList<Node>();
+		ArrayIterator<Node> itRetain = new ArrayIterator<Node>(nodesToRetain);
+		Node retainCurrent = null;
+		Comparator<Node> c = getNodeComparator();
+		
+		while(it.hasNext()) {
+			Node node = it.next();
+			while((retainCurrent == null || c.compare(retainCurrent, node) < 0) && itRetain.hasNext()) {
+				retainCurrent = itRetain.next();
+	}
+			if (retainCurrent == null || retainCurrent.index() != node.index() 
+				|| !markEdgeVisited(currentNode, node)) {
+				removed.add(node);
+				it.remove();
+			}
+		}
+	
+		return removed;
 	}
 
 	private void clique(Node initial) {
@@ -120,7 +150,7 @@ public class ExtendedCliqueDetector {
 			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y), y);
 			
 			// Exploit the clique if it breaks the ineq, backtrack if no more candidates
-			boolean broken = valueSumXij > valueWj + Def.Epsilon; 
+			boolean broken = valueSumXij > valueWj + Epsilon; 
 			if (broken && (backtrackBrokenIneqs || candidates.isEmpty())) {
 				cliquesFromBrokenCount = 0;
 				backtrackBreakingClique(candidates);
@@ -193,30 +223,8 @@ public class ExtendedCliqueDetector {
 		
 	}
 
-	public LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] nodesToRetain, Node currentNode) {
-		ListIterator<Node> it = nodes.listIterator();
-		LinkedList<Node> removed = new LinkedList<Node>();
-		ArrayIterator<Node> itRetain = new ArrayIterator<Node>(nodesToRetain);
-		Node retainCurrent = null;
-		Comparator<Node> c = getNodeComparator();
-		
-		while(it.hasNext()) {
-			Node node = it.next();
-			while((retainCurrent == null || c.compare(retainCurrent, node) < 0) && itRetain.hasNext()) {
-				retainCurrent = itRetain.next();
-	}
-			if (retainCurrent == null || retainCurrent.index() != node.index() 
-				|| !markEdgeVisited(currentNode, node)) {
-				removed.add(node);
-				it.remove();
-			}
-		}
-
-		return removed;
-	}
-
 	private Comparator<Node> getNodeComparator() {
-		return provider.getSorted().getNodeComparator(color, Def.DESC);
+		return provider.getSorted().getNodeComparator(color, Desc);
 	}
 
 

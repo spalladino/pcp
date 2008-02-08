@@ -10,40 +10,41 @@ import java.util.List;
 
 import pcp.Settings;
 import pcp.algorithms.block.BlockColorCuts;
-import pcp.algorithms.clique.ExtendedCliqueDetector;
+import pcp.algorithms.clique.ExtendedCliqueCuts;
 import pcp.algorithms.holes.ComponentHolesCuts;
+import pcp.definitions.Cuts;
 import pcp.entities.Node;
 import pcp.entities.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
+import pcp.metrics.CutsMetrics;
 import pcp.model.Model;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
 import pcp.utils.IntUtils;
 
 
-public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IModelData {
+public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuilder, IModelData {
 
-	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	
 	Iteration iteration;
 	Model model;
 	IloMPModeler modeler;
 	
-	ExtendedCliqueDetector cliques;
+	ExtendedCliqueCuts cliques;
 	ComponentHolesCuts holes;
 	BlockColorCuts blocks;
+	
+	CutsMetrics metrics;
 	
 	double[] ws;
 	double[][] xs;
 	
-	int cliqueCount = 0;
-	int holeCount = 0;
-	int blockCount = 0;
-	
+		
 	public CutCallback(IloMPModeler modeler) {
 		this.modeler = modeler;
+		this.metrics = new CutsMetrics();
 	}
 	
 	@Override
@@ -52,6 +53,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 		if (super.getNnodes() > 0) return;
 		
 		setupIterationData();
+		metrics.newIter();
 		
 		if (logIterData) { 
 			System.out.println("Current data:");
@@ -59,13 +61,11 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			System.out.println();
 		}
 		
-		cliques = new ExtendedCliqueDetector(iteration).run();
+		cliques = new ExtendedCliqueCuts(iteration).run();
 		holes = new ComponentHolesCuts(iteration).run();
 		blocks = new BlockColorCuts(iteration).run();
 		
-		System.out.println("Detected a total of " + cliqueCount + " cliques in " + cliques.getBounder().getMillis() + " millis.");
-		System.out.println("Detected a total of " + holeCount + " holes in " + holes.getBounder().getMillis() + " millis.");
-		System.out.println("Detected a total of " + blockCount + " block color in " + blocks.getBounder().getMillis() + " millis.");
+		metrics.iterTime(cliques, holes, blocks);
 	}
 
 	@Override
@@ -79,19 +79,13 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			
 			expr.addTerm(model.w(color), -IntUtils.floorhalf(nodes.size()));
 			IloRange range = modeler.le(expr, 0, name);
-			add(range);
-			holeCount++;
-			
-			if (logIneqs) {
-				System.out.println(range.toString());
-			}
+			add(Holes, range);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate hole cut: " + ex.getMessage());
 		}
 	}
 
-	
 	@Override
 	public void addClique(List<Node> nodes, int color) {
 		try {
@@ -103,12 +97,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			
 			expr.addTerm(model.w(color), -1);
 			IloRange range = modeler.le(expr, 0, name);
-			add(range);
-			cliqueCount++;
-			
-			if (logIneqs) {
-				System.out.println(range.toString());
-			}
+			add(Cliques, range);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate clique cut: " + ex.getMessage());
@@ -130,12 +119,7 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			expr.addTerm(model.w(color), -1);
 			
 			IloRange range = modeler.le(expr, 0, name);
-			add(range);
-			blockCount++;
-			
-			if (logIneqs) {
-				System.out.println(range.toString());
-			}
+			add(BlockColor, range);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate block color cut: " + ex.getMessage());
@@ -164,6 +148,11 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	
 	public void setModel(Model model) {
 		this.model = model;
+	}
+
+	private void add(int cut, IloRange range) throws IloException {
+		super.add(range);
+		metrics.added(Holes, range);
 	}
 
 	private void setupIterationData() {

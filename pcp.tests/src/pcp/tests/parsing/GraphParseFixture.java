@@ -14,8 +14,8 @@ import pcp.entities.Node;
 import pcp.entities.Partition;
 import pcp.entities.PartitionedGraphBuilder;
 import pcp.interfaces.IPartitionedGraph;
-import pcp.parsing.DimacsParseException;
-import pcp.parsing.DimacsParser;
+import pcp.model.parsing.DimacsParseException;
+import pcp.model.parsing.DimacsParser;
 
 
 public class GraphParseFixture {

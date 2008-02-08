@@ -10,7 +10,7 @@ import pcp.algorithms.coloring.PartitionsColoring;
 import pcp.entities.PartitionedGraph;
 import pcp.entities.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
-import pcp.parsing.DimacsParser;
+import pcp.model.parsing.DimacsParser;
 import pcp.solver.BranchAndBoundSolver;
 import pcp.solver.PcpCutAndBranchSolver;
 import pcp.solver.Solver;

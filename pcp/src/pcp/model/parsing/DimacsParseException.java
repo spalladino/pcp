@@ -1,4 +1,4 @@
-package pcp.parsing;
+package pcp.model.parsing;
 
 import java.text.ParseException;
 

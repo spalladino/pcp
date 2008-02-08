@@ -69,7 +69,7 @@ public class DSaturFixture {
 		clique.add(builder.getNode(2));
 		clique.add(builder.getNode(3));
 		
-		bounder.setMaxPartials(1);
+		bounder.setMaxTime(0);
 		check(3,6);
 	}
 	

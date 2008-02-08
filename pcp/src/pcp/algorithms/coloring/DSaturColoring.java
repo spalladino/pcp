@@ -39,6 +39,10 @@ public class DSaturColoring extends Coloring implements IBoundedAlgorithm {
 	}
 	
 	@Override
+	public IAlgorithmBounder getBounder() {
+		return this.bounder;
+	}
+	
 	public void setBounder(IAlgorithmBounder bounder) {
 		this.bounder = bounder;
 		this.hasrun = false;
@@ -64,6 +68,11 @@ public class DSaturColoring extends Coloring implements IBoundedAlgorithm {
 		return bestColorClass[node] - 1;
 	}
 
+	@Override
+	public Integer getIdentifier() {
+		return null;
+	}
+
 	private int color(int i, int currentColor) throws AlgorithmException {
 		int j, newVal;
 		int k, max, place;
@@ -75,7 +84,7 @@ public class DSaturColoring extends Coloring implements IBoundedAlgorithm {
 			return (currentColor);
 		}
 
-		if (!bounder.incIters()) { 
+		if (!bounder.check()) { 
 			return bestColoring;
 		}
 		
@@ -107,7 +116,7 @@ public class DSaturColoring extends Coloring implements IBoundedAlgorithm {
 				if (newVal < bestColoring) {
 					bestColoring = newVal;
 					bestColorClass = colorClass.clone();
-					if (!bounder.incPartials()) {
+					if (!bounder.check()) {
 						return bestColoring;
 					}
 				}
@@ -126,7 +135,7 @@ public class DSaturColoring extends Coloring implements IBoundedAlgorithm {
 			if (newVal < bestColoring) {
 				bestColoring = newVal;
 				bestColorClass = colorClass.clone();
-				if (!bounder.incPartials()) {
+				if (!bounder.check()) {
 					return bestColoring;
 				}
 			}

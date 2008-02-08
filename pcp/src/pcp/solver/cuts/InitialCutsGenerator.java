@@ -1,7 +1,7 @@
 package pcp.solver.cuts;
 
 import pcp.algorithms.block.BlockColorTable;
-import pcp.interfaces.IConstraintsRequestor;
+import pcp.interfaces.ICutBuilder;
 import pcp.model.Model;
 
 
@@ -13,7 +13,7 @@ public class InitialCutsGenerator {
 		this.model = model;
 	}
 
-	public void makeCuts(IConstraintsRequestor requestor) {
+	public void makeCuts(ICutBuilder requestor) {
 		new BlockColorTable(model).makeCuts(requestor);
 	}
 

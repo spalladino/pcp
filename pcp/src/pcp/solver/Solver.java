@@ -1,17 +1,16 @@
 package pcp.solver;
 
-import ilog.concert.IloConstraint;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
-import pcp.interfaces.IConstraintsRequestor;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
 
 
-public class Solver extends AbstractSolutionData implements IConstraintsRequestor {
+public class Solver extends AbstractSolutionData {
 	
 	IloCplex cplex;
 	Model model;
@@ -106,14 +105,9 @@ public class Solver extends AbstractSolutionData implements IConstraintsRequesto
 	}
 	
 	protected void addInitialCuts() {
-		InitialCutsGenerator generator = new InitialCutsGenerator(model); 
-		generator.makeCuts(this);
+		InitialCutsGenerator generator = new InitialCutsGenerator(model);
+		InitialCutBuilder builder = new InitialCutBuilder(cplex, model);
+		generator.makeCuts(builder);
 	}
 
-	@Override
-	public boolean addInitialCut(IloConstraint constraint) {
-		try { this.cplex.addCut(constraint); }
-		catch (Exception ex) { System.err.println("Error adding cut"); }
-		return true;
-	}
 }
