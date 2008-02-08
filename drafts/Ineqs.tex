@@ -86,7 +86,7 @@ En PCP esto puede generalizarse predicando sobre una partición completa:
 \emph{Neighbourhood:} Sean $N(v)$ el vecindario de $v$, $\delta(v)$ su cardinal y $r = \alpha(\delta(v))$ el cardinal de un maximum independent set de $N(v)$, y un color $j_0$. Entonces o bien el nodo $v$ tiene el color $j_0$, o bien a lo sumo $r$ vecinos lo tienen. Esto comprime muchas desigualdades de tipo \textit{nodos adyacentes tienen distinto color}. Debería ser válido para cualquier $r$ que sea cota superior de un maximum independent set.
 
 \[
-\sum_{i \in N(i_0)} x_{ij_0} + r x_{i_0j_0} \leq w_{j_0} \hspace{10pt} \forall i_0 \in V, j_0 \in C
+\sum_{i \in N(i_0)} x_{ij_0} + r x_{i_0j_0} \leq r w_{j_0} \hspace{10pt} \forall i_0 \in V, j_0 \in C
 \]
 
 Esta desigualdad puede llevarse idénticamente a PCP tomando $r$ como cota superior de un maximum component independent set, valor que está acotado por la cantidad de particiones que hay determinadas en $N(v)$.
