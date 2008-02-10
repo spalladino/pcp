@@ -90,11 +90,13 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		try {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("HOLE[%1$d]", color);
+			int alpha = IntUtils.floorhalf(nodes.size());
 			for (Node n : nodes) {
 				expr.addTerm(model.x(n.index(),color), 1);
-			} expr.addTerm(model.w(color), -IntUtils.floorhalf(nodes.size()));
+			} expr.addTerm(model.w(color), -alpha);
 			
-			int basej = graph.P() - nodes.size();
+			int basej = graph.P() - alpha;
+			
 			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
 				System.out.println("HOLE BASE: " + expr.toString() + " VAL= " + super.getValue(expr));
 				System.out.println("BASE J VALUE= " + super.getValue(model.w(basej)));
