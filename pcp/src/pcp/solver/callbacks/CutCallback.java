@@ -14,6 +14,7 @@ import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.clique.ExtendedCliqueCuts;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.definitions.Comparisons;
+import pcp.definitions.Constants;
 import pcp.definitions.Cuts;
 import pcp.entities.Node;
 import pcp.entities.Partition;
@@ -29,11 +30,14 @@ import pcp.utils.IntUtils;
 
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cuts, ICutBuilder, IModelData {
 
-	static boolean checkViolatedCut = Settings.get().getBoolean("validations.checkViolatedCut");
+	static boolean checkViolatedCut = Settings.get().getBoolean("validate.checkViolatedCut");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
+	static boolean allowSkipBreakingSymmetry = Settings.get().getBoolean("holes.allowSkipBreakingSymmetry");
 	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
+	
+	static int maxIters = Settings.get().getInteger("iterations.max");
 	
 	Iteration iteration;
 	Model model;
@@ -65,19 +69,23 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 			return;
 		}
 		
-		if (metrics.getNIters() > 5) {
+		// Run a maximum number of times on the root
+		if (maxIters > 0 && maxIters < metrics.getNIters()) {
+			System.out.println("Finishing callback execution after " + metrics.getNIters() + " iterations.");
 			return;
 		}
 		
 		setupIterationData();
 		metrics.newIter();
 		
+		// Log what needs to be logged
 		if (logIterData) { 
 			System.out.println("Current data:");
 			new IterationPrinter(this, iteration.getModel().getGraph()).printVerboseIteration();
 			System.out.println();
 		}
 		
+		// And cut!
 		cliques = new ExtendedCliqueCuts(iteration.forAlgorithm()).run();
 		holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
 		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
@@ -98,13 +106,20 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 			int basej = graph.P() - alpha;
 			
 			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
-				System.out.println("HOLE BASE: " + expr.toString() + " VAL= " + super.getValue(expr));
-				System.out.println("BASE J VALUE= " + super.getValue(model.w(basej)));
-				for (Node n : nodes) {
+				// TODO: Check ineq ok
+				for (Node n : graph.getNodes()) {
 					for (int j = basej; j < model.getColorCount(); j++) {
 						expr.addTerm(model.x(n.index(),j), 1);
 					}
 				} expr.addTerm(model.w(basej), -1);
+			}
+		
+			if (allowSkipBreakingSymmetry && useBreakingSymmetry && super.getValue(expr) < Constants.Epsilon) {
+				System.out.println("Falling back to simple constraint");
+				expr.clear();
+				for (Node n : nodes) {
+					expr.addTerm(model.x(n.index(),color), 1);
+				} expr.addTerm(model.w(color), -alpha);
 			}
 			
 			add(Holes, expr, LeqtZero, name);
@@ -185,7 +200,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		
 		if (checkViolatedCut || logIneqs) {
 			double val = super.getValue(expr);
-			if (checkViolatedCut && ((val > 0 && cmp == GeqtZero) || (val < 0 && cmp == LeqtZero))) {
+			if (checkViolatedCut && ((val > -Constants.Epsilon && cmp == GeqtZero) || (val < Constants.Epsilon && cmp == LeqtZero))) {
 				System.err.println("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
 			} else if (logIneqs) {
 				System.out.println(Names[cut] + ": " + range.toString() + " VAL=" + val );

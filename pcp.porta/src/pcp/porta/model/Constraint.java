@@ -132,9 +132,7 @@ public class Constraint {
 		
 	public String toString(final ITermWriter termWriter) {
 		final StringBuilder sb = new StringBuilder();
-		
 		innerToString(termWriter, sb);
-		
 		return sb.toString();
 	}
 

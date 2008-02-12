@@ -21,12 +21,15 @@ public class Main {
 		String basefilename = Settings.get().getPath("file.basename", "dir.porta");
 		String detailedfilename = createFilename(basefilename, strategy, Settings.get().getBoolean("porta.projectColors"));
 		String detailedname = createFilename(Settings.get().getString("file.basename"), strategy, Settings.get().getBoolean("porta.projectColors"));
+		String specificname = detailedfilename + "." + Settings.get().getString("file.specificname");
 		
 		String graphfile = basefilename + ".in";
 		String ieqfile = detailedfilename + ".ieq";
 		String poifile = detailedfilename + ".poi";
 		String traffile = detailedfilename + ".poi.ieq";
 		String modelfile = detailedfilename + ".model";
+		String specificmodelfile = specificname + ".model";
+		String specificportafile = specificname + ".ieq";
 		
 		Integer nodeCount = Settings.get().getInteger("porta.nodeCount");
 		Integer colorCount = Settings.get().getInteger("porta.colorCount");
@@ -47,8 +50,11 @@ public class Main {
 		} else if (action.equalsIgnoreCase("--poi")) {
 			System.out.println("Writing poi file from input graph");
 			WritePoi.write(graphfile, poifile, strategy);
-		}else {
-			System.out.println("Invalid action specified " + args[0]);
+		} else if (action.equalsIgnoreCase("--translate")) {
+			System.out.println("Translating from specific model file to porta file");
+			TranslateModel.translate(specificmodelfile, specificportafile, strategy);
+		} else {
+			System.err.println("Invalid action specified " + args[0]);
 		}
 	}
 

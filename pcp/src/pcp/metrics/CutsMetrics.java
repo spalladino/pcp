@@ -11,6 +11,7 @@ import pcp.definitions.Cuts;
 public class CutsMetrics implements Cuts {
 
 	static boolean logIterMetrics = Settings.get().getBoolean("logging.iterMetrics");
+	static boolean logTotalMetrics = Settings.get().getBoolean("logging.totalMetrics");
 	
 	int iter = -1;
 	LinkedList<int[]> counts;

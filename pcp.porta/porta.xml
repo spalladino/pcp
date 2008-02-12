@@ -75,6 +75,13 @@
     	</java>
 	</target>
 	
+	<target name="porta-vint" depends="name" description="Generates all integral points from an ieq">
+		<exec executable="bash">
+			<arg value="vint"/>
+			<arg value="${data.abs.dir}/${file.detailedname}.ieq"/>
+		</exec>
+	</target>
+	
 	<target name="traf" depends="name" description="Generates the convex hull from a poi">
 		<exec executable="bash">
 			<arg value="traf"/>
