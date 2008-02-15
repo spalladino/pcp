@@ -1,5 +1,8 @@
 package pcp.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearIntExpr;
@@ -159,8 +162,28 @@ public class ModelBuilder {
 		}
 	}
 
-	protected void constrainAdjacencyNeighbourhood() {
-		// TODO Implement
+	protected void constrainAdjacencyNeighbourhood() throws IloException {
+		for (Node n : graph.getNodes()) {
+			Set<Partition> neighbourPartitions = new HashSet<Partition>();
+			for (Node adj : n.getNeighbours()) {
+				neighbourPartitions.add(adj.getPartition());
+			}
+			
+			final int r = neighbourPartitions.size();
+			for (int j = 0; j < colors; j++) {
+				IloLinearIntExpr expr = modeler.linearIntExpr();
+				String name = String.format("ADJN[%1$d,%2$d]", n.index(), j);
+				// r * x_i0j0
+				expr.addTerm(xs[n.index()][j], r);
+				// sum i \in N(i0) x_ij0
+				for (Node adj : n.getNeighbours()) {
+					expr.addTerm(xs[adj.index()][j], 1);
+				}
+				// r * w_j0
+				expr.addTerm(ws[j], -r);
+				modeler.addLe(expr, 0, name);
+			}
+		}
 	}
 
 	/**
