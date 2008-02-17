@@ -5,7 +5,8 @@ public enum Adjacency {
 	
 	AdjacentsLeqColor("ac"),
 	AdjacentsLeqOne("a1"),
-	AdjacentsNeighbourhood("an");
+	AdjacentsNeighbourhood("an"),
+	AdjacentsPartitionLeqColor("ap");
 
 	String shortId;
 	

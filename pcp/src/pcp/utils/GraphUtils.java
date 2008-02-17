@@ -1,8 +1,11 @@
 package pcp.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import pcp.entities.Node;
@@ -11,6 +14,16 @@ import pcp.interfaces.IPartitionedGraph;
 
 public class GraphUtils {
 
+	public static Map<Partition, List<Node>> groupByPartition(Node[] nodes) {
+		Map<Partition, List<Node>> map = new HashMap<Partition, List<Node>>();
+		for (Node node : nodes) {
+			Partition p = node.getPartition();
+			if (!map.containsKey(p)) {
+				map.put(p, new ArrayList<Node>());
+			} map.get(p).add(node);
+		} return map;
+	}
+	
 	public static boolean checkComponentHole(IPartitionedGraph graph, List<Node> nodes) {
 		if (!checkHole(graph, nodes)) {
 			return false;

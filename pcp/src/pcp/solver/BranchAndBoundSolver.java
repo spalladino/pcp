@@ -9,6 +9,7 @@ public class BranchAndBoundSolver extends Solver {
 	public BranchAndBoundSolver() throws IloException {
 		super();
 		
+		// TODO: Remove duplicate constraints
         cplex.setParam(IntParam.Reduce, 0);
         cplex.setParam(BooleanParam.PreLinear, false);
         cplex.setParam(IntParam.HeurFreq, -1);

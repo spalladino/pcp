@@ -1,21 +1,23 @@
 package pcp.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import pcp.Factory;
 import pcp.algorithms.AlgorithmException;
 import pcp.entities.Edge;
 import pcp.entities.Node;
 import pcp.entities.Partition;
 import pcp.entities.PartitionedGraph;
-import pcp.model.strategy.Adjacency;
-import pcp.model.strategy.Symmetry;
+import pcp.utils.GraphUtils;
 
 public class ModelBuilder {
 	
@@ -45,33 +47,51 @@ public class ModelBuilder {
 		initializeVariables();
 		createObjective();
 		
-		// Constraints based on strategy
-		if (strategy.getPartitionConstraints() == pcp.model.strategy.Partition.PaintExactlyOne) {
-			constrainEachPartitionOneColor();
-		} else {
-			constrainEachPartitionAtLeastOneColor();
+		// Constraints based on painting
+		switch (strategy.getPartitionConstraints()) {
+			case PaintExactlyOne:
+				constrainEachPartitionOneColor();
+				break;
+			case PaintAtLeastOne:
+				constrainEachPartitionAtLeastOneColor();
+				break;
+			default:
+				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getPartitionConstraints());
 		}
 		
-		if (strategy.getAdjacencyConstraints() == Adjacency.AdjacentsLeqColor) {
-			constrainAdjacentLessThanColor();
-		} else if (strategy.getAdjacencyConstraints() == Adjacency.AdjacentsLeqOne) {
-			constrainNodeLessThanColor();
-			constrainAdjacentNotEquals();
-		} else if (strategy.getAdjacencyConstraints() == Adjacency.AdjacentsNeighbourhood) {
-			constrainAdjacencyNeighbourhood();
-		} else {
-			throw new UnsupportedOperationException("Unhandled adjacency strategy");
+		// Adjacency constraints
+		switch(strategy.getAdjacencyConstraints()) {
+			case AdjacentsLeqColor:
+				constrainAdjacentLessThanColor();
+				break;
+			case AdjacentsLeqOne:
+				constrainNodeLessThanColor();
+				constrainAdjacentNotEquals();
+				break;
+			case AdjacentsNeighbourhood:
+				constrainAdjacencyNeighbourhood();
+				break;
+			case AdjacentsPartitionLeqColor:
+				constrainAdjacencyPerPartitionLeqColor();
+				break;
+			default:
+				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getAdjacencyConstraints());
 		}
 		
-		
-		if (strategy.getBreakSymmetry() == Symmetry.OnlyUseColorIfNodesPainted) {
-			constrainUseLowerLabelFirst();
-			constrainUseColorIfNodesPainted();
-		} else if (strategy.getBreakSymmetry() == Symmetry.UseLowerLabelFirst) {
-			constrainUseLowerLabelFirst();
+		// Breaking symmetry constraints
+		switch(strategy.getBreakSymmetry()) {
+			case OnlyUseColorIfNodesPainted:
+				constrainUseLowerLabelFirst();
+				constrainUseColorIfNodesPainted();
+				break;
+			case UseLowerLabelFirst:
+				constrainUseLowerLabelFirst();
+				break;
+			case None:
+				break;
+			default:
+				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getBreakSymmetry());
 		}
-		
-		
 		
 		model.xs = xs;
 		model.ws = ws;
@@ -162,14 +182,41 @@ public class ModelBuilder {
 		}
 	}
 
+	/**
+	 * Creates constraints sum_{i \in p & N(i0)} x_ij0 + x_i0j0 \leq w_j0 \forall j0, p, i0
+	 * @throws IloException 
+	 */
+	protected void constrainAdjacencyPerPartitionLeqColor() throws IloException {
+		// Iterate for every i0
+		for (Node n : graph.getNodes()) {
+			Map<Partition, List<Node>> groupByPartition = GraphUtils.groupByPartition(n.getNeighbours());
+			// Iterate on neighbouring partitions
+			for (List<Node> adjs : groupByPartition.values()) {
+				// Iterate on colors
+				for (int j = 0; j < colors; j++) {
+					IloLinearIntExpr expr = modeler.linearIntExpr();
+					String name = String.format("ADJP[%1$d,%2$d]", n.index(), j);
+					// x_i0j0
+					expr.addTerm(xs[n.index()][j], 1);
+					// sum i \in p x_ij0
+					for (Node adj : adjs) {
+						expr.addTerm(xs[adj.index()][j], 1);
+					}
+					// w_j0
+					expr.addTerm(ws[j], -1);
+					modeler.addLe(expr, 0, name);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Creates constraints sum_{i \in N(i0)} x_ij0 + r * x_i0j0 \leq r* w_j0 \forall j0, i0
+	 * with r = number of partitions in i0's neighbourhood
+	 */
 	protected void constrainAdjacencyNeighbourhood() throws IloException {
 		for (Node n : graph.getNodes()) {
-			Set<Partition> neighbourPartitions = new HashSet<Partition>();
-			for (Node adj : n.getNeighbours()) {
-				neighbourPartitions.add(adj.getPartition());
-			}
-			
-			final int r = neighbourPartitions.size();
+			final int r = GraphUtils.groupByPartition(n.getNeighbours()).size();
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
 				String name = String.format("ADJN[%1$d,%2$d]", n.index(), j);

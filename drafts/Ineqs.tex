@@ -91,9 +91,13 @@ En PCP esto puede generalizarse predicando sobre una partición completa:
 
 Esta desigualdad puede llevarse idénticamente a PCP tomando $r$ como cota superior de un maximum component independent set, valor que está acotado por la cantidad de particiones que hay determinadas en $N(v)$.
 
-\textbf{Ver:} puede reforzarse aprovechando la desigualdad de colores, del mismo modo que se refuerza independent set?
+En coloreo tradicional se usa el cardinal de un clique coverage como cota superior del $r$. En particionado puede tomarse un extended clique coverage, donde por extended clique se entiende un conjunto de nodos tal que todo par es adyacente o está en la misma partición.
 
-\textbf{Ver:} funciona igual en PCP si se predica sobre un not-component independent set y se toma a $r$ como cota superior del cardinal de las particiones cubiertas, en lugar de vértices?
+Otra posibilidad es partir esta desigualdad en una por cada partición y tomar $r = 1$. Notar que si las particiones son unitarias, se tienen las desigualdades de adyacencia tradicionales.
+
+\[
+\sum_{i \in p_0 \cap N(i_0)} x_{ij_0} + x_{i_0j_0} \leq w_{j_0} \hspace{10pt} \forall i_0 \in V, j_0 \in C, p_0 \in P
+\]
 
 \item
 
@@ -113,11 +117,15 @@ Es decir, si todos los nodos de $N(v_0) - N(v_1)$ fueron eliminados, entonces va
 
 Notar que este corte puede eliminar soluciones válidas enteras, pero asegura que siempre mantiene alguna óptima.
 
-\item Suma sobre un color dentro de partición $P$
+\item 
+
+\emph{Color en partición} La suma sobre un color de todos los nodos dentro de una partición $p$ debe estar acotada por el uso de ese color.
 
 \[
-\sum_{i \in P} x_{ij_0} \leq w_{j_0} \hspace{10pt} \forall j_0 \in C
+\sum_{i \in p} x_{ij_0} \leq w_{j_0} \hspace{10pt} \forall j_0 \in C
 \]
+
+Esta restricción es una versión más débil de block color, pues no tiene en cuenta eliminación de simetrías. Puede que haya casos que no se cubran, dependiendo cuántos $j_0$ se consideren en block color.
 
 
 
