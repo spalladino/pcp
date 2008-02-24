@@ -11,7 +11,6 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 	public DSaturPartitionColoringEasiestNodes(IPartitionedGraph graph) {
 		super(graph);
 	}
-	
 
 	@Override
 	protected Node getNextNode() {

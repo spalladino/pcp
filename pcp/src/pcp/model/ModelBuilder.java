@@ -39,7 +39,7 @@ public class ModelBuilder {
 		this.objective = null;
 		
 		Model model = new Model(this.graph);
-		
+		model.strategy = strategy;
 		model.coloring = Factory.get().coloring(strategy.getColoring(), graph);
 		this.colors = model.colors = model.coloring.getChi();
 		

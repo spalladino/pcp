@@ -1,11 +1,15 @@
 package pcp.solver;
 
 import ilog.concert.IloException;
+import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
+import ilog.cplex.IloCplex.IntParam;
 import pcp.Settings;
+import pcp.algorithms.AlgorithmException;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.model.strategy.Coloring;
 import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
@@ -26,7 +30,7 @@ public class Solver extends AbstractSolutionData {
 		this.cplex = new IloCplex();
 	}
 	
-	public boolean solve() throws IloException {
+	public boolean solve() throws Exception {
 		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
 		long start = System.currentTimeMillis();
@@ -38,14 +42,38 @@ public class Solver extends AbstractSolutionData {
 		return solved;
 	}
 	
-	protected void beforeSolve() {
-		if(useInitialSolution) {
+	protected void beforeSolve() throws IloException, AlgorithmException {
+		if(useInitialSolution && Coloring.supportingAssignment.contains(model.getStrategy().getColoring())) {
+			System.out.println("Using initial solution from coloring with value " + model.getColoring().getChi());
 			loadInitialSolution();
 		}
 	}
 
-	protected void loadInitialSolution() {
-		// TODO: Setvectors
+	protected void loadInitialSolution() throws IloException, AlgorithmException {
+		cplex.setParam(IntParam.AdvInd, 1);
+		int n = model.getNodeCount();
+		int c = model.getColorCount();
+		int chi = model.getColoring().getChi();
+		
+		double[] vals = new double[n*c + c];
+		IloNumVar[] vars = new IloNumVar[n*c + c];
+		
+		int idx = 0;
+		for (int j = 0; j < c; j++) {
+			// Set w variable value
+			vars[idx] = model.getWs()[j];
+			vals[idx] = j < chi ? 1 : 0; 
+			idx++;
+			for (int i = 0; i < n; i++) {
+				// Set x variable value
+				vars[idx] = model.getXs()[i][j];
+				vals[idx] = model.getColoring().getColor(i) == j ? 1 : 0;
+				idx++;
+			}
+		}
+		
+		// Set the initial solution
+		cplex.setVectors(vals, null, vars, null, null, null);
 	}
 
 	public void end() throws Exception {

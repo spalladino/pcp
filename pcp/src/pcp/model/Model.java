@@ -18,6 +18,7 @@ public class Model {
 	
 	protected int colors;
 	protected Coloring coloring;
+	protected BuilderStrategy strategy;
 	
 	public Model(PartitionedGraph graph) {
 		this.graph = graph;
@@ -71,6 +72,15 @@ public class Model {
 	
 	public int getNodeCount() {
 		return this.graph.getNodes().length;
+	}
+	
+	public Coloring getColoring() {
+		return coloring;
+	}
+
+	
+	public BuilderStrategy getStrategy() {
+		return strategy;
 	}
 
 }

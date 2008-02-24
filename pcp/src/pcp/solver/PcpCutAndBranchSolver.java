@@ -1,6 +1,7 @@
 package pcp.solver;
 
 import ilog.concert.IloException;
+import pcp.algorithms.AlgorithmException;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
 
@@ -22,7 +23,7 @@ public class PcpCutAndBranchSolver extends BranchAndBoundSolver {
 	}
 	
 	@Override
-	protected void beforeSolve() {
+	protected void beforeSolve() throws IloException, AlgorithmException {
 		super.beforeSolve();
 		super.addInitialCuts();
 	}

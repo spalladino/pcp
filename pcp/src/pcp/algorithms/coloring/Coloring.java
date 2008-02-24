@@ -1,10 +1,11 @@
 package pcp.algorithms.coloring;
 
 import pcp.algorithms.AlgorithmException;
+import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.interfaces.IPartitionedGraph;
 
 
-public abstract class Coloring {
+public abstract class Coloring implements IBoundedAlgorithm {
 	
 	IPartitionedGraph graph;
 	

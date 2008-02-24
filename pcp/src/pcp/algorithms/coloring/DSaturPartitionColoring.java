@@ -96,7 +96,7 @@ public abstract class DSaturPartitionColoring extends Coloring implements IBound
 		if (bestColoring <= lowerBound) {
 			return (bestColoring);
 		}
-		if (i >= graph.N()) {
+		if (i >= graph.P()) {
 			if (log) System.out.println("Leaf with current coloring " + currentColor);
 			return (currentColor);
 		}
