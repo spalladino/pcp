@@ -4,6 +4,7 @@ import ilog.concert.IloException;
 import ilog.cplex.IloCplex.IntParam;
 import pcp.algorithms.Preprocessor;
 import pcp.algorithms.Verifier;
+import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.PartitionedGraph;
 import pcp.entities.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
@@ -48,6 +49,11 @@ public class Main {
 		} catch (Exception e) {
 			System.err.println("Error creating model");
 			System.err.println(e.getMessage());
+			return;
+		}
+
+		if (!new ConnectivityChecker(graph).check()) {
+			System.err.println("Graph is disconnected");
 			return;
 		}
 		

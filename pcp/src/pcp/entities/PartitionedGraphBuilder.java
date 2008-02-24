@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import pcp.interfaces.IGraph;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.interfaces.IPartitionedGraphBuilder;
 import pcp.utils.GraphUtils;
@@ -41,7 +42,6 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	
 	public PartitionedGraph getGraph() {
 		if (mustRecreate) recreateGraph();
-		//PartitionedGraph graph = new PartitionedGraph(nodes.size(), edges.size(), partitions.size());
 		PartitionedGraph graph = new PartitionedGraph();
 		graph.name = this.name;
 		
@@ -78,6 +78,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 			graph.matrix[edge.node1.index()][edge.node2.index()] = true;
 			graph.matrix[edge.node2.index()][edge.node1.index()] = true;
 		}
+		
+		graph.gprime = (SimpleGraph)getGPrime();
 		
 		return graph;
 	}
@@ -306,6 +308,24 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 				nodes.add(neighbour);
 			}
 		} return (Node[]) nodes.toArray(new Node[nodes.size()]);
+	}
+
+	@Override
+	public IGraph getGPrime() {
+		SimpleGraphBuilder builder = new SimpleGraphBuilder(this.name);
+		
+		Partition[] ps = this.getPartitions();
+		
+		for (int i = 0; i < ps.length; i++) {
+			builder.addNode(i);
+			for (int j = i+1; j < ps.length; j++) {
+				if (GraphUtils.areBipartite(ps[i], ps[j])) {
+					builder.addEdge(i, j);
+				}
+			}
+		}
+
+		return builder.getGraph();
 	}
 	
 }

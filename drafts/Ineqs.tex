@@ -78,7 +78,7 @@ Dados $C_k$, $\overline{C_k}$, $P_k$ un hole, un anti hole y un camino respectiv
 En PCP esto puede generalizarse predicando sobre una partición completa:
 
 \[
-\sum_{j \geq j_0} \sum_{v_i \in p_0} x_{i_0j} \leq w_{j_0} \hspace{10pt} \forall p_0 \in P, j_0 \in C
+\sum_{j \geq j_0} \sum_{v_i \in p_0} x_{ij} \leq w_{j_0} \hspace{10pt} \forall p_0 \in P, j_0 \in C
 \]
 
 \item
@@ -93,11 +93,15 @@ Esta desigualdad puede llevarse idénticamente a PCP tomando $r$ como cota superi
 
 En coloreo tradicional se usa el cardinal de un clique coverage como cota superior del $r$. En particionado puede tomarse un extended clique coverage, donde por extended clique se entiende un conjunto de nodos tal que todo par es adyacente o está en la misma partición.
 
+Estas desigualdades pueden usarse como reemplazo de las de adyacencia en la formulación del modelo.
+
 Otra posibilidad es partir esta desigualdad en una por cada partición y tomar $r = 1$. Notar que si las particiones son unitarias, se tienen las desigualdades de adyacencia tradicionales.
 
 \[
 \sum_{i \in p_0 \cap N(i_0)} x_{ij_0} + x_{i_0j_0} \leq w_{j_0} \hspace{10pt} \forall i_0 \in V, j_0 \in C, p_0 \in P
 \]
+
+Estas últimas no son más que una versión más débil de los cortes clique extendidos. Un nodo y un conjunto de sus vecinos en una misma partición verifican que, tomados de a pares, son adyacentes o pertenencen a la misma partición. Usar estas desigualdades en lugar de las de adyacencia sería equivalente a intentar un clique cover.
 
 \item
 

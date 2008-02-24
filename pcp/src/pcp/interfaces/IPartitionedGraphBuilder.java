@@ -12,7 +12,7 @@ public interface IPartitionedGraphBuilder {
 	
 	void removeEdge(Edge redge);
 	
-	void recreateGraph();
+	IPartitionedGraph getGraph();
 	
 	IPartitionedGraphBuilder addNode(int node, int partition);
 	

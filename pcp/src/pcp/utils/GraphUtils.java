@@ -1,6 +1,7 @@
 package pcp.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -105,5 +106,27 @@ public class GraphUtils {
         } builder.append("]");
         return builder.toString();
     }
+
+	/**
+	 * Returns true if every node in one partition is adjacent to every node in the other one.
+	 * @return true if every node in one partition is adjacent to every node in the other one.
+	 */
+	public static boolean areBipartite(Partition p1, Partition p2) {
+		return checkAllNodesAdjacent(p1, p2) && checkAllNodesAdjacent(p2, p1);  
+	}
+	
+	private static boolean checkAllNodesAdjacent(Partition p1, Partition p2) {
+		for (Node n1 : p1.getNodes()) {
+			Set<Node> pending = new HashSet<Node>();
+			Collections.addAll(pending, p2.getNodes());
+			for (Node adj : n1.getNeighbours()) {
+				pending.remove(adj);
+			}
+			if (!pending.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 }

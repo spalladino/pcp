@@ -3,6 +3,7 @@ package pcp.entities;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import pcp.interfaces.IGraph;
 import pcp.interfaces.IPartitionedGraph;
 
 public class SortedPartitionedGraph implements IPartitionedGraph {
@@ -193,7 +194,11 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 		throw new UnsupportedOperationException();
 		//return graph.getNeighbours(p);
 	}
-	
-	
+
+	@Override
+	public IGraph getGPrime() {
+		throw new UnsupportedOperationException();
+		//return graph.getGPrime();
+	}
 	
 }

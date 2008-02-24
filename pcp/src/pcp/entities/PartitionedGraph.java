@@ -1,5 +1,6 @@
 package pcp.entities;
 
+import pcp.interfaces.IGraph;
 import pcp.interfaces.IPartitionedGraph;
 
 
@@ -25,6 +26,9 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	
 	// Index k contains array of nodes adjacent to partition k
 	Node[][] partitionNodeAdjacencies;
+	
+	// G' graph corresponding to this partitioned graph
+	SimpleGraph gprime;
 	
 	Node[] nodes;
 	Partition[] partitions;
@@ -121,5 +125,10 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	@Override
 	public Node[] getNeighbours(Partition p) {
 		return this.partitionNodeAdjacencies[p.index()];
+	}
+
+	@Override
+	public IGraph getGPrime() {
+		return this.gprime;
 	}
 }
