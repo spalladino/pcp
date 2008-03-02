@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import pcp.common.sorting.NodeDegreeComparator;
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 /**
  * Preprocesses the input graph before solving the PCP problem. This includes

@@ -1,6 +1,6 @@
 package pcp.common.sorting;
 
-import pcp.entities.Node;
+import pcp.entities.partitioned.Node;
 import pcp.interfaces.IModelData;
 
 public class ReverseNodeColorValueComparator extends NodeColorValueComparator {

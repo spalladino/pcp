@@ -2,7 +2,7 @@ package pcp.algorithms.holes;
 
 import java.util.List;
 
-import pcp.entities.Node;
+import pcp.entities.partitioned.Node;
 
 public interface IHolesDetector {
 	

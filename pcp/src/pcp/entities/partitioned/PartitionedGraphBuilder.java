@@ -1,4 +1,4 @@
-package pcp.entities;
+package pcp.entities.partitioned;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,9 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import pcp.interfaces.IPartitionedGraph;
-import pcp.interfaces.IPartitionedGraphBuilder;
-import pcp.interfaces.ISimpleGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.IPartitionedGraphBuilder;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.simple.SimpleGraph;
 import pcp.utils.GraphUtils;
 
 public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedGraphBuilder {
@@ -325,23 +326,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 
 	@Override
 	public ISimpleGraph getGPrime() {
-		SimpleGraphBuilder builder = new SimpleGraphBuilder(this.name);
-		
-		Partition[] ps = this.getPartitions();
-		
-		for (int i = 0; i < ps.length; i++) {
-			builder.addNode(i);
-		}
-		
-		for (int i = 0; i < ps.length; i++) {
-			for (int j = i+1; j < ps.length; j++) {
-				if (GraphUtils.areBipartite(ps[i], ps[j])) {
-					builder.addEdge(i, j);
-				}
-			}
-		}
-
-		return builder.getGraph();
+		return new GPrimeBuilder(this).getGraph();
 	}
 
 	@Override

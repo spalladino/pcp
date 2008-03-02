@@ -1,7 +1,7 @@
 package pcp.porta;
 
 import pcp.Factory;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.model.BuilderStrategy;
 import pcp.porta.io.ModelWriter;
 import pcp.porta.io.PortaReader;

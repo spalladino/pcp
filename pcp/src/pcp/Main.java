@@ -5,8 +5,8 @@ import ilog.cplex.IloCplex.IntParam;
 import pcp.algorithms.Preprocessor;
 import pcp.algorithms.Verifier;
 import pcp.algorithms.connectivity.ConnectivityChecker;
-import pcp.entities.PartitionedGraph;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
@@ -84,6 +84,7 @@ public class Main {
 	}
 
 	private static void exportModel(Solver solver, String filename) throws IloException {
+		System.out.println("Exporting model to " + filename + ".lps");
 		solver.getCplex().exportModel(filename + ".lps");
 	}
 

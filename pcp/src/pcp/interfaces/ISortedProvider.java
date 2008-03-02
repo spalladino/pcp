@@ -4,8 +4,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import pcp.common.sorting.NodeColorValueComparator;
-import pcp.entities.Edge;
-import pcp.entities.SortedPartitionedGraph;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.SortedPartitionedGraph;
 
 
 public interface ISortedProvider {

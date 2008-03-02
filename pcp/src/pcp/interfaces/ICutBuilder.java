@@ -2,8 +2,8 @@ package pcp.interfaces;
 
 import java.util.List;
 
-import pcp.entities.Node;
-import pcp.entities.Partition;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 
 public interface ICutBuilder {
 

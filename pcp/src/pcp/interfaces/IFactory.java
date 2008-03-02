@@ -1,8 +1,8 @@
 package pcp.interfaces;
 
 import pcp.algorithms.coloring.Coloring;
-import pcp.entities.PartitionedGraph;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.solver.Solver;
 
 

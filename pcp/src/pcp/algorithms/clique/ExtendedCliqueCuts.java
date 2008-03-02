@@ -13,8 +13,8 @@ import pcp.common.iterate.ArrayIterator;
 import pcp.definitions.Constants;
 import pcp.definitions.Cuts;
 import pcp.definitions.Sorting;
-import pcp.entities.Node;
-import pcp.entities.SortedPartitionedGraph;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 

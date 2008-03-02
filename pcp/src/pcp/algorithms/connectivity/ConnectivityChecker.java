@@ -3,8 +3,8 @@ package pcp.algorithms.connectivity;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import pcp.entities.Node;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
 
 
 public class ConnectivityChecker {

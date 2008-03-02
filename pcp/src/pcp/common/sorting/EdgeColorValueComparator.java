@@ -1,6 +1,6 @@
 package pcp.common.sorting;
 
-import pcp.entities.Edge;
+import pcp.entities.partitioned.Edge;
 import pcp.interfaces.IModelData;
 
 public class EdgeColorValueComparator extends BaseValueComparator<Edge> {

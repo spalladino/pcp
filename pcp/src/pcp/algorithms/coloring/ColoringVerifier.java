@@ -1,9 +1,9 @@
 package pcp.algorithms.coloring;
 
 import pcp.algorithms.AlgorithmException;
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
 
 
 public class ColoringVerifier {

@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import pcp.definitions.Constants;
-import pcp.entities.Edge;
-import pcp.entities.SortedPartitionedGraph;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IModelData;
 import pcp.interfaces.ISortedProvider;
 import pcp.model.Model;

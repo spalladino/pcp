@@ -5,9 +5,9 @@ import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.definitions.Constants;
 import pcp.definitions.Cuts;
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.entities.PartitionedGraph;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 
 public class BlockColorCuts implements Constants, Cuts, IBoundedAlgorithm {

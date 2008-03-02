@@ -1,15 +1,15 @@
-package pcp.entities;
+package pcp.entities.simple;
 
 
-public class Edge {
-	Node node1;
-	Node node2;
+public class SimpleEdge {
+	SimpleNode node1;
+	SimpleNode node2;
 	
-	public Node getNode1() {
+	public SimpleNode getNode1() {
 		return node1;
 	}
 	
-	public Node getNode2() {
+	public SimpleNode getNode2() {
 		return node2;
 	}
 	
@@ -21,7 +21,7 @@ public class Edge {
 		return node2.name;
 	}
 
-	Edge(Node node1, Node node2) {
+	SimpleEdge(SimpleNode node1, SimpleNode node2) {
 		this.node1 = node1;
 		this.node2 = node2;
 	}
@@ -40,7 +40,7 @@ public class Edge {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
-		Edge other = (Edge) obj;
+		SimpleEdge other = (SimpleEdge) obj;
 		
 		return (this.node1.equals(other.node1) && this.node2.equals(other.node2))
 			|| (this.node2.equals(other.node1) && this.node1.equals(other.node2));

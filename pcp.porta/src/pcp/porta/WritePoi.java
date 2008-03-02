@@ -2,8 +2,8 @@ package pcp.porta;
 
 import ilog.concert.IloException;
 import pcp.Factory;
-import pcp.entities.PartitionedGraph;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.model.BuilderStrategy;
 import pcp.porta.io.PoiWriter;
 import pcp.porta.poi.PointsGenerator;

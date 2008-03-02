@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
 
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 public interface IGraphParser {
 	

@@ -7,7 +7,7 @@ import ilog.cplex.IloCplex.CplexStatus;
 import ilog.cplex.IloCplex.IntParam;
 import pcp.Settings;
 import pcp.algorithms.AlgorithmException;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
 import pcp.model.strategy.Coloring;
 import pcp.solver.cuts.InitialCutBuilder;

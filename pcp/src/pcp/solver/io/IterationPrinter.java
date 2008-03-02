@@ -4,8 +4,8 @@ import ilog.concert.IloException;
 
 import java.io.PrintStream;
 
+import pcp.entities.IPartitionedGraph;
 import pcp.interfaces.IModelData;
-import pcp.interfaces.IPartitionedGraph;
 import pcp.utils.ArrayUtils;
 
 public class IterationPrinter {

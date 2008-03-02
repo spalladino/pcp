@@ -1,7 +1,7 @@
 package pcp.porta.processing;
 
-import pcp.entities.Node;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
 import pcp.porta.model.Constraint;
@@ -64,7 +64,7 @@ public class Processor {
 	 * it is replaced by x[i,0], considering all nodes in partition. 
 	 */
 	public void restoreNodeFirstColorVariable(Constraint constraint) {
-		for (pcp.entities.Partition partition : graph.getPartitions()) {
+		for (pcp.entities.partitioned.Partition partition : graph.getPartitions()) {
 			Node[] nodes = partition.getNodes();
 			
 			int i = 0;

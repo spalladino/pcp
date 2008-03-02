@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import pcp.Settings;
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
 import pcp.utils.GraphUtils;
 
 public class ComponentHolesDetector implements IHolesDetector {

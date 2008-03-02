@@ -4,10 +4,10 @@ import static pcp.utils.DoubleUtils.doubleEquals;
 import static pcp.utils.DoubleUtils.isTrue;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex.UnknownObjectException;
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ISolutionData;
 
 public class Verifier {

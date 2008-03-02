@@ -7,8 +7,8 @@ import ilog.cplex.IloCplex;
 
 import java.util.List;
 
-import pcp.entities.Node;
-import pcp.entities.Partition;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.model.Model;
 

@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import pcp.entities.Partition;
-import pcp.entities.PartitionedGraph;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 
 public class GraphBuilderFixture {

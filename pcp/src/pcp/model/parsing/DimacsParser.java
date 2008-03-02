@@ -3,7 +3,7 @@ package pcp.model.parsing;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IGraphParser;
 
 public class DimacsParser implements IGraphParser {

@@ -2,7 +2,7 @@ package pcp.common.sorting;
 
 import java.util.Comparator;
 
-import pcp.entities.SimpleNode;
+import pcp.entities.simple.SimpleNode;
 
 public class SimpleNodeDegreeComparator implements Comparator<SimpleNode> {
 	

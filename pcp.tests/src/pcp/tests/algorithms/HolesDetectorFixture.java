@@ -11,8 +11,8 @@ import pcp.algorithms.holes.HolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.common.BoxInt;
-import pcp.entities.Node;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 
 @SuppressWarnings("deprecation")

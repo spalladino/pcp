@@ -1,6 +1,6 @@
-package pcp.entities;
+package pcp.entities.simple;
 
-import pcp.interfaces.ISimpleGraph;
+import pcp.entities.ISimpleGraph;
 
 public class SimpleGraph implements ISimpleGraph {
 

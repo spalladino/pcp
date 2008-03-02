@@ -1,10 +1,10 @@
-package pcp.entities;
+package pcp.entities.partitioned;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import pcp.interfaces.IPartitionedGraph;
-import pcp.interfaces.ISimpleGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.ISimpleGraph;
 
 public class SortedPartitionedGraph implements IPartitionedGraph {
 

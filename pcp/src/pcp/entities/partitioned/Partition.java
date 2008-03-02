@@ -1,6 +1,6 @@
-package pcp.entities;
+package pcp.entities.partitioned;
 
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
 
 
 public class Partition implements Comparable<Partition> {

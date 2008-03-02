@@ -9,11 +9,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.entities.PartitionedGraphBuilder;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.model.parsing.DimacsParseException;
 import pcp.model.parsing.DimacsParser;
 

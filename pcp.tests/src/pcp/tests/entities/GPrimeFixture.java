@@ -5,9 +5,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pcp.entities.PartitionedGraphBuilder;
-import pcp.interfaces.IPartitionedGraph;
-import pcp.interfaces.ISimpleGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 
 public class GPrimeFixture {

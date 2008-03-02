@@ -1,7 +1,8 @@
-package pcp.interfaces;
+package pcp.entities;
 
-import pcp.entities.SimpleEdge;
-import pcp.entities.SimpleNode;
+import pcp.entities.simple.SimpleEdge;
+import pcp.entities.simple.SimpleNode;
+import pcp.interfaces.IGraph;
 
 public interface ISimpleGraph extends IGraph {
 	

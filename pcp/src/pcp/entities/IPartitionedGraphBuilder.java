@@ -1,8 +1,8 @@
-package pcp.interfaces;
+package pcp.entities;
 
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.entities.Partition;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 
 public interface IPartitionedGraphBuilder {
 	

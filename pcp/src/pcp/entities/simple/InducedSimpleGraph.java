@@ -1,22 +1,29 @@
-package pcp.entities;
+package pcp.entities.simple;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pcp.interfaces.ISimpleGraph;
+import pcp.entities.ISimpleGraph;
 
 
 public class InducedSimpleGraph implements ISimpleGraph {
 	
 	ISimpleGraph graph;
-	SimpleNode[] nodes;
+
 	Map<Integer, SimpleNode> nodesMap;
 	Map<Integer, SimpleNode[]> nodesAdjacencies;
 
 	public InducedSimpleGraph(ISimpleGraph graph, SimpleNode[] nodes) {
 		this.graph = graph;
-		this.nodes = nodes;
+		
+		this.nodesAdjacencies = new HashMap<Integer, SimpleNode[]>(nodes.length);
+		this.nodesMap = new HashMap<Integer, SimpleNode>(nodes.length);
+		for (SimpleNode node : nodes) {
+			this.nodesMap.put(node.name, new SimpleNode(this, node.name));
+		}
 	}
 
 	@Override
@@ -57,7 +64,8 @@ public class InducedSimpleGraph implements ISimpleGraph {
 
 	@Override
 	public SimpleNode[] getNodes() {
-		return nodes;
+		Collection<SimpleNode> values = nodesMap.values();
+		return (SimpleNode[]) values.toArray(new SimpleNode[values.size()]);
 	}
 
 	@Override
@@ -67,7 +75,7 @@ public class InducedSimpleGraph implements ISimpleGraph {
 
 	@Override
 	public int N() {
-		return nodes.length;
+		return nodesMap.size();
 	}
 
 	@Override

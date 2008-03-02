@@ -15,9 +15,9 @@ import pcp.algorithms.holes.IHolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.common.BoxInt;
-import pcp.entities.Node;
-import pcp.entities.PartitionedGraph;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 
 public class ComponentHolesDetectorFixture {

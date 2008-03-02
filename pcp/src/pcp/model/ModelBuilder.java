@@ -10,14 +10,19 @@ import java.util.List;
 import java.util.Map;
 
 import pcp.Factory;
+import pcp.Settings;
 import pcp.algorithms.AlgorithmException;
-import pcp.entities.Edge;
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.entities.PartitionedGraph;
+import pcp.algorithms.clique.CliqueCover;
+import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.InducedGraph;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraph;
 import pcp.utils.GraphUtils;
 
 public class ModelBuilder {
+	
+	static final boolean useCliqueCover = Settings.get().getBoolean("model.adjacentsNeighbourhood.useCliqueCover");
 	
 	IloIntVar[][] xs;
 	IloIntVar[] ws;
@@ -216,7 +221,11 @@ public class ModelBuilder {
 	 */
 	protected void constrainAdjacencyNeighbourhood() throws IloException {
 		for (Node n : graph.getNodes()) {
-			final int r = GraphUtils.groupByPartition(n.getNeighbours()).size();
+			
+			final int r = useCliqueCover 
+				? new CliqueCover(new InducedGraph(graph, n.getNeighbours()).getGPrime()).count()
+				: GraphUtils.groupByPartition(n.getNeighbours()).size();
+			
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
 				String name = String.format("ADJN[%1$d,%2$d]", n.index(), j);

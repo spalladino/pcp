@@ -1,4 +1,4 @@
-package pcp.interfaces;
+package pcp.entities;
 
 
 public interface ISimpleGraphBuilder {

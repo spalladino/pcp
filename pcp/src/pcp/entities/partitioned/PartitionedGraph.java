@@ -1,7 +1,8 @@
-package pcp.entities;
+package pcp.entities.partitioned;
 
-import pcp.interfaces.IPartitionedGraph;
-import pcp.interfaces.ISimpleGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.simple.SimpleGraph;
 
 
 public class PartitionedGraph implements IPartitionedGraph  {

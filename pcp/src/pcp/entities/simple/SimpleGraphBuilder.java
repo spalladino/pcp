@@ -1,4 +1,4 @@
-package pcp.entities;
+package pcp.entities.simple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import pcp.common.TupleInt;
-import pcp.interfaces.ISimpleGraph;
-import pcp.interfaces.ISimpleGraphBuilder;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.ISimpleGraphBuilder;
 
 
 public class SimpleGraphBuilder implements ISimpleGraphBuilder {
@@ -44,6 +44,12 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 		return this;
 	}
 
+	public ISimpleGraphBuilder addNodes(int count) {
+		for (int i = 0; i < count; i++) {
+			addNode(i);
+		} return this;
+	}
+	
 	@Override
 	public ISimpleGraph getGraph() {
 		SimpleGraph graph = new SimpleGraph(nodeCount, edges.size());

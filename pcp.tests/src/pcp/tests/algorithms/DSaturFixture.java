@@ -14,9 +14,9 @@ import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.coloring.Coloring;
 import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.coloring.DSaturColoring;
-import pcp.entities.Node;
-import pcp.entities.PartitionedGraphBuilder;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 public class DSaturFixture {
 	

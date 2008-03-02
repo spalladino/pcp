@@ -9,9 +9,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.utils.GraphUtils;
 
 public class GraphUtilsFixture {

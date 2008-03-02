@@ -1,9 +1,9 @@
 package pcp.algorithms.coloring;
 
 import pcp.algorithms.AlgorithmException;
-import pcp.entities.Node;
-import pcp.entities.Partition;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 
 public class DSaturPartitionColoringHardestPartition extends
 		DSaturPartitionColoring {

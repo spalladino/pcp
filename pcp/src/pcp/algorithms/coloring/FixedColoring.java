@@ -2,7 +2,7 @@ package pcp.algorithms.coloring;
 
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.bounding.IAlgorithmBounder;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
 
 
 public class FixedColoring extends Coloring {

@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pcp.algorithms.Preprocessor;
-import pcp.entities.PartitionedGraph;
-import pcp.entities.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraphBuilder;
 
 public class PreprocessorFixture {
 

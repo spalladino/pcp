@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pcp.algorithms.AlgorithmException;
-import pcp.entities.Node;
-import pcp.interfaces.IPartitionedGraph;
+import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
 import pcp.model.strategy.Symmetry;

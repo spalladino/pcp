@@ -1,6 +1,6 @@
 package pcp.common.sorting;
 
-import pcp.entities.Partition;
+import pcp.entities.partitioned.Partition;
 import pcp.interfaces.IModelData;
 
 public class PartitionNodeSumComparator extends BaseValueComparator<Partition> {

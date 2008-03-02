@@ -5,7 +5,7 @@ import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.coloring.Coloring;
-import pcp.entities.PartitionedGraph;
+import pcp.entities.partitioned.PartitionedGraph;
 
 public class Model {
 	
