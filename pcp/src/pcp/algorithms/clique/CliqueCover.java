@@ -1,23 +1,34 @@
 package pcp.algorithms.clique;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.Map;
 
-import pcp.common.sorting.SimpleNodeDegreeComparator;
-import pcp.definitions.Sorting;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.SimpleNode;
 
 
 public class CliqueCover {
-
-	ISimpleGraph graph;
+	
+	private final ISimpleGraph graph;
+	private final SimpleNode[] nodes;
+	private final Map<SimpleNode, Integer> degrees;
+	private final Comparator<SimpleNode> comparator;
 
 	public CliqueCover(ISimpleGraph graph) {
 		this.graph = graph;
+		this.degrees = new HashMap<SimpleNode, Integer>(graph.N());
+		this.nodes = graph.getNodes().clone();
+		this.comparator = new Comparator<SimpleNode>() {
+			public int compare(SimpleNode o1, SimpleNode o2) {
+				if (degrees.get(o1) == null) return -1;
+				if (degrees.get(o2) == null) return 1;
+				return degrees.get(o2) - degrees.get(o1);
+			}
+		};
 	}
 	
 	/**
@@ -26,44 +37,54 @@ public class CliqueCover {
 	 */
 	public List<List<SimpleNode>> cliques() {
 		List<List<SimpleNode>> cliques = new ArrayList<List<SimpleNode>>();
-		Queue<SimpleNode> queue = new PriorityQueue<SimpleNode>(graph.N(), new SimpleNodeDegreeComparator(Sorting.Asc)); 
-		Collections.addAll(queue, graph.getNodes());
-		
-		// Iterate over all nodes
-		while (!queue.isEmpty()) {
-			SimpleNode node = queue.poll();
-			List<SimpleNode> clique = new ArrayList<SimpleNode>();
-			clique.add(node);
-			
-			// Check all neighbours of the initial node
-			for (SimpleNode neighbour : node.getNeighbours()) {
-				
-				// If it has already been added to the clique, return
-				if (!queue.contains(neighbour)) {
-					break;
-				}
 
-				// Ensure each neighbour is adjacent to all nodes in the clique
-				boolean isAdjacent = true;
-				for (SimpleNode inClique : clique) {
-					if (!graph.areAdjacent(inClique, neighbour)) {
-						isAdjacent = false;
-						break;
-					} 
-				} 
-				
-				// Add it to the clique
-				if (isAdjacent) {
-					queue.remove(neighbour);
-					clique.add(neighbour);
-				}
-			} 
-			
-			// Add the clique to the list
+		for (SimpleNode node : nodes) {
+			degrees.put(node, node.getDegree());
+		} Arrays.sort(nodes, comparator);
+		
+		// Iterate on all nodes available
+		int i = 0;
+		while (i < graph.N()) {
+			SimpleNode current = nodes[i];
+			List<SimpleNode> clique = new ArrayList<SimpleNode>();
 			cliques.add(clique);
+			addToClique(current, clique);
+			
+			// Iterate on the rest of the nodes in the graph
+			for (int j = i+1; j < graph.N(); j++) {
+				SimpleNode candidate = nodes[j];
+				boolean adjacent = true;
+				for (SimpleNode inClique : clique) {
+					if (!graph.areAdjacent(inClique, candidate)) {
+						adjacent = false; break;
+					}
+				} 
+				if (adjacent) {
+					addToClique(candidate, clique);
+				}
+			}
+			
+			// Sort them based on new degrees values
+			Arrays.sort(nodes, i, nodes.length -1, comparator);
+			while (i < graph.N() && degrees.get(nodes[i]) == null) i++;
 		}
 		
 		return cliques;
+	}
+		
+
+	private void addToClique(SimpleNode node, List<SimpleNode> clique) {
+		decreaseNeighbours(node);
+		clique.add(node);
+		degrees.put(node, null);
+	}
+	
+	private void decreaseNeighbours(SimpleNode current) {
+		for (SimpleNode n : current.getNeighbours()) {
+			if (degrees.get(n) != null) {
+				degrees.put(n, degrees.get(n)-1);
+			}
+		}
 	}
 
 	/**
@@ -73,5 +94,4 @@ public class CliqueCover {
 	public int count() {
 		return this.cliques().size();
 	}
-	
 }
