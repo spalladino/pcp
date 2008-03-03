@@ -10,8 +10,10 @@ import java.util.Map;
 import java.util.Set;
 
 import pcp.entities.IPartitionedGraph;
+import pcp.entities.ISimpleGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
+import pcp.entities.simple.SimpleNode;
 
 public class GraphUtils {
 
@@ -41,6 +43,30 @@ public class GraphUtils {
 		return true;
 	}
 	
+	public static boolean checkClique(IPartitionedGraph graph, List<Node> clique) {
+		for (int i = 0; i < clique.size(); i++) {
+			for (int j = i+1; j < clique.size(); j++) {
+				if (!(graph.areAdjacent(clique.get(i), clique.get(j)) ||
+					graph.areInSamePartition(clique.get(i), clique.get(j)))) {
+					System.err.println("Invalid clique: " + clique);
+					System.err.println("Nodes " + clique.get(i) + " and " + clique.get(j) + " are not adjacent.");
+					return false;
+				}
+			}
+		} return true;
+	}
+	
+	public static boolean checkClique(ISimpleGraph graph, List<SimpleNode> clique) {
+		for (int i = 0; i < clique.size(); i++) {
+			for (int j = i+1; j < clique.size(); j++) {
+				if (!(graph.areAdjacent(clique.get(i), clique.get(j)))) {
+					System.err.println("Invalid clique: " + clique);
+					System.err.println("Nodes " + clique.get(i) + " and " + clique.get(j) + " are not adjacent.");
+					return false;
+				}
+			}
+		} return true;
+	}
 	
 	public static boolean checkHole(IPartitionedGraph graph, List<Node> nodes) {
 		Set<Node> visited = new HashSet<Node>();

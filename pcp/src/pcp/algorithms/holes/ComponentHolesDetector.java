@@ -14,7 +14,7 @@ import pcp.utils.GraphUtils;
 
 public class ComponentHolesDetector implements IHolesDetector {
 
-	static boolean check = Settings.get().getBoolean("holes.check");
+	static boolean check = Settings.get().getBoolean("validate.holes");
 	static boolean storeVisited = Settings.get().getBoolean("holes.storeVisited");
 	
 	static boolean printHoles = false;

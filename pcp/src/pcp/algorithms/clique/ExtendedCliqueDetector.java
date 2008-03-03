@@ -17,41 +17,34 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
+import pcp.utils.GraphUtils;
 
 /**
  * Detects subsets of nodes in a graph in which every pair is either adjacent 
  * or in the same partition. 
  */
-public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlgorithm {
-	boolean checkClique = true;
+public abstract class ExtendedCliqueDetector implements Cuts, Constants, Sorting, IBoundedAlgorithm {
+	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
 	
-	SortedPartitionedGraph graph;
+	protected SortedPartitionedGraph graph;
 	
-	IAlgorithmSource provider;
-	IAlgorithmBounder bounder;
-	IModelData data;
+	protected IAlgorithmSource provider;
+	protected IAlgorithmBounder bounder;
+	protected IModelData data;
 
-	List<Integer> colors;
+	protected List<Integer> colors;
 	
-	int[] visited;
-	int[][] edgesVisited;
+	protected int[] visited;
+	protected int[][] edgesVisited;
 	
-	Node[] nodes;
-	List<Node> clique;
-	int color = -1;
+	protected Node[] nodes;
+	protected List<Node> clique;
+	protected int color = -1;
 	
-	double valueWj;
-	double valueSumXij;
-	
-	int colorCount = 0;
-	int cliquesFromBrokenCount = 0;
-	int cliquesFromInitialCount = 0;
+	protected int colorCount = 0;
+	protected int cliquesFromBrokenCount = 0;
+	protected int cliquesFromInitialCount = 0;
 
-	static double maxColorValue = 1.0;
-	static double minColorValue = Epsilon;
-	
-	static double minInitialNodeValue = Settings.get().getDouble("clique.minInitialNodeValue");
-	static double minCandidateNodeValue = Settings.get().getDouble("clique.minCandidateNodeValue");
 	static int maxInitialNodeVisits = Settings.get().getInteger("clique.maxInitialNodeVisits");
 	static int maxEdgeVisits = Settings.get().getInteger("clique.maxEdgeVisits");
 	static int maxColorCount = Settings.get().getInteger("clique.maxColorCount");
@@ -61,27 +54,30 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 	static boolean enabled = Settings.get().getBoolean("clique.enabled");
 	static boolean colorsAsc = Settings.get().getBoolean("clique.colorsAsc");
 	
-	public ExtendedCliqueCuts(IAlgorithmSource provider) {
+	public ExtendedCliqueDetector(IAlgorithmSource provider) {
 		super();
 		this.provider = provider;
 		this.bounder = provider.getBounder();
 		this.data = provider.getData();
-		this.colors = provider.getSorted().getSortedColors(colorsAsc);
+		this.colors = getColors(colorsAsc); 
 	}
 	
-	public ExtendedCliqueCuts run() {
+	protected abstract List<Integer> getColors(boolean asc);
+	
+	protected abstract boolean onStartColor();
+	
+	protected abstract SortedPartitionedGraph generateGraph();
+	
+	public ExtendedCliqueDetector run() {
 		if (!enabled) return this;
 		bounder.start();
 		for (Integer color : this.colors) {
 			this.color = color;
-			valueWj = data.w(color);
-
-			if (valueWj < minColorValue) continue;
-			if (valueWj > maxColorValue) continue;
+			if (!onStartColor()) continue;
 			if (this.colorCount++ > maxColorCount) break;
 			
 			// Initializations for current color
-			this.graph = provider.getSorted().getSortedGraph(color, Desc);
+			this.graph = generateGraph();
 			this.nodes = this.graph.getNodes();
 			this.visited = new int[nodes.length];
 			this.edgesVisited = new int[nodes.length][nodes.length];
@@ -89,14 +85,15 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 			// Iterate over every initial node
 			for (int i = 0; i < nodes.length; i++) {
 				Node initial = nodes[i];
-				if (data.x(initial.index(), color) < minInitialNodeValue) break;
-				clique = new ArrayList<Node>(nodes.length/2);
+				if (!onInitialNode(initial)) break;
 				clique(initial);
 			}
 		}
 		bounder.stop();
 		return this;
 	}
+
+	protected abstract boolean onInitialNode(Node initial);
 
 	public IAlgorithmBounder getBounder() {
 		return bounder;
@@ -129,10 +126,20 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 		return removed;
 	}
 
+	protected abstract void onAddedCandidate(Node y);
+	
+	protected abstract void onRemovedCandidate(Node y);
+	
+	protected abstract boolean isCliqueExploitable();
+	
+	protected abstract boolean isInvalidInitialCandidate(Node node);
+
+	protected abstract Comparator<Node> getNodeComparator();
+
 	private void clique(Node initial) {
 		// Initialize clique with initial node
+		clique = new ArrayList<Node>(nodes.length/2);
 		clique.add(initial);
-		valueSumXij = data.x(initial.index(), color);
 		visited[initial.index()]++;
 		
 		// Candidates to be in the clique will be neighbour/copartitioned nodes to initial
@@ -143,14 +150,14 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 			
 			// Add first candidate to clique
 			Node y = candidates.poll();
-			valueSumXij += data.x(y.index(), color);
 			clique.add(y);
+			onAddedCandidate(y);
 			
 			// Remove from candidates those that are not in adjacents or y partition
 			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y), y);
 			
 			// Exploit the clique if it breaks the ineq, backtrack if no more candidates
-			boolean broken = valueSumXij > valueWj + Epsilon; 
+			boolean broken = isCliqueExploitable(); 
 			if (broken && (backtrackBrokenIneqs || candidates.isEmpty())) {
 				cliquesFromBrokenCount = 0;
 				backtrackBreakingClique(candidates);
@@ -158,8 +165,8 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 			} 
 			if ((!broken || !backtrackBrokenIneqs) && backtrackLastCandidate && candidates.isEmpty() && !removed.isEmpty()) {
 				clique.remove(clique.size()-1);
-				valueSumXij -= data.x(y.index(), color);
 				candidates = removed;
+				onRemovedCandidate(y);
 			}
 		}
 		
@@ -168,7 +175,7 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 	private LinkedList<Node> getInitialCandidates(Node initial) {
 		LinkedList<Node> ret = new LinkedList<Node>();
 		for (Node node : graph.getNeighboursPlusCopartition(initial)) {
-			if (data.x(node.index(), color) < minCandidateNodeValue) {
+			if (isInvalidInitialCandidate(node)) {
 				break;
 			} else if ((++visited[node.index()]) < maxInitialNodeVisits 
 				&& markEdgeVisited(initial, node)) {
@@ -188,7 +195,7 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 
 	private void backtrackBreakingClique(LinkedList<Node> candidates) {
 		if (candidates.isEmpty()) {
-			if (checkClique) checkCliqueValid(color);
+			if (checkClique) checkCliqueValid();
 			provider.getCutBuilder().addClique(clique, color);
 			++cliquesFromBrokenCount;
 		} else {
@@ -197,34 +204,22 @@ public class ExtendedCliqueCuts implements Cuts, Constants, Sorting, IBoundedAlg
 			clique.add(y);
 			backtrackBreakingClique(candidates);
 			
-			if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+			if (cliquesFromBrokenCount >= maxCliquesFromBroken) 
+				return;
 			
 			clique.remove(clique.size()-1);
 			if (!removed.isEmpty()) {
 				candidates.addAll(removed);
 				backtrackBreakingClique(candidates);
 				
-				if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+				if (cliquesFromBrokenCount >= maxCliquesFromBroken) 
+					return;
 			}
 		}
 	}
 
-	private void checkCliqueValid(int color) {
-		
-		for (int i = 0; i < clique.size(); i++) {
-			for (int j = i+1; j < clique.size(); j++) {
-				if (!(graph.areAdjacent(clique.get(i), clique.get(j)) ||
-					graph.areInSamePartition(clique.get(i), clique.get(j)))) {
-					System.err.println("Invalid clique: " + clique);
-					System.err.println("Nodes " + clique.get(i) + " and " + clique.get(j) + " are not adjacent.");
-				}
-			}
-		}
-		
-	}
-
-	private Comparator<Node> getNodeComparator() {
-		return provider.getSorted().getNodeComparator(color, Desc);
+	private void checkCliqueValid() {
+		GraphUtils.checkClique(graph, clique);
 	}
 
 

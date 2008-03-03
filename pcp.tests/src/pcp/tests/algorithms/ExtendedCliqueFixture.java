@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import pcp.Settings;
-import pcp.algorithms.clique.ExtendedCliqueCuts;
+import pcp.algorithms.clique.ExtendedCliqueCutter;
 import pcp.algorithms.data.ModelData;
 import pcp.algorithms.data.StubModelData;
 import pcp.entities.partitioned.PartitionedGraph;
@@ -105,7 +105,7 @@ public class ExtendedCliqueFixture {
 		PartitionedGraph graph = builder.getGraph();
 		Model model = new Model(graph, colors);
 		Iteration iter = new Iteration(model, data, cuts);
-		ExtendedCliqueCuts detector = new ExtendedCliqueCuts(iter);
+		ExtendedCliqueCutter detector = new ExtendedCliqueCutter(iter);
 		detector.run();
 		
 		cuts.printIneqs(System.out);

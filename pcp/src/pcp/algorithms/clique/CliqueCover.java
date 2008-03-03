@@ -7,11 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pcp.Settings;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.SimpleNode;
+import pcp.utils.GraphUtils;
 
 
 public class CliqueCover {
+	
+	static final boolean checkClique = Settings.get().getBoolean("validate.clique");
 	
 	private final ISimpleGraph graph;
 	private final SimpleNode[] nodes;
@@ -67,6 +71,12 @@ public class CliqueCover {
 			// Sort them based on new degrees values
 			Arrays.sort(nodes, i, nodes.length -1, comparator);
 			while (i < graph.N() && degrees.get(nodes[i]) == null) i++;
+		}
+		
+		if (checkClique) {
+			for (List<SimpleNode> clique : cliques) {
+				GraphUtils.checkClique(graph, clique);
+			}
 		}
 		
 		return cliques;

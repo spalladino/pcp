@@ -11,7 +11,8 @@ import java.util.List;
 
 import pcp.Settings;
 import pcp.algorithms.block.BlockColorCuts;
-import pcp.algorithms.clique.ExtendedCliqueCuts;
+import pcp.algorithms.clique.ExtendedCliqueCutter;
+import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.definitions.Comparisons;
 import pcp.definitions.Constants;
@@ -30,7 +31,7 @@ import pcp.utils.IntUtils;
 
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cuts, ICutBuilder, IModelData {
 
-	static boolean checkViolatedCut = Settings.get().getBoolean("validate.checkViolatedCut");
+	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
 	static boolean allowSkipBreakingSymmetry = Settings.get().getBoolean("holes.allowSkipBreakingSymmetry");
 	
@@ -44,7 +45,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 	IPartitionedGraph graph;
 	IloMPModeler modeler;
 	
-	ExtendedCliqueCuts cliques;
+	ExtendedCliqueDetector cliques;
 	ComponentHolesCuts holes;
 	BlockColorCuts blocks;
 	
@@ -86,7 +87,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		}
 		
 		// And cut!
-		cliques = new ExtendedCliqueCuts(iteration.forAlgorithm()).run();
+		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
 		holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
 		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
 		
