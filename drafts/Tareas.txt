@@ -4,3 +4,13 @@
 - Testear grafo connected
 - Ver prop2 de isapau, se puede llevar a ciclos?
 - Multicolors
+
+- Usar como base el algoritmo de clique para detectar caminos!
+	para cada color
+		para cada nodo inicial
+			do
+				candidates = candidates menos neighbours del nodo anterior interseccion neighbours del ultimo nodo
+				tomo mejor nodo de candidates
+			while candidates no vacio
+			
+- Usar greedy randomised en los casos en q ordeno nodos?

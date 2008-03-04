@@ -12,11 +12,11 @@ import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.SimpleNode;
 
 @Deprecated
-public class SimpleCliqueCover {
+public class CliqueCoverSimple {
 
 	ISimpleGraph graph;
 
-	public SimpleCliqueCover(ISimpleGraph graph) {
+	public CliqueCoverSimple(ISimpleGraph graph) {
 		this.graph = graph;
 	}
 	
