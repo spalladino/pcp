@@ -10,3 +10,4 @@ drafts/*.bbl
 drafts/*.blg
 drafts/*.log
 *.orig
+*.pyc

@@ -1,25 +1,19 @@
-'''
-Created on 15/03/2008
-
-@author: Santiago
-'''
-
 from subprocess import *
+from config import *
 
-def main():
-    #command = "java -Djava.library.path=${cplex.path} ${run.properties} -jar ${ant.project.name}.jar ${run.inputfile} ${build.number} ${run.parameters}"
-    command = "java -classpath pcp/build/classes/pcp;pcp.lib/lib pcp/build/classes/pcp/Main"
-    print "Invoking:"
-    p = Popen(command, stdout=PIPE, cwd="E:\\Workspace")
-    print "Communicating:"
-    out, err = p.communicate()
-    print "Output:"
-    print out
-    print "Error:"
-    print err
-    print "Finished!"
-    #print pipe
+class Runner:
     
+    def __init__(self):
+        self.props = {}
+    
+    def run(self):
+        path = ";".join([basedir + path for path in classpaths])
+        defs = " ".join(["-D%s=%s" % (key, value) for key, value in self.props.iteritems() ])
+        command = "java %s -classpath %s pcp.Main" % (defs, path)
+        p = Popen(command, stdout=PIPE, cwd=basedir+"/pcp")
+        return p.communicate()
 
 if __name__ == '__main__':
-    main()
+    out, err = Runner().run()
+    print out
+    print err

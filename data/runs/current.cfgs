@@ -1,0 +1,11 @@
+(lp0
+(dp1
+S'run.filename'
+p2
+S'rand20.in'
+p3
+sa(dp4
+g2
+S'rand10.in'
+p5
+sa.

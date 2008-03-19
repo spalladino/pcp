@@ -26,10 +26,13 @@ public class Settings {
 	
 	private Settings(String name) throws Exception {
 		props = new Properties();
-		if (name != null) { 
+		if (name != null) {
 			props.load(new FileInputStream(new File(name + ".properties")));
-		} 
-		//props.putAll(System.getProperties());
+		}
+		
+		props.putAll(System.getProperties());
+		
+		System.out.println(this.toString());
 	}
 	
 	public <T extends Enum<T>> T getEnum(String prop, Class<T> clazz) {
@@ -57,6 +60,11 @@ public class Settings {
 	public Integer getInteger(String name) {
 		try { return Integer.valueOf(getProperty(name)); }
 		catch (Exception ex) { return null; }
+	}
+	
+	@Override
+	public String toString() {
+		return props == null ? "Settings" : props.toString();
 	}
 	
 	private String getProperty(String name) {
