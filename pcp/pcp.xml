@@ -17,7 +17,7 @@
 	<property name="common.antfile" value="../common/common.xml" />
 	
 	<path id="classpath" path="${classes.dir}" >
-        <fileset dir="${lib.dir}" includes="**/cplex.jar **/guava.jar"/>
+        <fileset dir="${lib.dir}" includes="**/cplex.jar **/guava.jar **/snakeyaml-1.6.jar"/>
     </path>
 	
 	<target name="dependencies" description="Builds dependent projects">

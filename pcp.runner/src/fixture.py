@@ -11,9 +11,8 @@ cfgs_path = basedir + runsdir + '/current.cfgs'
 def resume():
     return Fixture().resume()
 
-def newrun():
-    return Fixture().newrun()
-
+def newrun(runs):
+    return Fixture().newrun(runs)
 
 class Fixture:
 

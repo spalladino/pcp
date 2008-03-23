@@ -31,8 +31,6 @@ public class Settings {
 		}
 		
 		props.putAll(System.getProperties());
-		
-		System.out.println(this.toString());
 	}
 	
 	public <T extends Enum<T>> T getEnum(String prop, Class<T> clazz) {
