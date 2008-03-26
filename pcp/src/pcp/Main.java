@@ -33,7 +33,7 @@ public class Main {
 	private static void solve(String filename, String runId) throws Exception {
 		IFactory factory = Factory.get();
 		BuilderStrategy strategy = BuilderStrategy.fromSettings();
-		ExecutionData execution = new ExecutionData().withSettings();
+		ExecutionData execution = new ExecutionData().withProblemSettings();
 		
 		PartitionedGraph graph;
 		Model model;
@@ -41,6 +41,7 @@ public class Main {
 		
 		PartitionedGraphBuilder builder = factory.getGraphBuilder(filename);
 		Solver solver = factory.createSolver(Settings.get().getEnum("solver.kind", Kind.class));
+		execution.withOriginalInputData(builder);
 		
 		try {
 			long initial = System.currentTimeMillis();
@@ -72,6 +73,8 @@ public class Main {
 		}
 		
 		System.out.println("Solving " + filename + " with " + graph.getNodes().length + " nodes and " + graph.getEdges().length + " edges.");
+		execution.withInputData(graph);
+		
 		solver.getCplex().setParam(IntParam.MIPDisplay, 3);
 		solver.solve();
 		

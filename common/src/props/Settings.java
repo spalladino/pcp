@@ -24,13 +24,18 @@ public class Settings {
 	
 	Properties props;
 	
+	Properties systemProps;
+	Properties runProps;
+	
 	private Settings(String name) throws Exception {
 		props = new Properties();
-		if (name != null) {
-			props.load(new FileInputStream(new File(name + ".properties")));
-		}
+		runProps = new Properties();
+		systemProps = System.getProperties();
 		
-		props.putAll(System.getProperties());
+		runProps.load(new FileInputStream(new File(name + ".properties")));
+		
+		props.putAll(runProps);
+		props.putAll(systemProps);
 	}
 	
 	public <T extends Enum<T>> T getEnum(String prop, Class<T> clazz) {
@@ -71,6 +76,16 @@ public class Settings {
 	
 	private String getProperty(String name) {
 		return props.getProperty(name);
+	}
+
+	
+	public Properties getSystemProps() {
+		return systemProps;
+	}
+
+	
+	public Properties getRunProps() {
+		return runProps;
 	}
 	
 }
