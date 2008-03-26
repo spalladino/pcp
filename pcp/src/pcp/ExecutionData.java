@@ -1,8 +1,8 @@
 package pcp;
 
 import java.io.FileWriter;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -15,7 +15,7 @@ public class ExecutionData {
 	Map<String, Object> data;
 	
 	public ExecutionData() {
-		this.data = new HashMap<String, Object>();
+		this.data = new TreeMap<String, Object>();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -31,7 +31,7 @@ public class ExecutionData {
 	public void dump() {
 		try {
 			String dumpfile = Settings.get().getPath("data.folder", "data.filename");
-			FileWriter writer = new FileWriter(dumpfile, true);
+			FileWriter writer = new FileWriter(dumpfile, false);
 			DumperOptions opts = new DumperOptions();
 			Yaml yaml = new Yaml(opts);
 			yaml.dump(data, writer);

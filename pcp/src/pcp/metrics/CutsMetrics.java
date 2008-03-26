@@ -105,6 +105,7 @@ public class CutsMetrics implements Cuts {
 				totalt += tick;
 			}
 			
+			cut.put("iters", iters);
 			cut.put("count", totalc);
 			cut.put("ticks", totalt);
 		}

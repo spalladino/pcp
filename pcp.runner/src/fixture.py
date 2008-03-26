@@ -1,13 +1,15 @@
 import os.path
 import pickle
 import yaml
+import time
+import gc
 
 from runner import *
 from config import *
 from datetime import datetime
 
-curr_path = basedir + runsdir + '/current.runs'
-cfgs_path = basedir + runsdir + '/current.cfgs'
+curr_path = basedir + runsdir + 'current.runs'
+cfgs_path = basedir + runsdir + 'current.cfgs'
 
 def resume():
     return Fixture().resume()
@@ -23,9 +25,9 @@ class Fixture:
         self.successful = 0
     
         
-    def newrun(self, runs):
+    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S")):
         self.runs = runs
-        self.runid = datetime.now().strftime("%Y%m%d%H%M%S")
+        self.runid = runid
         self.successful = 0
         self.init_status()
         self.execute()
@@ -38,13 +40,17 @@ class Fixture:
     
     
     def execute(self):
+        if not os.path.isdir(basedir + runsdir + self.runid.strip()):
+            os.mkdir(basedir + runsdir + self.runid.strip())
+            
         for run in self.runs:
             runner = Runner()
-            out, err = runner.run(self.runid, run)
-            print out
+            out, err = runner.run(self.runid, self.successful + 1, run)
             self.add_success_status()
+            time.sleep(sleeptime)
+            gc.collect()
         
-        self.end_status()
+        self.clear_status()
         return True
             
 
@@ -57,7 +63,7 @@ class Fixture:
             self.runs = yaml.load(current)
         
         with open(curr_path, 'r') as current:
-            self.runid = int(current.readline())
+            self.runid = current.readline()
             while (current.readline() == 'OK\n'):
                 self.successful += 1
             
@@ -91,4 +97,7 @@ class Fixture:
     def end_status(self):
         with open(curr_path, 'a') as current:
             current.write("END\n")
+            
+    def clear_status(self):
+        os.remove(curr_path)
             
