@@ -17,9 +17,9 @@ public class Generator {
 		Properties props = new Properties();
 		
 		try {
-			props.load(new FileInputStream(new File("run.properties")));
+			props.load(new FileInputStream(new File("generator.properties")));
 		} catch(IOException e) {
-			System.err.println("Error opening run.properties");
+			System.err.println("Error opening generator.properties");
 			System.err.println(e.getMessage());
 			return;
 		} 
