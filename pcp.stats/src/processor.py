@@ -1,11 +1,14 @@
 import loader
 import graphics
+import config
+import os
 
 class Processor(object):
     
     def __init__(self, runid=None):
-        self.runid = runid
-        self.runs = loader.Loader(runid).load()
+        self.loader = loader.Loader(runid) 
+        self.runs = self.loader.load()
+        self.runid = self.loader.runid
         
     def summary(self):
         for run in self.runs:
@@ -19,10 +22,16 @@ class Processor(object):
             
             print
 
-    def graphprops(self, datax, datay):
+    def graphprops(self, datax, datay, fname=None):
         x, y = zip(*[(run[datax], run[datay]) for run in self.runs])
         graphics.simplegraphic(x, y, datax, datay)
+        self.handlegraph(fname)
         
-    def graphfuncs(self, datax, datay):
+    def graphfuncs(self, datax, datay, fname=None):
         x, y = zip(*[(datax(run), datay(run)) for run in self.runs])
         graphics.simplegraphic(x, y)
+        self.handlegraph(fname)
+        
+    def handlegraph(self, fname=None):
+        if fname: graphics.save(os.path.join(config.fullrunsdir, self.runid, fname))
+        else: graphics.show()
