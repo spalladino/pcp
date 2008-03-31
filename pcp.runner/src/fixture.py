@@ -3,6 +3,7 @@ import pickle
 import yaml
 import time
 import gc
+import itertools
 
 from runner import *
 from config import *
@@ -14,8 +15,8 @@ cfgs_path = basedir + runsdir + 'current.cfgs'
 def resume():
     return Fixture().resume()
 
-def newrun(runs):
-    return Fixture().newrun(runs)
+def newrun(runs, files=[]):
+    return Fixture().newrun(runs, files=files)
 
 class Fixture:
 
@@ -24,9 +25,14 @@ class Fixture:
         self.runid = None
         self.successful = 0
     
+    def withprop(self, dict, key, value):
+        d = dict.copy()
+        d[key] = value
+        return d
         
-    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S")):
-        self.runs = runs
+    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S"), files=[]):
+        if len(files) == 0: self.runs = runs
+        else: self.runs = [ self.withprop(runs, "run.filename", file) for (file, runs) in itertools.product(files, runs)  ] 
         self.runid = runid
         self.successful = 0
         self.init_status()

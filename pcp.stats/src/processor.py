@@ -2,6 +2,7 @@ import loader
 import graphics
 import config
 import os
+import metrics
 
 class Processor(object):
     
@@ -22,14 +23,17 @@ class Processor(object):
             
             print
 
-    def graphprops(self, datax, datay, fname=None):
-        x, y = zip(*[(run[datax], run[datay]) for run in self.runs])
-        graphics.simplegraphic(x, y, datax, datay)
+    def graph(self, datax, datay, fname=None, series=[]):
+        fx, fy = metrics.metric(datax), metrics.metric(datay)
+        
+        # TODO: extract series values and group them to generate all series to be shown
+        x, y = zip(*[(fx(run), fy(run)) for run in self.runs])
+        graphics.simplegraphic(x, y, fx, fy)
         self.handlegraph(fname)
         
-    def graphfuncs(self, datax, datay, fname=None):
+    def graphfuncs(self, datax, datay, fname=None, series=[]):
         x, y = zip(*[(datax(run), datay(run)) for run in self.runs])
-        graphics.simplegraphic(x, y)
+        graphics.simplegraphic(x, y, str(datax), str(datay))
         self.handlegraph(fname)
         
     def handlegraph(self, fname=None):

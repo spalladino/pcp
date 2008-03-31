@@ -72,14 +72,14 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		}
 		
 		// Run a maximum number of times on the root
+		metrics.newIter();
 		if (maxIters > 0 && maxIters < metrics.getNIters()) {
 			System.out.println("Finishing callback execution after " + metrics.getNIters() + " iterations.");
 			return;
 		}
 		
 		setupIterationData();
-		metrics.newIter();
-		
+
 		// Log what needs to be logged
 		if (logIterData) { 
 			System.out.println("Current data:");
