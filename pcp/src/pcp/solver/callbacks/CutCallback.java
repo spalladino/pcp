@@ -13,6 +13,7 @@ import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.clique.ExtendedCliqueCutter;
 import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.holes.ComponentHolesCuts;
+import pcp.algorithms.holes.HolesCuts;
 import pcp.definitions.Comparisons;
 import pcp.definitions.Constants;
 import pcp.definitions.Cuts;
@@ -33,7 +34,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 
 	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
-	static boolean allowSkipBreakingSymmetry = Settings.get().getBoolean("holes.allowSkipBreakingSymmetry");
 	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
@@ -48,6 +48,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 	ExtendedCliqueDetector cliques;
 	ComponentHolesCuts holes;
 	BlockColorCuts blocks;
+	HolesCuts gholes;
 	
 	CutsMetrics metrics;
 	boolean doneFirst = false;
@@ -90,8 +91,9 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
 		holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
 		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
+		gholes = new HolesCuts(iteration.forAlgorithm()).run();
 		
-		metrics.iterTime(cliques, holes, blocks);
+		metrics.iterTime(cliques, holes, blocks, gholes);
 	}
 
 	@Override
@@ -113,14 +115,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 					}
 				} expr.addTerm(model.w(basej), -1);
 			}
-		
-			if (allowSkipBreakingSymmetry && useBreakingSymmetry && super.getValue(expr) < Constants.Epsilon) {
-				System.out.println("Falling back to simple constraint");
-				expr.clear();
-				for (Node n : nodes) {
-					expr.addTerm(model.x(n.index(),color), 1);
-				} expr.addTerm(model.w(color), -alpha);
-			}
 			
 			add(Holes, expr, LeqtZero, name);
 			
@@ -129,6 +123,36 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		}
 	}
 
+	@Override
+	public void addGPrimeHole(List<pcp.entities.simple.Node> nodes, int color) {
+		try {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("HOLE[%1$d]", color);
+			int alpha = IntUtils.floorhalf(nodes.size());
+			for (pcp.entities.simple.Node sn : nodes) {
+				for (Node n : graph.getNodes(sn)) {
+					expr.addTerm(model.x(n.index(),color), 1);
+				}
+			} expr.addTerm(model.w(color), -alpha);
+			
+			int basej = graph.P() - alpha;
+			
+			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
+				for (Node n : graph.getNodes()) {
+					for (int j = basej; j < model.getColorCount(); j++) {
+						expr.addTerm(model.x(n.index(),j), 1);
+					}
+				} expr.addTerm(model.w(basej), -1);
+			}
+			
+			add(GPrimeHoles, expr, LeqtZero, name);
+			
+		} catch (Exception ex) {
+			System.err.println("Could not generate hole cut: " + ex.getMessage());
+		}
+	}
+
+	
 	@Override
 	public void addClique(List<Node> nodes, int color) {
 		try {
@@ -205,7 +229,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		if (checkViolatedCut || logIneqs) {
 			double val = super.getValue(expr);
 			if (checkViolatedCut && ((val > -Constants.Epsilon && cmp == GeqtZero) || (val < Constants.Epsilon && cmp == LeqtZero))) {
-				System.err.println("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
+				throw new IloException("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
 			} else if (logIneqs) {
 				System.out.println(Names[cut] + ": " + range.toString() + " VAL=" + val );
 			}

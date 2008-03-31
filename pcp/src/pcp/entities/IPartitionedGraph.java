@@ -115,4 +115,11 @@ public interface IPartitionedGraph extends IGraph {
 	 * @return the graph G' for this partitioned graph.
 	 */
 	ISimpleGraph getGPrime();
+
+	/**
+	 * Returns the nodes in the partition represented by the specified node in G' graph.
+	 * @param simpleNode node in G' representing a partition in this graph
+	 * @return the nodes in the partition represented by the specified node in G' graph.
+	 */
+	Node[] getNodes(pcp.entities.simple.Node simpleNode);
 }

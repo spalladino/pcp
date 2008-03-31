@@ -13,6 +13,7 @@ import pcp.interfaces.ICutBuilder;
 
 public class StubCutBuilder implements ICutBuilder {
 
+	List<Tuple<Integer, List<pcp.entities.simple.Node>>> gprimeHoles = new ArrayList<Tuple<Integer,List<pcp.entities.simple.Node>>>();
 	List<Tuple<Integer, List<Node>>> cliques = new ArrayList<Tuple<Integer,List<Node>>>();
 	List<Tuple<Integer, List<Node>>> holes = new ArrayList<Tuple<Integer,List<Node>>>();
 	List<Tuple<Integer, Partition>> blocks = new ArrayList<Tuple<Integer,Partition>>();
@@ -32,6 +33,11 @@ public class StubCutBuilder implements ICutBuilder {
 		blocks.add(new Tuple<Integer, Partition>(j0, partition));		
 	}
 
+	@Override
+	public void addGPrimeHole(List<pcp.entities.simple.Node> hole, int color) {
+		gprimeHoles.add(new Tuple<Integer, List<pcp.entities.simple.Node>>(color, hole));
+	}
+
 	public List<Tuple<Integer, List<Node>>> getCliques() {
 		return cliques;
 	}
@@ -42,6 +48,10 @@ public class StubCutBuilder implements ICutBuilder {
 
 	public List<Tuple<Integer, List<Node>>> getHoles() {
 		return holes;
+	}
+
+	public List<Tuple<Integer, List<pcp.entities.simple.Node>>> getGprimeHoles() {
+		return gprimeHoles;
 	}
 
 	public void printIneqs(PrintStream stream) {

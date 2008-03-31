@@ -4,6 +4,7 @@ package porta.parser;
 import porta.processing.*;
 import porta.model.*;
 
+@SuppressWarnings("unchecked")
 public class PortaParser implements PortaParserConstants {
 
         BaseModel model;

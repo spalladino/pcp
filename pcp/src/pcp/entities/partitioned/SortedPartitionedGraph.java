@@ -205,5 +205,10 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 	public boolean areAdjacent(int n1, int n2) {
 		return graph.areAdjacent(n1, n2);
 	}
+
+	@Override
+	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
+		throw new UnsupportedOperationException();
+	}
 	
 }

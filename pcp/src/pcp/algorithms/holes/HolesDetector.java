@@ -15,7 +15,7 @@ import props.Settings;
 public class HolesDetector implements IHolesDetector<Node> {
 
 	static boolean check = Settings.get().getBoolean("validate.holes");
-	static boolean storeVisited = Settings.get().getBoolean("holes.storeVisited");
+	static boolean storeVisited = Settings.get().getBoolean("gprime.holes.storeVisited");
 	
 	static boolean printHoles = false;
 	

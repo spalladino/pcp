@@ -333,5 +333,10 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	public boolean areAdjacent(int n1, int n2) {
 		return areAdjacent(nodes.get(n1), nodes.get(n2));
 	}
+
+	@Override
+	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
+		throw new UnsupportedOperationException();
+	}
 	
 }

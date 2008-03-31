@@ -15,11 +15,11 @@ import porta.model.*;
 @SuppressWarnings("unchecked")
 public class PortaParser { 
 
-	Model model;
+	BaseModel model;
 	ITranslator translator;
 	BaseConstraint current;
 
-	public PortaParser initialize(Model model, ITranslator t) {
+	public PortaParser initialize(BaseModel model, ITranslator t) {
 		this.model = model;
 		this.translator = t;
 		this.current = null;
@@ -58,7 +58,7 @@ TOKEN :
 | 	< VARNAME: "X"|"x" >
 |	< NUMBER: (["0" - "9"])+ >
 }
-Model ieq() : 
+BaseModel ieq() : 
 { }
 {
 	dimension()
@@ -105,7 +105,7 @@ void term() :
 	i = natural()
 	
 	{ 
-		Variable var = translator.convertPortaToModel(i);
+		BaseVariable var = translator.convertPortaToModel(i);
 		current.addVar(var, s * n);
 	}
 }

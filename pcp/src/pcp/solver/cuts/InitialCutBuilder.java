@@ -47,13 +47,18 @@ public class InitialCutBuilder implements ICutBuilder {
 
 	@Override
 	public void addClique(List<Node> nodes, int color) {
-		throw new RuntimeException("Unimplemented");
+		throw new UnsupportedOperationException();
 		
 	}
 
 	@Override
 	public void addHole(List<Node> nodes, int color) {
-		throw new RuntimeException("Unimplemented");
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void addGPrimeHole(List<pcp.entities.simple.Node> hole, int color) {
+		throw new UnsupportedOperationException();
 	}
 	
 }

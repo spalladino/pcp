@@ -137,4 +137,9 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	public boolean areAdjacent(int n1, int n2) {
 		return matrix[n1][n2];
 	}
+	
+	@Override
+	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
+		return this.getNodes(partitions[simpleNode.index()]);
+	}
 }

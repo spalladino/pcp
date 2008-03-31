@@ -162,6 +162,11 @@ public class InducedGraph implements IPartitionedGraph {
 		Collection<Partition> values = this.partitionsMap.values();
 		return (Partition[]) values.toArray(new Partition[values.size()]);
 	}
+
+	@Override
+	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
+		throw new UnsupportedOperationException();
+	}
 	
 	
 	

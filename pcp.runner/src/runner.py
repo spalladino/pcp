@@ -14,6 +14,8 @@ class Runner:
         if runindex:
             props["data.filename"] = '%03d.run' % runindex
         
+        props["data.generate"] = "true"
+        
         path = ";".join([basedir + path for path in classpaths])
         defs = " ".join(["-D%s=%s" % (key, value) for key, value in props.iteritems() ])
         
