@@ -20,12 +20,15 @@ class PlainMetric:
     
     def __str__(self):
         return self.prop
-    
+
+def evalmetric(m, run):
+    return metric(m)(run)
+
 def metric(metric):
     return metric if callable(metric) else PlainMetric(metric)
 
 def cutcount(cut):
-    return CutMetric.new(cut, "count")        
+    return CutMetric(cut, "count")        
 
 def cuttime(cut):
-    return CutMetric.new(cut, "ticks")
+    return CutMetric(cut, "ticks")

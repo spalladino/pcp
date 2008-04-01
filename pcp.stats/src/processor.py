@@ -3,6 +3,9 @@ import graphics
 import config
 import os
 import metrics
+import itertools
+
+from matplotlib import pyplot
 
 class Processor(object):
     
@@ -26,16 +29,24 @@ class Processor(object):
     def graph(self, datax, datay, fname=None, series=[]):
         fx, fy = metrics.metric(datax), metrics.metric(datay)
         
-        # TODO: extract series values and group them to generate all series to be shown
-        x, y = zip(*[(fx(run), fy(run)) for run in self.runs])
-        graphics.simplegraphic(x, y, fx, fy)
-        self.handlegraph(fname)
+        pyplot.clf()
+        pyplot.xlabel(str(fx)), pyplot.ylabel(str(fy))
         
-    def graphfuncs(self, datax, datay, fname=None, series=[]):
-        x, y = zip(*[(datax(run), datay(run)) for run in self.runs])
-        graphics.simplegraphic(x, y, str(datax), str(datay))
+        def runkey(run): 
+            return map(lambda m: metrics.evalmetric(m, run), series)
+        
+        if len(series) == 0: 
+            runsets = [(["run"], self.runs)]
+        else: 
+            runsets = itertools.groupby(sorted(self.runs, key=runkey), runkey)
+        
+        for key, runset in runsets:
+            x, y = zip(*[(fx(run), fy(run)) for run in runset])
+            pyplot.plot(x, y, '-o', label=str(key))
+
+        pyplot.legend(loc=0)        
         self.handlegraph(fname)
         
     def handlegraph(self, fname=None):
-        if fname: graphics.save(os.path.join(config.fullrunsdir, self.runid, fname))
-        else: graphics.show()
+        if fname: pyplot.savefig(os.path.join(config.fullrunsdir, self.runid, fname))
+        else: pyplot.show()

@@ -1,0 +1,9 @@
+- {holes.maxPerColor: 1, run.filename: rand10.in}
+- {holes.maxPerColor: 5, run.filename: rand10.in}
+- {holes.maxPerColor: 10, run.filename: rand10.in}
+- {holes.maxPerColor: 1, run.filename: rand20.in}
+- {holes.maxPerColor: 5, run.filename: rand20.in}
+- {holes.maxPerColor: 10, run.filename: rand20.in}
+- {holes.maxPerColor: 1, run.filename: rand30.in}
+- {holes.maxPerColor: 5, run.filename: rand30.in}
+- {holes.maxPerColor: 10, run.filename: rand30.in}
