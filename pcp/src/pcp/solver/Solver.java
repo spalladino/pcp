@@ -10,6 +10,7 @@ import java.util.Map;
 
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.solver.branching.BranchingPrioritizer;
 import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
@@ -33,6 +34,7 @@ public class Solver extends AbstractSolutionData {
 		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
 		long start = System.currentTimeMillis();
+		setBranchingPriorities();
 		beforeSolve();
 		solved = this.cplex.solve();
 		long end = System.currentTimeMillis();
@@ -41,9 +43,6 @@ public class Solver extends AbstractSolutionData {
 		return solved;
 	}
 	
-	protected void beforeSolve() throws IloException, AlgorithmException {
-	}
-
 	public void loadInitialSolution(pcp.algorithms.coloring.ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		cplex.setParam(IntParam.AdvInd, 1);
 		int n = model.getNodeCount();
@@ -137,16 +136,23 @@ public class Solver extends AbstractSolutionData {
 		} catch(Exception ex) {return 0.0;}
 	}
 	
-	protected void addInitialCuts() {
-		InitialCutsGenerator generator = new InitialCutsGenerator(model);
-		InitialCutBuilder builder = new InitialCutBuilder(cplex, model);
-		generator.makeCuts(builder);
-	}
-	
 	public void fillExecutionData(Map<String,Object> data) throws Exception {
 		data.put("solution.chi", getChromaticNumber());
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());
+	}
+
+	protected void beforeSolve() throws IloException, AlgorithmException {
+	}
+
+	protected void setBranchingPriorities() throws IloException {
+		new BranchingPrioritizer(cplex, model).setPriorities();
+	}
+
+	protected void addInitialCuts() {
+		InitialCutsGenerator generator = new InitialCutsGenerator(model);
+		InitialCutBuilder builder = new InitialCutBuilder(cplex, model);
+		generator.makeCuts(builder);
 	}
 
 }

@@ -21,8 +21,9 @@ class Processor(object):
             print " Time: %d millis (chi=%d) with %s" % (run['solution.time'], run['solution.chi'], run['solution.solver'])
             print " Preprocessing: %d millis" % run['preprocess.time']
             
-            for name, cut in run['cuts'].iteritems():
-                print " %s: %d cuts in %d millis" % (name, cut['count'], cut['ticks'])
+            if 'cuts' in run:
+                for name, cut in run['cuts'].iteritems():
+                    print " %s: %d cuts in %d millis" % (name, cut['count'], cut['ticks'])
             
             print
 

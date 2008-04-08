@@ -1,14 +1,40 @@
 from fixture import *
 
 if __name__ == '__main__':
-    if not resume():
-        newrun([
-                { "holes.maxPerColor": 1 },
-                { "holes.maxPerColor": 5 },
-                { "holes.maxPerColor": 10 }
+    #if not resume():
+    newrun([
+                {
+                    "branch.prios.enabled": "false" },
+                    
+                {   "branch.prios.psize": 0,
+                    "branch.prios.psadjacent": 1000,
+                    "branch.prios.colorindex": 1,
+                    "branch.prios.reversecolorindex": 0 },
+
+                {   "branch.prios.psize": 0,
+                    "branch.prios.psadjacent": 1000,
+                    "branch.prios.colorindex": 0,
+                    "branch.prios.reversecolorindex": 1 },
+                
+                {   "branch.prios.psize": 1000,
+                    "branch.prios.psadjacent": 0,
+                    "branch.prios.colorindex": 1,
+                    "branch.prios.reversecolorindex": 0 },
+                    
+                {   "branch.prios.psize": 1000,
+                    "branch.prios.psadjacent": 0,
+                    "branch.prios.colorindex": 0,
+                    "branch.prios.reversecolorindex": 1 },
+
+                {   "branch.prios.psize": 1,
+                    "branch.prios.psadjacent": 5,
+                    "branch.prios.colorindex": 0,
+                    "branch.prios.reversecolorindex": 0 },
+
                 ], 
             files = [ 
-                    "rand10.in", 
-                    "rand20.in", 
-                    "rand30.in" 
+                        "rand25.in",
+                        "rand30.in",
+                        "rand35.in",
+                        "rand40.in",
                     ])

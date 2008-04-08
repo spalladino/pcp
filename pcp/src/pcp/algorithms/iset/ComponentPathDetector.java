@@ -16,7 +16,7 @@ import props.Settings;
  * Detects paths and holes sorting by current fractional values.
  */
 public class ComponentPathDetector extends Algorithm  {
-
+	// TODO: Test me!
 	static boolean enabled = Settings.get().getBoolean("path.enabled");
 	static double minColorValue = Settings.get().getDouble("path.minColorValue");
 	static int maxColorCount = Settings.get().getInteger("path.maxColorCount");
