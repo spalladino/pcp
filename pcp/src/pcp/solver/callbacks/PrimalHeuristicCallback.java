@@ -23,6 +23,8 @@ public class PrimalHeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallba
 		this.graph = model.getGraph();
 		this.model = model;
 	}
+	
+	int max = 0;
 
 	
 	@Override
@@ -31,9 +33,11 @@ public class PrimalHeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallba
 		
 		try {
 			
-			int count = countVarsSet();
-			
-			System.out.println("Equals: " + count);
+			int count = countNodesEqualOne();
+			if (max < count) {
+				System.out.println("Equals: " + count);
+				max = count;
+			}
 			
 			/*
 			DSaturPartitionColoringEasiestNodes coloring = new DSaturPartitionColoringEasiestNodes(graph);
@@ -78,6 +82,30 @@ public class PrimalHeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallba
 			for (int i = 0; i < model.getNodeCount(); i++) {
 				IloIntVar x = model.x(i,j);
 				if (super.getLB(x) == super.getUB(x)) count++;
+			}	
+		}
+		return count;
+	}
+	
+	private int countVarsEqualOne() throws IloException {
+		int count = 0;
+		for (int j = 0; j < model.getColorCount(); j++) {
+			IloIntVar w = model.w(j);
+			if (super.getLB(w) == 1.0) count++;
+			for (int i = 0; i < model.getNodeCount(); i++) {
+				IloIntVar x = model.x(i,j);
+				if (super.getLB(x) == 1.0) count++;
+			}	
+		}
+		return count;
+	}
+	
+	private int countNodesEqualOne() throws IloException {
+		int count = 0;
+		for (int j = 0; j < model.getColorCount(); j++) {
+			for (int i = 0; i < model.getNodeCount(); i++) {
+				IloIntVar x = model.x(i,j);
+				if (super.getLB(x) > 0.99) count++;
 			}	
 		}
 		return count;

@@ -72,7 +72,7 @@ public class Main {
 			solver.loadInitialSolution(coloring);
 		}
 		
-		System.out.println("Solving " + filename + " with " + graph.getNodes().length + " nodes and " + graph.getEdges().length + " edges.");
+		System.out.println("Solving " + filename + " with " + graph.P() + " partitions, " + graph.N() + " nodes and " + graph.E() + " edges.");
 		execution.withInputData(graph);
 		
 		solver.getCplex().setParam(IntParam.MIPDisplay, 3);
