@@ -10,7 +10,11 @@ import java.util.Map;
 
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.solver.branching.BranchingDirectioner;
 import pcp.solver.branching.BranchingPrioritizer;
+import pcp.solver.branching.BranchingSelector;
+import pcp.solver.callbacks.BranchCallback;
+import pcp.solver.callbacks.PrimalHeuristicCallback;
 import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
@@ -34,7 +38,7 @@ public class Solver extends AbstractSolutionData {
 		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
 		long start = System.currentTimeMillis();
-		setBranchingPriorities();
+		setBranchingSettings();
 		beforeSolve();
 		solved = this.cplex.solve();
 		long end = System.currentTimeMillis();
@@ -145,8 +149,14 @@ public class Solver extends AbstractSolutionData {
 	protected void beforeSolve() throws IloException, AlgorithmException {
 	}
 
-	protected void setBranchingPriorities() throws IloException {
+	protected void setBranchingSettings() throws IloException {
+		// TODO: Use branch callback for pruning
+		// TODO: Use goals?
+		//cplex.use(new PrimalHeuristicCallback(model));
+		//cplex.use(new BranchCallback());
 		new BranchingPrioritizer(cplex, model).setPriorities();
+		new BranchingDirectioner(cplex, model).setDirection();
+		new BranchingSelector(cplex, model).setSelection();
 	}
 
 	protected void addInitialCuts() {

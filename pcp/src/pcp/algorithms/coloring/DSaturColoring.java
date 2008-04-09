@@ -95,6 +95,7 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 		
 		for (k = 0; k < graph.N(); k++) {
 			if (handled[k]) continue;
+			// TODO: Check conditions in case of a tie
 			if ((colorCount[k] > max) || ((colorCount[k] == max) && (colorAdj[k][0] > colorAdj[place][0]))) {
 				max = colorCount[k];
 				place = k;

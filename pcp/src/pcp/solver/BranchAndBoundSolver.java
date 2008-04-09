@@ -28,9 +28,9 @@ public class BranchAndBoundSolver extends Solver {
         cplex.setParam(IntParam.FracCuts, -1);
         cplex.setParam(IntParam.GUBCovers, -1);
         cplex.setParam(IntParam.ImplBd, -1);
-        cplex.setParam(IntParam.MIRCuts, -1);
         cplex.setParam(IntParam.AggCutLim, 0);
         cplex.setParam(IntParam.ZeroHalfCuts, -1);
+        cplex.setParam(IntParam.MIRCuts, -1);
         
         // Other
         cplex.setParam(IntParam.PreDual, -1);
