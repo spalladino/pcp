@@ -8,6 +8,11 @@ if __name__ == '__main__':
                     
                 {   "branch.prios.psize": 0,
                     "branch.prios.psadjacent": 1000,
+                    "branch.prios.colorindex": 0,
+                    "branch.prios.reversecolorindex": 0 },
+                    
+                {   "branch.prios.psize": 0,
+                    "branch.prios.psadjacent": 1000,
                     "branch.prios.colorindex": 1,
                     "branch.prios.reversecolorindex": 0 },
 
@@ -16,6 +21,11 @@ if __name__ == '__main__':
                     "branch.prios.colorindex": 0,
                     "branch.prios.reversecolorindex": 1 },
                 
+                {   "branch.prios.psize": 0,
+                    "branch.prios.psadjacent": 2,
+                    "branch.prios.colorindex": 0,
+                    "branch.prios.reversecolorindex": 1 },
+
                 {   "branch.prios.psize": 1000,
                     "branch.prios.psadjacent": 0,
                     "branch.prios.colorindex": 1,
@@ -33,8 +43,9 @@ if __name__ == '__main__':
 
                 ], 
             files = [ 
-                        "rand25.in",
                         "rand30.in",
                         "rand35.in",
+                        "rand37.in",
+                        "rand39.in",
                         "rand40.in",
                     ])

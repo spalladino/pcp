@@ -11,3 +11,4 @@ drafts/*.blg
 drafts/*.log
 *.orig
 *.pyc
+*.run

@@ -2,6 +2,16 @@ package pcp.utils;
 
 
 public class IntUtils {
+
+	public static int positiveOrZero(int x) {
+		if (x < 0) return 0;
+		else return x;
+	}
+	
+	public static int negativeOrZero(int x) {
+		if (x > 0) return 0;
+		else return x;
+	}
 	
 	public static int floorhalf(int x) {
 		if (x % 2 == 1) {

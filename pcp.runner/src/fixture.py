@@ -51,7 +51,7 @@ class Fixture:
             
         for run in self.runs:
             runner = Runner()
-            print "Running id " + str(self.runid) + " iter " + str(self.successful + 1)
+            print "Running id " + str(self.runid) + " iter " + str(self.successful + 1) + " of " + str(len(self.runs))
             out, err = runner.run(self.runid, self.successful + 1, run)
             self.add_success_status()
             time.sleep(sleeptime)
