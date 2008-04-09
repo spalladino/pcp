@@ -151,9 +151,8 @@ public class Solver extends AbstractSolutionData {
 
 	protected void setBranchingSettings() throws IloException {
 		// TODO: Use branch callback for pruning
-		// TODO: Use goals?
-		//cplex.use(new PrimalHeuristicCallback(model));
-		//cplex.use(new BranchCallback());
+		cplex.use(new PrimalHeuristicCallback(model));
+		cplex.use(new BranchCallback());
 		new BranchingPrioritizer(cplex, model).setPriorities();
 		new BranchingDirectioner(cplex, model).setDirection();
 		new BranchingSelector(cplex, model).setSelection();

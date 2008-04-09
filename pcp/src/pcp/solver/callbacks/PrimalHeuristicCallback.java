@@ -4,7 +4,9 @@ import pcp.algorithms.coloring.DSaturColoring;
 import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.utils.DoubleUtils;
 import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
 import ilog.concert.IloNumVar;
 
 
@@ -25,7 +27,15 @@ public class PrimalHeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallba
 	
 	@Override
 	protected void main() throws IloException {
+		// TODO: Use current solution information, and run completely only if depth is more than X
+		
 		try {
+			
+			int count = countVarsSet();
+			
+			System.out.println("Equals: " + count);
+			
+			/*
 			DSaturPartitionColoringEasiestNodes coloring = new DSaturPartitionColoringEasiestNodes(graph);
 
 			int n = model.getNodeCount();
@@ -51,12 +61,26 @@ public class PrimalHeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallba
 			
 			System.out.println("Coloring: " + coloring.getChi());
 			
-			super.setBounds(vars, vals, vals);
+			super.setSolution(vars, vals);
 			super.solve();
+			*/
 
 		} catch (Exception ex) {
 			System.err.println("Exception in heuristic callback: " + ex.toString());
 		}
+	}
+
+	private int countVarsSet() throws IloException {
+		int count = 0;
+		for (int j = 0; j < model.getColorCount(); j++) {
+			IloIntVar w = model.w(j);
+			if (super.getLB(w) == super.getUB(w)) count++;
+			for (int i = 0; i < model.getNodeCount(); i++) {
+				IloIntVar x = model.x(i,j);
+				if (super.getLB(x) == super.getUB(x)) count++;
+			}	
+		}
+		return count;
 	}
 	
 }

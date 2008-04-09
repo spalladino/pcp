@@ -12,7 +12,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	protected void main() throws IloException {
 		// TODO: Invoke getBranches and set them to see if performance is unaffected
 		
-		if (counts++ > 1) {
+		if (counts++ > 1000000) {
 			System.out.println("Pruning!");
 			prune();
 		} else {
