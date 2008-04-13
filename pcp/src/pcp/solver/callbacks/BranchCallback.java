@@ -1,23 +1,41 @@
 package pcp.solver.callbacks;
 
-import pcp.definitions.Constants;
 import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
+import pcp.model.Model;
+import props.Settings;
 
 
 public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 
-	int counts = 0;
+	static final boolean log = Settings.get().getBoolean("logging.callback.branching");
+	static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
+	static final double pruningRemaining = Settings.get().getDouble("callback.pruning.remaining");
 	
+	Model model;
+	
+	public BranchCallback(Model model) {
+		this.model = model;
+	}
+
 	@Override
 	protected void main() throws IloException {
-		// TODO: Invoke getBranches and set them to see if performance is unaffected
-		
-		if (counts++ > 1000000) {
-			System.out.println("Pruning!");
+		if (!enabled) return;
+		if (countNodesEqualOne() >= (model.getGraph().P() * (1.0-pruningRemaining))) {
+			if (log) System.out.println("Pruning at " + countNodesEqualOne() + " nodes set");
 			prune();
-		} else {
-			System.out.println("Not pruning");
 		}
+	}
+	
+	private int countNodesEqualOne() throws IloException {
+		int count = 0;
+		for (int j = 0; j < model.getColorCount(); j++) {
+			for (int i = 0; i < model.getNodeCount(); i++) {
+				IloIntVar x = model.x(i,j);
+				if (super.getLB(x) > 0.99) count++;
+			}	
+		}
+		return count;
 	}
 	
 }

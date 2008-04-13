@@ -16,4 +16,6 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	public abstract Integer getChi() throws AlgorithmException;
 	
 	public abstract Integer getColor(int node) throws AlgorithmException;
+	
+	public abstract void useColor(int node, int color) throws AlgorithmException;
 }

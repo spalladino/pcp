@@ -42,12 +42,16 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	// Stored solution
 	protected int solution;
 	
+	// Number of color fixed nodes
+	protected int fixed = 0;
+	
 	protected IAlgorithmBounder bounder;
 	
 	private boolean hasrun = false;
 	
 	public DSaturPartitionColoring(IPartitionedGraph graph) {
 		super(graph);
+		initFields();
 	}
 	
 	@Override
@@ -64,9 +68,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	public Integer getChi() throws AlgorithmException {
 		if (hasrun) return solution;
 		
-		initFields();
-		
-		solution = color(0, 0);
+		bounder.start();
+		solution = color(fixed, fixed);
 		bounder.end();
 		hasrun = true;
 		
@@ -77,6 +80,13 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	public Integer getColor(int node) throws AlgorithmException {
 		if (!hasrun) getChi();
 		return bestColorClass[node] - 1;
+	}
+	
+	@Override
+	public void useColor(int node, int color) throws AlgorithmException {
+		handleNode(node);
+		assignColor(node, color);
+		fixed++;
 	}
 
 	@Override
@@ -155,6 +165,11 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		return (bestColoring);
 	}
 
+	private void handleNode(int node) {
+		int partition = graph.getNode(node).getPartition().index();
+		handled[partition] = true;
+	}
+	
 	private void handle(int partition) {
 		handled[partition] = true;
 	}
@@ -224,10 +239,10 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		colorAdj[node1][0]++;
 	}
 	
-	protected void initFields() throws AlgorithmException {
+	protected void initFields()  {
 		if (bounder == null) {
 			bounder = new Bounder();
-		} bounder.start();
+		} 
 		
 		this.bestColoring = graph.P() + 1;
 		this.colorAdj = new int[graph.N()][graph.P()];

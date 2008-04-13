@@ -1,9 +1,9 @@
 package pcp.algorithms.coloring;
 
-import exceptions.AlgorithmException;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
 import pcp.solver.cuts.CutFamily;
+import exceptions.AlgorithmException;
 
 
 public class NodesColoring extends ColoringAlgorithm {
@@ -30,6 +30,11 @@ public class NodesColoring extends ColoringAlgorithm {
 	@Override
 	public CutFamily getIdentifier() {
 		return null;
+	}
+
+	@Override
+	public void useColor(int node, int color) throws AlgorithmException {
+		throw new AlgorithmException("Painting nodes not supported for " + this.getClass().getName());
 	}
 	
 }

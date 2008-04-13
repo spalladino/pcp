@@ -35,6 +35,12 @@ public class FixedColoring extends ColoringAlgorithm {
 		return null;
 	}
 	
+	@Override
+	public void useColor(int node, int color) throws AlgorithmException {
+		throw new AlgorithmException("Painting nodes not supported for " + this.getClass().getName());
+	}
+
+	
 	
 	
 }

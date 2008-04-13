@@ -8,27 +8,31 @@ import ilog.cplex.IloCplex.IntParam;
 
 import java.util.Map;
 
+import pcp.definitions.Constants;
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
 import pcp.solver.branching.BranchingDirectioner;
 import pcp.solver.branching.BranchingPrioritizer;
 import pcp.solver.branching.BranchingSelector;
 import pcp.solver.callbacks.BranchCallback;
-import pcp.solver.callbacks.PrimalHeuristicCallback;
+import pcp.solver.callbacks.HeuristicCallback;
 import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
+import props.Settings;
 import exceptions.AlgorithmException;
 
 
 public class Solver extends AbstractSolutionData {
 	
+	final static boolean useHeuristicCallback = Settings.get().getBoolean("solver.useHeuristicCallback");
+	final static boolean useBranchingCallback = Settings.get().getBoolean("solver.useBranchingCallback");
+	
 	IloCplex cplex;
 	Model model;
 	
 	boolean solved;
-	double epsilon = 1.0e-6;
-	long elapsed = 0L;
+	double elapsed = 0.0;
 	
 	public Solver() throws IloException {
 		this.cplex = new IloCplex();
@@ -37,11 +41,11 @@ public class Solver extends AbstractSolutionData {
 	public boolean solve() throws Exception {
 		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
-		long start = System.currentTimeMillis();
+		double start = cplex.getCplexTime();
 		setBranchingSettings();
 		beforeSolve();
 		solved = this.cplex.solve();
-		long end = System.currentTimeMillis();
+		double end = cplex.getCplexTime();
 		elapsed = end - start;
 		
 		return solved;
@@ -96,14 +100,14 @@ public class Solver extends AbstractSolutionData {
 	
 	public int getChromaticNumber() throws IloException {
 		if (model.isTrivial()) return 1;
-		return (int)Math.ceil(cplex.getObjValue() - epsilon);
+		return (int)Math.ceil(cplex.getObjValue() - Constants.Epsilon);
 	}
 
 	public CplexStatus getStatus() throws IloException {
 		return cplex.getCplexStatus();
 	}
 	
-	public long getTime() {
+	public double getTime() {
 		return elapsed;
 	}
 
@@ -150,9 +154,9 @@ public class Solver extends AbstractSolutionData {
 	}
 
 	protected void setBranchingSettings() throws IloException {
-		// TODO: Use branch callback for pruning
-		cplex.use(new PrimalHeuristicCallback(model));
-		//cplex.use(new BranchCallback());
+		if (useHeuristicCallback) cplex.use(new HeuristicCallback(model));
+		if (useBranchingCallback) cplex.use(new BranchCallback(model));
+		
 		new BranchingPrioritizer(cplex, model).setPriorities();
 		new BranchingDirectioner(cplex, model).setDirection();
 		new BranchingSelector(cplex, model).setSelection();

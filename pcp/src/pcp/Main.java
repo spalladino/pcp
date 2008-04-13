@@ -66,7 +66,7 @@ public class Main {
 			exportModel(solver, filename);
 		}
 		
-		final boolean useInitialSolution = Settings.get().getBoolean("start.useInitialSolution");
+		final boolean useInitialSolution = Settings.get().getBoolean("solver.useInitialSolution");
 		if(useInitialSolution && Coloring.supportingAssignment.contains(model.getStrategy().getColoring())) {
 			System.out.println("Using initial solution from coloring with value " + coloring.getChi());
 			solver.loadInitialSolution(coloring);

@@ -1,6 +1,5 @@
 package pcp.algorithms.coloring;
 
-import exceptions.AlgorithmException;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
@@ -42,7 +41,7 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 	}
 	
 	@Override
-	protected void initFields() throws AlgorithmException {
+	protected void initFields()  {
 		super.initFields();
 	}
 	

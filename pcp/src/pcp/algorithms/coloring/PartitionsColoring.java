@@ -19,7 +19,7 @@ public class PartitionsColoring extends ColoringAlgorithm {
 
 	@Override
 	public Integer getColor(int node) throws AlgorithmException {
-		throw new AlgorithmException("Color assignment for fixed coloring not implemented.");
+		throw new AlgorithmException("Color assignment for partition coloring not implemented.");
 	}
 
 	@Override
@@ -32,4 +32,9 @@ public class PartitionsColoring extends ColoringAlgorithm {
 		return null;
 	}
 	
+	@Override
+	public void useColor(int node, int color) throws AlgorithmException {
+		throw new AlgorithmException("Painting nodes not supported for " + this.getClass().getName());
+	}
+
 }
