@@ -18,7 +18,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	
 	static final boolean log = Settings.get().getBoolean("logging.callback.heuristic");
 	static final boolean enabled = Settings.get().getBoolean("callback.heuristic.enabled");
-	static final double pruningRemaining = Settings.get().getDouble("callback.pruning.remaining");
+	static final int pruningRemaining = Settings.get().getInteger("callback.pruning.remaining");
 	
 	IPartitionedGraph graph;
 	Model model;
@@ -37,7 +37,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		if (!enabled) return;
 		
 		// Full run using current information if enough depth
-		if (countNodesEqualOne() >= (model.getGraph().P() * (1.0-pruningRemaining))) {
+		if (countNodesEqualOne() >= (model.getGraph().P() - pruningRemaining)) {
 			if (log) System.out.println("Using brute force at " + countNodesEqualOne() + " nodes set");
 			setSolution();
 		}

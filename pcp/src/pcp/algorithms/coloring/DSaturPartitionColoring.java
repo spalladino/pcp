@@ -8,6 +8,7 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.solver.cuts.CutFamily;
+import pcp.utils.IntUtils;
 import props.Settings;
 
 public abstract class DSaturPartitionColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
@@ -44,6 +45,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	// Number of color fixed nodes
 	protected int fixed = 0;
+	protected int maxInitialColor = -1;
 	
 	protected IAlgorithmBounder bounder;
 	
@@ -68,14 +70,20 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	public Integer getChi() throws AlgorithmException {
 		if (hasrun) return solution;
 		
+		lowerBound = calculateLowerBound();
 		bounder.start();
-		solution = color(fixed, fixed);
+		solution = color(fixed, lowerBound);
 		bounder.end();
 		hasrun = true;
 		
 		return solution;
 	}
 	
+	private int calculateLowerBound() {
+		if (fixed == 0) return 0;
+		return maxInitialColor;
+	}
+
 	@Override
 	public Integer getColor(int node) throws AlgorithmException {
 		if (!hasrun) getChi();
@@ -87,6 +95,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		handleNode(node);
 		assignColor(node, color);
 		fixed++;
+		maxInitialColor = IntUtils.max(maxInitialColor, color);
 	}
 
 	@Override
@@ -250,7 +259,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		this.colorCount = new int[graph.N()];
 		this.handled = new boolean[graph.P()];
 		this.coloredNodeInPartition = new Node[graph.P()];
-		this.lowerBound = -1;
+		this.lowerBound = 1;
 		
 		if (colorAdjPartitions) {
 			for (Node n : graph.getNodes()) {

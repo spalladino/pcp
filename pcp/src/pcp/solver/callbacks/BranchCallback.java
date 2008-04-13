@@ -10,7 +10,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 
 	static final boolean log = Settings.get().getBoolean("logging.callback.branching");
 	static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
-	static final double pruningRemaining = Settings.get().getDouble("callback.pruning.remaining");
+	static final int pruningRemaining = Settings.get().getInteger("callback.pruning.remaining");
 	
 	Model model;
 	
@@ -21,7 +21,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	@Override
 	protected void main() throws IloException {
 		if (!enabled) return;
-		if (countNodesEqualOne() >= (model.getGraph().P() * (1.0-pruningRemaining))) {
+		if (countNodesEqualOne() >= (model.getGraph().P() - pruningRemaining)) {
 			if (log) System.out.println("Pruning at " + countNodesEqualOne() + " nodes set");
 			prune();
 		}
