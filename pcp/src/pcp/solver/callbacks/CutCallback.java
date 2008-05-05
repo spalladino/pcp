@@ -9,12 +9,14 @@ import ilog.cplex.IloCplex;
 import java.util.List;
 
 import pcp.algorithms.clique.ExtendedCliqueDetector;
+import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.entities.Node;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
 import pcp.model.Model;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
+import pcp.utils.IntUtils;
 
 
 public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IModelData {
@@ -27,11 +29,13 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 	IloMPModeler modeler;
 	
 	ExtendedCliqueDetector cliques;
+	ComponentHolesCuts holes;
 	
 	double[] ws;
 	double[][] xs;
 	
 	int cliqueCount = 0;
+	int holeCount = 0;
 	
 	public CutCallback(IloMPModeler modeler) {
 		this.modeler = modeler;
@@ -50,22 +54,44 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 			System.out.println();
 		}
 		
-		cliques = new ExtendedCliqueDetector(iteration);
-		cliques.run();
+		cliques = new ExtendedCliqueDetector(iteration).run();
+		holes = new ComponentHolesCuts(iteration).run();
 		
 		System.out.println("Detected a total of " + cliqueCount + " cliques in " + cliques.getBounder().getMillis() + " millis.");
+		System.out.println("Detected a total of " + holeCount + " holes in " + holes.getBounder().getMillis() + " millis.");
 	}
 
 	@Override
-	public void addClique(List<Node> nodes, int color) {
+	public void addHole(List<Node> nodes, int color) {
 		try {
-			
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("CLIQUE[%1$d]", color);
-			String values = "";
+			String name = String.format("HOLE[%1$d]", color);
 			for (Node n : nodes) {
 				expr.addTerm(model.x(n.index(),color), 1);
-				values += String.valueOf(this.x(n.index(), color)) + " + ";
+			}
+			
+			expr.addTerm(model.w(color), -IntUtils.floorhalf(nodes.size()));
+			IloRange range = modeler.le(expr, 0, name);
+			add(range);
+			holeCount++;
+			
+			if (logIneqs) {
+				System.out.println(range.toString());
+			}
+			
+		} catch (Exception ex) {
+			System.err.println("Could not generate hole cut: " + ex.getMessage());
+		}
+	}
+
+	
+	@Override
+	public void addClique(List<Node> nodes, int color) {
+		try {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("CLIQUE[%1$d]", color);
+			for (Node n : nodes) {
+				expr.addTerm(model.x(n.index(),color), 1);
 			}
 			
 			expr.addTerm(model.w(color), -1);
@@ -119,4 +145,5 @@ public class CutCallback extends IloCplex.CutCallback implements ICutBuilder, IM
 		
 		this.iteration = new Iteration(model, this, this);
 	}
+
 }

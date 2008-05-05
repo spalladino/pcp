@@ -1,8 +1,10 @@
 package pcp.interfaces;
 
+import java.util.Comparator;
 import java.util.List;
 
 import pcp.common.sorting.NodeColorValueComparator;
+import pcp.entities.Edge;
 import pcp.entities.SortedPartitionedGraph;
 
 
@@ -15,5 +17,11 @@ public interface ISortedProvider {
 	List<Integer> getSortedFractionalColors(boolean asc);
 	
 	List<Integer> getSortedColors(boolean asc);
+
+	List<Integer> getSortedColors(boolean asc, boolean onlyFrac);
+	
+	Comparator<Edge> getEdgeComparator(int color, boolean asc);
+
+	
 	
 }

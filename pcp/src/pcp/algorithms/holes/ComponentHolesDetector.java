@@ -9,15 +9,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import pcp.algorithms.AlgorithmException;
+import pcp.Settings;
 import pcp.entities.Edge;
 import pcp.entities.Node;
 import pcp.interfaces.IPartitionedGraph;
 
-
 public class ComponentHolesDetector implements IHolesDetector {
 
-	static final boolean check = true;
+	static boolean check = Settings.get().getBoolean("holes.check");
+	static boolean storeVisited = Settings.get().getBoolean("holes.storeVisited");
 	
     private IPartitionedGraph graph;
 
@@ -28,12 +28,11 @@ public class ComponentHolesDetector implements IHolesDetector {
     private boolean[] returned;
     private Set<List<Node>> visited;
     
-    
     public ComponentHolesDetector(IPartitionedGraph g) {
         this.graph = g;
     }
     
-    public void holes(IHoleHandler handler, IHoleFilter filter) throws AlgorithmException {
+    public void holes(IHoleHandler handler, IHoleFilter filter) {
         int n = graph.getNodes().length;    
     	
         notInHole = new boolean[n][n][n];
@@ -58,8 +57,7 @@ public class ComponentHolesDetector implements IHolesDetector {
         }
     }
 
-	private boolean processEdge(IHoleHandler handler, IHoleFilter filter, Node node, int u, Node ev1, Node ev2)
-			throws AlgorithmException {
+	private boolean processEdge(IHoleHandler handler, IHoleFilter filter, Node node, int u, Node ev1, Node ev2) {
 		
 		if (node != ev1 && node != ev2
 		    && graph.areAdjacent(node, ev1)
@@ -88,20 +86,21 @@ public class ComponentHolesDetector implements IHolesDetector {
 		    {
 		        List<Node> hole = getHole(inPath[result.nodeE.index()], result.k);
 		        
-		        List<Node> sorted = new ArrayList<Node>(hole);
-		        Collections.sort(sorted);
+		        if (storeVisited) {
+		        	List<Node> sorted = new ArrayList<Node>(hole);
+		        	Collections.sort(sorted);
+		        	if (visited.contains(sorted)) {
+		        		return false;
+		        	}
+		        }
 		        
-		        if (!visited.contains(sorted)) {
-			        visited.add(sorted);
-			        
-		        	if (filter.use(hole)) { 
-			        	if (check) {
-			        		checkHole(hole);
-			        	}
-			            if (!handler.handle(hole)) {
-			            	return false;
-			            }
-			        }
+	        	if (filter.use(hole)) { 
+		        	if (check) {
+		        		checkHole(hole);
+		        	}
+		            if (!handler.handle(hole)) {
+		            	return false;
+		            }
 		        }
 		            
 		        for (Node x : hole) {
@@ -124,7 +123,7 @@ public class ComponentHolesDetector implements IHolesDetector {
     	int a = aa.index(), b = bb.index(), c = cc.index();
     	
     	inPath[c] = i;
-        for(Node dd : cc.getNeighbours()) {
+        for(Node dd : graph.getNeighbours(cc)) {
             int d = dd.index();
         	
             if (d != a 
@@ -168,7 +167,7 @@ public class ComponentHolesDetector implements IHolesDetector {
         do {
             uu = pathVertex.get(i-1);
         	h = imax + 1;
-            for (Node xx : uu.getNeighbours()) {
+            for (Node xx : graph.getNeighbours(uu)) {
             	int x = xx.index();
                 if (inPath[x] >= i + 4 && inPath[x] < h) {
                     h = inPath[x];
@@ -192,7 +191,7 @@ public class ComponentHolesDetector implements IHolesDetector {
         return builder.toString();
     }
 
-    private void checkHole(List<Node> hole) throws AlgorithmException
+    private void checkHole(List<Node> hole)
     {
         Set<Node> visited = new HashSet<Node>();
         Map<Node, Node> parent = new HashMap<Node, Node>();
@@ -207,13 +206,13 @@ public class ComponentHolesDetector implements IHolesDetector {
             if (visited.contains(node)) continue;
             visited.add(node);
 
-            for (Node adj : node.getNeighbours()) {
+            for (Node adj : graph.getNeighbours(node)) {
                 boolean added = false;
                 if (hole.contains(adj) &&
                     (!parent.containsKey(node) || parent.get(node) != adj))
                 {
                     if (!visited.contains(adj)) {
-                        if (added) throw new AlgorithmException("Error checking hole " + listHole(hole));
+                        assert (!added): ("Error checking hole " + listHole(hole));
                         added = true;
                         parent.put(adj, node);
                         stack.push(adj);
@@ -225,24 +224,11 @@ public class ComponentHolesDetector implements IHolesDetector {
             }
         }
 
-        if (cycle != 1) { 
-        	throw new AlgorithmException("Error checking hole " + listHole(hole));
-        }
+    	assert cycle == 1: "Error checking hole " + listHole(hole);
 
         for (Node x : hole) {
-            if (!visited.contains(x)) { 
-            	throw new AlgorithmException("Error checking hole " + listHole(hole));
-            }
+        	assert visited.contains(x): ("Error checking hole " + listHole(hole));
         }
-
-//        Collections.sort(hole);
-//        for (int i = 0; i < returnedHoles.size(); i++) {
-//			List<Node> previous = returnedHoles.get(i);
-//			if (previous.containsAll(hole) || hole.containsAll(previous)) {
-//        		throw new AlgorithmException("Hole already returned");
-//        	}
-//		}
-//        this.returnedHoles.add(new ArrayList<Node>(hole));
         
         System.out.println(listHole(hole));
     }

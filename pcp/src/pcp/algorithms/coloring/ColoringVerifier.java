@@ -18,8 +18,8 @@ public class ColoringVerifier {
 		int chi = coloring.getChi();
 		
 		for (Edge edge : graph.getEdges()) {
-			int c1 = coloring.getColor(edge.getIndex1());
-			int c2 = coloring.getColor(edge.getIndex2());
+			int c1 = coloring.getColor(edge.index1());
+			int c2 = coloring.getColor(edge.index2());
 			if (c1 == c2) throw new AlgorithmException("Both nodes in edge " + edge + " have color " + c1);
 		}
 		

@@ -3,6 +3,18 @@ package pcp.utils;
 
 public class IntUtils {
 	
+	public static int floorhalf(int x) {
+		if (x % 2 == 1) {
+			x--;
+		} return x / 2;
+	}
+	
+	public static int ceilhalf(int x) {
+		if (x % 2 == 1) {
+			x++;
+		} return x / 2;
+	}
+	
 	public static int minabs(int a, int b) {
 		int aa = a < 0 ? -a : a;  
 		int bb = b < 0 ? -b : b;

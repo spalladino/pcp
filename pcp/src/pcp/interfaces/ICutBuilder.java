@@ -8,4 +8,6 @@ public interface ICutBuilder {
 
 	void addClique(List<Node> nodes, int color);
 	
+	void addHole(List<Node> nodes, int color);
+	
 }

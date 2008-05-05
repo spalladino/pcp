@@ -7,8 +7,8 @@ public class BoxInt extends Box<Integer> {
 		super(data);
 	}
 	
-	public void incData() {
-		this.data++;
+	public Integer incData() {
+		return this.data++;
 	}
 	
 }

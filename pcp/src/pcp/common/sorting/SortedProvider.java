@@ -1,8 +1,10 @@
 package pcp.common.sorting;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import pcp.entities.Edge;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IModelData;
 import pcp.interfaces.ISortedProvider;
@@ -14,9 +16,6 @@ public class SortedProvider implements ISortedProvider {
 
 	private IModelData data;
 	private Model model;
-
-	NodeColorValueComparator ascNodeComparators[];
-	NodeColorValueComparator descNodeComparators[];
 	
 	List<Integer> ascSortedColorsFrac;
 	List<Integer> descSortedColorsFrac;
@@ -31,9 +30,6 @@ public class SortedProvider implements ISortedProvider {
 		this.model = model;
 		this.data = data;
 		
-		this.ascNodeComparators = new NodeColorValueComparator[model.getColorCount()];
-		this.descNodeComparators = new NodeColorValueComparator[model.getColorCount()];
-		
 		this.ascGraphs = new SortedPartitionedGraph[model.getColorCount()];
 		this.descGraphs = new SortedPartitionedGraph[model.getColorCount()];
 	}
@@ -41,26 +37,51 @@ public class SortedProvider implements ISortedProvider {
 
 	@Override
 	public NodeColorValueComparator getNodeComparator(int color, boolean asc) {
-		NodeColorValueComparator[] comparators = asc ? ascNodeComparators : descNodeComparators;
-		if (comparators[color] == null) { 
-			comparators[color] = asc
-				? new NodeColorValueComparator(data, color)
-				: new ReverseNodeColorValueComparator(data, color);
-		} return comparators[color];
+		return asc
+			? new NodeColorValueComparator(data, color)
+			: new ReverseNodeColorValueComparator(data, color);
 	}
 
 	@Override
+	public Comparator<Edge> getEdgeComparator(int color, boolean asc) {
+		Comparator<Edge> comparator = new EdgeColorValueComparator(data, color);
+		if (!asc) {
+			comparator = new ReverseComparator<Edge>(comparator);
+		} return comparator;
+	}
+
+
+	@Override
 	public List<Integer> getSortedColors(boolean asc) {
-		if (asc) {
-			if (ascSortedColors == null) { 
-				ascSortedColors = new LinkedList<Integer>();
-				fillSortedColors((LinkedList<Integer>)ascSortedColors, true, false);
-			} return ascSortedColors;
+		return getSortedColors(asc, false);
+	}
+	
+	@Override
+	public List<Integer> getSortedColors(boolean asc, boolean onlyFrac) {
+		if (onlyFrac) {
+			if (asc) {
+				if (ascSortedColorsFrac == null) { 
+					ascSortedColorsFrac = new LinkedList<Integer>();
+					fillSortedColors((LinkedList<Integer>)ascSortedColorsFrac, true, false);
+				} return ascSortedColorsFrac;
+			} else {
+				if (descSortedColorsFrac == null) { 
+					descSortedColorsFrac= new LinkedList<Integer>();
+					fillSortedColors((LinkedList<Integer>)descSortedColorsFrac, false, false);
+				} return descSortedColorsFrac;
+			}
 		} else {
-			if (descSortedColors == null) { 
-				descSortedColors= new LinkedList<Integer>();
-				fillSortedColors((LinkedList<Integer>)descSortedColors, false, false);
-			} return descSortedColors;
+			if (asc) {
+				if (ascSortedColors == null) { 
+					ascSortedColors = new LinkedList<Integer>();
+					fillSortedColors((LinkedList<Integer>)ascSortedColors, true, false);
+				} return ascSortedColors;
+			} else {
+				if (descSortedColors == null) { 
+					descSortedColors= new LinkedList<Integer>();
+					fillSortedColors((LinkedList<Integer>)descSortedColors, false, false);
+				} return descSortedColors;
+			}
 		}
 	}
 	
@@ -99,7 +120,7 @@ public class SortedProvider implements ISortedProvider {
 		if (graphs[color] == null) {
 			graphs[color] = new SortedPartitionedGraph(model.getGraph(), 
 					getNodeComparator(color, asc), 
-					null, 
+					getEdgeComparator(color, asc), 
 					null);
 		} return graphs[color];
 	}

@@ -56,23 +56,26 @@ public class ExtendedCliqueDetector {
 	static boolean backtrackLastCandidate = Settings.get().getBoolean("clique.backtrackLastCandidate");
 	static boolean backtrackBrokenIneqs = Settings.get().getBoolean("clique.backtrackBrokenIneqs");
 	static boolean enabled = Settings.get().getBoolean("clique.enabled");
+	static boolean colorsAsc = Settings.get().getBoolean("clique.colorsAsc");
 	
 	public ExtendedCliqueDetector(IAlgorithmSource provider) {
 		super();
 		this.provider = provider;
 		this.bounder = provider.getBounder();
 		this.data = provider.getData();
-		this.colors = provider.getSorted().getSortedColors(Def.ASC);
+		this.colors = provider.getSorted().getSortedColors(colorsAsc);
 	}
 	
-	public void run() {
-		if (!enabled) return;
+	public ExtendedCliqueDetector run() {
+		if (!enabled) return this;
 		bounder.start();
 		for (Integer color : this.colors) {
 			this.color = color;
 			valueWj = data.w(color);
+
 			if (valueWj < minColorValue) continue;
-			if (this.colorCount++ > maxColorCount || valueWj > maxColorValue) break; 
+			if (valueWj > maxColorValue) continue;
+			if (this.colorCount++ > maxColorCount) break;
 			
 			// Initializations for current color
 			this.graph = provider.getSorted().getSortedGraph(color, Def.DESC);
@@ -89,6 +92,7 @@ public class ExtendedCliqueDetector {
 			}
 		}
 		bounder.stop();
+		return this;
 	}
 
 	public IAlgorithmBounder getBounder() {

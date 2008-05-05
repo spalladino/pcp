@@ -13,11 +13,11 @@ public class Edge {
 		return node2;
 	}
 	
-	public int getIndex1() {
+	public int index1() {
 		return node1.name;
 	}
 	
-	public int getIndex2() {
+	public int index2() {
 		return node2.name;
 	}
 
