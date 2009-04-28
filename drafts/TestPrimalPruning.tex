@@ -1,0 +1,573 @@
+\documentclass[landscape, 12pt]{report}
+\usepackage[a1paper,landscape]{geometry}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+
+\newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
+\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+
+\newlength{\margen}
+\setlength{\margen}{1in}
+\setlength{\textwidth}{\paperwidth}\addtolength{\textwidth}{-2\margen}
+\setlength{\textheight}{\paperheight}\addtolength{\textheight}{-2\margen}
+\setlength{\topmargin}{\margen}\addtolength{\topmargin}{-38mm}
+\setlength{\oddsidemargin}{\margen}\addtolength{\oddsidemargin}{-46mm}
+\setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-46mm}
+
+\begin{document}
+
+
+\section*{Heuristica primal con menos frecuencia con dsatur branch}
+
+Processing Runid 20110321PRIMALDSATURBRANCHLESSFREQ
+
+Data:
+\begin{itemize}
+\item gap
+\item time
+\item nnodes
+\item ph.time
+\item ph.success.\#
+\item ph.unsuccess.\#
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: ph.enabled: true, solver.useCplexPrimalHeuristic: false, ph.dsatur.coloring: DSaturEasyNode, coloring.ph.maxTime: 1000, coloring.ph.maxSolutions: 100
+\item S2: ph.enabled: true, solver.useCplexPrimalHeuristic: false, ph.dsatur.coloring: DSaturEasyNode, coloring.ph.maxTime: 2000, coloring.ph.maxSolutions: 1000
+\item S3: ph.enabled: true, solver.useCplexPrimalHeuristic: false, ph.dsatur.coloring: DSaturEasyNode, coloring.ph.maxTime: 5000, coloring.ph.maxSolutions: 1000
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3}
+\\
+ & gap & time & nnodes & ph.time & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & ph.time & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & ph.time & ph.success.\# & ph.unsuccess.\#
+\\
+\hline
+EW 20 N=90 & 0.167 & 1623.073 & 94260.000 & 93.000 & 0.000 & 14660.333 & 0.167 & 1622.693 & 94265.000 & 83.000 & 0.000 & 14660.667 & 0.167 & 1622.453 & 94218.333 & 51.000 & 0.000 & 14654.000
+\\
+EW 40 N=100 & 0.333 & 1800.057 & 23684.000 & 685.333 & 0.000 & 7713.667 & 0.333 & 1800.052 & 23666.333 & 665.333 & 0.000 & 7709.000 & 0.333 & 1800.036 & 23672.000 & 717.667 & 0.000 & 7710.000
+\\
+EW 60 N=80 & 0.375 & 1800.052 & 21208.000 & 1765.667 & 0.000 & 8754.667 & 0.375 & 1800.062 & 21190.333 & 1776.667 & 0.000 & 8749.667 & 0.375 & 1800.062 & 21194.000 & 1808.333 & 0.000 & 8751.000
+\\
+EW 80 N=100 & 0.402 & 1800.047 & 2435.667 & 135026.667 & 0.667 & 987.333 & 0.402 & 1800.083 & 2357.667 & 206134.667 & 0.667 & 955.667 & 0.403 & 1800.083 & 2219.667 & 306859.333 & 0.667 & 895.333
+\\
+\hline 
+ \end{tabular}
+
+
+\subsection*{Salida original}
+
+Processing Runid 20110321PRIMALDSATURBRANCHLESSFREQ
+
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.primalheur.time
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 1000, coloring.primal.maxSolutions: 100
+\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 2000, coloring.primal.maxSolutions: 1000
+\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 5000, coloring.primal.maxSolutions: 1000
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=90 & 0.167 & 1623.073 & 94260.000 & 93.000 & 0.000 & 14660.333 & 0.167 & 1622.693 & 94265.000 & 83.000 & 0.000 & 14660.667 & 0.167 & 1622.453 & 94218.333 & 51.000 & 0.000 & 14654.000
+\\
+EW 40 N=100 & 0.333 & 1800.057 & 23684.000 & 685.333 & 0.000 & 7713.667 & 0.333 & 1800.052 & 23666.333 & 665.333 & 0.000 & 7709.000 & 0.333 & 1800.036 & 23672.000 & 717.667 & 0.000 & 7710.000
+\\
+EW 60 N=80 & 0.375 & 1800.052 & 21208.000 & 1765.667 & 0.000 & 8754.667 & 0.375 & 1800.062 & 21190.333 & 1776.667 & 0.000 & 8749.667 & 0.375 & 1800.062 & 21194.000 & 1808.333 & 0.000 & 8751.000
+\\
+EW 80 N=100 & 0.402 & 1800.047 & 2435.667 & 135026.667 & 0.667 & 987.333 & 0.402 & 1800.083 & 2357.667 & 206134.667 & 0.667 & 955.667 & 0.403 & 1800.083 & 2219.667 & 306859.333 & 0.667 & 895.333
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+\section*{Heuristica primal con dsatur branch}
+
+Processing Runid 20110313PRIMALDSATURBRANCH
+
+Data:
+\begin{itemize}
+\item gap
+\item time
+\item nnodes
+\item primal.time
+\item primal.ok\#
+\item primal.fail\#
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 500, coloring.primal.maxSolutions: 100
+\item S4: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\item S5: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 500, coloring.primal.maxSolutions: 100
+\item S6: primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & gap & time & nnodes & primal.time & primal.ok\# & primal.fail\# & gap & time & nnodes & primal.time & primal.ok\# & primal.fail\# & gap & time & nnodes & primal.time & primal.ok\# & primal.fail\# & gap & time & nnodes & primal.time & primal.ok\# & primal.fail\# & gap & time & nnodes & primal.time & primal.ok\# & primal.fail\# & gap & time & nnodes & primal.time & primal.ok\# & primal.fail\#
+\\
+\hline
+EW 20 N=90 & 0.167 & 1621.927 & 102039.333 & 0.000 & 0.000 & 0.000 & 0.167 & 1671.589 & 86918.333 & 331.333 & 0.000 & 43535.000 & 0.167 & 1668.016 & 86311.667 & 360.000 & 0.000 & 43230.333 & 0.167 & 1672.974 & 86606.000 & 1050.333 & 0.000 & 43377.667 & 0.167 & 1670.333 & 86356.000 & 1123.333 & 0.000 & 43253.000 & 0.167 & 1693.906 & 92008.667 & 300.333 & 0.000 & 46067.667
+\\
+EW 40 N=100 & 0.333 & 1800.042 & 28536.333 & 0.000 & 0.000 & 0.000 & 0.333 & 1800.036 & 22081.667 & 1823.667 & 0.000 & 14413.000 & 0.333 & 1800.042 & 22062.333 & 2366.000 & 0.000 & 14401.000 & 0.333 & 1800.047 & 21974.333 & 12517.000 & 0.000 & 14350.333 & 0.333 & 1800.026 & 21912.667 & 16144.667 & 0.000 & 14308.000 & 0.333 & 1800.047 & 24223.000 & 2662.333 & 0.000 & 16035.333
+\\
+EW 60 N=80 & 0.372 & 1800.047 & 24230.333 & 0.000 & 0.000 & 0.000 & 0.375 & 1800.036 & 19903.667 & 7123.333 & 0.000 & 14588.667 & 0.375 & 1800.042 & 20008.667 & 7614.667 & 0.000 & 14666.667 & 0.375 & 1800.083 & 19368.667 & 58276.000 & 0.000 & 14198.333 & 0.375 & 1800.036 & 19330.333 & 71358.667 & 0.000 & 14171.333 & 0.375 & 1800.052 & 20778.000 & 7122.000 & 0.000 & 15177.333
+\\
+EW 80 N=100 & 0.388 & 1800.040 & 3567.000 & 0.000 & 0.000 & 0.000 & 0.403 & 1800.115 & 2335.667 & 81619.333 & 0.667 & 1752.000 & 0.407 & 1800.188 & 2239.000 & 154761.667 & 0.667 & 1679.333 & 0.409 & 1800.089 & 2203.333 & 130357.667 & 0.667 & 1657.667 & 0.410 & 1800.110 & 2073.667 & 258456.667 & 0.667 & 1556.667 & 0.389 & 1800.078 & 2447.333 & 91038.000 & 0.667 & 1855.000
+\\
+\hline 
+ \end{tabular}
+
+
+\subsection*{Original}
+
+Processing Runid 20110313PRIMALDSATURBRANCH
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.primalheur.time
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 500, coloring.primal.maxSolutions: 100
+\item S4: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\item S5: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 500, coloring.primal.maxSolutions: 100
+\item S6: primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=90 & 0.167 & 1621.927 & 102039.333 & 0.000 & 0.000 & 0.000 & 0.167 & 1671.589 & 86918.333 & 331.333 & 0.000 & 43535.000 & 0.167 & 1668.016 & 86311.667 & 360.000 & 0.000 & 43230.333 & 0.167 & 1672.974 & 86606.000 & 1050.333 & 0.000 & 43377.667 & 0.167 & 1670.333 & 86356.000 & 1123.333 & 0.000 & 43253.000 & 0.167 & 1693.906 & 92008.667 & 300.333 & 0.000 & 46067.667
+\\
+EW 40 N=100 & 0.333 & 1800.042 & 28536.333 & 0.000 & 0.000 & 0.000 & 0.333 & 1800.036 & 22081.667 & 1823.667 & 0.000 & 14413.000 & 0.333 & 1800.042 & 22062.333 & 2366.000 & 0.000 & 14401.000 & 0.333 & 1800.047 & 21974.333 & 12517.000 & 0.000 & 14350.333 & 0.333 & 1800.026 & 21912.667 & 16144.667 & 0.000 & 14308.000 & 0.333 & 1800.047 & 24223.000 & 2662.333 & 0.000 & 16035.333
+\\
+EW 60 N=80 & 0.372 & 1800.047 & 24230.333 & 0.000 & 0.000 & 0.000 & 0.375 & 1800.036 & 19903.667 & 7123.333 & 0.000 & 14588.667 & 0.375 & 1800.042 & 20008.667 & 7614.667 & 0.000 & 14666.667 & 0.375 & 1800.083 & 19368.667 & 58276.000 & 0.000 & 14198.333 & 0.375 & 1800.036 & 19330.333 & 71358.667 & 0.000 & 14171.333 & 0.375 & 1800.052 & 20778.000 & 7122.000 & 0.000 & 15177.333
+\\
+EW 80 N=100 & 0.388 & 1800.040 & 3567.000 & 0.000 & 0.000 & 0.000 & 0.403 & 1800.115 & 2335.667 & 81619.333 & 0.667 & 1752.000 & 0.407 & 1800.188 & 2239.000 & 154761.667 & 0.667 & 1679.333 & 0.409 & 1800.089 & 2203.333 & 130357.667 & 0.667 & 1657.667 & 0.410 & 1800.110 & 2073.667 & 258456.667 & 0.667 & 1556.667 & 0.389 & 1800.078 & 2447.333 & 91038.000 & 0.667 & 1855.000
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+\section*{Heuristica Primal en un branch and bound seteando cota superior}
+
+Las muy contadas veces en las que efectivamente la heuristica primal logra una mejora sobre la solucion inicial que arrojo la heuristica inicial, obtiene un gap mejor al de CPLEX. Si no, la heuristica primal de CPLEX, seguramente mas rapida, le da mas tiempo para explorar mas nodos y bajar ligeramente el gap.
+
+Las columnas son gap de la solucion, tiempo, cantidad de nodos explorados, tiempo total consumido por la primal, cantidad de veces que logro mejorar la cota superior y cantidad de veces que no.
+
+Series:
+\begin{itemize}
+\item S1: Desactivada la heuristica primal de DSatur, usando solo heuristica primal de CPlex %primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\item S2: Heuristica DSatur, 200ms para la heuristica primal % primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\item S3: Heuristica DSatur, 500ms para la heuristica primal%primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 500
+\item S4: Heuristica DSatur randomizada, 200ms para la heuristica primal %primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 200
+\item S5: Heuristica DSatur randomizada, 500ms para la heuristica primal %primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 500
+\item S6: Heuristica DSatur y CPlex en simultaneo, 200ms para la heuristica primal DSatur%primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & gap & time & nnodes & hp.time & hp.success & hp.unsuccess & gap & time & nnodes & hp.time & hp.success & hp.unsuccess & gap & time & nnodes & hp.time & hp.success & hp.unsuccess & gap & time & nnodes & hp.time & hp.success & hp.unsuccess & gap & time & nnodes & hp.time & hp.success & hp.unsuccess & gap & time & nnodes & hp.time & hp.success & hp.unsuccess
+\\
+\hline
+EW 20 N=90 & 0.000 & 1159.901 & 64583.667 & 0.000 & 0.000 & 0.000 & 0.000 & 1282.844 & 62655.000 & 277.333 & 0.000 & 31700.667 & 0.000 & 1285.412 & 62655.000 & 316.667 & 0.000 & 31700.667 & 0.000 & 1286.172 & 62655.000 & 1606.000 & 0.000 & 31700.667 & 0.000 & 1285.167 & 62655.000 & 1527.000 & 0.000 & 31700.667 & 0.000 & 1337.042 & 64583.667 & 270.000 & 0.000 & 32532.667
+\\
+EW 40 N=100 & 0.448 & 1800.031 & 44650.667 & 0.000 & 0.000 & 0.000 & 0.456 & 1800.036 & 33384.000 & 8236.333 & 0.000 & 30039.667 & 0.455 & 1800.036 & 33536.000 & 11558.667 & 0.000 & 30170.333 & 0.456 & 1800.042 & 32866.000 & 43048.000 & 0.000 & 29573.667 & 0.456 & 1800.042 & 32557.000 & 65642.000 & 0.000 & 29292.000 & 0.456 & 1800.042 & 33205.000 & 7961.000 & 0.000 & 29771.000
+\\
+EW 60 N=80 & 0.387 & 1800.031 & 95060.667 & 0.000 & 0.000 & 0.000 & 0.393 & 1800.042 & 53060.333 & 26784.333 & 0.000 & 48886.000 & 0.393 & 1800.031 & 53122.000 & 30386.667 & 0.000 & 48942.667 & 0.394 & 1800.031 & 48120.333 & 198668.667 & 0.000 & 44335.000 & 0.395 & 1800.031 & 46557.333 & 250975.667 & 0.000 & 42894.667 & 0.393 & 1800.042 & 52684.333 & 26572.333 & 0.000 & 48557.333
+\\
+EW 80 N=100 & 0.441 & 1800.024 & 10303.000 & 0.000 & 0.000 & 0.000 & 0.438 & 1800.047 & 5210.667 & 382378.333 & 0.667 & 4971.000 & 0.438 & 1800.141 & 4304.333 & 637176.667 & 0.667 & 4098.667 & 0.438 & 1800.141 & 4715.333 & 487275.667 & 0.667 & 4497.333 & 0.439 & 1800.167 & 3513.333 & 810069.000 & 0.667 & 3343.000 & 0.437 & 1800.073 & 5262.333 & 344715.333 & 0.667 & 5016.000
+\\
+\hline 
+ \end{tabular}
+
+\subsection*{Salida original}
+
+Processing Runid 20110219PRIMALSTATIC3
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.primalheur.time
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 500
+\item S4: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 200
+\item S5: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNodeRandomized, coloring.primal.maxTime: 500
+\item S6: primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.primalheur.time & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=90 & 0.000 & 1159.901 & 64583.667 & 0.000 & 0.000 & 0.000 & 0.000 & 1282.844 & 62655.000 & 277.333 & 0.000 & 31700.667 & 0.000 & 1285.412 & 62655.000 & 316.667 & 0.000 & 31700.667 & 0.000 & 1286.172 & 62655.000 & 1606.000 & 0.000 & 31700.667 & 0.000 & 1285.167 & 62655.000 & 1527.000 & 0.000 & 31700.667 & 0.000 & 1337.042 & 64583.667 & 270.000 & 0.000 & 32532.667
+\\
+EW 40 N=100 & 0.448 & 1800.031 & 44650.667 & 0.000 & 0.000 & 0.000 & 0.456 & 1800.036 & 33384.000 & 8236.333 & 0.000 & 30039.667 & 0.455 & 1800.036 & 33536.000 & 11558.667 & 0.000 & 30170.333 & 0.456 & 1800.042 & 32866.000 & 43048.000 & 0.000 & 29573.667 & 0.456 & 1800.042 & 32557.000 & 65642.000 & 0.000 & 29292.000 & 0.456 & 1800.042 & 33205.000 & 7961.000 & 0.000 & 29771.000
+\\
+EW 60 N=80 & 0.387 & 1800.031 & 95060.667 & 0.000 & 0.000 & 0.000 & 0.393 & 1800.042 & 53060.333 & 26784.333 & 0.000 & 48886.000 & 0.393 & 1800.031 & 53122.000 & 30386.667 & 0.000 & 48942.667 & 0.394 & 1800.031 & 48120.333 & 198668.667 & 0.000 & 44335.000 & 0.395 & 1800.031 & 46557.333 & 250975.667 & 0.000 & 42894.667 & 0.393 & 1800.042 & 52684.333 & 26572.333 & 0.000 & 48557.333
+\\
+EW 80 N=100 & 0.441 & 1800.024 & 10303.000 & 0.000 & 0.000 & 0.000 & 0.438 & 1800.047 & 5210.667 & 382378.333 & 0.667 & 4971.000 & 0.438 & 1800.141 & 4304.333 & 637176.667 & 0.667 & 4098.667 & 0.438 & 1800.141 & 4715.333 & 487275.667 & 0.667 & 4497.333 & 0.439 & 1800.167 & 3513.333 & 810069.000 & 0.667 & 3343.000 & 0.437 & 1800.073 & 5262.333 & 344715.333 & 0.667 & 5016.000
+\\
+\hline 
+ \end{tabular}
+
+	\clearpage
+	
+
+\section*{Pruning en branch and cut con grafos de un nodo por particion}
+	
+Las series se corresponden son el porcentaje de nodos que deben estar fijos para disparar la enumeracion exhaustiva y podar esa rama del arbol. S1 es cuando el metodo esta desactivado, los siguientes van de 0.4 a 0.8.
+
+Tiene toda la pinta de que hay un error en los datos, cuando esta prendido el pruning, el arbol de BNC tiene un solo nodo y llega al optimo enseguida. Pareceria como si estuviera corriendo un DSatur completo desde la raiz, y que encima eso termina mucho antes que el BNC.
+
+Lo unico interesante de la tabla es S1 para compararlo con la tabla anterior. La heuristica primal se corrio con exito mas veces, y los gaps son significativamente mas chicos, lo que da la pauta de que particionado es mas dificil que coloreo comun.
+	
+Voy a revisar estas corridas a ver por que dieron asi (las series de 2 a 6) y les aviso cuando tenga novedades.
+	
+	\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & gap & time & nnodes & prune.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & prune.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & prune.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & prune.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & prune.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & prune.\# & hp.success.\# & hp.unsuccess.\#
+\\
+\hline
+singleparte02n100p1 & 0.143 & 1800.016 & 1506.333 & 0.000 & 0.333 & 281.667 & 0.000 & 12.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.891 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.844 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.865 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.870 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte04n100p1 & 0.289 & 1800.094 & 282.667 & 0.000 & 0.333 & 224.000 & 0.000 & 50.297 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.255 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.281 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.234 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.188 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte06n100p1 & 0.250 & 1800.198 & 35.333 & 0.000 & 0.333 & 20.667 & 0.000 & 383.323 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 385.198 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 384.167 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 383.636 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 383.818 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte08n100p1 & 0.185 & 1800.193 & 16.000 & 0.000 & 0.667 & 9.000 & 0.000 & 547.526 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 546.542 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 544.141 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 544.297 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 555.984 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+	
+\subsection*{Salida original}	
+	
+Processing Runid 20110219PRUNINGP1
+
+Successfully created and stored
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+singleparte02n100p1 & 0.143 & 1800.016 & 1506.333 & 0.000 & 0.333 & 281.667 & 0.000 & 12.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.891 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.844 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.865 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.870 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte04n100p1 & 0.289 & 1800.094 & 282.667 & 0.000 & 0.333 & 224.000 & 0.000 & 50.297 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.255 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.281 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.234 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.188 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte06n100p1 & 0.250 & 1800.198 & 35.333 & 0.000 & 0.333 & 20.667 & 0.000 & 383.323 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 385.198 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 384.167 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 383.636 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 383.818 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte08n100p1 & 0.185 & 1800.193 & 16.000 & 0.000 & 0.667 & 9.000 & 0.000 & 547.526 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 546.542 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 544.141 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 544.297 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 555.984 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
+\section*{Pruning en branch and cut con grafos particionados de dos nodos por particion}
+
+Las series son igual a la seccion anterior. El pruning no llego a correr nunca. Sin embargo, HAY diferencia entre las corridas que lo tienen habilitado y las que no, tanto en gap como en exito de la primal. Voy a revisar el codigo a ver en que influye, el chequeo de si corresponde que se ejecute o no no deberia ser tan costoso como para generar tanta diferencia.
+
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & gap & time & nnodes & leafheur.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & leafheur.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & leafheur.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & leafheur.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & leafheur.\# & hp.success.\# & hp.unsuccess.\# & gap & time & nnodes & leafheur.\# & hp.success.\# & hp.unsuccess.\#
+\\
+\hline
+EW 20 N=100 & 0.250 & 1800.036 & 6917.333 & 0.000 & 0.000 & 562.000 & 0.000 & 41.276 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.271 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.250 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.260 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.302 & 93.000 & 0.000 & 0.000 & 0.000
+\\
+EW 40 N=100 & 0.222 & 1800.052 & 1326.333 & 0.000 & 0.000 & 214.000 & 0.000 & 340.214 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.224 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.307 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.313 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.271 & 153.000 & 0.000 & 0.000 & 0.000
+\\
+EW 60 N=100 & 0.270 & 1800.068 & 650.000 & 0.000 & 0.000 & 122.000 & 0.000 & 1390.136 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1391.562 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1390.651 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1392.646 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1389.729 & 255.000 & 0.000 & 0.000 & 0.000
+\\
+EW 80 N=100 & 0.211 & 1800.078 & 107.667 & 0.000 & 0.667 & 13.000 & 0.204 & 1800.177 & 83.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 83.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 81.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.109 & 82.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 83.333 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+\subsection*{Salida original}	
+
+Processing Runid 20110219PRUNING2
+
+ Successfully created and stored
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=100 & 0.250 & 1800.036 & 6917.333 & 0.000 & 0.000 & 562.000 & 0.000 & 41.276 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.271 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.250 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.260 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.302 & 93.000 & 0.000 & 0.000 & 0.000
+\\
+EW 40 N=100 & 0.222 & 1800.052 & 1326.333 & 0.000 & 0.000 & 214.000 & 0.000 & 340.214 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.224 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.307 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.313 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.271 & 153.000 & 0.000 & 0.000 & 0.000
+\\
+EW 60 N=100 & 0.270 & 1800.068 & 650.000 & 0.000 & 0.000 & 122.000 & 0.000 & 1390.136 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1391.562 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1390.651 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1392.646 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1389.729 & 255.000 & 0.000 & 0.000 & 0.000
+\\
+EW 80 N=100 & 0.211 & 1800.078 & 107.667 & 0.000 & 0.667 & 13.000 & 0.204 & 1800.177 & 83.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 83.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 81.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.109 & 82.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 83.333 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
+\section*{Pruning en un branch and cut sin setear cota superior para la primal}
+
+Processing Runid 20110219PRUNINGPRIMALNOUB2
+
+Data:
+\begin{itemize}
+\item gap
+\item time
+\item nnodes
+\item lh.\#: leaf heuristic count
+\item ph.success.\#: primal heuristic success count
+\item ph.unsuccess.\#: primal heuristic unsuccess count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\#
+\\
+\hline
+EW 20 N=100 & 0.250 & 1800.026 & 6939.000 & 0.000 & 0.000 & 563.333 & 0.000 & 41.214 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.136 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.151 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.141 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.146 & 93.000 & 0.000 & 0.000 & 0.000
+\\
+EW 40 N=100 & 0.222 & 1800.042 & 1331.333 & 0.000 & 0.000 & 214.000 & 0.000 & 339.156 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.281 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.208 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.271 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.297 & 153.000 & 0.000 & 0.000 & 0.000
+\\
+EW 60 N=100 & 0.270 & 1800.047 & 648.667 & 0.000 & 0.000 & 122.000 & 0.000 & 1416.505 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1408.344 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1404.141 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1409.677 & 255.000 & 0.000 & 0.000 & 0.000 & 0.067 & 1506.438 & 239.000 & 0.000 & 0.000 & 0.000
+\\
+EW 80 N=100 & 0.211 & 1800.089 & 96.333 & 0.000 & 0.667 & 12.667 & 0.204 & 1800.156 & 76.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.115 & 78.333 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.146 & 79.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 78.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.151 & 75.667 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+
+
+
+\subsection*{Salida Original}
+
+Processing Runid 20110219PRUNINGPRIMALNOUB2
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=100 & 0.250 & 1800.026 & 6939.000 & 0.000 & 0.000 & 563.333 & 0.000 & 41.214 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.136 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.151 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.141 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.146 & 93.000 & 0.000 & 0.000 & 0.000
+\\
+EW 40 N=100 & 0.222 & 1800.042 & 1331.333 & 0.000 & 0.000 & 214.000 & 0.000 & 339.156 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.281 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.208 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.271 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 339.297 & 153.000 & 0.000 & 0.000 & 0.000
+\\
+EW 60 N=100 & 0.270 & 1800.047 & 648.667 & 0.000 & 0.000 & 122.000 & 0.000 & 1416.505 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1408.344 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1404.141 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1409.677 & 255.000 & 0.000 & 0.000 & 0.000 & 0.067 & 1506.438 & 239.000 & 0.000 & 0.000 & 0.000
+\\
+EW 80 N=100 & 0.211 & 1800.089 & 96.333 & 0.000 & 0.667 & 12.667 & 0.204 & 1800.156 & 76.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.115 & 78.333 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.146 & 79.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 78.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.151 & 75.667 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
+\section*{Pruning en un branch and cut sin setear cota superior para la primal con particiones de un nodo}
+
+Processing Runid 20110219PRUNINGPRIMALNOUBP1
+
+Successfully created and stored
+
+Data:
+\begin{itemize}
+\item gap
+\item time
+\item nnodes
+\item lh.\#
+\item ph.success.\#
+\item ph.unsuccess.\#
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\#
+\\
+\hline
+singleparte02n100p1 & 0.143 & 1800.037 & 1499.667 & 0.000 & 0.333 & 281.000 & 0.000 & 12.953 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.922 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.844 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.885 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte04n100p1 & 0.289 & 1800.068 & 282.667 & 0.000 & 0.333 & 224.000 & 0.000 & 50.281 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.333 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.271 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.302 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.297 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte06n100p1 & 0.250 & 1800.156 & 35.333 & 0.000 & 0.333 & 20.667 & 0.000 & 382.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 381.156 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.958 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.708 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.818 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte08n100p1 & 0.185 & 1800.130 & 18.000 & 0.000 & 0.667 & 9.333 & 0.000 & 541.000 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 541.177 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 540.802 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 542.354 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 540.281 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+
+\subsection*{Salida original}
+
+Processing Runid 20110219PRUNINGPRIMALNOUBP1
+
+Successfully created and stored
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+singleparte02n100p1 & 0.143 & 1800.037 & 1499.667 & 0.000 & 0.333 & 281.000 & 0.000 & 12.953 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.922 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.844 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.885 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte04n100p1 & 0.289 & 1800.068 & 282.667 & 0.000 & 0.333 & 224.000 & 0.000 & 50.281 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.333 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.271 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.302 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.297 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte06n100p1 & 0.250 & 1800.156 & 35.333 & 0.000 & 0.333 & 20.667 & 0.000 & 382.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 381.156 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.958 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.708 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.818 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+singleparte08n100p1 & 0.185 & 1800.130 & 18.000 & 0.000 & 0.667 & 9.333 & 0.000 & 541.000 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 541.177 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 540.802 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 542.354 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 540.281 & 1.000 & 0.000 & 0.000 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+
+\end{document}
+

@@ -16,12 +16,24 @@ class Generator(object):
     
     # http://en.wikipedia.org/wiki/Barabasi-Albert_model
     def barabasi_albert(self, nodes, density=0.2, minpsize=2, maxpsize=2):
-        g = barabasi_albert_graph(nodes, int(nodes * density))
-        p = self.partitionate(g, minpsize, maxpsize)
+        if density is float:
+            m = int(nodes * density)
+        else:
+            m = density
+        g = barabasi_albert_graph(nodes, m, complete_graph(m))
+        print "Density for m=" + str(m) + " is " + str(self.density(g))
+        p = self.partitionate(g, minpsize, maxpsize)        
         self.write(g,p,nodecnt=nodes,density=density,minpsize=minpsize,maxpsize=maxpsize,algorithm='barabasi_albert')
 
     def holme_kim(self, nodes, density=0.2, minpsize=2, maxpsize=2):
-        g = powerlaw_cluster_graph(nodes, int(nodes * density), density)
+        if density is float:
+            m = int(nodes * density)
+            p = density
+            d = density
+        else:
+            m, p, d = density
+        g = powerlaw_cluster_graph(nodes, m, p, binomial_graph(m, d))
+        print "Density for p=" + str(p) + " m=" + str(m) + " is " + str(self.density(g))
         p = self.partitionate(g, minpsize, maxpsize)
         self.write(g,p,nodecnt=nodes,density=density,minpsize=minpsize,maxpsize=maxpsize,algorithm='holme_kim')
     
@@ -47,6 +59,8 @@ class Generator(object):
             for (u,v) in graph.edges():
                 f.write("e %s %s \n" % (self.node(u),self.node(v)))
                 
+    def density(self, g):
+        return float(len(g.edges())) / float(len(g.nodes())*(len(g.nodes())-1)/2)
     
     def node(self, node):
         return str(node+self.base)

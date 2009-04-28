@@ -12,6 +12,7 @@ We executed all tests on an Intel Core 2 Duo E7400 ($2.80$GHz each) with $3.5$ G
 We used \textsc{IBM Ilog Cplex} version $12.1$ as a branch and cut framework, using its Java libraries for programming custom routines.
 
 \subsection{Graphs instances}
+\label{subsec:results:instances}
 
 We used different types of instances on each test depending on the focus of the test itself. Overall, we used mostly random graphs, as well as certain \textsc{dimacs} challenge instances\cite{dimacs} for our last tests. In the case of random graphs, we used multiple instances (between three and five, depending on running times) for each different value of number of nodes, density and partition size; and reported the average results.
 
@@ -26,7 +27,7 @@ Random graphs were built according to two different schemes:
 		\caption{Sample random binomial graph with $10$ nodes and a $40\%$ probability to create an edge between each pair of nodes.}
 	\end{figure}
 	}
-	\defitem{Holme-Kim}{Also known as powerlaw cluster graphs\cite{holme2002growing}, the graph is constructed iteratively by attaching each new node to a number $t$ of already existing nodes using preferential attachment based on the degree of existing nodes. Also, after the addition of each edge, there is a probability $p$ that a triangle will be created by adding an additional edge. These graphs are controlled by two parameters: node count $n$ and density $p$; value $t$ is inferred as the product between $p$ and $n$.
+	\defitem{Holme-Kim}{Also known as powerlaw cluster graphs\cite{holme2002growing}, the graph is constructed iteratively by attaching each new node to a number $m$ of already existing nodes using preferential attachment based on the degree of existing nodes. Also, after the addition of each edge, there is a probability $p$ that a triangle will be created by adding an additional edge. These graphs are controlled by two parameters: node count $n$ and probabilty $p$, with $0\leq p\leq 1$; value $m$ is inferred as the product between $p$ and $n$.
 	\begin{figure}
 	  \begin{center}
 	    \includegraphics[scale=0.5]{imgs/hk-10-04.png}

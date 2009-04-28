@@ -1,0 +1,124 @@
+\documentclass[landscape, 12pt]{report}
+\usepackage[a1paper,landscape]{geometry}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+
+\newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
+\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+
+\newlength{\margen}
+\setlength{\margen}{1in}
+\setlength{\textwidth}{\paperwidth}\addtolength{\textwidth}{-2\margen}
+\setlength{\textheight}{\paperheight}\addtolength{\textheight}{-2\margen}
+\setlength{\topmargin}{\margen}\addtolength{\topmargin}{-38mm}
+\setlength{\oddsidemargin}{\margen}\addtolength{\oddsidemargin}{-46mm}
+\setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-46mm}
+
+\begin{document}
+
+\section*{Cuts}
+
+Processing Runid 20110412LOWDENSCUTS
+
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.gap
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 1, cuts.local: true, cuts.maxdepth: 0
+\item S2: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 20, cuts.local: false, cuts.maxdepth: 10
+\item S3: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 20, cuts.local: true, cuts.maxdepth: 10
+\item S4: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 5, cuts.local: true, cuts.maxdepth: 15
+\item S5: cuts.iterations.root.max: 500, cuts.iterations.nodes.max: 1, cuts.local: true, cuts.maxdepth: 0
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+ & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time
+\\
+\hline
+EW 20 N=90 & 4.000 & 0.000 & 3045.568 & 4.000 & 0.167 & 5376.349 & 4.000 & 0.000 & 3495.870 & 4.000 & 0.000 & 3404.412 & 4.000 & 0.000 & 3045.401
+\\
+EW 40 N=90 & 6.000 & 0.167 & 5400.036 & 6.000 & 0.167 & 5400.068 & 6.000 & 0.167 & 5400.036 & 6.000 & 0.167 & 5400.068 & 6.000 & 0.167 & 5400.042
+\\
+\hline 
+ \end{tabular}
+
+
+
+
+
+Processing Runid 20110414HIGHDENSCUTSS3
+
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.gap
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 1, cuts.local: true, cuts.maxdepth: 0
+\item S2: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 20, cuts.local: false, cuts.maxdepth: 10
+\item S3: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 20, cuts.local: true, cuts.maxdepth: 10
+\item S4: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 5, cuts.local: true, cuts.maxdepth: 15
+\item S5: cuts.iterations.root.max: 500, cuts.iterations.nodes.max: 1, cuts.local: true, cuts.maxdepth: 0
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+ & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time
+\\
+\hline
+EW 60 N=90 & 8.667 & 0.231 & 5400.083 & 8.667 & 0.231 & 5400.198 & 8.667 & 0.231 & 5400.063 & 8.667 & 0.231 & 5400.099 & 8.667 & 0.231 & 5400.036
+\\
+EW 80 N=90 & 12.000 & 0.111 & 5400.089 & 13.000 & 0.180 & 5400.115 & 12.000 & 0.111 & 5400.094 & 12.000 & 0.111 & 5400.078 & 12.000 & 0.111 & 5400.162
+\\
+\hline 
+ \end{tabular}
+
+
+
+Processing Runid 20110414HIGHDENSCUTSS5
+
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.gap
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 1, cuts.local: true, cuts.maxdepth: 0
+\item S2: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 20, cuts.local: false, cuts.maxdepth: 10
+\item S3: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 20, cuts.local: true, cuts.maxdepth: 10
+\item S4: cuts.iterations.root.max: 100, cuts.iterations.nodes.max: 5, cuts.local: true, cuts.maxdepth: 15
+\item S5: cuts.iterations.root.max: 500, cuts.iterations.nodes.max: 1, cuts.local: true, cuts.maxdepth: 0
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+ & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time & solution.chi & solution.gap & solution.time
+\\
+\hline
+EW 60 N=90 & 8.667 & 0.231 & 5400.057 & 9.000 & 0.284 & 5400.135 & 8.667 & 0.231 & 5400.068 & 8.667 & 0.231 & 5400.083 & 8.667 & 0.231 & 5400.068
+\\
+EW 80 N=90 & 12.000 & 0.111 & 5400.099 & 12.667 & 0.158 & 5400.182 & 12.667 & 0.158 & 5400.151 & 12.667 & 0.158 & 5400.115 & 12.000 & 0.111 & 5400.172
+\\
+\hline 
+ \end{tabular}
+
+
+\end{document}
+

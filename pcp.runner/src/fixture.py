@@ -88,7 +88,7 @@ class Fixture:
             while (current.readline() == 'OK\n'):
                 self.successful += 1
             
-            self.runs = self.runs[self.successful : -1]
+            self.runs = self.runs[self.successful:]
             if current.readline() == 'END\n':
                 return False
         

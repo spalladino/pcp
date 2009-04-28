@@ -16,18 +16,108 @@ import files as f
 import os
  
 def main():
-    
-    files = bncm.files_lowdens()
-    print 'Processing additional bnc models for low dens: ', files
+
+    files = bnc.fileslowhk90()
+    print 'Processing Final Holme Kim BNC Low Density: ', files
     Fixture().newrun(
-                bncm.lowdens_runs_ext, 
+                bnc.lowdens_final, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110410BNCMODELLOWEXT')
-   
+                runid = '20110427LOWDENSFINALHK')
+    
+    files = bnc.fileshighhk90()
+    print 'Processing Final Holme Kim BNC High Density: ', files
+    Fixture().newrun(
+                bnc.highdens_final, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110427HIGHDENSFINALHK')
 
 def old():
+   
+    files = bnc.fileslow90()
+    print 'Processing Final BNC Low Density: ', files
+    Fixture().newrun(
+                bnc.lowdens_final, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110419LOWDENSFINAL')
     
+    files = bnc.fileshigh90()
+    print 'Processing Final BNC High Density: ', files
+    Fixture().newrun(
+                bnc.highdens_final, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110419HIGHDENSFINAL')
+   
+    files = bnc.fileslow90()
+    print 'Processing BNC Low Density with More Pruning: ', files
+    Fixture().newrun(
+                bnc.lowdens_final_pruning_more, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110421LOWDENSPRUNINGMORE')
+    
+    files = bnc.fileshigh90()
+    print 'Processing BNC High Density with More Pruning: ', files
+    Fixture().newrun(
+                bnc.highdens_final_pruning_more, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110421HIGHDENSPRUNINGMORE')
+
+
+    files = bnc.fileslow90()
+    print 'Processing Final BNC Low Density: ', files
+    Fixture().newrun(
+                bnc.lowdens_final, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110419LOWDENSFINAL')
+    
+    files = bnc.fileshigh90()
+    print 'Processing Final BNC High Density: ', files
+    Fixture().newrun(
+                bnc.highdens_final, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110419HIGHDENSFINAL')
+    
+    files = bncm.files_highdens()
+    print 'Processing bnc cuts for high dens S3: ', files
+    Fixture().newrun(
+                bncm.highdens_cuts_s3, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110414HIGHDENSCUTSS3')
+
+    files = bncm.files_highdens()
+    print 'Processing bnc cuts for high dens S5: ', files
+    Fixture().newrun(
+                bncm.highdens_cuts_s5, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110414HIGHDENSCUTSS5')
+
+    files = [bncm.files_highdens()[-1]]
+    print 'Processing bnc extra for high dens: ', files
+    Fixture().newrun(
+                bncm.highdens_runs_ext, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110414BNCHIGHDENSEXT2')        
+
+
+        
+    files = bncm.files_lowdens()
+    print 'Processing bnc cuts for low dens: ', files
+    Fixture().newrun(
+                bncm.lowdens_cuts, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110412LOWDENSCUTS')
+
     files = primal.files()
     print 'Processing Primal DSatur branch Runs with less time: ', files
     Fixture().newrun(

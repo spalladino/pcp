@@ -89,6 +89,56 @@ lowdens_runs = create_runs(baseprops, [
                 },
                 ])
 
+lowdens_cuts = create_runs(baseprops, [
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'5',
+                    'cuts.maxdepth':'15',
+                },
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'20',
+                    'cuts.local':'false',
+                    'cuts.maxdepth':'10',
+                },
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'20',
+                    'cuts.local':'true',
+                    'cuts.maxdepth':'10',
+                },
+                ])
+
 lowdens_runs_ext = create_runs(baseprops, [
                 {
                     'pruning.enabled': 'false',
@@ -97,15 +147,20 @@ lowdens_runs_ext = create_runs(baseprops, [
                     'strategy.colorBound': 'UpperNodesSum',
                     'strategy.symmetry': 'UseLowerLabelFirst',
                     'branch.dynamic.dsatur': 'false',
+                    'primal.onlyonup': 'false',
+                    'primal.everynodes': '2',
+                    'cuts.onlyonup': 'false'
                 },
                 {
-                    'branch.dynamic.dsatur': 'false',  
+                    'branch.dynamic.dsatur': 'false',
+                    'primal.onlyonup': 'false',
+                    'primal.everynodes': '2',  
                     'pruning.enabled': 'false',
                     'solver.probing': '-1',
                     'solver.mipEmphasis': '3',
                     'strategy.colorBound': 'UpperNodesSum',
                     'strategy.symmetry': 'UseLowerLabelFirst',
-                    
+                    'cuts.onlyonup': 'false',
                     'primal.enabled': 'false',
                     'solver.useCplexPrimalHeuristic': 'true',
                 },
@@ -172,6 +227,91 @@ highdens_runs = create_runs(baseprops, [
                     'strategy.symmetry': 'UseLowerLabelFirst',                    
                 },
                 ])
+
+
+highdens_cuts_s3 = create_runs(update_copy(baseprops, {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                    'strategy.symmetry': 'UseLowerLabelFirst',                         
+                 }), [
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'5',
+                    'cuts.maxdepth':'15',
+                },
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'20',
+                    'cuts.local':'false',
+                    'cuts.maxdepth':'10',
+                },
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'20',
+                    'cuts.local':'true',
+                    'cuts.maxdepth':'10',
+                }
+                 ])
+
+highdens_cuts_s5 = create_runs(update_copy(baseprops, {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                    'strategy.symmetry': 'VerticesNumber',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',              
+                 }), [
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'5',
+                    'cuts.maxdepth':'15',
+                },
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'20',
+                    'cuts.local':'false',
+                    'cuts.maxdepth':'10',
+                },
+                {
+                    'cuts.iterations.root.max': '100',
+                    'cuts.iterations.nodes.max':'20',
+                    'cuts.local':'true',
+                    'cuts.maxdepth':'10',
+                }
+                 ])
+
+highdens_runs_ext = create_runs(baseprops, [ {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                    'strategy.symmetry': 'MinimumNodeLabel',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',                    
+                }])
+
 
 highdens_runs_phlfreq = create_runs(baseprops, [
                 {

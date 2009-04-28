@@ -6,7 +6,7 @@ We executed a test suite for determining which inequalities to use in the formul
 
 In order to test the effectiveness of the different formulations, we applied a fixed number of cutting planes iterations, using all implemented cuts with a slightly aggressive configuration, and reported the resulting MIP gap and running time (in seconds), as well as how many rounds of cutting planes were executed. It is worth noting that in some cases fewer iterations than total were applied as the separation heuristics were not able to find any more violated inequalities.
 
-For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition, and powerlaw cluster graphs with the same size, changing only the density of the graphs. All graphs were preprocessed beforehand.
+For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition and densities from $20\%$ to $80\%$, and powerlaw cluster graphs with the same size with different values of $p$ and $m$. All graphs were preprocessed beforehand.
 
 \subsection{Adjacency constraints}
 
@@ -27,7 +27,7 @@ The different adjacency constraints being tested in this experiment are the foll
 &\sum_{i \in P_k \cap N(i_0)} x_{ij} + x_{i_0j} \leq w_j &\quad \forall j \in C, \; \forall P_k \in P, \; \forall i_0 \in V \tag{\ref{eqn:adjsperpart}} 
 \end{align*}
 
-Results are displayed on table \ref{table:modelsadj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n \dot c$ additional constraints \ref{eqn:nodelessthanwj}.
+Results are displayed on table \ref{table:modelsadj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n.c$ additional constraints \ref{eqn:nodelessthanwj}.
 
 Graphics \ref{fig:models:adj} show the evolution of the gap for four particular representative instances, one for each of the evaluated densities in binomial graphs. Gap evolution is very similar among different configurations, except for \ref{eqn:adjsneighb} which is remarkably slower to achieve the same gap in low density graphs. At $40\%$ and $60\%$ densities, \ref{eqn:adjscolorpone} not only works better than \ref{eqn:adjscolorp} as reported in table \ref{table:modelsadj}, but also achieves the same gap slightly faster.
 
@@ -50,13 +50,13 @@ Graphics \ref{fig:models:adj} show the evolution of the gap for four particular 
 	EW 80\% &29.2\% & 193.0 & 449.054 &29.6\% & 181.2 & 469.844 &29.2\% & 192.4 & \b{349.557} &29.4\% & 160.0 & 451.126
 	\\
 	\hline
-	HK 10\% &  20.0\% &  0.8 & 0.156 &  20.0\% &  0.8 & 0.128 &  20.0\% &  0.8 & \b{0.106} &  20.0\% &  0.8 & 0.168
+	HK P=0.1 &  20.0\% &  0.8 & 0.156 &  20.0\% &  0.8 & 0.128 &  20.0\% &  0.8 & \b{0.106} &  20.0\% &  0.8 & 0.168
 	\\
-	HK 20\% & 12.0\% &  0.6 & 0.278 & 12.0\% &  0.6 & 0.324 &  20.0\% &  1.0 & \b{0.181} & 12.0\% &  0.6 & 0.306
+	HK P=0.2 & 12.0\% &  0.6 & 0.278 & 12.0\% &  0.6 & 0.324 &  20.0\% &  1.0 & \b{0.181} & 12.0\% &  0.6 & 0.306
 	\\
-	HK 30\% &  0\% &  0.8 & 0.308 &  0\% &  0.8 & \b{0.276} &  0\% &  3.2 & 0.489 &  0\% &  0.8 & 0.318
+	HK P=0.3 &  0\% &  0.8 & 0.308 &  0\% &  0.8 & \b{0.276} &  0\% &  3.2 & 0.489 &  0\% &  0.8 & 0.318
 	\\
-	HK 40\% & 4.8\% &  2.2 & \b{0.28} & 4.8\% &  3.0 & 0.312 & 4.8\% &  5.2 & 0.416 & 4.8\% &  2.6 & 0.292
+	HK P=0.4 & 4.8\% &  2.2 & \b{0.28} & 4.8\% &  3.0 & 0.312 & 4.8\% &  5.2 & 0.416 & 4.8\% &  2.6 & 0.292
 	\\
 	\hline 
 	 \end{tabular}
@@ -100,13 +100,13 @@ EW 60\% & 42.0\% & 93.578 & 42.0\% & 87.575
 EW 80\% &29.4\% & 354.612 &29.2\% & 349.557
 \\
 \hline
-HK 10\% &  20.0\% & 0.112 &  20.0\% & 0.106
+HK P=0.1 &  20.0\% & 0.112 &  20.0\% & 0.106
 \\
-HK 20\% &  20.0\% & 0.136 &  20.0\% & 0.181
+HK P=0.2 &  20.0\% & 0.136 &  20.0\% & 0.181
 \\
-HK 30\% &  0\% & 0.434 & 0\% & 0.489
+HK P=0.3 &  0\% & 0.434 & 0\% & 0.489
 \\
-HK 40\% & 7.6\% & 0.398 & 4.8\% & 0.416
+HK P=0.4 & 7.6\% & 0.398 & 4.8\% & 0.416
 \\
 \hline 
  \end{tabular}
@@ -145,13 +145,13 @@ EW 60\% & 42.0\% & 72.6 & \b{87.575} & 42.0\% & 84.2 & 91.272 & 42.0\% & 79.4 & 
 EW 80\% &29.2\% & 192.4 & \b{349.557} &29.4\% & 170.0 & 355.518 &29.4\% & 180.6 & 378.936
 \\
 \hline
-HK 10\% &  20.0\% &  0.8 & \b{0.106} &  20.0\% &  0.8 & 0.108 &  20.0\% &  0.8 & 0.112
+HK P=0.1 &  20.0\% &  0.8 & \b{0.106} &  20.0\% &  0.8 & 0.108 &  20.0\% &  0.8 & 0.112
 \\
-HK 20\% &  20.0\% &  1.0 & \b{0.181} &  20.0\% &  1.0 & 0.198 &  20.0\% &  1.0 & 0.184
+HK P=0.2 &  20.0\% &  1.0 & \b{0.181} &  20.0\% &  1.0 & 0.198 &  20.0\% &  1.0 & 0.184
 \\
-HK 30\% & 0\% &  3.2 & \b{0.489} & 0\% &  3.2 & 0.552 & 0\% &  3.2 & 0.51
+HK P=0.3 & 0\% &  3.2 & \b{0.489} & 0\% &  3.2 & 0.552 & 0\% &  3.2 & 0.51
 \\
-HK 40\% & 4.8\% &  5.2 & \b{0.416} & 4.8\% &  4.0 & 0.398 & 4.8\% &  5.2 & 0.438
+HK P=0.4 & 4.8\% &  5.2 & \b{0.416} & 4.8\% &  4.0 & 0.398 & 4.8\% &  5.2 & 0.438
 \\
 \hline 
  \end{tabular}
@@ -212,13 +212,13 @@ EW 60\% & \b{4.0\%} & 34.8 & 153.702 & 42.0\% & 73.2 & 96.82 & 42.0\% & 72.6 & 8
 EW 80\% & \b{5.2\%} & 43.2 & 299.66 &29.4\% & 192.2 & 401.3 &29.2\% & 192.4 & 349.557 & 16.0\% & 100.6 & 202.282
 \\
 \hline
-HK 10\% &  20.0\% &  0.6 & 0.082 & 20.6\% &  4.4 & 0.26 &  20.0\% &  0.8 & 0.106 & \b{15.0\%} &  0.6 & 0.084
+HK P=0.1 &  20.0\% &  0.6 & 0.082 & 20.6\% &  4.4 & 0.26 &  20.0\% &  0.8 & 0.106 & \b{15.0\%} &  0.6 & 0.084
 \\
-HK 20\% & \b{12.0\%} &  0.6 & 0.144 & 20.6\% &  9.8 & 0.752 &  20.0\% &  1.0 & 0.181 & \b{12.0\%} &  0.6 & 0.12
+HK P=0.2 & \b{12.0\%} &  0.6 & 0.144 & 20.6\% &  9.8 & 0.752 &  20.0\% &  1.0 & 0.181 & \b{12.0\%} &  0.6 & 0.12
 \\
-HK 30\% &  0\% &  2.0 & 0.314 &  0\% &  3.4 & 0.516 & 0\% &  3.2 & 0.489 & 0\% &  2.4 & 0.454
+HK P=0.3 &  0\% &  2.0 & 0.314 &  0\% &  3.4 & 0.516 & 0\% &  3.2 & 0.489 & 0\% &  2.4 & 0.454
 \\
-HK 40\% & 4.8\% &  3.8 & 0.316 & 5.0\% &  6.2 & 0.494 & 4.8\% &  5.2 & 0.416 & \b{2.4\%} &  4.4 & 0.376
+HK P=0.4 & 4.8\% &  3.8 & 0.316 & 5.0\% &  6.2 & 0.494 & 4.8\% &  5.2 & 0.416 & \b{2.4\%} &  4.4 & 0.376
 \\
 \hline 
  \end{tabular}

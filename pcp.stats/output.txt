@@ -1,27 +1,48 @@
-Processing Runid 20110313BNCMODELLOW
+Processing Runid 20110419LOWDENSFINAL
  Successfully loaded
 Data:
 \begin{itemize}
-\item solution.gap
-\item solution.time
-\item solution.nnodes
+\item solution.chi
+\item solution.lb
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.probing: -1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: UseLowerLabelFirst
-\item S2: solver.probing: 1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintAtLeastOne, strategy.symmetry: MinimumNodeLabel
-\item S3: solver.probing: 1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: MinimumNodeLabel
+\item S1: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|}
+\begin{tabular}{|c|cc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1}
 \\
- & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes
+ & solution.chi & solution.lb
 \\
 \hline
-EW 20 N=90 & ['-', '0.250', '0.250'] & ['5085.984', '5400.031', '5400.031'] & [56203, 57301, 57359] & ['-', '0.250', '0.250'] & ['2436.813', '5400.031', '5400.016'] & [22887, 58112, 58069] & ['-', '-', '-'] & ['1725.078', '3669.188', '3647.859'] & [17795, 40105, 40105]
+EW 20 N=90 & [4, 4, 4, 3, 3] & [4.0, 4.0, 4.0, 3.0, 3.0]
 \\
-EW 40 N=90 & ['0.167', '0.167'] & ['5400.047', '5400.031'] & [15450, 18015] & ['0.167', '0.167', '0.167'] & ['5400.047', '5400.078', '5400.047'] & [22657, 14543, 14512] & ['0.167', '0.167', '0.167'] & ['5400.047', '5400.047', '5400.047'] & [48403, 16951, 16964]
+EW 40 N=90 & [6, 6, 6, 6, 6] & [5.0, 5.0, 5.0, 5.0, 5.0]
+\\
+\hline 
+ \end{tabular}
+Processing Runid 20110419HIGHDENSFINAL
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.lb
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: UseLowerLabelFirst
+\end{itemize}
+\begin{tabular}{|c|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1}
+\\
+ & solution.chi & solution.lb
+\\
+\hline
+EW 60 N=90 & [8, 9, 9, 9, 9] & [6.0, 7.0, 7.0, 7.0, 7.0]
+\\
+EW 80 N=90 & [12, 12, 12, 12, 12] & [10.0, 11.0, 11.0, 11.0, '10.282']
 \\
 \hline 
  \end{tabular}

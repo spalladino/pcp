@@ -448,26 +448,57 @@ def primal_dsatur_branch_runs():
             aggr= aggregate.concat
             )
 
+         
+def cuts_iters_runs():
+    files = ['20110412LOWDENSCUTS','20110414HIGHDENSCUTSS3','20110414HIGHDENSCUTSS5']
+    
+    for file in files:
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.chi', 'solution.gap', 'solution.time'], 
+                series=['cuts.iterations.root.max', 'cuts.iterations.nodes.max', 'cuts.local','cuts.maxdepth'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
+                   
+
 def model_bnc_highdens_runs():
     file = '20110313BNCMODELHIGH'
+    file = '20110414BNCHIGHDENSEXT'
+    
     LatexProcessor(file).process(
             ids=[metrics.FileName()],
-            datas=[ 'solution.time'], 
+            datas=['solution.chi', 'solution.gap', 'solution.time'], 
             series=['strategy.colorBound','strategy.adjacency','strategy.symmetry'],
             datafilter= None,
             runfilter= None,
-            aggr= aggregate.avg
-            )    
+            aggr= aggregate.concat
+            )   
+    
+def final_bnc_runs():
+    files = ['20110419LOWDENSFINAL', '20110419HIGHDENSFINAL']
+    
+    for file in files:
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.chi', 'solution.lb'], 
+                series=['strategy.colorBound','strategy.adjacency','strategy.symmetry'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.concat
+                )        
     
 def model_bnc_lowdens_runs():
     file = '20110313BNCMODELLOW'
+    file = '20110410BNCMODELLOWEXT'
     LatexProcessor(file).process(
             ids=[metrics.FileName()],
             datas=['solution.gap','solution.time','solution.nnodes'], 
-            series=['solver.probing','strategy.colorBound','strategy.partition','strategy.symmetry'],
+            series=['branch.dynamic.dsatur', 'primal.enabled','solver.probing','strategy.colorBound','strategy.partition','strategy.symmetry'],
             datafilter= None,
             runfilter= None,
-            aggr= aggregate.concat
+            aggr= aggregate.avg
             )    
 
                         
@@ -478,7 +509,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    model_bnc_lowdens_runs()
+    final_bnc_runs()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

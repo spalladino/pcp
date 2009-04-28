@@ -27,12 +27,15 @@ def fileslow():
 def fileshigh():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((100))\\.00(3|4)\\.in')
 
-def filesvlow90():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2)n((90))\\.00(3|4)\\.in')
 def fileslow90():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(4)n((90))\\.00(3|4)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4)n((90))\\.00(0|1|2|3|4)\\.in')
 def fileshigh90():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((90))\\.00(3|4)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((90))\\.00(0|1|2|3|4)\\.in')
+
+def fileslowhk90():
+    return fetcher.Fetcher(datadir).fetch_files('holmefinal', 'n90d(2|4)0p(\\d\\d)\\.00(0|1|2|3|4)\\.in')
+def fileshighhk90():
+    return fetcher.Fetcher(datadir).fetch_files('holmefinal', 'n90d(6|8)0p(\\d\\d)\\.00(0|1|2|3|4)\\.in')
 
 baseprops = {
              'cuts.enabled': 'true',
@@ -42,7 +45,7 @@ baseprops = {
              'cuts.local':'true',
              'cuts.onlyonup':'true',
                           
-             'solver.maxTime': '1800',
+             'solver.maxTime': '7200',
              'solver.kind': 'PcpBranchAndCut',
              'branch.selection': '1',
              'branch.direction': '1',
@@ -88,6 +91,103 @@ baseprops = {
 			'solver.useCplexCuttingPlanes': 'false',
             'solver.useCplexPrimalHeuristic': 'false',
               }
+
+lowdens_final = create_runs(baseprops, [
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                }])
+
+lowdens_final_pruning = create_runs(baseprops, [               
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.minset': '5',
+                    'pruning.remaining': '20',
+                    'pruning.frac': '1.0',
+                    'pruning.useub': 'true',
+                         
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                }])
+
+lowdens_final_pruning_more = create_runs(baseprops, [               
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.minset': '5',
+                    'pruning.remaining': '30',
+                    'pruning.frac': '1.0',
+                    'pruning.useub': 'true',
+                         
+                    'solver.probing': '1',
+                    'solver.mipEmphasis': '3',
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                }])
+
+
+highdens_final = create_runs(update_copy(baseprops, {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                    'strategy.symmetry': 'UseLowerLabelFirst',                         
+                 }), [
+                {
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                }])
+
+highdens_final_pruning = create_runs(update_copy(baseprops, {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                    'strategy.symmetry': 'UseLowerLabelFirst',                         
+                 }), [
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.minset': '5',
+                    'pruning.remaining': '20',
+                    'pruning.frac': '1.0',
+                    'pruning.useub': 'true',
+                 
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                }])
+
+highdens_final_pruning_more = create_runs(update_copy(baseprops, {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                    'strategy.symmetry': 'UseLowerLabelFirst',                         
+                 }), [
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.minset': '5',
+                    'pruning.remaining': '30',
+                    'pruning.frac': '1.0',
+                    'pruning.useub': 'true',
+                 
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                }])
+
+
 
 hopefully_final_runs_vlow = create_runs(baseprops, [
                            {
