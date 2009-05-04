@@ -478,8 +478,9 @@ def model_bnc_highdens_runs():
     
 def final_bnc_runs():
     files = ['20110419LOWDENSFINAL', '20110419HIGHDENSFINAL']
+    fileshk = ['20110427LOWDENSFINALHK','20110427HIGHDENSFINALHK']
     
-    for file in files:
+    for file in fileshk:
         LatexProcessor(file).process(
                 ids=[metrics.FileName()],
                 datas=['solution.chi', 'solution.lb'], 

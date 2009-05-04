@@ -3,4 +3,41 @@
 \chapter{Conclusions}
 \label{sec:conclusions}
 
-Conclusions...
+The graph coloring problem is one of the most vastly studied problems on graphs. In this work, we studied one of its many variants: the partitioned graph coloring problem, or \PCP{}, which is closely related to the min-RWA problem in WDM networks. Our main objective was to solve this problem efficiently using binary integer programming techniques, eventually leading to a branch and cut algorithm.
+
+\section{Recapitulation}
+
+We built our initial model of the problem by generalizing the one proposed by Méndez-Díaz and Zabala in \cite{mendez2008cutting} for standard coloring, and experimented with multiple alternatives for expressing the constraints that shape the \PCP{}, as well as with different symmetry breaking constraints adapted from standard coloring. It soon became clear that the symmetry of solutions was one of the most difficult parts of this problem, as happens with standard coloring.
+
+A partial analysis of the polyhedron defined by our proposed model was made, in order to obtain valid inequalities to be used as cuts in the algorithm. We found out that most of the cuts present in \cite{mendez2008cutting} could be generalized to partitioned coloring, converting \textit{clique cuts} into \textit{extended clique cuts}, as well as \textit{independent set cuts} into \textit{component independent set cuts}. We also defined the concept of \textit{partition graph} for a partitioned graph, and defined how to migrate certain families of inequalities found in the former into the latter.
+
+Having done an analysis of the polyhedron, we focused in developing a strong heuristic for the problem, which would later be used not only as an initial heuristic to provide a starting integer solution for the algorithm, but also as a primal heuristic and as a component of the branching strategy. The chosen heuristic was actually an exact method, \textsc{dsatur}, which is an implicit enumeration algorithm, but produces solutions of very high quality very early in its exploration, thus executing it under a strict time bound makes it an excellent heuristic. Since \textsc{dsatur} is an algorithm for standard coloring, we tested different generalizations of it, eventually choosing the one proposed in \cite{Li00thepartition}, and introduced certain optimizations for our particular algorithm.
+
+Armed with several families of valid inequalities and an heuristic algorithm for our problem, we used them as building blocks for our branch and cut algorithm. Starting with a generic B\&C scheme provided by the \textsc{cplex} engine, we implemented a custom initial heuristic, primal heuristic, and branching strategy, as well as our set of cutting planes along with their separation procedures. A strong preprocessing stage allowed for larger instances to be handled by our algorithm.
+
+We made extensive testing of all of these custom artifacts, evaluating different configurations for each of them under different circumstances, and eventually fine-tuned our algorithm for it to handle different instances of the \PCP{}.
+
+\section{Results obtained}
+
+We obtained several results from the experimentation. First of all, we found out that our heuristic procedure quickly generated solutions very close to the optimum, and the most difficult part in the branch and cut algorithm was to improve the lower bound to prove the optimality of the solution. This made cutting planes play a critical part in our work.
+
+In the analysis we made of the polyhedron, making heavy use of \textsc{porta} for identifying the facets of particular instances of our model, we discovered that several families of the standard coloring problem were also found in our models, albeit with slight variations. Since the standard coloring problem can be considered a particular case of the \PCP{}, it is reasonable to deduce that a partial characterization of the latter can be derived from one of the former; this is the method we used to obtain valid inequalities for our problem. 
+
+We also found certain restrictions without an equivalent in the standard coloring polytope: this could have been either because they relate to a yet non-discovered facet of standard coloring, or because the addition of partitions to the problem introduces whole new families, pending to be studied.
+
+Regarding performance in comparison with \textsc{cplex}'s default MIP engine, our algorithm showed that the development of custom artifacts for the \PCP{} did generate a difference in the quality of the obtained solutions.
+
+Also, it was most interesting to find out that, compared to the other integer linear programming model existing in the literature (\cite{frota2010branch}), the model we used performs much better in graphs with low density, whereas this trend is exactly reversed in high density graphs. This proves that certain models may be more adequate than others for dealing with certain families of graphs. 
+
+Consequently, it is critical to identify for which families a particular model (and therefore, a particular algorithm) is more suitable than other, in order to find the correct tool for each particular problem. Discovering which properties of each graph family are being exploited by each model would also provide valuable insight for further optimizing the algorithms being developed.
+
+\section{Future work}
+
+There are several paths for continuing this work. The first of them is to dwelve deeper into the characterization of the \PCP{} polyhedron defined by the propsed model. Even though we presented certain inequalities in this work, there are yet many remaining to provide a complete description. This task has not been even accomplished for the standard coloring problem; nevertheless, there are certain inequalities found for coloring which we have not yet generalized into \PCP{}, such as multicolor inequalities, which could provide more cutting planes to work towards a more effective proof of optimality for the obtained solutions in the branch and cut. Since improving the lower bound was the most difficult task for our algorithm, implementing more families of cutting planes might yield some interesting improvements in terms of obtained gaps.
+
+Further analysis of the heuristic procedures developed is also a pending subject. In this work we evaluated the heuristic methods only with respect to their usefulness in the context of a branch and cut algorithm; however, these procedures have proved to obtain very good solutions by themselves, and an analysis of their performance as stand-alone long-running algorithms would be most interesting. To illustrate this point, for small graphs, the implicit enumeration done by partitioned \textsc{dsatur} actually proved the optimality of the solution it produced, much faster than its branch and cut counterpart.
+
+Testing the branch and cut algorithm under other scenarios is also another possibility for further development of this work. Throughout our experimentation, we evaluated our algorithm mostly in random graphs with two particular structures (binomial and clustered) with bounded partition sizes. Implementing an \textit{edge-disjoint} heuristic to generate graphs from actual WDM networks would provide the means to test our algorithm under real-world scenarios for the min-RWA problem.
+
+
+

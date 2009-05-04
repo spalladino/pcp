@@ -1,5 +1,5 @@
-Processing Runid 20110419LOWDENSFINAL
- Successfully loaded
+Processing Runid 20110427LOWDENSFINALHK
+. . . . . . . . . .  Successfully created and stored
 Data:
 \begin{itemize}
 \item solution.chi
@@ -16,14 +16,30 @@ Series:
  & solution.chi & solution.lb
 \\
 \hline
-EW 20 N=90 & [4, 4, 4, 3, 3] & [4.0, 4.0, 4.0, 3.0, 3.0]
+holmefinaln90d20p00 &  [4] & [4.0]
 \\
-EW 40 N=90 & [6, 6, 6, 6, 6] & [5.0, 5.0, 5.0, 5.0, 5.0]
+holmefinaln90d20p02 &  [4] & [4.0]
+\\
+holmefinaln90d20p04 &  [4] & [4.0]
+\\
+holmefinaln90d20p06 &  [4] & [4.0]
+\\
+holmefinaln90d20p08 &  [4] & [4.0]
+\\
+holmefinaln90d40p00 &  [7] & [7.0]
+\\
+holmefinaln90d40p02 &  [6] & [6.0]
+\\
+holmefinaln90d40p04 &  [6] & [6.0]
+\\
+holmefinaln90d40p06 &  [6] & [6.0]
+\\
+holmefinaln90d40p08 &  [7] & [7.0]
 \\
 \hline 
  \end{tabular}
-Processing Runid 20110419HIGHDENSFINAL
- Successfully loaded
+Processing Runid 20110427HIGHDENSFINALHK
+. . . . . . . . . .  Successfully created and stored
 Data:
 \begin{itemize}
 \item solution.chi
@@ -40,9 +56,25 @@ Series:
  & solution.chi & solution.lb
 \\
 \hline
-EW 60 N=90 & [8, 9, 9, 9, 9] & [6.0, 7.0, 7.0, 7.0, 7.0]
+holmefinaln90d60p00 & [10] & [10.0]
 \\
-EW 80 N=90 & [12, 12, 12, 12, 12] & [10.0, 11.0, 11.0, 11.0, '10.282']
+holmefinaln90d60p02 &  [8] & [7.0]
+\\
+holmefinaln90d60p04 &  [8] & [7.0]
+\\
+holmefinaln90d60p06 &  [8] & [8.0]
+\\
+holmefinaln90d60p08 &  [8] & [8.0]
+\\
+holmefinaln90d80p00 & [14] & [13.0]
+\\
+holmefinaln90d80p02 & [11] & [10.0]
+\\
+holmefinaln90d80p04 & [12] & [10.0]
+\\
+holmefinaln90d80p06 & [12] & [11.0]
+\\
+holmefinaln90d80p08 & [12] & [11.0]
 \\
 \hline 
  \end{tabular}

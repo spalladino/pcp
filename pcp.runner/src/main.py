@@ -17,6 +17,24 @@ import os
  
 def main():
 
+    files = f.dimacs
+    print 'Processing Final DIMACS Low Density: ', files
+    Fixture().newrun(
+                bnc.lowdens_final, 
+                files = files[9:],
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110427LOWDENSDIMACSCONT')
+    
+    files = f.dimacs
+    print 'Processing Final DIMACS High Density: ', files
+    Fixture().newrun(
+                bnc.highdens_final, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110427HIGHDENSDIMACS')
+
+def old():
+    
     files = bnc.fileslowhk90()
     print 'Processing Final Holme Kim BNC Low Density: ', files
     Fixture().newrun(
@@ -33,7 +51,7 @@ def main():
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20110427HIGHDENSFINALHK')
 
-def old():
+
    
     files = bnc.fileslow90()
     print 'Processing Final BNC Low Density: ', files
