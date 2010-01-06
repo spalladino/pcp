@@ -1,0 +1,23 @@
+package pcp.algorithms.coloring;
+
+import pcp.algorithms.AlgorithmException;
+import pcp.interfaces.IPartitionedGraph;
+
+
+public class PartitionsColoring extends Coloring {
+	
+	public PartitionsColoring(IPartitionedGraph graph) {
+		super(graph);
+	}
+
+	@Override
+	public Integer getChi() {
+		return graph.getPartitions().length;
+	}
+
+	@Override
+	public Integer getColor(int node) throws AlgorithmException {
+		throw new AlgorithmException("Color assignment for fixed coloring not implemented.");
+	}
+	
+}

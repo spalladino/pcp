@@ -1,0 +1,21 @@
+dir.porta=.\\..\\data\\porta\\
+
+file.basename=F03P2B
+
+writer.preprocess=false
+writer.validPoint=false
+
+porta.projectColors=false
+porta.nodeCount=6
+porta.colorCount=3
+
+coloring.colors=3
+
+# PaintExactlyOne, PaintAtLeastOne
+strategy.partition=PaintExactlyOne
+# AdjacentsLeqColor, AdjacentsLeqOne
+strategy.adjacency=AdjacentsLeqColor
+# None, UseLowerLabelFirst, OnlyUseColorIfNodesPainted
+strategy.symmetry=OnlyUseColorIfNodesPainted
+# Nodes, Partitions, Configuration
+strategy.coloring=Configuration

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pcp" basedir=".">
+	
+	<property name="run.inputfile" value="test.in" />
+	<property name="run.parameters" value="test.in" />
+	<property name="run.properties" value="" />
+	
+	<property name="main-class" value="pcp.Main" />
+	<property name="username" value="spalladino"/>
+	<property name="password" value="alpha01"/>
+	
+	<property name="remote.version" value="1.6" />
+	<property name="remote.dir" value="/home/spalladino/cplex/pcp/jar"/>
+	<property name="remote.host" value="socrates.srv.inv.dc.uba.ar"/>
+	<property name="remote.javabin" value="/usr/local/jdk1.6.0_16/bin/"/>
+	
+	<property name="cfg.dir" value="." />
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="../build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="lib.dir" value="../lib"/>
+	<property name="logs.dir" value="../logs"/>
+	<property name="data.dir" value="../data"/>
+
+	<property name="cplex.path" value="/local/ilog/cplex101/bin/ultrasparc64_9_8" />
+	<property name="cplex.jar" value="/local/ilog/cplex101/lib/cplex.jar" />
+	
+	<path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+	<target name="clean" description="Deletes output build directory">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="data" description="Copies the generated data to the server">
+		<fileset id="data.fileset" dir="${data.dir}" includes="**/*.in"/>
+		<scp todir="${username}:${password}@${remote.host}:${remote.dir}" trust="true">
+			<fileset refid="data.fileset" />
+		</scp>
+	</target>
+	
+	<target name="cleardata" description="Deletes the local data">
+		<fileset id="data.fileset" dir="${data.dir}" includes="**/*.in"/>
+		<delete>
+			<fileset refid="data.fileset" />
+		</delete>
+	</target>
+	
+	<target name="compile" description="Compiles all java classes in source directory">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" 
+			compiler="javac${remote.version}" target="${remote.version}" source="${remote.version}" />
+	</target>
+
+	<target name="jar" depends="compile" description="Creates a jar file from compiled classes">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="cplex.jar pcp.jar" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="deploy" depends="jar" description="Copies the generated jar to the running folder in the server">
+        <scp todir="${username}:${password}@${remote.host}:${remote.dir}" trust="true" 
+			file="${jar.dir}/${ant.project.name}.jar"/>
+		<scp todir="${username}:${password}@${remote.host}:${remote.dir}" trust="true">
+			<fileset dir="${cfg.dir}" includes="**/*.properties"/>
+		</scp>
+    </target>
+	
+	<target name="run" description="Runs the copied jar file from the server">
+		<buildnumber file="run.number"/>
+		<sshexec trust="true" host="${remote.host}" username="${username}" password="${password}" 
+			command="cd ${remote.dir};${remote.javabin}/java -d64 -Djava.library.path=${cplex.path} ${run.properties} -jar ${ant.project.name}.jar ${run.inputfile} ${build.number} ${run.parameters}"
+			output="${logs.dir}/log${build.number}.txt" />
+	</target>
+
+</project>

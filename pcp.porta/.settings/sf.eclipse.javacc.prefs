@@ -1,0 +1,9 @@
+#Mon Nov 09 20:06:28 GYT 2009
+CLEAR_CONSOLE=false
+JJ_NATURE=true
+JTB_OPTIONS=-p\=pcp.porta.parser
+RUNTIME_JAR=E\:/Eclipse/plugins/sf.eclipse.javacc_1.5.16/javacc.jar
+RUNTIME_JTBJAR=E\:/Eclipse/plugins/sf.eclipse.javacc_1.5.16/jtb132.jar
+SHOW_CONSOLE=true
+SUPPRESS_WARNINGS=true
+eclipse.preferences.version=1

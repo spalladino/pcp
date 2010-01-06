@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="porta" basedir="..">
+	
+	<property name="pcp.porta.dir" value="./pcp.porta" />
+	<property file="${pcp.porta.dir}/porta.properties" />
+	
+	<property name="main-class" value="pcp.porta.Main" />
+	
+	<property name="data.dir" value="./data/porta" />
+	<property name="data.abs.dir" value="${basedir}/data/porta" />
+	
+	<property name="src.dir" value="${pcp.porta.dir}/src" />
+	<property name="build.dir" value="./build" />
+	<property name="lib.dir" value="./lib"/>
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="classes.pcp.dir" value="${classes.dir}/pcp"/>
+	
+	<property name="pcp.antfile" value="./pcp/socrates.xml" />
+	
+	<path id="buildpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+		<fileset dir="${classes.pcp.dir}" includes="**/*.class"/>
+	</path>
+	
+	<path id="classpath" path="${classes.dir}" >
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<target name="clean" description="Deletes output build directory">
+		<delete dir="${build.dir}" />
+	</target>
+	
+	<target name="dependencies" description="Builds dependent projects">
+		<ant antfile="${pcp.antfile}" target="compile" inheritall="false" />
+	</target>
+	
+	<target name="compile" depends="dependencies" description="Compiles all java classes in source directory">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="buildpath" />
+	</target>
+	
+	<target name="jar" depends="compile" description="Creates a jar file from compiled classes">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="${cplex.jar}" />
+			</manifest>
+		</jar>
+	</target>
+
+    <target name="ieq" depends="compile" description="Generates initial ieq from graph file">
+    	<java classpathref="classpath" classname="${main-class}">
+    		<arg value="--ieq"/>	
+    	</java>
+    </target>
+	
+	<target name="model" depends="compile" description="Processes existing ieq and outputs a model file">
+    	<java classpathref="classpath" classname="${main-class}">
+    		<arg value="--process"/>	
+    	</java>
+    </target>
+
+	<target name="name" description="Returns name for a configuration run">
+    	<java classpathref="classpath" classname="${main-class}" outputproperty="file.detailedname">
+    		<arg value="--name"/>	
+    	</java>
+    </target>
+	
+	<target name="vint" depends="name" description="Generates all integral points from an ieq">
+    	<java classpathref="classpath" classname="${main-class}">
+    		<arg value="--poi"/>	
+    	</java>
+	</target>
+	
+	<target name="traf" depends="name" description="Generates the convex hull from a poi">
+		<exec executable="bash">
+			<arg value="traf"/>
+			<arg value="${data.abs.dir}/${file.detailedname}.poi"/>
+		</exec>
+	</target>
+
+	<target name="hull" depends="ieq, vint, traf, model" description="Generates convex hull model from graph">
+		<echo message="Generated model in ${file.detailedname}.model from ${file.basename}.in" />	
+	</target>
+	
+</project>
