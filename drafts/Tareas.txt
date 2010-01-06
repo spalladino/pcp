@@ -1,0 +1,20 @@
+Desigualdades Válidas
+---------------------
+
+- Clique
+
+- Independent set
+  - Hole, Anti hole, Path
+  - Implementar usando GSL y Nikolo
+  
+- Block color
+
+- Neighbourhood
+
+- Inclusion de vecindades
+  - Ojo que elimina soluciones validas
+
+Algoritmos
+----------
+
+- DSATUR

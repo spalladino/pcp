@@ -1,0 +1,118 @@
+\documentclass[a4paper]{article}
+%\usepackage[spanish]{babel}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+
+\newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
+\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+
+\newlength{\margen}
+\setlength{\margen}{1in}
+\setlength{\textwidth}{\paperwidth}\addtolength{\textwidth}{-2\margen}
+\setlength{\textheight}{\paperheight}\addtolength{\textheight}{-2\margen}
+\setlength{\topmargin}{\margen}\addtolength{\topmargin}{-38mm}
+\setlength{\oddsidemargin}{\margen}\addtolength{\oddsidemargin}{-26mm}
+\setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-26mm}
+
+\begin{document}
+
+\section*{Definiciones}
+
+Un grafo particionado $G$ es una tupla $<V,E,P>$ de nodos, ejes y particiones, con $n$, $m$ y $q$ el cardinal de cada conjunto respectivamente. Llamamos $C$ al conjunto de etiquetas de colores, formado por los naturales del $1$ hasta una cota superior (a lo sumo $q$).
+
+\section*{Desigualdades válidas}
+
+\begin{enumerate}
+
+\item
+
+\emph{Cortes clique:} Dada $K$ una clique del grafo, entonces vale, en CP y en PCP, que cada color podrá ser usado a lo sumo una vez entre los vértices de dicha clique; notar que como en PCP se eliminan los ejes dentro de cada partición, una clique y una component clique coinciden.
+
+\[
+\sum _{v \in K} x_{vj_0} \leq w_{j_0} \hspace{10pt} \forall j_0 \in J
+\]
+
+Estos cortes se pueden extender a un subgrafo inducido $K$ que cumple que para todo par de nodos $v,w \in K$, o bien son adyacentes, o bien pertenecen a una misma partición. La restricción resulta igual a la anterior.
+
+\item 
+
+\emph{Conjunto independiente:} Dado $I$ un maximum independent set en CP o un maximum component independent set\footnote{Un component independent set es un independent set donde cada nodo pertenece a una particion distinta.} en PCP, y dado $\alpha$ su cardinal; vale que el total de nodos que usa un determinado color no puede superar dicho cardinal (pues de lo contrario habría un independent set mayor, lo que es absurdo).
+
+\[
+\sum _{v \in V} x_{vj_0} \leq \alpha(G) w_{j_0} \hspace{10pt} \forall j_0 \in J
+\]
+
+Incluyendo las restricciones de eliminación de simetría, en CP esta desigualdad pasa a reforzarse. 
+
+\[
+\sum _{v \in V} x_{vj_0} + \sum ^n _{j = n - \alpha(G) + 1} \sum _{v \in V} x_{vj} \leq \alpha(G) w_{j_0} + w_{n - \alpha(G) + 1} \hspace{10pt} \forall j_0 \leq n - \alpha(G)
+\]
+
+El análogo en PCP sería reemplazando la cantidad de nodos por la de particiones $p$, pues el máximo para el número cromático es $|P|$.
+
+\[
+\sum _{v \in V} x_{vj_0} + \sum ^p _{j = p - \alpha(G) + 1} \sum _{v \in V} x_{vj} \leq \alpha(G) w_{j_0} + w_{p - \alpha(G) + 1} \hspace{10pt} \forall j_0 \leq p - \alpha(G)
+\]
+
+\textbf{Ver:} si se obtiene una cota más ajustada que $p$ para $\chi$, puede reemplazarse en la expresión anterior?
+
+\item
+
+\emph{Hole, Anti hole y Path:} Se derivan de la desigualdad anterior de conjunto independiente. Recordar que dicho conjunto debe ser un component independent set para el caso de PCP. 
+
+Dados $C_k$, $\overline{C_k}$, $P_k$ un hole, un anti hole y un camino respectivamente, todos ellos de longitud $k$; entonces vale que el cardinal del maximum component independent set es $\lfloor k/2 \rfloor$, $2$ y $\lceil k/2 \rceil$ respectivalemente. Reemplazando estos valores en la fórmula de independent set se tienen 3 desigualdades.
+
+\item
+
+\emph{Block color:} Dado un vértice y un color en particular, todos los coloreos que se hagan de ese vértice con colores de mayor índice deben estar acotados por el uso del primer color elegido, pues no puede usarse un color si no se usaron todos los de etiqueta menor. En CP, esto se traduce a:
+
+\[
+\sum_{j \geq j_0} x_{i_0j} \leq w_{j_0} \hspace{10pt} \forall i_0 \in V, j_0 \in C
+\]
+
+En PCP esto puede generalizarse predicando sobre una partición completa:
+
+\[
+\sum_{j \geq j_0} \sum_{v_i \in p_0} x_{i_0j} \leq w_{j_0} \hspace{10pt} \forall p_0 \in P, j_0 \in C
+\]
+
+\item
+
+\emph{Neighbourhood:} Sean $N(v)$ el vecindario de $v$, $\delta(v)$ su cardinal y $r = \alpha(\delta(v))$ el cardinal de un maximum independent set de $N(v)$, y un color $j_0$. Entonces o bien el nodo $v$ tiene el color $j_0$, o bien a lo sumo $r$ vecinos lo tienen. Esto comprime muchas desigualdades de tipo \textit{nodos adyacentes tienen distinto color}. Debería ser válido para cualquier $r$ que sea cota superior de un maximum independent set.
+
+\[
+\sum_{i \in N(i_0)} x_{ij_0} + r x_{i_0j_0} \leq w_{j_0} \hspace{10pt} \forall i_0 \in V, j_0 \in C
+\]
+
+Esta desigualdad puede llevarse idénticamente a PCP tomando $r$ como cota superior de un maximum component independent set, valor que está acotado por la cantidad de particiones que hay determinadas en $N(v)$.
+
+\textbf{Ver:} puede reforzarse aprovechando la desigualdad de colores, del mismo modo que se refuerza independent set?
+
+\textbf{Ver:} funciona igual en PCP si se predica sobre un not-component independent set y se toma a $r$ como cota superior del cardinal de las particiones cubiertas, en lugar de vértices?
+
+\item
+
+\emph{Inclusión de vecindades:} Dados dos vértices de una misma partición, $v_0$ y $v_1$, si $N(v_0) \subseteq N(v_1)$, entonces es posible eliminar $v_1$ completamente del grafo. Esto se hace durante la etapa de preprocesamiento.
+
+Pero durante la ejecución del algoritmo, si se determina que un nodo tiene cierto color, entonces es posible eliminar todos los demás nodos de la partición, lo que se hace seteando igual a cero (mediante las desigualdades del modelo) las variables correspondientes a dichos nodos para todos los colores. Esto último modifica los neighbourhoods de todos los nodos adyacentes a los eliminados y escapa al preprocesamiento. Por lo tanto se agrega la propiedad enunciada como constraint, considerando eliminados los nodos iguales a cero.
+
+\[
+\sum_{j \in C} \sum_{i \in N(v_0) - N(v_1)} x_{ij} = 0 \Longrightarrow \sum_{j \in C} x_{v_1j} = 0 \hspace{10pt}
+\]
+
+Es decir, si todos los nodos de $N(v_0) - N(v_1)$ fueron eliminados, entonces vale $N(v_0) \subseteq N(v_1)$, con lo cual se puede eliminar el nodo $v_1$. Traducido sin implicancias lógicas:
+
+\[
+\sum_{j \in C} \left[ x_{v_1j} - \sum_{i \in N(v_0) - N(v_1)} x_{ij} \right] \leq 0 \hspace{10pt}
+\]
+
+Notar que este corte puede eliminar soluciones válidas enteras, pero asegura que siempre mantiene alguna óptima.
+
+\end{enumerate}
+
+\end{document}

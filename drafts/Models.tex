@@ -1,0 +1,164 @@
+\documentclass[a4paper]{article}
+%\usepackage[spanish]{babel}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+
+\newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
+\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+
+\newlength{\margen}
+\setlength{\margen}{1in}
+\setlength{\textwidth}{\paperwidth}\addtolength{\textwidth}{-2\margen}
+\setlength{\textheight}{\paperheight}\addtolength{\textheight}{-2\margen}
+\setlength{\topmargin}{\margen}\addtolength{\topmargin}{-38mm}
+\setlength{\oddsidemargin}{\margen}\addtolength{\oddsidemargin}{-26mm}
+\setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-26mm}
+
+\begin{document}
+
+\section{Classic Coloring}
+
+\subsection{$\mathcal{SCP}$}
+
+Every variable $x_ij$ is true if vertex $i$ is colored with color $j$. Variables $w_j$ are true if color $j$ is used in coloring the graph. Therefore, the goal is to minimize the sum of $w_j$.
+
+\begin{lpmodel}
+\lpobjective{Minimize sum of colors used}
+{\min \sum _{i,j} x_{ij}}
+
+\lprestriction{Every vertex has exactly one colour assigned}
+{\sum _j x_{ij} = 1}{\forall i \in V}
+\lprestriction{Neighbours shall not have the same colour, and variable $w_j$ must be true if the color is to be used}
+{x_{ij} + x_{kj} \leq w_j}{\forall j, \forall (i,k) \in E}
+\end{lpmodel}
+
+\subsection{$\mathcal{CP}$}
+
+Adds to the classical formulation the restriction that for any color to be used, all colors lower than it must have been used as well. This reduces a huge amount of symmetrical formulations.
+
+\begin{lpmodel}
+\lprestriction{A color variable is true only if it has been actually used (added only for performance, the minimization goal should guarantee this restriction)}
+{w_j \leq \sum _i x_{ij}}{\forall j}
+\lprestriction{For a color variable to be true its predecessor must be true as well}
+{w_j \geq w_{j+1}}{\forall j}
+\end{lpmodel}
+
+\subsection{$\mathcal{CP}-1$}
+
+Adds to the classical formulation the restriction that any used color must color less vertices than the previous one. This is a stronger restriction than the previous one.
+
+\begin{lpmodel}
+\lprestriction{A color variable is true only if it has been actually used (added only for performance, the minimization goal should guarantee this restriction)}
+{w_j \leq \sum _i x_{ij}}{\forall j}
+\lprestriction{The lower the index the more vertices colored}
+{\sum _i x_{ij} \geq \sum _i x_{ij+1}}{\forall j}
+\end{lpmodel}
+
+\subsection{$\mathcal{CP}-2$}
+
+Instead of breaking symmetries by using the cardinal of an independent set, the index of the first coloured vertex is used. Therefore, the coloring of every independent set is determined by the lowest vertex index in the set.
+
+\begin{lpmodel}
+\lprestriction{Vertex $i$ can use color $j$ only if any other vertex is using color $j-1$, this ensures that $j < i$.}
+{x_{ij} \leq \sum _{k=j-1}^{i-1} x_{kj-1}}{\forall i, \forall j < i}
+\end{lpmodel}
+
+\subsection{\textsl{REP}}
+
+Formulation by representatives. Does not have any symmetry breaking contraints. Variables $x_{ij}$ are true iif vertex $i$ represents the color of $j$. 
+
+\begin{lpmodel}
+\lpobjective{Minimize the number of colors used via representatives}
+{\min \sum_v x_{vv}}
+\lprestriction{Every vertex must have a representative}
+{\sum _{u \in A(v)} x_{uv} \geq 1}{\forall u \in V}
+\lprestriction{Adjacent vertices must have different representatives}
+{x_{uv} + x_{uw} \geq x_{uu}}{\forall u \in V, (vw) \in E(A(u))}
+\end{lpmodel}
+
+\subsection{\textsl{CCF04}}
+
+Formulation by representatives with vertex ordering to break symmetry. Variables $x_{ij}$ are true iif vertex $i$ represents the color of $j$. Vertex $i$ can represent $j$ iif $i < j$. Uses definitions of in and out anti neighbourhood of a vertex.
+
+\begin{lpmodel}
+\lpobjective{Minimize the number of colors used via representatives}
+{\min \sum_v x_{vv}}
+\lprestriction{Every vertex must have at least a representative}
+{x_{uu} + \sum _{u \in A_\leq(u)} x_{wu} \geq 1}{\forall u \in V - S}
+\lprestriction{Adjacent vertices must have different representatives}
+{x_{uv} + x_{uw} \geq x_{uu}}{\forall u \in V - T, (vw) \in E(A_\geq(u))}
+\lprestriction{Adjacent vertices must have different representatives}
+{x_{uz} \leq x_{uu}}{\forall u \in V - T, isolated(z,A_\geq(u))}
+\end{lpmodel}
+
+
+\section{Partition Coloring}
+
+\subsection{Representatives}
+
+By Frota, Maculan, Ribeiro, Noronha. Has symmetry in feasable solutions. Based on the formulation by representatives of classic coloring problem.
+
+\subsubsection*{Definitions:}
+
+\begin{itemize}
+\item{$A(u)$ = Anti neighbourhood of vertex $u$ (vertices of G not adjacent to $u$)}
+\item{$A_P(u)$ = Component anti neighbourhood of vertex $u$ (vertices of $G$ not adjacent to $u$ that are in a different partition)}
+\item{$A'_P(u)$ = Component anti neighbourhood of vertex $u$ plus the vertex $u$ ($A_P(u) \cup \{u\}$)}
+\item{Isolated = Vertex $v \in A_P(u)$ is isolated in $A_P(u)$ if vertex $v$ has no adjacent vertices in $A_P(u)$}
+\end{itemize}
+
+\begin{lpmodel}
+
+\lpobjective{Minimize number of colors by minimizing representatives}
+{\min \sum_{u \in V} x_{uu}}
+
+\lprestriction{Each component has at least one coloured vertex}
+{\sum_{u \in Q_P} \sum_{v \in A'_P(u)} x_{vu} \geq 1}{\forall p = 1,\ldots,q}
+
+\lprestriction{Adjacent vertices have different representatives (ie colours)}
+{x_{uv} + x_{uw} \leq x_{uu}}{\forall u \in V, \forall (v,w) \in E : v,w \in A_P{u} \wedge P[v] \neq P[w]}
+
+\lprestriction{A vertex must be represented by a representative}
+{x_{uv} \leq x_{uu}}{\forall u \in V, \forall v \in A_P(u) : isolated(v, A_P(u))}
+
+\end{lpmodel}
+
+\subsection{Representatives II}
+
+Formulation by representatives of PCP with asymmetry, prevents a vertex from having multiple representatives. A vertex $u$ can only represent the color of a vertex $v$ if $P[u] \leq P[v]$.
+
+\subsubsection*{Definitions:}
+
+\begin{itemize}
+\item{$A_{P\geq}(u)$ = Out anti neighbourhood of vertex $u$, vertices that cannot represent vertex $u$}
+\item{$A_{P\leq}(u)$ = In anti neighbourhood of vertex $u$, vertices that can represent vertex $u$}
+\item{$V^e$ = All elementary vertices, all sets that are alone in their partitions and are therefore guaranteed to be coloured}
+\item{$V^0$ = All elementary vertices that are reprensentatives, this is, that have an empty in anti neighbourhood}
+\item{$Q^0$ = Partitions that correspond to vertices in $V^0$}
+\end{itemize}
+
+\begin{lpmodel}
+
+\lpobjective{Minimize colors by minimizing vertices}
+{\min \sum_{v \in V - V^0} x_{vv} + |V^0|}
+
+\lprestriction{Every vertex guaranteed to be coloured and representative is forced equal to 1 and the variable removed}
+{x_{vv} = 1}{\forall v \in V^0}
+
+\lprestriction{Each component has at least one coloured vertex, restricts representative to in anti neighbourhood}
+{\sum_{u \in Q_P} \sum_{v \in A'_{P\leq}(u)} x_{vu} \geq 1}{\forall Q_p \in Q - Q^0}
+
+\lprestriction{Adjacent vertices have different representatives (ie colours), restricting representative search}
+{x_{uv} + x_{uw} \leq x_{uu}}{\forall u \in V, \forall (v,w) \in E : v,w \in A_{P\geq}{u} \wedge P[v] \neq P[w]}
+
+\lprestriction{A vertex must be represented by a representative, restricting representative search}
+{x_{uv} \leq x_{uu}}{\forall u \in V, \forall v \in A_{P\geq}(u) : isolated(v, A_{P\geq}(u))}
+
+\end{lpmodel}
+
+\end{document}

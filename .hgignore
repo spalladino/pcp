@@ -4,3 +4,7 @@ build
 porta.log
 bin
 logs
+drafts/*.aux
+drafts/*.bbl
+drafts/*.blg
+drafts/*.log
