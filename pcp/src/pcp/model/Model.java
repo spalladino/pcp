@@ -33,6 +33,14 @@ public class Model {
 		return ws;
 	}
 	
+	public IloIntVar x(int i, int j) {
+		return xs[i][j];
+	}
+	
+	public IloIntVar w(int j) {
+		return ws[j];
+	}
+	
 	public IloObjective getObjective() {
 		return objective;
 	}

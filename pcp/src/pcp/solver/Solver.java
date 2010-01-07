@@ -4,11 +4,12 @@ import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
 import ilog.cplex.IloCplex.UnknownObjectException;
+import pcp.interfaces.IModelData;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.model.Model;
 
 
-public class Solver extends AbstractSolutionData  {
+public class Solver extends AbstractSolutionData implements IModelData  {
 	
 	IloCplex cplex;
 	Model model;
@@ -77,6 +78,16 @@ public class Solver extends AbstractSolutionData  {
 	@Override
 	public IPartitionedGraph getGraph() {
 		return model.getGraph();
+	}
+
+	@Override
+	public double w(int j) throws UnknownObjectException, IloException {
+		return cplex.getValue(model.w(j));
+	}
+
+	@Override
+	public double x(int i, int j) throws UnknownObjectException, IloException {
+		return cplex.getValue(model.x(i,j));
 	}
 	
 }
