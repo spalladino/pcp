@@ -23,6 +23,10 @@ public class Node implements Comparable<Node> {
 	public boolean isAdjacent(Node n) {
 		return graph.areAdjacent(this, n);
 	}
+
+	public boolean isAdjacentOrSamePartition(Node n) {
+		return (graph.areAdjacent(this, n)) || (getPartition() == n.getPartition());
+	}
 	
 	public Partition getPartition() {
 		return graph.getPartition(this);

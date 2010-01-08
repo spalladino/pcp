@@ -29,4 +29,11 @@ public class ArrayUtils {
 		
 		return (j == contained.length);
 	}
+	
+	public static <T> T[] concat(T[] a, T[] b, T[] target) {
+		   T[] c = target;
+		   System.arraycopy(a, 0, c, 0, a.length);
+		   System.arraycopy(b, 0, c, a.length, b.length);
+		   return c;
+		}
 }

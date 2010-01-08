@@ -9,4 +9,8 @@ public interface IModelData {
 
 	double x(int i, int j) throws UnknownObjectException, IloException;
 	
+	double[] getColorValues() throws UnknownObjectException, IloException;
+
+	double[] getNodeValues(int node) throws UnknownObjectException, IloException;
+	
 }
