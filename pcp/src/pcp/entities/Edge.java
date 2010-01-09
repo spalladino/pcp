@@ -48,7 +48,7 @@ public class Edge {
 	
 	@Override
 	public String toString() {
-		return String.format("(%1$s,%2$s)", node1.index(), node2.index());
+		return String.format("E(%1$s,%2$s)", node1.index(), node2.index());
 	}
 	
 	

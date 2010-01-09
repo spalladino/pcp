@@ -1,6 +1,5 @@
 package pcp.model;
 
-import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
@@ -17,8 +16,13 @@ public class Model {
 	
 	protected int colors;
 	
-	public Model(PartitionedGraph graph) throws IloException {
+	public Model(PartitionedGraph graph) {
 		this.graph = graph;
+	}
+	
+	public Model(PartitionedGraph graph, int colors) {
+		this(graph);
+		this.colors = colors;
 	}
 
 	public boolean isTrivial() {

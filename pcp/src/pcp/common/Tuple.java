@@ -54,7 +54,7 @@ public class Tuple<T,S> {
 	
 	@Override
 	public String toString() {
-		return "<" + (first == null ? "null" : first) + ","
-				+ (second == null ? "null" : second) + ">";
+		return "<" + (first == null ? "null" : first.toString()) + ","
+				+ (second == null ? "null" : second.toString()) + ">";
 	}
 }

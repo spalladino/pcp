@@ -14,7 +14,7 @@ public abstract class AbstractSolutionData implements ISolutionData {
 
 	@Override
 	public int getNodeColor(int node) throws IloException {
-		double[] nodeColors = getNodeValues(node);
+		double[] nodeColors = xs(node);
 		for (int c = 0; c < nodeColors.length; c++) {
 			if (doubleEquals(nodeColors[c], 1.0)) {
 				return c;
@@ -25,7 +25,7 @@ public abstract class AbstractSolutionData implements ISolutionData {
 	@Override
 	public List<Integer> getColorsUsed() throws IloException {
 		List<Integer> used = new ArrayList<Integer>();
-		double[] colorValues = getColorValues();
+		double[] colorValues = ws();
 		for (int c = 0; c < colorValues.length; c++) {
 			if (isTrue(colorValues[c])) {
 				used.add(c);

@@ -58,5 +58,10 @@ public class Node implements Comparable<Node> {
 		return ((Integer)name).compareTo(o.name);
 	}
 	
+	@Override
+	public String toString() {
+		return "X" + this.index();
+	}
+	
 	
 }

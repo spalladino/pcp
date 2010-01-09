@@ -27,9 +27,9 @@ public class Verifier {
 	}
 
 	private void colorVariablesAreSet() throws IloException, AlgorithmException {
-		double[] colorValues = solver.getColorValues();
+		double[] colorValues = solver.ws();
 		for (Node n : graph.getNodes()) {
-			double[] nodeColors = solver.getNodeValues(n.index());
+			double[] nodeColors = solver.xs(n.index());
 			for (int c = 0; c < nodeColors.length; c++) {
 				if (isTrue(nodeColors[c]) && !isTrue(colorValues[c])) {
 					throw new AlgorithmException("Node " + n.index() + " uses color " + c + " whose variable is unset.");
@@ -53,7 +53,7 @@ public class Verifier {
 		for (Partition p : graph.getPartitions()) {
 			int coloredCount = 0;
 			for (Node n : p.getNodes()) {
-				double[] nodeColors = solver.getNodeValues(n.index());
+				double[] nodeColors = solver.xs(n.index());
 				int nodeColorsCount = 0;
 				for (int c = 0; c < nodeColors.length; c++) {
 					if (doubleEquals(nodeColors[c], 1.0)) {

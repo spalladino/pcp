@@ -164,8 +164,9 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		mustRecreate = false;
 	}
 	
-	public void createNodes(int count) {
+	public PartitionedGraphBuilder createNodes(int count) {
 		createNodes(0, count);
+		return this;
 	}
 	
 	public void createNodes(int from, int count) {
@@ -174,14 +175,16 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		}
 	}
 	
-	public void addNode(int node, int partition) {
+	public PartitionedGraphBuilder addNode(int node, int partition) {
 		Node n = getCreateNode(node);
 		Partition p = getCreatePartition(partition);
 		partitionNodes.get(p).add(n);
 		nodePartition.put(n, p);
+		
+		return this;
 	}
 	
-	public void addEdge(int n1, int n2) {
+	public PartitionedGraphBuilder addEdge(int n1, int n2) {
 		Node node1 = getCreateNode(n1);
 		Node node2 = getCreateNode(n2);
 		
@@ -189,6 +192,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		
 		nodeAdjacencies.get(node1).add(node2);
 		nodeAdjacencies.get(node2).add(node1);
+		
+		return this;
 	}
 	
 	public boolean hasNode(int val) {

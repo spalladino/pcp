@@ -10,6 +10,7 @@ import pcp.common.Predicate;
 import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
+import pcp.interfaces.IModelData;
 import pcp.utils.Def;
 
 /**
@@ -22,6 +23,7 @@ public class ExtendedCliqueDetector {
 	
 	IAlgorithmSource provider;
 	IAlgorithmBounder bounder;
+	IModelData data;
 
 	List<Integer> colors;
 	
@@ -37,6 +39,9 @@ public class ExtendedCliqueDetector {
 	int colorCount = 0;
 	int maxColorCount = Integer.MAX_VALUE;
 	
+	int cliquesFromBrokenCount = 0;
+	int maxCliquesFromBroken = Integer.MAX_VALUE;
+	
 	double maxColorValue = 0.9;
 	double minInitialNodeValue = 0.001;
 	double minCandidateNodeValue = 0.0001;
@@ -45,26 +50,27 @@ public class ExtendedCliqueDetector {
 	
 	public ExtendedCliqueDetector(IAlgorithmSource provider) {
 		super();
-		this.bounder = provider;
 		this.provider = provider;
-		this.colors = provider.getSortedColors(Def.ASC, false, false);
+		this.bounder = provider.getBounder();
+		this.data = provider.getData();
+		this.colors = provider.getSorted().getSortedFractionalColors(Def.ASC);
 	}
 	
-	public void run() throws Exception {
+	public void run() {
 		
 		for (Integer color : this.colors) {
-			valueWj = provider.w(color);
+			valueWj = data.w(color);
 			if (this.colorCount++ > maxColorCount || valueWj > maxColorValue) return; 
 			
 			// Initializations for current color
-			this.graph = provider.getSortedGraph(color, Def.DESC);
+			this.graph = provider.getSorted().getSortedGraph(color, Def.DESC);
 			this.nodes = this.graph.getNodes();
 			this.visited = new boolean[nodes.length];
 			this.excludeVisitedIndices = createExcludeVisitedIndicesPredicate(visited);
 			
 			// Iterate over every initial node
 			for (int i = 0; i < nodes.length; i++) {
-				if (provider.x(i, color) < minInitialNodeValue) return;
+				if (data.x(i, color) < minInitialNodeValue) continue;
 				clique = new ArrayList<Node>(nodes.length/2);
 				clique(i, color);
 			}
@@ -72,11 +78,11 @@ public class ExtendedCliqueDetector {
 		
 	}
 
-	private void clique(int initialIndex, int color) throws Exception {
+	private void clique(int initialIndex, int color) {
 		// Initialize clique with initial node
 		Node initial = nodes[initialIndex];
 		clique.add(initial);
-		valueSumXij = provider.x(initialIndex, color);
+		valueSumXij = data.x(initialIndex, color);
 		visited[initialIndex] = true;
 		
 		// Candidates to be in the clique will be neighbour/copartitioned nodes to initial
@@ -89,20 +95,21 @@ public class ExtendedCliqueDetector {
 			
 			// Add first candidate to clique
 			Node y = candidates.poll();
-			valueSumXij += provider.x(y.index(), color);
-			if (provider.x(y.index(), color) < minCandidateNodeValue) return;
+			valueSumXij += data.x(y.index(), color);
+			if (data.x(y.index(), color) < minCandidateNodeValue) return;
 			clique.add(y);
 			
 			// Remove from candidates those that are not in adjacents or y partition
-			LinkedList<Node> removed = removeFrom(candidates, graph.getNeighboursPlusCopartition(y));
+			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y));
 			
 			// Exploit the clique if it breaks the ineq, backtrack if no more candidates
-			if (valueSumXij > valueWj) {
-				breakingClique(candidates);
+			if (valueSumXij > valueWj + Def.Epsilon) {
+				cliquesFromBrokenCount = 0;
+				breakingClique(candidates, color);
 				if (!bounder.check()) return;
 			}  else if (backtrackLastCandidate && candidates.isEmpty() && !removed.isEmpty()) {
 				clique.remove(clique.size()-1);
-				valueSumXij -= provider.x(y.index(), color);
+				valueSumXij -= data.x(y.index(), color);
 				candidates = removed;
 			}
 		}
@@ -118,17 +125,32 @@ public class ExtendedCliqueDetector {
 		} return ret;
 	}
 
-	private void breakingClique(LinkedList<Node> candidates) {
-		// TODO Auto-generated method stub
-		
+	private void breakingClique(LinkedList<Node> candidates, int color) {
+		if (candidates.isEmpty()) {
+			provider.getCutBuilder().addClique(clique, color);
+			if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+		} else {
+			Node y = candidates.poll();
+			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y));
+			clique.add(y);
+			breakingClique(candidates, color);
+			if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+			if (!removed.isEmpty()) {
+				candidates.addAll(removed);
+				clique.remove(clique.size()-1);
+				breakingClique(candidates, color);
+				if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+			}
+		}
 	}
 
 	// TODO: Optimize based on sorting!
-	private LinkedList<Node> removeFrom(LinkedList<Node> nodes, Node[] toRemove) {
-		List<Node> remove = Arrays.asList(toRemove);
+	@SuppressWarnings("unchecked")
+	private LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] toRetain) {
+		List<Node> retain = Arrays.asList(toRetain);
 		LinkedList<Node> clone = (LinkedList<Node>) nodes.clone();
-		nodes.removeAll(remove);
-		clone.retainAll(remove);
+		nodes.retainAll(retain);
+		clone.removeAll(retain);
 		
 		return clone;
 	}

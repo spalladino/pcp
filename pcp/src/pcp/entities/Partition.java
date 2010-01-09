@@ -54,5 +54,10 @@ public class Partition implements Comparable<Partition> {
 	public void setData(Object data) {
 		this.data = data;
 	}
+	
+	@Override
+	public String toString() {
+		return "P" + this.index();
+	}
 
 }

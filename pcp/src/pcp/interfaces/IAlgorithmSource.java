@@ -1,20 +1,18 @@
 package pcp.interfaces;
 
-import java.util.List;
-
 import pcp.algorithms.bounding.IAlgorithmBounder;
-import pcp.common.sorting.NodeColorValueComparator;
-import pcp.entities.SortedPartitionedGraph;
 import pcp.model.Model;
 
 
-public interface IAlgorithmSource extends IModelData, IAlgorithmBounder {
+public interface IAlgorithmSource {
 
-	SortedPartitionedGraph getSortedGraph(int color, boolean asc);
+	IAlgorithmBounder getBounder();
 	
-	NodeColorValueComparator getNodeComparator(int color, boolean asc);
+	ICutBuilder getCutBuilder();
 	
-	List<Integer> getSortedColors(boolean asc, boolean includeZeros, boolean includeOnes);
+	IModelData getData();
+	
+	ISortedProvider getSorted();
 	
 	Model getModel();
 	

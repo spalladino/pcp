@@ -28,9 +28,9 @@ public class Printer {
 
 	public void printVerboseSolution() throws IloException {
 		out.println("Solution values:");
-		out.println("W: " + Arrays.toString(solver.getColorValues()));
+		out.println("W: " + Arrays.toString(solver.ws()));
 		for (int n = 0; n < solver.getGraph().getNodes().length; n++) {
-			out.println("X[" + n + "]: " + Arrays.toString(solver.getNodeValues(n)));
+			out.println("X[" + n + "]: " + Arrays.toString(solver.xs(n)));
 		}
 		out.println();
 	}

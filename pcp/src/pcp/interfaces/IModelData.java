@@ -1,16 +1,15 @@
 package pcp.interfaces;
 
-import ilog.concert.IloException;
-import ilog.cplex.IloCplex.UnknownObjectException;
 
 public interface IModelData {
 
-	double w(int j) throws UnknownObjectException, IloException;
+	double w(int j);
 
-	double x(int i, int j) throws UnknownObjectException, IloException;
+	double x(int i, int j);
 	
-	double[] getColorValues() throws UnknownObjectException, IloException;
+	double[] ws();
 
-	double[] getNodeValues(int node) throws UnknownObjectException, IloException;
+	double[] xs(int node);
+
 	
 }

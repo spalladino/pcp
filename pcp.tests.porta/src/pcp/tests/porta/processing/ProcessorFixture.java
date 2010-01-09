@@ -1,18 +1,5 @@
 package pcp.tests.porta.processing;
 
-import java.util.List;
-
-import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import pcp.porta.model.Constraint;
-import pcp.porta.model.Family;
-import pcp.porta.model.Model;
-import pcp.porta.processing.Cardinals;
-import pcp.porta.processing.Processor;
-
 
 public class ProcessorFixture {
 	

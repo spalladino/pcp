@@ -3,13 +3,11 @@ package pcp.solver;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
-import ilog.cplex.IloCplex.UnknownObjectException;
-import pcp.interfaces.IModelData;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.model.Model;
 
 
-public class Solver extends AbstractSolutionData implements IModelData  {
+public class Solver extends AbstractSolutionData {
 	
 	IloCplex cplex;
 	Model model;
@@ -66,13 +64,17 @@ public class Solver extends AbstractSolutionData implements IModelData  {
 	}
 
 	@Override
-	public double[] getNodeValues(int node) throws UnknownObjectException, IloException {
-		return cplex.getValues(model.getXs()[node]);
+	public double[] xs(int node) {
+		try {
+			return cplex.getValues(model.getXs()[node]);
+		} catch(Exception ex) {return null;}
 	}
 	
 	@Override
-	public double[] getColorValues() throws UnknownObjectException, IloException {
-		return cplex.getValues(model.getWs());
+	public double[] ws()  {
+		try {
+			return cplex.getValues(model.getWs());
+		} catch(Exception ex) {return null;}
 	}
 	
 	@Override
@@ -81,13 +83,17 @@ public class Solver extends AbstractSolutionData implements IModelData  {
 	}
 
 	@Override
-	public double w(int j) throws UnknownObjectException, IloException {
-		return cplex.getValue(model.w(j));
+	public double w(int j)  {
+		try {
+			return cplex.getValue(model.w(j));
+		} catch(Exception ex) {return 0.0;}
 	}
 
 	@Override
-	public double x(int i, int j) throws UnknownObjectException, IloException {
-		return cplex.getValue(model.x(i,j));
+	public double x(int i, int j)  {
+		try {
+			return cplex.getValue(model.x(i,j));
+		} catch(Exception ex) {return 0.0;}
 	}
 	
 }

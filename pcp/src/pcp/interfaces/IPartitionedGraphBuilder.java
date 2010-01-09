@@ -14,9 +14,9 @@ public interface IPartitionedGraphBuilder {
 	
 	void recreateGraph();
 	
-	void addNode(int node, int partition);
+	IPartitionedGraphBuilder addNode(int node, int partition);
 	
-	void addEdge(int n1, int n2);
+	IPartitionedGraphBuilder addEdge(int n1, int n2);
 	
 	boolean hasNode(int node);
 	

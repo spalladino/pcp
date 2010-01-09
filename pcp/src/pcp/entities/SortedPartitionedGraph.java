@@ -114,15 +114,15 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 			int t = 0;			
 			
 			while (i < n.length || j < p.length) {
-				if (j >= p.length || nodeComparer.compare(n[i], p[j]) <= 0 ) {
+				if ((j >= p.length) || (i < n.length && nodeComparer.compare(n[i], p[j]) <= 0 )) {
 					if (n[i].index() != node.index()) {
-						target[t] = n[i]; 
+						target[t] = n[i]; t++;
 					} i++;
 				} else {
 					if (p[j].index() != node.index()) {
-						target[t] = p[j];
+						target[t] = p[j]; t++;
 					} j++;
-				} t++;
+				} 
 			}
 			
 			this.adjacenciesCopartitionNodes[node.name] = target;
