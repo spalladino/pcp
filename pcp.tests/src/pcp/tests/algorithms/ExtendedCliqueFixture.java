@@ -34,9 +34,9 @@ public class ExtendedCliqueFixture {
 		colors = 3;
 		
 		data = new StubModelData(3).withWs(0.8, 1.0, 0.7)
-			.withXs(0, 0.4, 0.4, 0.4)
-			.withXs(1, 0.5, 0.5, 0.5)
-			.withXs(2, 0.4, 0.4, 0.4);
+			.withXs(0, 0.4, 0.5, 0.4)
+			.withXs(1, 0.4, 0.5, 0.4)
+			.withXs(2, 0.4, 0.5, 0.4);
 		
 		test();
 	}
@@ -50,13 +50,50 @@ public class ExtendedCliqueFixture {
 		colors = 4;
 		
 		data = new StubModelData(4).withWs(0.8, 1.0, 0.7, 0.3)
-			.withXs(0, 0.4, 0.4, 0.4, 0.4)
-			.withXs(1, 0.5, 0.5, 0.5, 0.5)
-			.withXs(2, 0.4, 0.0, 0.2, 0.1)
-			.withXs(3, 0.1, 0.2, 0.1, 0.0);
+			.withXs(0, 0.4, 0.5, 0.4, 0.1)
+			.withXs(1, 0.4, 0.5, 0.0, 0.2)
+			.withXs(2, 0.4, 0.5, 0.2, 0.1)
+			.withXs(3, 0.4, 0.5, 0.1, 0.0);
 		
 		test();
 	}
+	
+	@Test
+	public void testD4() {
+		builder.createNodes(4)
+			.addEdge(0, 1).addEdge(1, 2).addEdge(2, 0)
+			.addEdge(3, 1).addEdge(3, 2);
+		
+		colors = 4;
+		
+		data = new StubModelData(4).withWs(0.8, 1.0, 0.7, 0.3)
+			.withXs(0, 0.4, 0.5, 0.4, 0.2)
+			.withXs(1, 0.4, 0.5, 0.1, 0.1)
+			.withXs(2, 0.4, 0.5, 0.2, 0.1)
+			.withXs(3, 0.4, 0.5, 0.4, 0.1);
+		
+		test();
+	}
+	
+	@Test
+	public void testG5() {
+		builder.createNodes(5)
+			.addEdge(0, 1).addEdge(1, 2).addEdge(2, 0)
+			.addEdge(3, 1).addEdge(3, 2)
+			.addEdge(3, 4);
+		
+		colors = 4;
+		
+		data = new StubModelData(5).withWs(0.8, 1.0, 0.7, 0.3)
+			.withXs(0, 0.4, 0.5, 0.4, 0.2)
+			.withXs(1, 0.4, 0.5, 0.1, 0.1)
+			.withXs(2, 0.4, 0.5, 0.2, 0.1)
+			.withXs(3, 0.4, 0.5, 0.4, 0.1)
+			.withXs(4, 0.4, 0.5, 0.3, 0.3);
+		
+		test();
+	}
+
 
 	
 	private void test() {

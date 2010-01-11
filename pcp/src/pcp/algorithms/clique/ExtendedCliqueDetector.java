@@ -28,7 +28,6 @@ public class ExtendedCliqueDetector {
 	List<Integer> colors;
 	
 	boolean[] visited;
-	Predicate<Node> excludeVisitedIndices;
 	
 	Node[] nodes;
 	List<Node> clique;
@@ -42,31 +41,33 @@ public class ExtendedCliqueDetector {
 	int cliquesFromBrokenCount = 0;
 	int maxCliquesFromBroken = Integer.MAX_VALUE;
 	
-	double maxColorValue = 0.9;
+	double maxColorValue = 1.0;
+	double minColorValue = Def.Epsilon;
 	double minInitialNodeValue = 0.001;
 	double minCandidateNodeValue = 0.0001;
 	
 	boolean backtrackLastCandidate = true;
+	boolean eachVertexInAtMostOneBrokenIneq = false; // TODO: Implement true!
 	
 	public ExtendedCliqueDetector(IAlgorithmSource provider) {
 		super();
 		this.provider = provider;
 		this.bounder = provider.getBounder();
 		this.data = provider.getData();
-		this.colors = provider.getSorted().getSortedFractionalColors(Def.ASC);
+		this.colors = provider.getSorted().getSortedColors(Def.ASC);
 	}
 	
 	public void run() {
 		
 		for (Integer color : this.colors) {
 			valueWj = data.w(color);
+			if (valueWj < minColorValue) continue;
 			if (this.colorCount++ > maxColorCount || valueWj > maxColorValue) return; 
 			
 			// Initializations for current color
 			this.graph = provider.getSorted().getSortedGraph(color, Def.DESC);
 			this.nodes = this.graph.getNodes();
 			this.visited = new boolean[nodes.length];
-			this.excludeVisitedIndices = createExcludeVisitedIndicesPredicate(visited);
 			
 			// Iterate over every initial node
 			for (int i = 0; i < nodes.length; i++) {
@@ -82,8 +83,8 @@ public class ExtendedCliqueDetector {
 		// Initialize clique with initial node
 		Node initial = nodes[initialIndex];
 		clique.add(initial);
-		valueSumXij = data.x(initialIndex, color);
-		visited[initialIndex] = true;
+		valueSumXij = data.x(initial.index(), color);
+		visited[initial.index()] = true;
 		
 		// Candidates to be in the clique will be neighbour/copartitioned nodes to initial
 		LinkedList<Node> candidates = getInitialCandidates(initial);
@@ -134,12 +135,12 @@ public class ExtendedCliqueDetector {
 			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y));
 			clique.add(y);
 			breakingClique(candidates, color);
-			if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+			if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
 			if (!removed.isEmpty()) {
 				candidates.addAll(removed);
 				clique.remove(clique.size()-1);
 				breakingClique(candidates, color);
-				if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+				if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
 			}
 		}
 	}
