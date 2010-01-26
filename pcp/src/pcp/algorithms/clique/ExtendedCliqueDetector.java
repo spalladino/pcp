@@ -7,7 +7,6 @@ import java.util.List;
 
 import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
-import pcp.common.Predicate;
 import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
@@ -50,6 +49,7 @@ public class ExtendedCliqueDetector {
 	static int maxColorCount = Settings.get().getInteger("clique.maxColorCount");
 	static int maxCliquesFromBroken = Settings.get().getInteger("clique.maxCliquesFromBroken");
 	static boolean backtrackLastCandidate = Settings.get().getBoolean("clique.backtrackLastCandidate");
+	static boolean enabled = Settings.get().getBoolean("clique.enabled");
 	
 	boolean eachVertexInAtMostOneBrokenIneq = false; // TODO: Implement true!
 	
@@ -62,6 +62,7 @@ public class ExtendedCliqueDetector {
 	}
 	
 	public void run() {
+		if (!enabled) return;
 		bounder.start();
 		for (Integer color : this.colors) {
 			valueWj = data.w(color);
