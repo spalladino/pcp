@@ -38,6 +38,7 @@ public class SortedProvider implements ISortedProvider {
 		this.descGraphs = new SortedPartitionedGraph[model.getColorCount()];
 	}
 
+
 	@Override
 	public NodeColorValueComparator getNodeComparator(int color, boolean asc) {
 		NodeColorValueComparator[] comparators = asc ? ascNodeComparators : descNodeComparators;
@@ -97,7 +98,9 @@ public class SortedProvider implements ISortedProvider {
 		SortedPartitionedGraph[] graphs = asc ? ascGraphs : descGraphs;
 		if (graphs[color] == null) {
 			graphs[color] = new SortedPartitionedGraph(model.getGraph(), 
-					getNodeComparator(color, asc), null, null);
+					getNodeComparator(color, asc), 
+					null, 
+					null);
 		} return graphs[color];
 	}
 

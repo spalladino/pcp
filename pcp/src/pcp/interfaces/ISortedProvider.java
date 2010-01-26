@@ -15,6 +15,5 @@ public interface ISortedProvider {
 	List<Integer> getSortedFractionalColors(boolean asc);
 	
 	List<Integer> getSortedColors(boolean asc);
-
 	
 }

@@ -3,7 +3,6 @@ package pcp.solver.io;
 import ilog.concert.IloException;
 
 import java.io.PrintStream;
-import java.util.Arrays;
 
 import pcp.interfaces.IModelData;
 import pcp.interfaces.IPartitionedGraph;

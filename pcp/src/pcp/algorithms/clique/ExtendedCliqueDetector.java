@@ -1,9 +1,7 @@
 package pcp.algorithms.clique;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -16,7 +14,6 @@ import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 import pcp.utils.Def;
-import pcp.utils.IntUtils;
 
 /**
  * Detects subsets of nodes in a graph in which every pair is either adjacent 

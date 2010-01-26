@@ -1,0 +1,18 @@
+A cut-and-branch algorithm for the partitioned graph coloring problem
+
+Santiago Palladino
+spalladino@gmail.com
+
+Isabel Méndez-Díaz
+imendez@dc.uba.ar
+
+Paula Zabala
+pzabala@dc.uba.ar
+
+Departamento de Computación, FCEN, Universidad de Buenos Aires, Argentina
+
+The partitioned graph coloring problem is a generalization of the standard graph coloring problem, in which the set $V$ of nodes is partitioned into $P = \{ P_1, \ldots, P_q \}$ subsets, and only one node per partition must be colored. The main application of this problem is wavelength routing and assignment in Wavelength Division Multiplexed optical networks.
+
+In this paper we present a binary integer programming formulation for this problem, extending the CP model presented by Méndez-Díaz and Zabala for the coloring problem in previous publications. We present an analysis of the polytope spanned by the model as well as a number of valid inequalities and facets.
+
+In order to determine the computational efficiency of these inequalities we implemented a simple cut and branch algorithm by applying some of the obtained cuts and standard branching rules.
