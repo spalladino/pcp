@@ -2,23 +2,27 @@ package pcp.algorithms.clique;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
+import pcp.common.iterate.ArrayIterator;
 import pcp.entities.Node;
 import pcp.entities.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 import pcp.utils.Def;
+import pcp.utils.IntUtils;
 
 /**
  * Detects subsets of nodes in a graph in which every pair is either adjacent 
  * or in the same partition. 
  */
 public class ExtendedCliqueDetector {
-
 	boolean checkClique = true;
 	
 	SortedPartitionedGraph graph;
@@ -29,10 +33,12 @@ public class ExtendedCliqueDetector {
 
 	List<Integer> colors;
 	
-	boolean[] visited;
+	int[] visited;
+	int[][] edgesVisited;
 	
 	Node[] nodes;
 	List<Node> clique;
+	int color = -1;
 	
 	double valueWj;
 	double valueSumXij;
@@ -43,15 +49,16 @@ public class ExtendedCliqueDetector {
 
 	static double maxColorValue = 1.0;
 	static double minColorValue = Def.Epsilon;
-	static double minInitialNodeValue = 0.001;
-	static double minCandidateNodeValue = 0.0001;
 	
+	static double minInitialNodeValue = Settings.get().getDouble("clique.minInitialNodeValue");
+	static double minCandidateNodeValue = Settings.get().getDouble("clique.minCandidateNodeValue");
+	static int maxInitialNodeVisits = Settings.get().getInteger("clique.maxInitialNodeVisits");
+	static int maxEdgeVisits = Settings.get().getInteger("clique.maxEdgeVisits");
 	static int maxColorCount = Settings.get().getInteger("clique.maxColorCount");
 	static int maxCliquesFromBroken = Settings.get().getInteger("clique.maxCliquesFromBroken");
 	static boolean backtrackLastCandidate = Settings.get().getBoolean("clique.backtrackLastCandidate");
+	static boolean backtrackBrokenIneqs = Settings.get().getBoolean("clique.backtrackBrokenIneqs");
 	static boolean enabled = Settings.get().getBoolean("clique.enabled");
-	
-	boolean eachVertexInAtMostOneBrokenIneq = false; // TODO: Implement true!
 	
 	public ExtendedCliqueDetector(IAlgorithmSource provider) {
 		super();
@@ -65,6 +72,7 @@ public class ExtendedCliqueDetector {
 		if (!enabled) return;
 		bounder.start();
 		for (Integer color : this.colors) {
+			this.color = color;
 			valueWj = data.w(color);
 			if (valueWj < minColorValue) continue;
 			if (this.colorCount++ > maxColorCount || valueWj > maxColorValue) break; 
@@ -72,14 +80,15 @@ public class ExtendedCliqueDetector {
 			// Initializations for current color
 			this.graph = provider.getSorted().getSortedGraph(color, Def.DESC);
 			this.nodes = this.graph.getNodes();
-			this.visited = new boolean[nodes.length];
+			this.visited = new int[nodes.length];
+			this.edgesVisited = new int[nodes.length][nodes.length];
 			
 			// Iterate over every initial node
 			for (int i = 0; i < nodes.length; i++) {
 				Node initial = nodes[i];
-				if (data.x(initial.index(), color) < minInitialNodeValue) continue;
+				if (data.x(initial.index(), color) < minInitialNodeValue) break;
 				clique = new ArrayList<Node>(nodes.length/2);
-				clique(initial, color);
+				clique(initial);
 			}
 		}
 		bounder.stop();
@@ -89,11 +98,11 @@ public class ExtendedCliqueDetector {
 		return bounder;
 	}
 
-	private void clique(Node initial, int color) {
+	private void clique(Node initial) {
 		// Initialize clique with initial node
 		clique.add(initial);
 		valueSumXij = data.x(initial.index(), color);
-		visited[initial.index()] = true;
+		visited[initial.index()]++;
 		
 		// Candidates to be in the clique will be neighbour/copartitioned nodes to initial
 		LinkedList<Node> candidates = getInitialCandidates(initial);
@@ -104,18 +113,19 @@ public class ExtendedCliqueDetector {
 			// Add first candidate to clique
 			Node y = candidates.poll();
 			valueSumXij += data.x(y.index(), color);
-			if (data.x(y.index(), color) < minCandidateNodeValue) return;
 			clique.add(y);
 			
 			// Remove from candidates those that are not in adjacents or y partition
-			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y));
+			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y), y);
 			
 			// Exploit the clique if it breaks the ineq, backtrack if no more candidates
-			if (valueSumXij > valueWj + Def.Epsilon) {
+			boolean broken = valueSumXij > valueWj + Def.Epsilon; 
+			if (broken && (backtrackBrokenIneqs || candidates.isEmpty())) {
 				cliquesFromBrokenCount = 0;
-				breakingClique(candidates, color);
+				backtrackBreakingClique(candidates);
 				if (!bounder.check()) return;
-			}  else if (backtrackLastCandidate && candidates.isEmpty() && !removed.isEmpty()) {
+			} 
+			if ((!broken || !backtrackBrokenIneqs) && backtrackLastCandidate && candidates.isEmpty() && !removed.isEmpty()) {
 				clique.remove(clique.size()-1);
 				valueSumXij -= data.x(y.index(), color);
 				candidates = removed;
@@ -127,29 +137,41 @@ public class ExtendedCliqueDetector {
 	private LinkedList<Node> getInitialCandidates(Node initial) {
 		LinkedList<Node> ret = new LinkedList<Node>();
 		for (Node node : graph.getNeighboursPlusCopartition(initial)) {
-			if (!visited[node.index()]) {
+			if (data.x(node.index(), color) < minCandidateNodeValue) {
+				break;
+			} else if ((++visited[node.index()]) < maxInitialNodeVisits 
+				&& markEdgeVisited(initial, node)) {
 				ret.add(node);
 			}
 		} return ret;
 	}
 
-	private void breakingClique(LinkedList<Node> candidates, int color) {
+	private boolean markEdgeVisited(Node initial, Node node) {
+		edgesVisited[initial.index()][node.index()]++;
+		edgesVisited[node.index()][initial.index()]++;
+		
+		if (edgesVisited[node.index()][initial.index()] > maxEdgeVisits) {
+			return false;
+		} return true;
+	}
+
+	private void backtrackBreakingClique(LinkedList<Node> candidates) {
 		if (candidates.isEmpty()) {
 			if (checkClique) checkCliqueValid(color);
 			provider.getCutBuilder().addClique(clique, color);
-			if (++cliquesFromBrokenCount >= maxCliquesFromBroken) return;
+			++cliquesFromBrokenCount;
 		} else {
 			Node y = candidates.poll();
-			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y));
+			LinkedList<Node> removed = retainFrom(candidates, graph.getNeighboursPlusCopartition(y), y);
 			clique.add(y);
-			breakingClique(candidates, color);
+			backtrackBreakingClique(candidates);
 			
 			if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
 			
 			clique.remove(clique.size()-1);
 			if (!removed.isEmpty()) {
 				candidates.addAll(removed);
-				breakingClique(candidates, color);
+				backtrackBreakingClique(candidates);
 				
 				if (cliquesFromBrokenCount >= maxCliquesFromBroken) return;
 			}
@@ -170,17 +192,31 @@ public class ExtendedCliqueDetector {
 		
 	}
 
-	// TODO: Optimize based on sorting!
-	@SuppressWarnings("unchecked")
-	private LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] toRetain) {
-		List<Node> retain = Arrays.asList(toRetain);
-		LinkedList<Node> clone = (LinkedList<Node>) nodes.clone();
-		nodes.retainAll(retain);
-		clone.removeAll(nodes);
+	public LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] nodesToRetain, Node currentNode) {
+		ListIterator<Node> it = nodes.listIterator();
+		LinkedList<Node> removed = new LinkedList<Node>();
+		ArrayIterator<Node> itRetain = new ArrayIterator<Node>(nodesToRetain);
+		Node retainCurrent = null;
+		Comparator<Node> c = getNodeComparator();
 		
-		return clone;
+		while(it.hasNext()) {
+			Node node = it.next();
+			while((retainCurrent == null || c.compare(retainCurrent, node) < 0) && itRetain.hasNext()) {
+				retainCurrent = itRetain.next();
+	}
+			if (retainCurrent == null || retainCurrent.index() != node.index() 
+				|| !markEdgeVisited(currentNode, node)) {
+				removed.add(node);
+				it.remove();
+			}
+		}
+
+		return removed;
 	}
 
+	private Comparator<Node> getNodeComparator() {
+		return provider.getSorted().getNodeComparator(color, Def.DESC);
+	}
 
 
 }

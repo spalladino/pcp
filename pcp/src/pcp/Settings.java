@@ -46,6 +46,11 @@ public class Settings {
 		catch (Exception ex) { return null; }
 	}
 	
+	public Double getDouble(String name) {
+		try { return Double.valueOf(props.getProperty(name)); }
+		catch (Exception ex) { return null; }
+	}
+	
 	public Integer getInteger(String name) {
 		try { return Integer.valueOf(props.getProperty(name)); }
 		catch (Exception ex) { return null; }

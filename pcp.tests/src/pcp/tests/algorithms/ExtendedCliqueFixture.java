@@ -1,8 +1,10 @@
 package pcp.tests.algorithms;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pcp.Settings;
 import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.data.ModelData;
 import pcp.algorithms.data.StubModelData;
@@ -20,6 +22,11 @@ public class ExtendedCliqueFixture {
 	ModelData data;
 
 	int colors;
+	
+	@BeforeClass
+	public static void loadSettings() throws Exception {
+		Settings.load("test");
+	}
 	
 	@Before
 	public void setup() {
@@ -93,8 +100,6 @@ public class ExtendedCliqueFixture {
 		
 		test();
 	}
-
-
 	
 	private void test() {
 		PartitionedGraph graph = builder.getGraph();
