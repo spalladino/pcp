@@ -9,3 +9,4 @@ drafts/*.aux
 drafts/*.bbl
 drafts/*.blg
 drafts/*.log
+*.orig
