@@ -8,7 +8,7 @@ import pcp.entities.PartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.utils.Def;
 
-public class BlockColor {
+public class BlockColorCuts {
 
 	IAlgorithmSource provider;
 	PartitionedGraph graph;
@@ -17,13 +17,13 @@ public class BlockColor {
 	
 	static int maxColorsCount = Settings.get().getInteger("blockColor.maxColorsCount");
 	
-	public BlockColor(IAlgorithmSource provider) {
+	public BlockColorCuts(IAlgorithmSource provider) {
 		super();
 		this.provider = provider;
 		this.graph = provider.getModel().getGraph();
 	}
 	
-	public BlockColor run() {
+	public BlockColorCuts run() {
 		if (!enabled) return this;
 		provider.getBounder().start();
 		
