@@ -10,7 +10,6 @@ import pcp.definitions.Cuts;
 
 public class CutsMetrics implements Cuts {
 
-	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	static boolean logIterMetrics = Settings.get().getBoolean("logging.iterMetrics");
 	
 	int iter = -1;
@@ -34,9 +33,6 @@ public class CutsMetrics implements Cuts {
 	
 	public void added(int cut, IloRange range) {
 		this.counts.getLast()[cut]++;
-		if (logIneqs) {
-			System.out.println(Names[cut] + ": " + range.toString());
-		}
 	}
 	
 	public void iterTime(IBoundedAlgorithm... algorithms) {
@@ -54,7 +50,7 @@ public class CutsMetrics implements Cuts {
 		for (int i = 0; i < Cuts; i++) {
 			int c = this.counts.getLast()[i];
 			long t = this.ticks.getLast()[i];
-			System.out.println(" Generated " + c + " cuts in " + t + " of " + Names[i]);
+			System.out.println(" Generated " + c + " cuts in " + t + " ms of " + Names[i]);
 		}
 	}
 	
@@ -69,8 +65,12 @@ public class CutsMetrics implements Cuts {
 			for (long[] t : ticks) {
 				totalt += t[i];
 			}
-			System.out.println(" Generated a total of " + totalc + " cuts in " + totalt + " of " + Names[i]);
+			System.out.println(" Generated a total of " + totalc + " cuts in " + totalt + " ms of " + Names[i]);
 		}
+	}
+	
+	public int getNIters() {
+		return this.counts.size();
 	}
 	
 }

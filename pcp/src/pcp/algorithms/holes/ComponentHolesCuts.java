@@ -19,7 +19,6 @@ public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 
 	static boolean enabled = Settings.get().getBoolean("holes.enabled");
 	
-	static boolean colorsAsc = Settings.get().getBoolean("holes.colorsAsc");
 	static int maxColorCount = Settings.get().getInteger("holes.maxColorCount");
 	static double minColorValue = Settings.get().getDouble("holes.minColorValue");
 	static double maxColorValue = Settings.get().getDouble("holes.maxColorValue");
@@ -49,8 +48,9 @@ public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 	public ComponentHolesCuts run() {
 		if (!enabled) return this;
 		provider.getBounder().start();
-		
-		for (final Integer color : provider.getSorted().getSortedColors(colorsAsc)) {
+
+		for (int c = 0; c < provider.getModel().getColorCount(); c++) {
+			final Integer color = c;
 			this.color = color;
 			valueWj = data.w(color);
 

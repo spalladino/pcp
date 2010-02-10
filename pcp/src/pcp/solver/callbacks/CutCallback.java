@@ -3,6 +3,7 @@ package pcp.solver.callbacks;
 import ilog.concert.IloException;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
+import ilog.concert.IloNumExpr;
 import ilog.concert.IloRange;
 import ilog.cplex.IloCplex;
 
@@ -12,11 +13,13 @@ import pcp.Settings;
 import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.clique.ExtendedCliqueCuts;
 import pcp.algorithms.holes.ComponentHolesCuts;
+import pcp.definitions.Comparisons;
 import pcp.definitions.Cuts;
 import pcp.entities.Node;
 import pcp.entities.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
+import pcp.interfaces.IPartitionedGraph;
 import pcp.metrics.CutsMetrics;
 import pcp.model.Model;
 import pcp.solver.data.Iteration;
@@ -24,12 +27,17 @@ import pcp.solver.io.IterationPrinter;
 import pcp.utils.IntUtils;
 
 
-public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuilder, IModelData {
+public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cuts, ICutBuilder, IModelData {
 
+	static boolean checkViolatedCut = Settings.get().getBoolean("validations.checkViolatedCut");
+	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
+	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
+	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	
 	Iteration iteration;
 	Model model;
+	IPartitionedGraph graph;
 	IloMPModeler modeler;
 	
 	ExtendedCliqueCuts cliques;
@@ -37,11 +45,11 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 	BlockColorCuts blocks;
 	
 	CutsMetrics metrics;
+	boolean doneFirst = false;
 	
 	double[] ws;
 	double[][] xs;
 	
-		
 	public CutCallback(IloMPModeler modeler) {
 		this.modeler = modeler;
 		this.metrics = new CutsMetrics();
@@ -50,7 +58,16 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 	@Override
 	protected void main() throws IloException {
 		// Only cuts on initial node
-		if (super.getNnodes() > 0) return;
+		if (super.getNnodes() > 0) {
+			if (doneFirst) return;
+			metrics.printTotal();
+			doneFirst = true;
+			return;
+		}
+		
+		if (metrics.getNIters() > 5) {
+			return;
+		}
 		
 		setupIterationData();
 		metrics.newIter();
@@ -61,9 +78,9 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 			System.out.println();
 		}
 		
-		cliques = new ExtendedCliqueCuts(iteration).run();
-		holes = new ComponentHolesCuts(iteration).run();
-		blocks = new BlockColorCuts(iteration).run();
+		cliques = new ExtendedCliqueCuts(iteration.forAlgorithm()).run();
+		holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
+		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
 		
 		metrics.iterTime(cliques, holes, blocks);
 	}
@@ -75,11 +92,20 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 			String name = String.format("HOLE[%1$d]", color);
 			for (Node n : nodes) {
 				expr.addTerm(model.x(n.index(),color), 1);
+			} expr.addTerm(model.w(color), -IntUtils.floorhalf(nodes.size()));
+			
+			int basej = graph.P() - nodes.size();
+			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
+				System.out.println("HOLE BASE: " + expr.toString() + " VAL= " + super.getValue(expr));
+				System.out.println("BASE J VALUE= " + super.getValue(model.w(basej)));
+				for (Node n : nodes) {
+					for (int j = basej; j < model.getColorCount(); j++) {
+						expr.addTerm(model.x(n.index(),j), 1);
+					}
+				} expr.addTerm(model.w(basej), -1);
 			}
 			
-			expr.addTerm(model.w(color), -IntUtils.floorhalf(nodes.size()));
-			IloRange range = modeler.le(expr, 0, name);
-			add(Holes, range);
+			add(Holes, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate hole cut: " + ex.getMessage());
@@ -96,8 +122,7 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 			}
 			
 			expr.addTerm(model.w(color), -1);
-			IloRange range = modeler.le(expr, 0, name);
-			add(Cliques, range);
+			add(Cliques, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate clique cut: " + ex.getMessage());
@@ -114,12 +139,9 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 				for (Node node : partition.getNodes()) {
 					expr.addTerm(model.x(node.index(), j), 1);
 				}  
-			}
+			} expr.addTerm(model.w(color), -1);
 			
-			expr.addTerm(model.w(color), -1);
-			
-			IloRange range = modeler.le(expr, 0, name);
-			add(BlockColor, range);
+			add(BlockColor, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate block color cut: " + ex.getMessage());
@@ -148,11 +170,25 @@ public class CutCallback extends IloCplex.CutCallback implements Cuts, ICutBuild
 	
 	public void setModel(Model model) {
 		this.model = model;
+		this.graph = model.getGraph();
 	}
 
-	private void add(int cut, IloRange range) throws IloException {
+	private void add(int cut, IloNumExpr expr, boolean cmp, String name) throws IloException {
+		IloRange range = cmp == LeqtZero 
+			? modeler.le(expr, 0, name)
+			: modeler.ge(expr, 0, name);
+			
 		super.add(range);
-		metrics.added(Holes, range);
+		metrics.added(cut, range);
+		
+		if (checkViolatedCut || logIneqs) {
+			double val = super.getValue(expr);
+			if (checkViolatedCut && ((val > 0 && cmp == GeqtZero) || (val < 0 && cmp == LeqtZero))) {
+				System.err.println("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
+			} else if (logIneqs) {
+				System.out.println(Names[cut] + ": " + range.toString() + " VAL=" + val );
+			}
+		}
 	}
 
 	private void setupIterationData() {

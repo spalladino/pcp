@@ -12,6 +12,8 @@ import pcp.model.Model;
 
 public class Iteration implements IAlgorithmSource {
 	
+	Integer currentAlgorithm;
+	
 	IModelData data;
 	ICutBuilder cutBuilder;
 	
@@ -21,13 +23,25 @@ public class Iteration implements IAlgorithmSource {
 	
 	
 	public Iteration(Model model, IModelData data, ICutBuilder cutBuilder) {
+		this(model, data, cutBuilder, null);
+	}
+	
+	private Iteration(Model model, IModelData data, ICutBuilder cutBuilder, Integer algorithm) {
 		this.model = model;
 		this.data = data;
 		this.cutBuilder = cutBuilder;
 		this.sorted = new SortedProvider(model, data);
 		this.bounder = new Bounder();
+		this.currentAlgorithm = algorithm;
 	}
 	
+	public Iteration forAlgorithm() {
+		return forAlgorithm(null);
+	}
+	
+	public Iteration forAlgorithm(Integer code) {
+		return new Iteration(model, data, cutBuilder, code);
+	}
 
 	@Override
 	public ICutBuilder getCutBuilder() {

@@ -24,8 +24,6 @@ public class InitialCutBuilder implements ICutBuilder {
 	IloMPModeler modeler;
 	Model model;
 
-	int blockCount = 0;
-	
 	@Override
 	public void addBlockColor(Partition partition, int color) {
 		try {
@@ -42,8 +40,6 @@ public class InitialCutBuilder implements ICutBuilder {
 			
 			IloRange range = modeler.le(expr, 0, name);
 			cplex.addCut(range);
-			blockCount++;
-			System.out.println("Got " + blockCount + " block initial cuts");
 		} catch (Exception ex) {
 			System.err.println("Could not generate block color cut: " + ex.getMessage());
 		}	
