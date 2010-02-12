@@ -1,20 +1,4 @@
-Desigualdades Válidas
----------------------
-
-- Clique
-
-- Independent set
-  - Hole, Anti hole, Path
-  - Implementar usando GSL y Nikolo
-  
-- Block color
-
-- Neighbourhood
-
-- Inclusion de vecindades
-  - Ojo que elimina soluciones validas
-
-Algoritmos
-----------
-
-- DSATUR
+- Implementar DSATUR heuristica inicial para volar variables, y setear solucion inicial (ver mipstart)
+- Ver CPXGetCallbackNodeLb para ver bounds, si hay un setter (no usar en favor de heur inicial)
+- Las restricciones con G' de IsaPau son menos estrictas pero cubren mas nodos por predicar sobre toda la particion (ver un C5=G'? las cuerdas q efecto tienen?)
+- Neighbourhood subsume a las de adyacentes, se usa r como cota superior del max independent set reemplazando al grado, ver como llevar a particionado
