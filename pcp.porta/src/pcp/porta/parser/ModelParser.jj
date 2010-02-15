@@ -1,7 +1,7 @@
 /**
  * JavaCC file
  */
-	
+
 options {
 	JDK_VERSION = "1.6";
 	STATIC = false;
@@ -13,18 +13,8 @@ import pcp.porta.model.*;
 import pcp.common.*;
 
 public class ModelParser { 
-
 	Model model;
-	Translator translator;
 	Constraint current;
-
-	public ModelParser initialize(Model model, Translator t) {
-		this.model = model;
-		this.translator = t;
-		this.current = null;
-		return this;
-	}
-	
 }
 PARSER_END(ModelParser)
 
@@ -45,26 +35,42 @@ TOKEN :
 | 	< ASSIGN: "=">
 | 	< LPAREN: "(">
 | 	< RPAREN: ")">
+| 	< LBRACKET: "[">
+| 	< RBRACKET: "]">
+| 	< COMMA: ",">
+| 	< COLON: ":">
 }
 TOKEN :
 {
-	< DIM: "DIM" >
-| 	< LOWERB: "LOWER_BOUNDS">
-| 	< UPPERB: "UPPER_BOUNDS">
-| 	< VALID: "VALID">
-| 	< INEQS: "INEQUALITIES_SECTION">
+	< INEQS: "INEQUALITIES_SECTION">
 | 	< END: "END">
-| 	< VARNAME: "X"|"x" >
+| 	< VARX: "X"|"x" >
+| 	< VARW: "W"|"w" >
 |	< NUMBER: (["0" - "9"])+ >
+|	< NULL: "null" >
+|	< COLORS: "COLORS" >
+|	< NODES: "NODES" >
 }
-Model ieq() : 
+Model model() : 
 { }
 {
-	dimension()
-	( lower() | upper() | valid() )*
+	cardinals()
 	inequalities()
-	end()
+	(end())?
 	{ return this.model; }
+}
+
+void cardinals() : 
+{
+	int n = 0;
+	int c = 0;
+}
+{
+	<COLORS> <COLON> (c = natural())
+	<NODES> <COLON> (n = natural())
+	{
+		this.model = new Model(new Cardinals(n, c)); 
+	}
 }
 
 void inequalities() : {}
@@ -77,7 +83,7 @@ void inequality() :
 	Integer c, b, i = null;
 }
 {
-	( i=index() )?	( term() )+
+	( i=index() )?	( term() )*
 	( c=comparison() )
 	( b=integer() )
 	
@@ -95,17 +101,17 @@ void term() :
 {
 	int s = 1;
 	int n = 1;
-	int i = 0;
+	Integer i = null;
+	Integer j = null;
 }
 {
 	s = sign()
 	( n = natural() )?
-	< VARNAME >
-	i = natural()
+	( < VARX > <LBRACKET> i=natural() <COMMA> j=natural() <RBRACKET> { i--; j--; }
+	| < VARW > <LBRACKET> j=natural() <RBRACKET>  { j--; })
 	
 	{ 
-		TupleInt nodeColor = translator.convertPortaToNodeColor(i);
-		current.addVar(nodeColor.getFirst(), nodeColor.getSecond(), s * n);
+		current.addVar(i, j, s * n);
 	}
 }
 
@@ -134,28 +140,10 @@ int sign() : {}{
 
 int index() : 
 {
-	int i;
+	int i = 0;
 }{
-	< LPAREN > i=natural() < RPAREN >
+	< LPAREN > ( ( i=natural() ) | <NULL> ) < RPAREN >
 	{ return i; }}
-
-void dimension() : {}{
-	< DIM > < ASSIGN > < NUMBER >}
-
-void lower() : {}
-{
-	< LOWERB > ( < NUMBER > )+
-}
-
-void upper() : {}
-{
-	< UPPERB > ( < NUMBER > )+
-}
-
-void valid() : {}
-{
-	< VALID > ( < NUMBER > )+
-}
 
 void end() : {}
 {

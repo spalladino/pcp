@@ -18,7 +18,7 @@ public class WritePoi {
 		
 		PartitionedGraph graph = graphb.getGraph();
 		
-		Cardinals cardinals = Cardinals.fromPortaSettings();
+		Cardinals cardinals = Cardinals.fromPortaSettings(graph.N());
 		
 		PointsGenerator generator = new PointsGenerator(graph, cardinals, strategy);
 		PoiWriter writer = new PoiWriter(generator.getDimension(), generator.getPoints());

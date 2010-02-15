@@ -6,68 +6,53 @@ import pcp.common.*;
 
 @SuppressWarnings("all")
 public class ModelParser implements ModelParserConstants {
-
         Model model;
-        Translator translator;
         Constraint current;
 
-        public ModelParser initialize(Model model, Translator t) {
-                this.model = model;
-                this.translator = t;
-                this.current = null;
-                return this;
-        }
-
-  final public Model ieq() throws ParseException {
-    dimension();
-    label_1:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LOWERB:
-      case UPPERB:
-      case VALID:
-        ;
-        break;
-      default:
-        jj_la1[0] = jj_gen;
-        break label_1;
-      }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LOWERB:
-        lower();
-        break;
-      case UPPERB:
-        upper();
-        break;
-      case VALID:
-        valid();
-        break;
-      default:
-        jj_la1[1] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-    }
+  final public Model model() throws ParseException {
+    cardinals();
     inequalities();
-    end();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case END:
+      end();
+      break;
+    default:
+      jj_la1[0] = jj_gen;
+      ;
+    }
           {if (true) return this.model;}
     throw new Error("Missing return statement in function");
   }
 
+  final public void cardinals() throws ParseException {
+        int n = 0;
+        int c = 0;
+    jj_consume_token(COLORS);
+    jj_consume_token(COLON);
+    c = natural();
+    jj_consume_token(NODES);
+    jj_consume_token(COLON);
+    n = natural();
+                this.model = new Model(new Cardinals(n, c));
+  }
+
   final public void inequalities() throws ParseException {
     jj_consume_token(INEQS);
-    label_2:
+    label_1:
     while (true) {
       inequality();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case MINUS:
+      case EQUALS:
+      case LEQ:
+      case GEQ:
       case LPAREN:
         ;
         break;
       default:
-        jj_la1[2] = jj_gen;
-        break label_2;
+        jj_la1[1] = jj_gen;
+        break label_1;
       }
     }
   }
@@ -80,21 +65,21 @@ public class ModelParser implements ModelParserConstants {
       i = index();
       break;
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[2] = jj_gen;
       ;
     }
-    label_3:
+    label_2:
     while (true) {
-      term();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case MINUS:
         ;
         break;
       default:
-        jj_la1[4] = jj_gen;
-        break label_3;
+        jj_la1[3] = jj_gen;
+        break label_2;
       }
+      term();
     }
     c = comparison();
     b = integer();
@@ -116,7 +101,7 @@ public class ModelParser implements ModelParserConstants {
                       {if (true) return 1;}
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[4] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -126,20 +111,40 @@ public class ModelParser implements ModelParserConstants {
   final public void term() throws ParseException {
         int s = 1;
         int n = 1;
-        int i = 0;
+        Integer i = null;
+        Integer j = null;
     s = sign();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NUMBER:
       n = natural();
       break;
     default:
-      jj_la1[6] = jj_gen;
+      jj_la1[5] = jj_gen;
       ;
     }
-    jj_consume_token(VARNAME);
-    i = natural();
-                TupleInt nodeColor = translator.convertPortaToNodeColor(i);
-                current.addVar(nodeColor.getFirst(), nodeColor.getSecond(), s * n);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VARX:
+      jj_consume_token(VARX);
+      jj_consume_token(LBRACKET);
+      i = natural();
+      jj_consume_token(COMMA);
+      j = natural();
+      jj_consume_token(RBRACKET);
+                                                                           i--; j--;
+      break;
+    case VARW:
+      jj_consume_token(VARW);
+      jj_consume_token(LBRACKET);
+      j = natural();
+      jj_consume_token(RBRACKET);
+                                                        j--;
+      break;
+    default:
+      jj_la1[6] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+                current.addVar(i, j, s * n);
   }
 
   final public int integer() throws ParseException {
@@ -185,66 +190,23 @@ public class ModelParser implements ModelParserConstants {
   }
 
   final public int index() throws ParseException {
-        int i;
+        int i = 0;
     jj_consume_token(LPAREN);
-    i = natural();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case NUMBER:
+      i = natural();
+      break;
+    case NULL:
+      jj_consume_token(NULL);
+      break;
+    default:
+      jj_la1[9] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
     jj_consume_token(RPAREN);
           {if (true) return i;}
     throw new Error("Missing return statement in function");
-  }
-
-  final public void dimension() throws ParseException {
-    jj_consume_token(DIM);
-    jj_consume_token(ASSIGN);
-    jj_consume_token(NUMBER);
-  }
-
-  final public void lower() throws ParseException {
-    jj_consume_token(LOWERB);
-    label_4:
-    while (true) {
-      jj_consume_token(NUMBER);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case NUMBER:
-        ;
-        break;
-      default:
-        jj_la1[9] = jj_gen;
-        break label_4;
-      }
-    }
-  }
-
-  final public void upper() throws ParseException {
-    jj_consume_token(UPPERB);
-    label_5:
-    while (true) {
-      jj_consume_token(NUMBER);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case NUMBER:
-        ;
-        break;
-      default:
-        jj_la1[10] = jj_gen;
-        break label_5;
-      }
-    }
-  }
-
-  final public void valid() throws ParseException {
-    jj_consume_token(VALID);
-    label_6:
-    while (true) {
-      jj_consume_token(NUMBER);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case NUMBER:
-        ;
-        break;
-      default:
-        jj_la1[11] = jj_gen;
-        break label_6;
-      }
-    }
   }
 
   final public void end() throws ParseException {
@@ -260,13 +222,13 @@ public class ModelParser implements ModelParserConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[12];
+  final private int[] jj_la1 = new int[10];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x1c000,0x1c000,0x860,0x800,0x60,0x380,0x100000,0x60,0x60,0x100000,0x100000,0x100000,};
+      jj_la1_0 = new int[] {0x40000,0xbe0,0x800,0x60,0x380,0x200000,0x180000,0x60,0x60,0x600000,};
    }
 
   /** Constructor with InputStream. */
@@ -280,7 +242,7 @@ public class ModelParser implements ModelParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -294,7 +256,7 @@ public class ModelParser implements ModelParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -304,7 +266,7 @@ public class ModelParser implements ModelParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -314,7 +276,7 @@ public class ModelParser implements ModelParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -323,7 +285,7 @@ public class ModelParser implements ModelParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -332,7 +294,7 @@ public class ModelParser implements ModelParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 12; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -383,12 +345,12 @@ public class ModelParser implements ModelParserConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[21];
+    boolean[] la1tokens = new boolean[25];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 10; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -397,7 +359,7 @@ public class ModelParser implements ModelParserConstants {
         }
       }
     }
-    for (int i = 0; i < 21; i++) {
+    for (int i = 0; i < 25; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

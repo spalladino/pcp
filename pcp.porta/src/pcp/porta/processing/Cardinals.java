@@ -24,8 +24,7 @@ public class Cardinals {
 		this.nodeVarsCount = colors * nodes;
 	}
 	
-	public static Cardinals fromPortaSettings() {
-		int nodeCount = Settings.get().getInteger("porta.nodeCount");
+	public static Cardinals fromPortaSettings(int nodeCount) {
 		int colorCount = Settings.get().getInteger("porta.colorCount");
 		return new Cardinals(nodeCount, colorCount);
 	}

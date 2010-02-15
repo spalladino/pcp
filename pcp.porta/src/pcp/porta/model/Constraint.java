@@ -115,6 +115,21 @@ public class Constraint {
 		return this;
 	}
 	
+	public boolean hasTerms() {
+		final Box<Boolean> has = new Box<Boolean>(false);
+		forXs(new INodeVarHandler() {
+			public void handle(int i, int j, int coef) {
+				has.setData(true);
+			}
+		});
+		forWs(new IColorVarHandler() {
+			public void handle(int j, int coef) {
+				has.setData(true);
+			}
+		});
+		return has.getData();
+	}
+	
 	public boolean isOnlyColors() {
 		final Box<Boolean> hasX = new Box<Boolean>(false);
 		forXs(new INodeVarHandler() {
@@ -152,6 +167,10 @@ public class Constraint {
 				sb.append(termWriter.term(coef, null, j)).append(' ');
 			}
 		});
+		
+		if (!hasTerms()) {
+			sb.append("0 ");
+		}
 		
 		sb.append(NameUtils.asCmp(compare)).append(' ').append(bound).append(' ');
 		

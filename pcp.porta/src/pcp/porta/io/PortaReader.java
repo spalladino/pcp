@@ -15,11 +15,11 @@ public class PortaReader {
 		this.model = m;
 	}
 	
-	public void readIeq(String filename) throws Exception {
-		readIeq(new FileInputStream(filename));
+	public void read(String filename) throws Exception {
+		read(new FileInputStream(filename));
 	}
 	
-	public void readIeq(InputStream s) throws Exception {
+	public void read(InputStream s) throws Exception {
 		Translator t = new Translator(model.getCardinals());
 		PortaParser parser = new PortaParser(s);
 		parser.initialize(this.model, t);

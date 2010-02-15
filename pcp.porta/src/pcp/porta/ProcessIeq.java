@@ -12,14 +12,15 @@ import pcp.porta.processing.Processor;
 
 public class ProcessIeq {
 
-	public static void process(String graph, String input, String output, Cardinals c, BuilderStrategy strategy) throws Exception {		
+	public static void process(String graph, String input, String output, BuilderStrategy strategy) throws Exception {		
+		PartitionedGraphBuilder graphb = Factory.get().getGraphBuilder(graph);
+		Cardinals c = Cardinals.fromPortaSettings(graphb.N());
+		
 		Model model = new Model(c);
 		PortaReader reader = new PortaReader(model);
-		reader.readIeq(input);
+		reader.read(input);
 		
 		System.out.println("Parsed input from " + input);
-		
-		PartitionedGraphBuilder graphb = Factory.get().getGraphBuilder(graph);
 		
 		Processor processor = new Processor(graphb, c, strategy);
 		processor.process(model);

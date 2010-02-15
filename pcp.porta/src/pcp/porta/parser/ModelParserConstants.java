@@ -28,21 +28,29 @@ public interface ModelParserConstants {
   /** RegularExpression Id. */
   int RPAREN = 12;
   /** RegularExpression Id. */
-  int DIM = 13;
+  int LBRACKET = 13;
   /** RegularExpression Id. */
-  int LOWERB = 14;
+  int RBRACKET = 14;
   /** RegularExpression Id. */
-  int UPPERB = 15;
+  int COMMA = 15;
   /** RegularExpression Id. */
-  int VALID = 16;
+  int COLON = 16;
   /** RegularExpression Id. */
   int INEQS = 17;
   /** RegularExpression Id. */
   int END = 18;
   /** RegularExpression Id. */
-  int VARNAME = 19;
+  int VARX = 19;
   /** RegularExpression Id. */
-  int NUMBER = 20;
+  int VARW = 20;
+  /** RegularExpression Id. */
+  int NUMBER = 21;
+  /** RegularExpression Id. */
+  int NULL = 22;
+  /** RegularExpression Id. */
+  int COLORS = 23;
+  /** RegularExpression Id. */
+  int NODES = 24;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -62,14 +70,18 @@ public interface ModelParserConstants {
     "\"=\"",
     "\"(\"",
     "\")\"",
-    "\"DIM\"",
-    "\"LOWER_BOUNDS\"",
-    "\"UPPER_BOUNDS\"",
-    "\"VALID\"",
+    "\"[\"",
+    "\"]\"",
+    "\",\"",
+    "\":\"",
     "\"INEQUALITIES_SECTION\"",
     "\"END\"",
-    "<VARNAME>",
+    "<VARX>",
+    "<VARW>",
     "<NUMBER>",
+    "\"null\"",
+    "\"COLORS\"",
+    "\"NODES\"",
   };
 
 }

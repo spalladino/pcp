@@ -19,7 +19,7 @@
 	<property name="build.dir" value="../build" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
-	<property name="lib.dir" value="../lib"/>
+	<property name="lib.dir" value="../pcp.lib"/>
 	<property name="logs.dir" value="../logs"/>
 	<property name="data.dir" value="../data"/>
 
@@ -27,7 +27,7 @@
 	<property name="cplex.jar" value="/local/ilog/cplex101/lib/cplex.jar" />
 	
 	<path id="classpath">
-        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <fileset dir="${lib.dir}" includes="**/cplex.jar"/>
     </path>
 	
 	<target name="clean" description="Deletes output build directory">
