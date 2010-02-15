@@ -4,7 +4,8 @@ package pcp.model.strategy;
 public enum Adjacency {
 	
 	AdjacentsLeqColor("ac"),
-	AdjacentsLeqOne("a1");
+	AdjacentsLeqOne("a1"),
+	AdjacentsNeighbourhood("an");
 
 	String shortId;
 	

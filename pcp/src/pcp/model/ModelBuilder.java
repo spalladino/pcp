@@ -51,10 +51,15 @@ public class ModelBuilder {
 		
 		if (strategy.getAdjacencyConstraints() == Adjacency.AdjacentsLeqColor) {
 			constrainAdjacentLessThanColor();
-		} else {
+		} else if (strategy.getAdjacencyConstraints() == Adjacency.AdjacentsLeqOne) {
 			constrainNodeLessThanColor();
 			constrainAdjacentNotEquals();
+		} else if (strategy.getAdjacencyConstraints() == Adjacency.AdjacentsNeighbourhood) {
+			constrainAdjacencyNeighbourhood();
+		} else {
+			throw new UnsupportedOperationException("Unhandled adjacency strategy");
 		}
+		
 		
 		if (strategy.getBreakSymmetry() == Symmetry.OnlyUseColorIfNodesPainted) {
 			constrainUseLowerLabelFirst();
@@ -152,6 +157,10 @@ public class ModelBuilder {
 				modeler.addLe(expr, 0, name);
 			}
 		}
+	}
+
+	protected void constrainAdjacencyNeighbourhood() {
+		// TODO Implement
 	}
 
 	/**

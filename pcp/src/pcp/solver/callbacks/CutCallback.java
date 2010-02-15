@@ -106,7 +106,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 			int basej = graph.P() - alpha;
 			
 			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
-				// TODO: Check ineq ok
 				for (Node n : graph.getNodes()) {
 					for (int j = basej; j < model.getColorCount(); j++) {
 						expr.addTerm(model.x(n.index(),j), 1);
