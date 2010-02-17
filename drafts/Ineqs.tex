@@ -127,8 +127,22 @@ Notar que este corte puede eliminar soluciones válidas enteras, pero asegura que
 
 Esta restricción es una versión más débil de block color, pues no tiene en cuenta eliminación de simetrías. Puede que haya casos que no se cubran, dependiendo cuántos $j_0$ se consideren en block color.
 
-
-
 \end{enumerate}
+
+\newpage
+
+\section*{Heurísticas}
+
+Heurísticas iniciales usadas para generar una solución inicial para el branch and cut.
+
+\subsection*{Cantidad de particiones}
+
+La solución inicial más sencilla es tomar la cantidad de particiones como un coloreo inicial. Este número es una cota superior para el número cromático, equivalente a tomar la cantidad de nodos.
+
+\subsection*{DSATUR}
+
+La heurística DSATUR clásica colorea con el menor color posible, a cada iteración, el nodo con mayor grado de saturación (cantidad de colores diferentes usados por sus vecinos). Siguiendo la extensión que hacen Li y Simha para las heurísticas para particionado, el algoritmo debería a cada iteración tomar el nodo de mayor grado de saturación de entre los nodos de menor grado de saturación de cada partición. Una vez pintado un nodo de una partición, se descartan los demás.
+
+Podría analizarse el enfoque inverso: en lugar de tomar el máximo entre los mínimos de cada partición, primero identificar la partición más difícil (con la mayor combinación de grados de saturación) y luego seleccionar el menor.
 
 \end{document}

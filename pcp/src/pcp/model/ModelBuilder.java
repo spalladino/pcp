@@ -6,10 +6,8 @@ import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import pcp.Factory;
 import pcp.algorithms.AlgorithmException;

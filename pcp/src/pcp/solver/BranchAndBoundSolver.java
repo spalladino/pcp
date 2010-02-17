@@ -8,16 +8,18 @@ public class BranchAndBoundSolver extends Solver {
 
 	public BranchAndBoundSolver() throws IloException {
 		super();
-		
-		// TODO: Remove duplicate constraints
-        cplex.setParam(IntParam.Reduce, 0);
-        cplex.setParam(BooleanParam.PreLinear, false);
+        
+		// Turn of preprocessing
+		cplex.setParam(IntParam.Reduce, 0);
+		cplex.setParam(BooleanParam.PreInd, false);
+        
+		// Turn off cuts
+		cplex.setParam(BooleanParam.PreLinear, false);
         cplex.setParam(IntParam.HeurFreq, -1);
         cplex.setParam(IntParam.AggInd, 0);
         cplex.setParam(BooleanParam.PreInd, false);
         cplex.setParam(IntParam.PrePass, 0);
         cplex.setParam(IntParam.RelaxPreInd, 0);
-        cplex.setParam(IntParam.PreDual, -1);
         cplex.setParam(IntParam.Cliques, -1);
         cplex.setParam(IntParam.Covers, -1);
         cplex.setParam(IntParam.DisjCuts, -1);
@@ -29,6 +31,9 @@ public class BranchAndBoundSolver extends Solver {
         cplex.setParam(IntParam.MIRCuts, -1);
         cplex.setParam(IntParam.AggCutLim, 0);
         cplex.setParam(IntParam.ZeroHalfCuts, -1);
+        
+        // Other
+        cplex.setParam(IntParam.PreDual, -1);
 	}
 	
 	

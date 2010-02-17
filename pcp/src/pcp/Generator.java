@@ -17,15 +17,15 @@ public class Generator {
 		Properties props = new Properties();
 		
 		try {
-			props.load(new FileInputStream(new File("generator.properties")));
+			props.load(new FileInputStream(new File("run.properties")));
 		} catch(IOException e) {
-			System.err.println("Error opening generator.properties");
+			System.err.println("Error opening run.properties");
 			System.err.println(e.getMessage());
 			return;
 		} 
 		
 		try {
-			File file = new File(props.getProperty("generator.outdir"), props.getProperty("generator.output"));
+			File file = new File(props.getProperty("generator.outdir"), props.getProperty("generator.name") + ".in");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			GeneratorProperties gp = readProperties(props);
 			IGraphGenerator generator = createGenerator(gp);
