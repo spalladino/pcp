@@ -11,6 +11,7 @@ import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.coloring.DSaturPartitionColoring;
+import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
 import pcp.entities.Node;
 import pcp.entities.PartitionedGraphBuilder;
 import pcp.interfaces.IPartitionedGraph;
@@ -149,15 +150,18 @@ public class DSaturPartitionFixture {
 	private void check(int min, int max) throws AlgorithmException {
 		graph = builder.getGraph();
 		
-		dsatur = new DSaturPartitionColoring(graph);
+		dsatur = createDSatur();
 		dsatur.setBounder(bounder);
-		
 		int c = dsatur.getChi();
 		
 		Assert.assertTrue("Chi " + c + " is not within expected bounds", c >= min);
 		Assert.assertTrue("Chi " + c + " is not within expected bounds", c <= max);
 
 		new ColoringVerifier(graph).verify(dsatur);
+	}
+	
+	protected DSaturPartitionColoring createDSatur() {
+		return new DSaturPartitionColoringEasiestNodes(graph);
 	}
 	
 }

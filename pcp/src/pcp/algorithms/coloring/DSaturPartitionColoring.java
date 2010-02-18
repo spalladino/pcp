@@ -8,38 +8,38 @@ import pcp.entities.Edge;
 import pcp.entities.Node;
 import pcp.interfaces.IPartitionedGraph;
 
-public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorithm {
+public abstract class DSaturPartitionColoring extends Coloring implements IBoundedAlgorithm {
 	
-	private static final boolean log = true;
-	
-	private IAlgorithmBounder bounder;
+	protected static final boolean log = true;
 	
 	// ColorClass[i] = color assigned to node i
-	private int[] colorClass;
+	protected int[] colorClass;
 
 	// BestColorClass[i] = color assigned to node i in best solution
-	private int[] bestColorClass;
+	protected int[] bestColorClass;
 	
 	// ColorAdj[i,j] = number of neighbours of i using color j (all colored by 0 initially)
-	private int[][] colorAdj;
+	protected int[][] colorAdj;
 	
 	// ColorCount[i] = number of different colors used by neighbours of i
-	private int[] colorCount;
+	protected int[] colorCount;
 	
-	// Handled[q] = partition q has been colored
-	private boolean[] handled;
+	// Partitions handled
+	boolean[] handled;
 	
 	// ColoredNodeInPartition[q] = index of the node colored in partition q
-	private Node[] coloredNodeInPartition;
+	protected Node[] coloredNodeInPartition;
 	
 	// Best number of colors found so far
-	private int bestColoring;
+	protected int bestColoring;
 	
 	// Lower bound for the coloring
-	private int lowerBound;
+	protected int lowerBound;
 	
 	// Stored solution
-	private int solution;
+	protected int solution;
+
+	protected IAlgorithmBounder bounder;
 	
 	private boolean hasrun = false;
 	
@@ -78,11 +78,10 @@ public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorit
 
 	@Override
 	public Integer getIdentifier() {
-		
 		return null;
 	}
 	
-	protected Node getNextNode() {
+	protected abstract Node getNextNode();
 		/*max = -1;
 		place = -1;
 		
@@ -98,9 +97,9 @@ public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorit
 		if (place == -1) {
 			throw new AlgorithmException("Graph is disconnected. This code needs to be updated for that case.\n");
 		}
-		*/
+		
 		return null;
-	}
+	}*/
 
 	private int color(int i, int currentColor) throws AlgorithmException {
 		int j, newVal;
@@ -125,7 +124,7 @@ public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorit
 		Node next = getNextNode();
 		place = next.index(); 
 		partition = next.getPartition().index(); 
-		handled[partition] = true;
+		handle(partition);
 
 		// Execute DFS
 		for (j = 1; j <= currentColor; j++) {
@@ -146,7 +145,7 @@ public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorit
 				removeColor(place, j);
 				if (bestColoring <= currentColor) {
 					if (log) System.out.println("Current coloring " + currentColor + " over best " + bestColoring);
-					handled[partition] = false;
+					unhandled(partition);
 					return bestColoring;
 				}
 			}
@@ -167,8 +166,16 @@ public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorit
 			removeColor(place, currentColor + 1);
 		}
 		
-		handled[partition] = false;
+		unhandled(partition);
 		return (bestColoring);
+	}
+
+	private void handle(int partition) {
+		handled[partition] = true;
+	}
+
+	private void unhandled(int partition) {
+		handled[partition] = false;
 	}
 
 	private void assignColor(int node, int color) throws AlgorithmException {
@@ -222,7 +229,7 @@ public class DSaturPartitionColoring extends Coloring implements IBoundedAlgorit
 		}
 	}
 	
-	private void initFields() throws AlgorithmException {
+	protected void initFields() throws AlgorithmException {
 		if (bounder == null) {
 			bounder = new Bounder();
 		} bounder.start();
