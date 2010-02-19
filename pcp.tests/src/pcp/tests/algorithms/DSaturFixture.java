@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.bounding.Bounder;
+import pcp.algorithms.coloring.Coloring;
 import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.coloring.DSaturColoring;
 import pcp.entities.Node;
@@ -17,12 +18,12 @@ import pcp.interfaces.IPartitionedGraph;
 
 public class DSaturFixture {
 	
-	DSaturColoring dsatur;
-	PartitionedGraphBuilder builder;
-	List<Node> clique;
+	protected Coloring dsatur;
+	protected PartitionedGraphBuilder builder;
+	protected List<Node> clique;
 	
-	IPartitionedGraph graph;
-	Bounder bounder;
+	protected IPartitionedGraph graph;
+	protected Bounder bounder;
 	
 	@Before
 	public void setup() {
@@ -146,13 +147,10 @@ public class DSaturFixture {
 	}
 	
 	
-	private void check(int min, int max) throws AlgorithmException {
+	protected void check(int min, int max) throws AlgorithmException {
 		graph = builder.getGraph();
 		
-		dsatur = new DSaturColoring(graph);
-		dsatur.setClique(clique);
-		dsatur.setBounder(bounder);
-		
+		dsatur = createDSatur();
 		int c = dsatur.getChi();
 		
 		Assert.assertTrue("Chi " + c + " is not within expected bounds", c >= min);
@@ -160,5 +158,13 @@ public class DSaturFixture {
 
 		new ColoringVerifier(graph).verify(dsatur);
 	}
+	
+	protected Coloring createDSatur() {
+		 DSaturColoring saturColoring = new DSaturColoring(graph);
+		 saturColoring.setClique(clique);
+		 saturColoring.setBounder(bounder);
+		 return saturColoring;
+	}
+
 	
 }
