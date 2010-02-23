@@ -3,6 +3,8 @@ package pcp.model;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
+import pcp.algorithms.AlgorithmException;
+import pcp.algorithms.coloring.Coloring;
 import pcp.entities.PartitionedGraph;
 
 public class Model {
@@ -15,6 +17,7 @@ public class Model {
 	protected IloMPModeler modeler;
 	
 	protected int colors;
+	protected Coloring coloring;
 	
 	public Model(PartitionedGraph graph) {
 		this.graph = graph;
@@ -55,6 +58,15 @@ public class Model {
 
 	public int getColorCount() {
 		return this.colors;
+	}
+	
+	public int getColor(int node) {
+		try {
+			return this.coloring.getColor(node);
+		} catch (AlgorithmException e) {
+			System.err.println("Error getting color " + e.toString());
+			return 0;
+		}
 	}
 	
 	public int getNodeCount() {

@@ -3,6 +3,7 @@ package pcp.solver;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
+import pcp.Settings;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.model.Model;
 import pcp.solver.cuts.InitialCutBuilder;
@@ -11,6 +12,8 @@ import pcp.solver.data.AbstractSolutionData;
 
 
 public class Solver extends AbstractSolutionData {
+	
+	static final boolean useInitialSolution = Settings.get().getBoolean("start.useInitialSolution"); 
 	
 	IloCplex cplex;
 	Model model;
@@ -36,6 +39,13 @@ public class Solver extends AbstractSolutionData {
 	}
 	
 	protected void beforeSolve() {
+		if(useInitialSolution) {
+			loadInitialSolution();
+		}
+	}
+
+	protected void loadInitialSolution() {
+		// TODO: Setvectors
 	}
 
 	public void end() throws Exception {

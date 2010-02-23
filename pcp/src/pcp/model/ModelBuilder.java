@@ -39,7 +39,9 @@ public class ModelBuilder {
 		this.objective = null;
 		
 		Model model = new Model(this.graph);
-		this.colors = model.colors = Factory.get().coloring(strategy.getColoring(), graph).getChi();
+		
+		model.coloring = Factory.get().coloring(strategy.getColoring(), graph);
+		this.colors = model.colors = model.coloring.getChi();
 		
 		// Initialize variables and objective function
 		initializeVariables();
