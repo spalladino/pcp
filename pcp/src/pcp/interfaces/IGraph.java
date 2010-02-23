@@ -17,6 +17,8 @@ public interface IGraph {
 	
 	Node getNode(int index);
 	
+	int getDegree(Node node);
+	
 	int N();
 	
 	int E();

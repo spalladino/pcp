@@ -10,6 +10,7 @@ import java.util.TreeMap;
 
 import pcp.interfaces.IPartitionedGraph;
 import pcp.interfaces.IPartitionedGraphBuilder;
+import pcp.utils.GraphUtils;
 
 public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedGraphBuilder {
 	
@@ -40,7 +41,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	
 	public PartitionedGraph getGraph() {
 		if (mustRecreate) recreateGraph();
-		PartitionedGraph graph = new PartitionedGraph(nodes.size(), edges.size(), partitions.size());
+		//PartitionedGraph graph = new PartitionedGraph(nodes.size(), edges.size(), partitions.size());
+		PartitionedGraph graph = new PartitionedGraph();
 		graph.name = this.name;
 		
 		int nn = nodes.size();
@@ -50,6 +52,9 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		graph.adjacencies = new Node[nn][];
 		graph.partitionNodes = new Node[pp][];
 		graph.nodePartition = new Partition[nn];
+		graph.nodePartitionAdjacencies = new Partition[nn][pp];
+		graph.partitionPartitionAdjacencies = new Partition[pp][];
+		graph.partitionNodeAdjacencies = new Node[pp][];
 		
 		graph.nodes = this.getNodes();
 		graph.edges = this.getEdges();
@@ -59,11 +64,14 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 			node.graph = graph;
 			graph.nodePartition[node.name] = this.getPartition(node);
 			graph.adjacencies[node.name] = this.getNeighbours(node);
+			graph.nodePartitionAdjacencies[node.name] = this.getNeighbourPartitions(node);
 		}
 		
 		for (Partition partition : graph.partitions) {
 			partition.graph = graph;
 			graph.partitionNodes[partition.name] = this.getNodes(partition);
+			graph.partitionNodeAdjacencies[partition.name] = this.getNeighbours(partition);
+			graph.partitionPartitionAdjacencies[partition.name] = this.getNeighbourPartitions(partition);
 		}
 		
 		for (Edge edge : graph.edges) {
@@ -276,6 +284,28 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	@Override
 	public Node getNode(int index) {
 		return this.nodes.get(index);
+	}
+
+	@Override
+	public Partition[] getNeighbourPartitions(Node n) {
+		Set<Partition> partitions = GraphUtils.groupByPartition(this.getNeighbours(n)).keySet();
+		return (Partition[]) partitions.toArray(new Partition[partitions.size()]);
+	}
+
+	@Override
+	public Partition[] getNeighbourPartitions(Partition p) {
+		Set<Partition> partitions = GraphUtils.groupByPartition(this.getNeighbours(p)).keySet();
+		return (Partition[]) partitions.toArray(new Partition[partitions.size()]);
+	}
+
+	@Override
+	public Node[] getNeighbours(Partition p) {
+		Set<Node> nodes = new HashSet<Node>();
+		for (Node n : p.getNodes()) {
+			for (Node neighbour : n.getNeighbours()) {
+				nodes.add(neighbour);
+			}
+		} return (Node[]) nodes.toArray(new Node[nodes.size()]);
 	}
 	
 }

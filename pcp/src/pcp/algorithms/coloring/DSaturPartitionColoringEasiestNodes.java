@@ -22,11 +22,12 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 			if (handled[p.index()]) continue;
 			
 			// Pick the easiest node in the partition
-			int min = Integer.MAX_VALUE;
 			Node minNode = null;
 			for (Node n : p.getNodes()) {
-				if ((colorCount[n.index()] < min) || ((colorCount[n.index()] == min) && (colorAdj[n.index()][0] < colorAdj[minNode.index()][0]))) {
-					min = colorCount[n.index()];
+				if (minNode == null 
+					|| colorCount[n.index()] < colorCount[minNode.index()] 
+                    || (colorCount[n.index()] == colorCount[minNode.index()] 
+                        && (colorAdj[n.index()][0] < colorAdj[minNode.index()][0]))) {
 					minNode = n;
 				}
 			}

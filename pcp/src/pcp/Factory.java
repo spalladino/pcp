@@ -5,6 +5,8 @@ import java.io.FileReader;
 
 import pcp.algorithms.coloring.Coloring;
 import pcp.algorithms.coloring.ConfigurationColoring;
+import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
+import pcp.algorithms.coloring.DSaturPartitionColoringHardestPartition;
 import pcp.algorithms.coloring.NodesColoring;
 import pcp.algorithms.coloring.PartitionsColoring;
 import pcp.entities.PartitionedGraph;
@@ -32,6 +34,10 @@ public class Factory implements IFactory {
 				return new NodesColoring(graph);
 			case Partitions:
 				return new PartitionsColoring(graph);
+			case DSaturEasyNode:
+				return new DSaturPartitionColoringEasiestNodes(graph);
+			case DSaturHardPartition:
+				return new DSaturPartitionColoringHardestPartition(graph);
 		}
 		return null;
 	}

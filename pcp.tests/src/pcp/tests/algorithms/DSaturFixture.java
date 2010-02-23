@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pcp.Settings;
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.coloring.Coloring;
@@ -24,6 +26,11 @@ public class DSaturFixture {
 	
 	protected IPartitionedGraph graph;
 	protected Bounder bounder;
+	
+	@BeforeClass
+	public static void load() throws Exception {
+		Settings.load("test");
+	}
 	
 	@Before
 	public void setup() {

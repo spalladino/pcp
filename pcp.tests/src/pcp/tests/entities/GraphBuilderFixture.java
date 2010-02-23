@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import pcp.entities.Partition;
 import pcp.entities.PartitionedGraph;
 import pcp.entities.PartitionedGraphBuilder;
 
@@ -28,6 +29,53 @@ public class GraphBuilderFixture {
 		builder.addEdge(0, 2);
 		builder.addEdge(2, 4);
 		builder.addEdge(3, 4);
+	}
+	
+	@Test
+	public void testNeighbours() {
+		builder = new PartitionedGraphBuilder("test");
+		
+		builder.addNode(0, 0);
+		builder.addNode(1, 0);
+		builder.addNode(2, 0);
+		builder.addNode(3, 1);
+		builder.addNode(4, 1);
+		builder.addNode(5, 2);
+		builder.addNode(6, 2);
+		
+		builder.addEdge(0, 3);
+		builder.addEdge(0, 4);
+		builder.addEdge(2, 5);
+		builder.addEdge(1, 4);
+		builder.addEdge(1, 6);
+		builder.addEdge(4, 6);
+		
+		assertCounts(7, 6, 3);
+		
+		assertEquals(2, graph.getNode(0).getNeighbours().length);
+		assertEquals(2, graph.getNode(1).getNeighbours().length);
+		assertEquals(1, graph.getNode(2).getNeighbours().length);
+		assertEquals(1, graph.getNode(3).getNeighbours().length);
+		assertEquals(3, graph.getNode(4).getNeighbours().length);
+		assertEquals(1, graph.getNode(5).getNeighbours().length);
+		assertEquals(2, graph.getNode(6).getNeighbours().length);
+		
+		Partition p0 = graph.getPartitions()[0];
+		Partition p1 = graph.getPartitions()[1];
+		Partition p2 = graph.getPartitions()[2];
+		
+		assertEquals(1, graph.getNeighbourPartitions(graph.getNode(0)).length);
+		assertEquals(2, graph.getNeighbourPartitions(graph.getNode(1)).length);
+		assertEquals(1, graph.getNeighbourPartitions(graph.getNode(2)).length);
+		assertEquals(1, graph.getNeighbourPartitions(graph.getNode(3)).length);
+		assertEquals(2, graph.getNeighbourPartitions(graph.getNode(4)).length);
+		assertEquals(1, graph.getNeighbourPartitions(graph.getNode(5)).length);
+		assertEquals(2, graph.getNeighbourPartitions(graph.getNode(6)).length);
+		
+		assertEquals(4, graph.getNeighbours(p0).length);
+		assertEquals(3, graph.getNeighbours(p1).length);
+		assertEquals(3, graph.getNeighbours(p2).length);
+
 	}
 	
 	@Test

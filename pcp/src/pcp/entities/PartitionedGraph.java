@@ -5,11 +5,26 @@ import pcp.interfaces.IPartitionedGraph;
 
 public class PartitionedGraph implements IPartitionedGraph  {
 
+	// Index i0, i1 contains whether nodes i0 and i1 are adjacent 
 	boolean[][] matrix;
 
+	// Index i contains the neighbours of node i
 	Node[][] adjacencies;
+	
+	// Index k contains the nodes that belong to partition k
 	Node[][] partitionNodes;
+	
+	// Index i contains the partition node i belongs to
 	Partition[] nodePartition;
+	
+	// Index i contains array of partitions adjacent to node i
+	Partition[][] nodePartitionAdjacencies;
+
+	// Index k contains array of partitions adjacent to partition k
+	Partition[][] partitionPartitionAdjacencies;
+	
+	// Index k contains array of nodes adjacent to partition k
+	Node[][] partitionNodeAdjacencies;
 	
 	Node[] nodes;
 	Partition[] partitions;
@@ -25,8 +40,11 @@ public class PartitionedGraph implements IPartitionedGraph  {
 		this.partitions = new Partition[partitionscount];
 		this.matrix = new boolean[nodescount][nodescount];
 		this.adjacencies = new Node[nodescount][];
+		this.nodePartitionAdjacencies = new Partition[nodescount][];
 		this.partitionNodes = new Node[partitionscount][];
 		this.nodePartition = new Partition[nodescount];
+		this.partitionPartitionAdjacencies = new Partition[partitionscount][];
+		this.partitionNodeAdjacencies = new Node[partitionscount][];
 	}
 	
 	public Node[] getNodes() {
@@ -88,5 +106,20 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	@Override
 	public boolean areInSamePartition(Node n1, Node n2) {
 		return this.nodePartition[n1.name].name == this.nodePartition[n2.name].name;
+	}
+
+	@Override
+	public Partition[] getNeighbourPartitions(Node n) {
+		return this.nodePartitionAdjacencies[n.index()];
+	}
+
+	@Override
+	public Partition[] getNeighbourPartitions(Partition p) {
+		return this.partitionPartitionAdjacencies[p.index()];
+	}
+
+	@Override
+	public Node[] getNeighbours(Partition p) {
+		return this.partitionNodeAdjacencies[p.index()];
 	}
 }

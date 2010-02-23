@@ -175,6 +175,24 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 	public String getName() {
 		return graph.getName();
 	}
+
+	@Override
+	public Partition[] getNeighbourPartitions(Node n) {
+		throw new UnsupportedOperationException();
+		//return graph.getNeighbourPartitions(n);
+	}
+
+	@Override
+	public Partition[] getNeighbourPartitions(Partition p) {
+		throw new UnsupportedOperationException();
+		//return graph.getNeighbourPartitions(p);
+	}
+
+	@Override
+	public Node[] getNeighbours(Partition p) {
+		throw new UnsupportedOperationException();
+		//return graph.getNeighbours(p);
+	}
 	
 	
 	

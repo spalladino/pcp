@@ -9,11 +9,15 @@ public interface IPartitionedGraph extends IGraph {
 	
 	Partition[] getPartitions();
 	
+	Partition[] getNeighbourPartitions(Node n);
+	
+	Partition[] getNeighbourPartitions(Partition p);
+	
+	Node[] getNeighbours(Partition p);
+	
 	Node[] getNodes(Partition partition);
 	
 	Partition getPartition(Node node);
-
-	int getDegree(Node node);
 	
 	int P();
 }

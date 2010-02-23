@@ -1,5 +1,6 @@
 package pcp.algorithms.coloring;
 
+import pcp.Settings;
 import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
@@ -10,7 +11,8 @@ import pcp.interfaces.IPartitionedGraph;
 
 public abstract class DSaturPartitionColoring extends Coloring implements IBoundedAlgorithm {
 	
-	protected static final boolean log = true;
+	protected static final boolean log = Settings.get().getBoolean("logging.coloring");
+	protected static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");
 	
 	// ColorClass[i] = color assigned to node i
 	protected int[] colorClass;
@@ -38,7 +40,7 @@ public abstract class DSaturPartitionColoring extends Coloring implements IBound
 	
 	// Stored solution
 	protected int solution;
-
+	
 	protected IAlgorithmBounder bounder;
 	
 	private boolean hasrun = false;
@@ -82,24 +84,6 @@ public abstract class DSaturPartitionColoring extends Coloring implements IBound
 	}
 	
 	protected abstract Node getNextNode();
-		/*max = -1;
-		place = -1;
-		
-		for (k = 0; k < graph.N(); k++) {
-			//if (handled[k.partition]) continue; !!!
-			if ((colorCount[k] > max) || ((colorCount[k] == max) && (colorAdj[k][0] > colorAdj[place][0]))) {
-				max = colorCount[k];
-				place = k;
-			}
-		}
-		
-		// Disconnected graphs unhandled
-		if (place == -1) {
-			throw new AlgorithmException("Graph is disconnected. This code needs to be updated for that case.\n");
-		}
-		
-		return null;
-	}*/
 
 	private int color(int i, int currentColor) throws AlgorithmException {
 		int j, newVal;
@@ -188,21 +172,10 @@ public abstract class DSaturPartitionColoring extends Coloring implements IBound
 		coloredNodeInPartition[node.getPartition().index()] = node;
 		
 		for (Node n1 : node.getNeighbours()) {
-			int node1 = n1.index();
-			
-			if (colorAdj[node1][color] == 0) {
-				colorCount[node1]++;
-			}
-			
-			colorAdj[node1][color]++;
-			colorAdj[node1][0]--;
-			
-			if (colorAdj[node1][0] < 0) {
-				throw new AlgorithmException("Error on dsatur assign color");
-			}
+			increaseColorCount(n1, color);
 		}
 	}
-	
+
 	private void removeColor(int node, int color) throws AlgorithmException {
 		removeColor(graph.getNodes()[node], color);
 	}
@@ -213,20 +186,41 @@ public abstract class DSaturPartitionColoring extends Coloring implements IBound
 		coloredNodeInPartition[node.getPartition().index()] = null;
 		
 		for (Node n1 : node.getNeighbours()) {
-			int node1 = n1.index();
-			
-			colorAdj[node1][color]--;
-			
-			if (colorAdj[node1][color] == 0) {
-				colorCount[node1]--;
-			}
-			
-			if (colorAdj[node1][color] < 0) {
-				throw new AlgorithmException("Error on dsatur remove color");
-			}
-			
-			colorAdj[node1][0]++;
+			decreaseColorCount(n1, color);
 		}
+	}
+
+	protected void increaseColorCount(Node n1, int color)
+			throws AlgorithmException {
+		int node1 = n1.index();
+		
+		if (colorAdj[node1][color] == 0) {
+			colorCount[node1]++;
+		}
+		
+		colorAdj[node1][color]++;
+		colorAdj[node1][0]--;
+		
+		if (colorAdj[node1][0] < 0) {
+			throw new AlgorithmException("Error on dsatur assign color");
+		}
+	}
+
+	protected void decreaseColorCount(Node n1, int color)
+			throws AlgorithmException {
+		int node1 = n1.index();
+		
+		colorAdj[node1][color]--;
+		
+		if (colorAdj[node1][color] == 0) {
+			colorCount[node1]--;
+		}
+		
+		if (colorAdj[node1][color] < 0) {
+			throw new AlgorithmException("Error on dsatur remove color");
+		}
+		
+		colorAdj[node1][0]++;
 	}
 	
 	protected void initFields() throws AlgorithmException {
@@ -234,17 +228,23 @@ public abstract class DSaturPartitionColoring extends Coloring implements IBound
 			bounder = new Bounder();
 		} bounder.start();
 		
-		this.bestColoring = graph.N() + 1;
-		this.colorAdj = new int[graph.N()][graph.N()];
+		this.bestColoring = graph.P() + 1;
+		this.colorAdj = new int[graph.N()][graph.P()];
 		this.colorClass = new int[graph.N()];
 		this.colorCount = new int[graph.N()];
 		this.handled = new boolean[graph.P()];
 		this.coloredNodeInPartition = new Node[graph.P()];
 		this.lowerBound = -1;
 		
-		for (Edge e : graph.getEdges()) {
-			colorAdj[e.index1()][0]++;
-			colorAdj[e.index2()][0]++;
+		if (colorAdjPartitions) {
+			for (Node n : graph.getNodes()) {
+				colorAdj[n.index()][0] = graph.getNeighbourPartitions(n).length; 
+			}
+		} else {
+			for (Edge e : graph.getEdges()) {
+				colorAdj[e.index1()][0]++;
+				colorAdj[e.index2()][0]++;
+			}
 		}
 	}
 	
