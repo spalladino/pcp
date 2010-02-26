@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import pcp.interfaces.IGraph;
 import pcp.interfaces.IPartitionedGraph;
 import pcp.interfaces.IPartitionedGraphBuilder;
+import pcp.interfaces.ISimpleGraph;
 import pcp.utils.GraphUtils;
 
 public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedGraphBuilder {
@@ -194,6 +194,19 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		return this;
 	}
 	
+	public PartitionedGraphBuilder addNodesInPartition(int partition, int... nodes) {
+		for (int node : nodes)
+			addNode(node, partition);
+		return this;
+	}
+	
+	public PartitionedGraphBuilder addEdges(int from, int... to) {
+		for (int n : to) {
+			addEdge(from, n);
+		}
+		return this;
+	}
+	
 	public PartitionedGraphBuilder addEdge(int n1, int n2) {
 		Node node1 = getCreateNode(n1);
 		Node node2 = getCreateNode(n2);
@@ -311,13 +324,16 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	}
 
 	@Override
-	public IGraph getGPrime() {
+	public ISimpleGraph getGPrime() {
 		SimpleGraphBuilder builder = new SimpleGraphBuilder(this.name);
 		
 		Partition[] ps = this.getPartitions();
 		
 		for (int i = 0; i < ps.length; i++) {
 			builder.addNode(i);
+		}
+		
+		for (int i = 0; i < ps.length; i++) {
 			for (int j = i+1; j < ps.length; j++) {
 				if (GraphUtils.areBipartite(ps[i], ps[j])) {
 					builder.addEdge(i, j);
@@ -326,6 +342,11 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		}
 
 		return builder.getGraph();
+	}
+
+	@Override
+	public boolean areAdjacent(int n1, int n2) {
+		return areAdjacent(nodes.get(n1), nodes.get(n2));
 	}
 	
 }

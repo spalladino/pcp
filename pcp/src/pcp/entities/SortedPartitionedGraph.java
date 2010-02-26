@@ -3,8 +3,8 @@ package pcp.entities;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import pcp.interfaces.IGraph;
 import pcp.interfaces.IPartitionedGraph;
+import pcp.interfaces.ISimpleGraph;
 
 public class SortedPartitionedGraph implements IPartitionedGraph {
 
@@ -196,9 +196,14 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 	}
 
 	@Override
-	public IGraph getGPrime() {
+	public ISimpleGraph getGPrime() {
 		throw new UnsupportedOperationException();
 		//return graph.getGPrime();
+	}
+
+	@Override
+	public boolean areAdjacent(int n1, int n2) {
+		return graph.areAdjacent(n1, n2);
 	}
 	
 }

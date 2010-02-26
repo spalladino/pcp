@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import pcp.common.TupleInt;
@@ -31,11 +32,14 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 	@Override
 	public ISimpleGraphBuilder addEdge(int n1, int n2) {
 		edges.add(new TupleInt(n1, n2));
+		nodeAdjacencies.get(n1).add(n2);
+		nodeAdjacencies.get(n2).add(n1);
 		return this;
 	}
 
 	@Override
 	public ISimpleGraphBuilder addNode(int node) {
+		nodeAdjacencies.put(node, new TreeSet<Integer>());
 		nodeCount++;
 		return this;
 	}

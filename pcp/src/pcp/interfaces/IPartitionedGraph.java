@@ -113,5 +113,5 @@ public interface IPartitionedGraph extends IGraph {
 	 * partition in the graph G, and two nodes are adjacent iif both partitions formed a bipartite graph.
 	 * @return the graph G' for this partitioned graph.
 	 */
-	IGraph getGPrime();
+	ISimpleGraph getGPrime();
 }

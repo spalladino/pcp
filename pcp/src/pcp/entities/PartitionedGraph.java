@@ -1,7 +1,7 @@
 package pcp.entities;
 
-import pcp.interfaces.IGraph;
 import pcp.interfaces.IPartitionedGraph;
+import pcp.interfaces.ISimpleGraph;
 
 
 public class PartitionedGraph implements IPartitionedGraph  {
@@ -128,7 +128,12 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	}
 
 	@Override
-	public IGraph getGPrime() {
+	public ISimpleGraph getGPrime() {
 		return this.gprime;
+	}
+
+	@Override
+	public boolean areAdjacent(int n1, int n2) {
+		return matrix[n1][n2];
 	}
 }

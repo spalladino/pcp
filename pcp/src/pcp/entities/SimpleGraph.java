@@ -65,5 +65,10 @@ public class SimpleGraph implements ISimpleGraph {
 	public SimpleNode getNode(int index) {
 		return this.nodes[index];
 	}
+
+	@Override
+	public boolean areAdjacent(int n1, int n2) {
+		return matrix[n1][n2];
+	}
 	
 }

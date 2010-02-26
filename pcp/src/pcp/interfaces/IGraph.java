@@ -9,4 +9,5 @@ public interface IGraph {
 	
 	int E();
 	
+	boolean areAdjacent(int n1, int n2);
 }
