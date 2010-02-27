@@ -6,5 +6,7 @@
 - Ver prop2 de isapau, se puede llevar a ciclos?
 - Multicolors
 - Extended clique coverage para r de neighbourhood (arrancar con las particiones y usar G')
+
 - Clique coverage usando neighbourhood de r=1 para reemplazar adj
-- Testear G'
+- Terminar de codear y testear induced
+- Coverage
