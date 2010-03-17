@@ -12,6 +12,7 @@ package porta.parser;
 import porta.processing.*;
 import porta.model.*;
 
+@SuppressWarnings("unchecked")
 public class PortaParser { 
 
 	Model model;

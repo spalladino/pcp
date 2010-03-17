@@ -10,7 +10,7 @@ import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
 import pcp.model.strategy.Symmetry;
-import pcp.porta.PcpCardinals;
+import pcp.porta.Parameters;
 import pcp.porta.model.Variable;
 import pcp.porta.processing.Translator;
 import porta.poi.IPointsGenerator;
@@ -20,14 +20,14 @@ public class PointsGenerator implements IPointsGenerator {
 	
 	private BuilderStrategy strategy;
 	private IPartitionedGraph graph;
-	private PcpCardinals cardinals;
+	private Parameters cardinals;
 	private List<int[]> points;
 	private int[] current;
 	
 	private int dimension;
 	private Translator translator;
 	
-	public PointsGenerator(IPartitionedGraph graph, PcpCardinals cardinals, BuilderStrategy strategy) throws AlgorithmException {
+	public PointsGenerator(IPartitionedGraph graph, Parameters cardinals, BuilderStrategy strategy) throws AlgorithmException {
 		this.graph = graph;
 		this.strategy = strategy;
 		this.cardinals = cardinals;

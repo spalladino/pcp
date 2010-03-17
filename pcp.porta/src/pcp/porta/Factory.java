@@ -8,32 +8,35 @@ import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.model.BuilderStrategy;
 import pcp.model.ModelBuilder;
-import pcp.porta.model.PcpModel;
+import pcp.porta.model.Constraint;
+import pcp.porta.model.Family;
+import pcp.porta.model.Model;
 import pcp.porta.model.Variable;
-import pcp.porta.model.ilog.MockMPModeler;
 import pcp.porta.parser.ModelParser;
 import pcp.porta.poi.PointsGenerator;
 import pcp.porta.processing.Processor;
 import pcp.porta.processing.Translator;
-import porta.BaseParameters;
-import porta.base.EntityHolder;
-import porta.interfaces.IEntity;
+import porta.base.BaseParameters;
 import porta.interfaces.IFactory;
 import porta.io.ModelWriter;
 import porta.io.PortaWriter;
-import porta.model.BaseConstraint;
-import porta.model.BaseFamily;
-import porta.model.Model;
+import porta.model.ilog.MockMPModeler;
 import porta.poi.IPointsGenerator;
 import porta.processing.IProcessor;
 import porta.processing.ITranslator;
 
 
-public class Factory implements IFactory {
+public class Factory implements IFactory<
+	IPartitionedGraph,
+	Constraint,
+	Parameters,
+	Family,
+	Variable,
+	Model> {
 
 	boolean projectColors;
 	BuilderStrategy strategy;
-	PcpCardinals parameters;
+	Parameters parameters;
 	
 	public Factory(boolean projectColors, BuilderStrategy strategy) {
 		this.projectColors = projectColors;
@@ -41,36 +44,34 @@ public class Factory implements IFactory {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <C extends BaseConstraint, F extends BaseFamily, I extends BaseParameters> Model<C, F, I> createModel(I c) {
-		return (Model<C, F, I>) new PcpModel((PcpCardinals) c);
+	public Model createModel(Parameters c) {
+		return new Model(c);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Model readModel(String filename) throws Exception {
-		return new ModelParser(new FileInputStream(filename)).model();
+		return (Model) new ModelParser(new FileInputStream(filename)).model();
 	}
 	
 	
 	@Override
-	public ModelWriter createModelWriter(Model<?, ?, ?> model) {
-		return new pcp.porta.io.ModelWriter((PcpModel) model);
+	public ModelWriter<Variable> createModelWriter(Model model) {
+		return new pcp.porta.io.ModelWriter((Model) model);
 	}
 
 	@Override
-	public IPointsGenerator createPointsGenerator(IEntity graph) throws Exception {
-		return new PointsGenerator(toGraph(graph), parameters, strategy);
+	public IPointsGenerator createPointsGenerator(IPartitionedGraph graph) throws Exception {
+		return new PointsGenerator(graph, parameters, strategy);
 	}
 
 	@Override
-	public PortaWriter createPortaWriter(Model<?, ?, ?> model) {
-		return new pcp.porta.io.PortaWriter((PcpModel) model);
+	public PortaWriter<Variable> createPortaWriter(Model model) {
+		return new pcp.porta.io.PortaWriter(model);
 	}
 
 	@Override
-	public IProcessor createProcessor(IEntity graph, BaseParameters c) {
-		return new Processor(toGraph(graph), (PcpCardinals) c, strategy);
+	public IProcessor createProcessor(IPartitionedGraph graph, Parameters c) {
+		return new Processor(graph, c, strategy);
 	}
 
 	@Override
@@ -79,15 +80,15 @@ public class Factory implements IFactory {
 	}
 
 	@Override
-	public PcpCardinals getParameters() {
+	public Parameters getParameters() {
 		if (this.parameters == null) {
-			this.parameters = new PcpCardinals();
+			this.parameters = new Parameters();
 		}
 		return this.parameters;
 	}
 
 	@Override
-	public IEntity readEntity(String filename, Boolean preprocess) throws Exception {
+	public IPartitionedGraph readEntity(String filename, Boolean preprocess) throws Exception {
 		PartitionedGraphBuilder graphb = pcp.Factory.get().getGraphBuilder(filename);
 		if (preprocess) { 
 			graphb = new Preprocessor(graphb).preprocess();
@@ -98,31 +99,19 @@ public class Factory implements IFactory {
 		
 		PartitionedGraph graph = graphb.getGraph();
 		buildParameters(graph);
-		return asEntity(graph);
+		return graph;
 	}
 
 	@Override
-	public PcpModel generateModel(IEntity graph) throws Exception {
-		MockMPModeler modeler = new MockMPModeler();
-		ModelBuilder builder = new ModelBuilder((PartitionedGraph) toGraph(graph), modeler);
+	public Model generateModel(IPartitionedGraph graph) throws Exception {
+		MockMPModeler<Model> modeler = new MockMPModeler<Model>(this);
+		ModelBuilder builder = new ModelBuilder((PartitionedGraph) graph, modeler);
 		builder.buildModel(strategy);
-		return modeler.asModel(this.createTranslator());
+		return modeler.asModel(this.createTranslator(), getParameters());
 	}
 
 	private BaseParameters buildParameters(IPartitionedGraph graph) {
-		return parameters = new PcpCardinals(graph.N());
+		return parameters = new Parameters(graph.N());
 	}
-	
-	@SuppressWarnings("unchecked")
-	private IPartitionedGraph toGraph(IEntity entity) {
-		return ((EntityHolder<IPartitionedGraph>) entity).get();
-	}
-	
-	@SuppressWarnings("unused")
-	private IEntity asEntity(IPartitionedGraph graph) {
-		return new EntityHolder<IPartitionedGraph>(graph);
-	}
-
-	
 	
 }

@@ -3,16 +3,16 @@ package porta.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import porta.BaseParameters;
+import porta.base.BaseParameters;
 
 
-public abstract class Model<C extends BaseConstraint, F extends BaseFamily, I extends BaseParameters> {
+public abstract class BaseModel<C extends BaseConstraint, F extends BaseFamily, I extends BaseParameters> {
 	List<C> constraints;
 	List<F> families;
 	
 	I p;
 	
-	public Model(I p) {
+	public BaseModel(I p) {
 		this.p = p;
 		
 		constraints = new ArrayList<C>();
@@ -26,11 +26,11 @@ public abstract class Model<C extends BaseConstraint, F extends BaseFamily, I ex
 		return (C)createConstraint().withCompare(compare).withBound(bound);
 	}
 	
-	public abstract BaseFamily createFamily(int compare, int bound);
+	public abstract F createFamily(int compare, int bound);
 	
-	public abstract BaseFamily createFamily(BaseConstraint base);
+	public abstract F createFamily(C base);
 	
-	public void removeFamily(BaseFamily f) {
+	public void removeFamily(F f) {
 		families.remove(f);
 	}
 

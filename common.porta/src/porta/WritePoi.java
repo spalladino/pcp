@@ -1,12 +1,11 @@
 package porta;
 
 import ilog.concert.IloException;
-import porta.interfaces.IEntity;
 import porta.interfaces.IFactory;
 import porta.io.PoiWriter;
 import porta.poi.IPointsGenerator;
 
-
+@SuppressWarnings("unchecked")
 public class WritePoi {
 	
 	IFactory factory;
@@ -16,7 +15,7 @@ public class WritePoi {
 	}
 	
 	public void write(String filename, String output, Boolean preprocess) throws Exception, IloException {
-		IEntity graph = factory.readEntity(filename, preprocess);
+		Object graph = factory.readEntity(filename, preprocess);
 		
 		IPointsGenerator generator = factory.createPointsGenerator(graph);
 		PoiWriter writer = new PoiWriter(generator.getDimension(), generator.getPoints());

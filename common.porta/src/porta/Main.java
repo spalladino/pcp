@@ -4,6 +4,7 @@ import porta.interfaces.IFactory;
 import porta.interfaces.IFilesHandler;
 import props.Settings;
 
+@SuppressWarnings("unchecked")
 public class Main {
 	
 	IFilesHandler handler; 

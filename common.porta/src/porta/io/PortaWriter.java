@@ -4,24 +4,31 @@ import java.io.PrintStream;
 
 import porta.interfaces.ITermWriter;
 import porta.model.BaseConstraint;
-import porta.model.Model;
+import porta.model.BaseVariable;
+import porta.model.BaseModel;
 import porta.processing.ITranslator;
 import exceptions.AlgorithmException;
 
 
-public abstract class PortaWriter {
+public abstract class PortaWriter<VARIABLE extends BaseVariable> {
 	
-	protected Model<?, ?, ?> model;
+	protected BaseModel<?, ?, ?> model;
 	protected Integer dim;
-	protected ITranslator translator;
+	protected ITranslator<VARIABLE> translator;
 	
-	public PortaWriter(Model<?, ?, ?> model, ITranslator translator) {
+	public PortaWriter(BaseModel<?, ?, ?> model, ITranslator<VARIABLE> translator) {
 		this.model = model;
 		this.dim = calculateDimension();
 		this.translator = translator;
 	}
 	
 	protected abstract Integer calculateDimension();
+
+	protected abstract void writeValidPoint(PrintStream stream) throws AlgorithmException;
+
+	protected abstract boolean skipConstraint(BaseConstraint constraint);
+
+	protected abstract ITermWriter createTermWriter();
 
 	public void write(String filename) throws Exception {
 		try {
@@ -68,10 +75,6 @@ public abstract class PortaWriter {
 		} stream.print('\n');
 	}
 	
-	protected abstract void writeValidPoint(PrintStream stream) throws AlgorithmException;
-
-	protected abstract boolean skipConstraint(BaseConstraint constraint);
-	
 	void writeInequalities(PrintStream stream) {
 		stream.print("\nINEQUALITIES_SECTION\n");
 		boolean inEqs = true;
@@ -91,7 +94,5 @@ public abstract class PortaWriter {
 			stream.print('\n');
 		}
 	}
-	
-	protected abstract ITermWriter createTermWriter();
 	
 }

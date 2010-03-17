@@ -7,13 +7,12 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.TupleInt;
-
-import pcp.porta.PcpCardinals;
+import pcp.porta.Parameters;
 import pcp.porta.model.Constraint;
-import pcp.porta.model.PcpModel;
-import pcp.porta.parser.PortaParser;
+import pcp.porta.model.Model;
+import pcp.porta.model.Variable;
 import pcp.porta.processing.Translator;
+import porta.parser.PortaParser;
 import props.Settings;
 
 
@@ -40,7 +39,7 @@ public class PortaParseFixture {
 				"\n" +
 				"END\n";
 		
-		PcpModel constraints = parseFromString(t);
+		Model constraints = parseFromString(t);
 		Assert.assertEquals(3, constraints.getConstraints().size());
 		
 		Constraint c0 = constraints.getConstraints().get(0);
@@ -81,21 +80,21 @@ public class PortaParseFixture {
 	
 	}
 	
-	private static PcpModel parseFromString(String input) throws Exception {
+	private static Model parseFromString(String input) throws Exception {
 		final StringReader reader = new StringReader(input);
-		PcpCardinals c = new PcpCardinals(3, 1); 		
-		PcpModel model = new PcpModel(c);
+		Parameters c = new Parameters(3, 1); 		
+		Model model = new Model(c);
 		
 		Translator t = new Translator(c) {
-			public TupleInt convertPortaToNodeColor(int index) {
-				return new TupleInt(index-1, 0);
+			public Variable convertPortaToModel(int index) {
+				return new Variable(index-1, 0);
 			}
 		};
 		
 		PortaParser parser = new PortaParser(reader);
 		parser.initialize(model, t);
 		
-		return parser.ieq();
+		return (Model)parser.ieq();
 	}
 	
 }

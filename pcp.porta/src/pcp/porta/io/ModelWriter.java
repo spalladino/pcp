@@ -3,7 +3,8 @@ package pcp.porta.io;
 import java.io.PrintStream;
 
 import pcp.porta.model.Constraint;
-import pcp.porta.model.PcpModel;
+import pcp.porta.model.Model;
+import pcp.porta.model.Variable;
 import pcp.porta.processing.Translator;
 import porta.interfaces.ITermWriter;
 import porta.model.BaseConstraint;
@@ -11,11 +12,11 @@ import porta.model.BaseFamily;
 import exceptions.AlgorithmException;
 
 
-public class ModelWriter extends porta.io.ModelWriter {
+public class ModelWriter extends porta.io.ModelWriter<Variable> {
 
 	PortaWriter inner;
 	
-	public ModelWriter(PcpModel model) {
+	public ModelWriter(Model model) {
 		super(model, new Translator(model.getCardinals()));
 		if (inner == null) inner = new PortaWriter(model);
 	}
@@ -38,7 +39,7 @@ public class ModelWriter extends porta.io.ModelWriter {
 
 	@Override
 	protected Integer calculateDimension() {
-		if (inner == null) inner = new PortaWriter((PcpModel)model);
+		if (inner == null) inner = new PortaWriter((Model)model);
 		return inner.calculateDimension();
 	}
 

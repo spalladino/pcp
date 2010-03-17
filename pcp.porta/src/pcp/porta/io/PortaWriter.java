@@ -3,7 +3,7 @@ package pcp.porta.io;
 import java.io.PrintStream;
 
 import pcp.porta.model.Constraint;
-import pcp.porta.model.PcpModel;
+import pcp.porta.model.Model;
 import pcp.porta.model.Variable;
 import pcp.porta.processing.Translator;
 import pcp.utils.NameUtils;
@@ -13,8 +13,7 @@ import porta.model.BaseVariable;
 import props.Settings;
 import exceptions.AlgorithmException;
 
-
-public class PortaWriter extends porta.io.PortaWriter {
+public class PortaWriter extends porta.io.PortaWriter<Variable> {
 	
 	boolean validPoint;
 	boolean projectColors;
@@ -25,7 +24,7 @@ public class PortaWriter extends porta.io.PortaWriter {
 	int nodeCount = 0;
 	int colorCount = 0;
 	
-	public PortaWriter(PcpModel model) {
+	public PortaWriter(Model model) {
 		super(model, new Translator(model.getCardinals()));
 
 		this.validPoint = Settings.get().getBoolean("writer.validPoint");

@@ -3,14 +3,15 @@ package porta.io;
 import java.io.PrintStream;
 
 import porta.model.BaseFamily;
-import porta.model.Model;
+import porta.model.BaseVariable;
+import porta.model.BaseModel;
 import porta.processing.ITranslator;
 import exceptions.AlgorithmException;
 
 
-public abstract class ModelWriter extends PortaWriter {
+public abstract class ModelWriter<VARIABLE extends BaseVariable> extends PortaWriter<VARIABLE> {
 
-	public ModelWriter(Model<?, ?, ?> model, ITranslator translator) {
+	public ModelWriter(BaseModel<?, ?, ?> model, ITranslator<VARIABLE> translator) {
 		super(model, translator);
 	}
 	

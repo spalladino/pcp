@@ -6,18 +6,18 @@ import porta.model.*;
 
 public class PortaParser implements PortaParserConstants {
 
-        Model model;
+        BaseModel model;
         ITranslator translator;
         BaseConstraint current;
 
-        public PortaParser initialize(Model model, ITranslator t) {
+        public PortaParser initialize(BaseModel model, ITranslator t) {
                 this.model = model;
                 this.translator = t;
                 this.current = null;
                 return this;
         }
 
-  final public Model ieq() throws ParseException {
+  final public BaseModel ieq() throws ParseException {
     dimension();
     label_1:
     while (true) {

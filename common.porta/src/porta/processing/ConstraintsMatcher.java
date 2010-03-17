@@ -4,26 +4,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import porta.base.BaseParameters;
 import porta.model.BaseConstraint;
 import porta.model.BaseFamily;
-import porta.model.Model;
+import porta.model.BaseModel;
 
-@SuppressWarnings("unchecked")
-public abstract class ConstraintsMatcher<Constraint extends BaseConstraint> {
+public abstract class ConstraintsMatcher<CONSTRAINT extends BaseConstraint, FAMILY extends BaseFamily, PARAMS extends BaseParameters> {
 
-	abstract boolean match(Constraint c1, Constraint c2);
+	protected abstract boolean match(CONSTRAINT c1, CONSTRAINT c2);
 	
-	abstract boolean process(Constraint c);
+	protected abstract boolean process(CONSTRAINT c);
 	
-	boolean repeatProcessed = false;
+	protected boolean repeatProcessed = false;
 	
-	final Model model;
-	final Set<Constraint> handled = new HashSet<Constraint>();
-	private final List<Constraint> cs;
+	protected final BaseModel<CONSTRAINT, FAMILY, PARAMS> model;
+	protected final Set<CONSTRAINT> handled = new HashSet<CONSTRAINT>();
+	protected final List<CONSTRAINT> cs;
 	
-	BaseFamily current;
+	protected FAMILY current;
 	
-	public ConstraintsMatcher(Model model) {
+	public ConstraintsMatcher(BaseModel<CONSTRAINT, FAMILY, PARAMS> model) {
 		this.model = model;
 		this.cs= model.getConstraints();
 	}

@@ -1,9 +1,9 @@
 package porta.processing;
 
-import porta.model.Model;
+import porta.model.BaseModel;
 
 public interface IProcessor {
 
-	void process(Model<?, ?, ?> model);
+	void process(BaseModel<?, ?, ?> model);
 	
 }

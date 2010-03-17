@@ -3,20 +3,20 @@ package pcp.porta.processing;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import pcp.porta.PcpCardinals;
+import pcp.porta.Parameters;
 import pcp.porta.model.Variable;
-import porta.BaseParameters;
+import porta.base.BaseParameters;
 import porta.processing.ITranslator;
 
 
 public class Translator implements ITranslator<Variable> {
 	
-	PcpCardinals p;
+	Parameters p;
 	
 	static Pattern xRegex = Pattern.compile("(X|x)\\[(\\d+),(\\d+)\\]");
 	static Pattern wRegex = Pattern.compile("(W|w)\\[(\\d+)\\]");
 	
-	public Translator(PcpCardinals cardinals) {
+	public Translator(Parameters cardinals) {
 		this.p = cardinals;
 	}
 	

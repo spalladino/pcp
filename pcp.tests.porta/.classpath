@@ -6,5 +6,7 @@
 	<classpathentry kind="src" path="/pcp.porta"/>
 	<classpathentry kind="src" path="/pcp"/>
 	<classpathentry kind="lib" path="/pcp.lib/lib/cplex.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/common.porta"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -3,13 +3,11 @@ package pcp.porta.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import pcp.porta.PcpCardinals;
-import porta.model.BaseConstraint;
-import porta.model.BaseFamily;
-import porta.model.Model;
+import pcp.porta.Parameters;
+import porta.model.BaseModel;
 
 
-public class PcpModel extends Model<Constraint, Family, PcpCardinals> {
+public class Model extends BaseModel<Constraint, Family, Parameters> {
 	
 	Variable[][] xs;
 	Variable[] ws;
@@ -17,9 +15,9 @@ public class PcpModel extends Model<Constraint, Family, PcpCardinals> {
 	List<Constraint> constraints;
 	List<Family> families;
 	
-	PcpCardinals p;
+	Parameters p;
 	
-	public PcpModel(PcpCardinals p) {
+	public Model(Parameters p) {
 		super(p);
 		this.p = p;
 		
@@ -58,11 +56,6 @@ public class PcpModel extends Model<Constraint, Family, PcpCardinals> {
 		return c;
 	}
 	
-	@Override
-	public BaseFamily createFamily(BaseConstraint base) {
-		return createFamily((Constraint)base);
-	}
-
 	public Family createFamily(Constraint base) {
 		Family c = new Family(p.nodeCount, p.colorCount, base.getCompare(), base.getBound());
 		c.inner.xs = base.xs.clone();
@@ -84,7 +77,7 @@ public class PcpModel extends Model<Constraint, Family, PcpCardinals> {
 		return ws[j];
 	}
 	
-	public PcpCardinals getCardinals() {
+	public Parameters getCardinals() {
 		return p;
 	}
 

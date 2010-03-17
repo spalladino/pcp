@@ -9,10 +9,10 @@ import porta.interfaces.*;
 
 @SuppressWarnings("all")
 public class ModelParser implements ModelParserConstants {
-        PcpModel model;
+        Model model;
         Constraint current;
 
-  final public Model model() throws ParseException {
+  final public BaseModel model() throws ParseException {
     cardinals();
     inequalities();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -36,7 +36,7 @@ public class ModelParser implements ModelParserConstants {
     jj_consume_token(NODES);
     jj_consume_token(COLON);
     n = natural();
-                this.model = new PcpModel(new PcpCardinals(n, c));
+                this.model = new Model(new Parameters(n, c));
   }
 
   final public void inequalities() throws ParseException {

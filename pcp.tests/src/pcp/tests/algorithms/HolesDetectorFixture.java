@@ -6,14 +6,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.BoxInt;
-import exceptions.AlgorithmException;
-
 import pcp.algorithms.holes.HolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import entities.BoxInt;
+import exceptions.AlgorithmException;
 
 
 @SuppressWarnings("deprecation")

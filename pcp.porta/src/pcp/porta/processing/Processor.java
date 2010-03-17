@@ -4,20 +4,22 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
-import pcp.porta.PcpCardinals;
+import pcp.porta.Parameters;
 import pcp.porta.model.Constraint;
-import pcp.porta.model.PcpModel;
+import pcp.porta.model.Family;
+import pcp.porta.model.Model;
 import pcp.utils.IntUtils;
-import porta.model.Model;
+import porta.model.BaseModel;
+import porta.processing.ConstraintsMatcher;
 import porta.processing.IProcessor;
 
 public class Processor implements IProcessor {
 
-	final PcpCardinals cards;
+	final Parameters cards;
 	final BuilderStrategy strategy;
 	final IPartitionedGraph graph;
 	
-	public Processor(IPartitionedGraph g, PcpCardinals c, BuilderStrategy strategy) {
+	public Processor(IPartitionedGraph g, Parameters c, BuilderStrategy strategy) {
 		this.graph = g;
 		this.cards = c;
 		this.strategy = strategy;
@@ -25,8 +27,8 @@ public class Processor implements IProcessor {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void process(Model m) {
-		PcpModel model = (PcpModel) m;
+	public void process(BaseModel m) {
+		Model model = (Model) m;
 		if (strategy.getPartitionConstraints() == Partition.PaintExactlyOne) {
 			restoreNodeFirstColorVariable(model);
 		} groupConstraintsByColor(model);
@@ -35,8 +37,8 @@ public class Processor implements IProcessor {
 	/**
 	 * Attempts to group similar constraints with different colors
 	 */
-	public void groupConstraintsByColor(PcpModel model) {
-		new ConstraintsMatcher(model){
+	public void groupConstraintsByColor(Model model) {
+		new ConstraintsMatcher<Constraint, Family, Parameters>(model){
 			public boolean process(Constraint c) {
 				current.setColorVariable();
 				current.getColorValues().add(0);
@@ -59,7 +61,7 @@ public class Processor implements IProcessor {
 	 * Whenever an expression like x[i,1] + ... + x[i,c-1] is found,
 	 * it is replaced by x[i,0]. 
 	 */
-	public void restoreNodeFirstColorVariable(PcpModel model) {
+	public void restoreNodeFirstColorVariable(Model model) {
 		for (Constraint c : model.getConstraints()) {
 			restoreNodeFirstColorVariable(c);
 		}

@@ -2,9 +2,9 @@ package porta;
 
 import porta.interfaces.IFactory;
 import porta.io.PortaWriter;
-import porta.model.Model;
+import porta.model.BaseModel;
 
-
+@SuppressWarnings("unchecked")
 public class TranslateModel {
 
 	IFactory factory;
@@ -15,7 +15,7 @@ public class TranslateModel {
 	
 	public void translate(String specificmodelfile, String specificportafile) throws Exception {
 		
-		Model<?, ?, ?> model = factory.readModel(specificportafile);
+		BaseModel<?, ?, ?> model = factory.readModel(specificportafile);
 		
 		System.out.println("Parsed input from " + specificmodelfile);
 		

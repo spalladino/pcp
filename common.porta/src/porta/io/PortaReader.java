@@ -3,19 +3,18 @@ package porta.io;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import porta.interfaces.IFactory;
-import porta.model.Model;
+import porta.model.BaseModel;
 import porta.parser.PortaParser;
 import porta.processing.ITranslator;
 
 public class PortaReader {
 	
-	Model<?, ?, ?> model;
-	IFactory factory;
+	BaseModel<?, ?, ?> model;
+	ITranslator<?> translator;
 	
-	public PortaReader(Model<?, ?, ?> m, IFactory factory) {
+	public PortaReader(BaseModel<?, ?, ?> m, ITranslator<?> translator) {
 		this.model = m;
-		this.factory = factory;
+		this.translator = translator;
 	}
 	
 	public void read(String filename) throws Exception {
@@ -23,9 +22,8 @@ public class PortaReader {
 	}
 	
 	public void read(InputStream s) throws Exception {
-		ITranslator t = factory.createTranslator();
 		PortaParser parser = new PortaParser(s);
-		parser.initialize(this.model, t);
+		parser.initialize(this.model, translator);
 		parser.ieq();
 	}
 	

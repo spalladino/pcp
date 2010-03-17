@@ -1,6 +1,6 @@
 package porta.processing;
 
-import porta.BaseParameters;
+import porta.base.BaseParameters;
 import porta.model.BaseVariable;
 
 public interface ITranslator<V extends BaseVariable> {

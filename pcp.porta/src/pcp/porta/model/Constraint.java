@@ -1,8 +1,5 @@
 package pcp.porta.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import pcp.utils.NameUtils;
 import porta.interfaces.ITermWriter;
 import porta.model.BaseConstraint;
@@ -17,8 +14,6 @@ public class Constraint extends BaseConstraint {
 	int nodeCount;
 	int colorCount;
 	
-	List<InequalityKind> ineqKinds;
-	
 	public Constraint(int nodecount, int colorcount, int compare, int bound) {
 		this.compare = compare;
 		this.bound = bound;
@@ -27,14 +22,8 @@ public class Constraint extends BaseConstraint {
 		
 		xs = new int[nodeCount][colorCount];
 		ws = new int[colorCount];
-		
-		ineqKinds = new ArrayList<InequalityKind>(1);
 	}
 	
-	public List<InequalityKind> getIneqKinds() {
-		return this.ineqKinds;
-	}
-
 	public int getNodeCount() {
 		return nodeCount;
 	}
@@ -145,10 +134,6 @@ public class Constraint extends BaseConstraint {
 		}
 		
 		sb.append(NameUtils.asCmp(compare)).append(' ').append(bound).append(' ');
-		
-		for (InequalityKind family : ineqKinds) {
-			sb.append(family).append(' ');
-		}
 	}
 	
 	public static interface INodeVarHandler {

@@ -1,41 +1,46 @@
 package porta.interfaces;
 
-import porta.BaseParameters;
+import porta.base.BaseParameters;
 import porta.io.ModelWriter;
 import porta.io.PortaWriter;
 import porta.model.BaseConstraint;
 import porta.model.BaseFamily;
-import porta.model.Model;
+import porta.model.BaseVariable;
+import porta.model.BaseModel;
 import porta.poi.IPointsGenerator;
 import porta.processing.IProcessor;
 import porta.processing.ITranslator;
 
 
-public interface IFactory {
+public interface IFactory<ENTITY,
+	CONSTRAINT extends BaseConstraint,
+	PARAMS extends BaseParameters,
+	FAMILY extends BaseFamily,
+	VARIABLE extends BaseVariable,
+	MODEL extends BaseModel<CONSTRAINT, FAMILY, PARAMS>
+	> {
 
-	IPointsGenerator createPointsGenerator(IEntity graph) throws Exception;
+	IPointsGenerator createPointsGenerator(ENTITY graph) throws Exception;
 	
 	/**
 	 * Creates a new translator instance that can translate between porta and model variable names. 
 	 * @return a new translator instance
 	 */
-	ITranslator createTranslator();
+	ITranslator<VARIABLE> createTranslator();
 	
-	IProcessor createProcessor(IEntity graph, BaseParameters c);
+	IProcessor createProcessor(ENTITY graph, PARAMS c);
 
-	<C extends BaseConstraint, F extends BaseFamily, I extends BaseParameters> Model<C,F,I> createModel(I c);
+	MODEL createModel(PARAMS c);
 	
-	ModelWriter createModelWriter(Model<?, ?, ?> model);
+	ModelWriter<VARIABLE> createModelWriter(MODEL model);
 
-	PortaWriter createPortaWriter(Model<?, ?, ?> model);
+	PortaWriter<VARIABLE> createPortaWriter(MODEL model);
 
 	/**
 	 * Returns parameters needed for this problem (such as node count).
-	 * Implementors should create an instance when a new entity is read and return it.
-	 * @see IFactory#readEntity(String, Boolean)
 	 * @return
 	 */
-	BaseParameters getParameters();
+	PARAMS getParameters();
 
 	/**
 	 * Given an input file, reads a certain entity (such as a graph)
@@ -44,7 +49,7 @@ public interface IFactory {
 	 * @return the entity represented in the file
 	 * @throws Exception
 	 */
-	IEntity readEntity(String filename, Boolean preprocess) throws Exception;
+	ENTITY readEntity(String filename, Boolean preprocess) throws Exception;
 
 	/**
 	 * Generates a Model with all constraints given an input entity (such as a graph).
@@ -52,7 +57,7 @@ public interface IFactory {
 	 * @return LP model for this entity
 	 * @throws Exception
 	 */
-	Model<?, ?, ?> generateModel(IEntity graph) throws Exception;
+	MODEL generateModel(ENTITY graph) throws Exception;
 
-	Model<?, ?, ?> readModel(String filename) throws Exception;
+	MODEL readModel(String filename) throws Exception;
 }

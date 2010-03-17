@@ -6,17 +6,16 @@ import ilog.concert.IloNumExpr;
 import java.util.ArrayList;
 import java.util.List;
 
-import porta.BaseParameters;
+import porta.base.BaseParameters;
 import porta.interfaces.IFactory;
 import porta.model.BaseConstraint;
-import porta.model.BaseFamily;
-import porta.model.Model;
 import porta.model.BaseVariable;
+import porta.model.BaseModel;
 import porta.model.ilog.base.BaseMPModeler;
 import porta.processing.ITranslator;
 
-
-public class MockMPModeler extends BaseMPModeler {
+@SuppressWarnings("unchecked")
+public class MockMPModeler<MODEL extends BaseModel> extends BaseMPModeler {
 	
 	List<MockRange> constraints;
 	IFactory factory;
@@ -26,8 +25,8 @@ public class MockMPModeler extends BaseMPModeler {
 		this.factory = factory;
 	}
 	
-	public <C extends BaseConstraint, F extends BaseFamily, I extends BaseParameters> Model<C,F,I> asModel(ITranslator t, I cardinals) {
-		Model<C, F, I> model = factory.createModel(cardinals);
+	public MODEL asModel(ITranslator t, BaseParameters cardinals) {
+		MODEL model = (MODEL) factory.createModel(cardinals);
 		
 		for (MockRange range : constraints) {
 			BaseConstraint constraint = model.createConstraint(range.compare, (int)range.bound);
