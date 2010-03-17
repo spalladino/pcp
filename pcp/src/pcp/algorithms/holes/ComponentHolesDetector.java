@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import pcp.Settings;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.utils.GraphUtils;
+import props.Settings;
 
 public class ComponentHolesDetector implements IHolesDetector {
 

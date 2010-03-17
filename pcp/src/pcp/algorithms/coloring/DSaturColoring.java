@@ -2,7 +2,8 @@ package pcp.algorithms.coloring;
 
 import java.util.List;
 
-import pcp.algorithms.AlgorithmException;
+import exceptions.AlgorithmException;
+
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;

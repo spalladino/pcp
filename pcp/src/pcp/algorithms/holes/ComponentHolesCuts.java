@@ -2,7 +2,6 @@ package pcp.algorithms.holes;
 
 import java.util.List;
 
-import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
@@ -14,6 +13,7 @@ import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 import pcp.utils.DataUtils;
 import pcp.utils.IntUtils;
+import props.Settings;
 
 public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 

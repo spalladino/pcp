@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pcp" basedir=".">
+	
+	<property name="run.inputfile" value="test.in" />
+	<property name="run.parameters" value="test.in" />
+	<property name="run.properties" value="" />
+	
+	<property name="cfg.dir" value="." />
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="../build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="lib.dir" value="../pcp.lib"/>
+	<property name="logs.dir" value="../logs"/>
+	<property name="data.dir" value="../data"/>
+
+	<property name="common.antfile" value="../common/common.xml" />
+	
+	<path id="classpath" path="${classes.dir}" >
+        <fileset dir="${lib.dir}" includes="**/cplex.jar **/guava.jar"/>
+    </path>
+	
+	<target name="dependencies" description="Builds dependent projects">
+		<ant antfile="${common.antfile}" target="compile" inheritall="false" />
+	</target>
+	
+	<target name="clean" description="Deletes output build directory">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="cleardata" description="Deletes the local data">
+		<fileset id="data.fileset" dir="${data.dir}" includes="**/*.in"/>
+		<delete>
+			<fileset refid="data.fileset" />
+		</delete>
+	</target>
+	
+	<target name="compile" depends="dependencies" description="Compiles all java classes in source directory">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" 
+			compiler="javac${remote.version}" target="${remote.version}" source="${remote.version}" />
+	</target>
+
+	<target name="jar" depends="compile" description="Creates a jar file from compiled classes">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="${cplex.jar}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="run-local" description="Runs local jar">
+		<java classpathref="classpath" classname="${main-class}">
+			<env key="run" value="rand30" />
+    	</java>
+	</target>
+
+</project>

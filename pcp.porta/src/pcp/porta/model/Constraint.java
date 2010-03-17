@@ -1,24 +1,18 @@
 package pcp.porta.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import pcp.common.Box;
 import pcp.utils.NameUtils;
+import porta.interfaces.ITermWriter;
+import porta.model.BaseConstraint;
+import porta.model.BaseVariable;
+import entities.Box;
 
-public class Constraint {
+public class Constraint extends BaseConstraint {
 	
 	int[][] xs;
 	int[] ws;
 	
-	int compare;
-	int bound;
-	
 	int nodeCount;
 	int colorCount;
-	String index;
-	
-	List<InequalityKind> ineqKinds;
 	
 	public Constraint(int nodecount, int colorcount, int compare, int bound) {
 		this.compare = compare;
@@ -28,22 +22,8 @@ public class Constraint {
 		
 		xs = new int[nodeCount][colorCount];
 		ws = new int[colorCount];
-		
-		ineqKinds = new ArrayList<InequalityKind>(1);
 	}
 	
-	public int getCompare() {
-		return compare;
-	}
-
-	public int getBound() {
-		return bound;
-	}
-	
-	public List<InequalityKind> getIneqKinds() {
-		return this.ineqKinds;
-	}
-
 	public int getNodeCount() {
 		return nodeCount;
 	}
@@ -95,26 +75,6 @@ public class Constraint {
 		}
 	}
 
-	public Constraint addBound(int bound) {
-		this.bound += bound;
-		return this;
-	}
-	
-	public Constraint withBound(int b) {
-		this.bound = b;
-		return this;
-	}
-	
-	public Constraint withCompare(int c) {
-		this.compare = c;
-		return this;
-	}
-	
-	public Constraint withIndex(String index) {
-		this.index = index;
-		return this;
-	}
-	
 	public boolean hasTerms() {
 		final Box<Boolean> has = new Box<Boolean>(false);
 		forXs(new INodeVarHandler() {
@@ -151,20 +111,21 @@ public class Constraint {
 		return sb.toString();
 	}
 
-	void innerToString(final ITermWriter termWriter, final StringBuilder sb) {
+	@Override
+	protected void innerToString(final ITermWriter termWriter, final StringBuilder sb) {
 		if (index != null) {
 			sb.append('(').append(index).append(") ");
 		}
 		
 		forXs(new INodeVarHandler() {
 			public void handle(int i, int j, int coef) {
-				sb.append(termWriter.term(coef, i, j)).append(' ');
+				sb.append(termWriter.term(coef, new Variable(i, j))).append(' ');
 			}
 		});
 		
 		forWs(new IColorVarHandler() {
 			public void handle(int j, int coef) {
-				sb.append(termWriter.term(coef, null, j)).append(' ');
+				sb.append(termWriter.term(coef, new Variable(j))).append(' ');
 			}
 		});
 		
@@ -173,10 +134,6 @@ public class Constraint {
 		}
 		
 		sb.append(NameUtils.asCmp(compare)).append(' ').append(bound).append(' ');
-		
-		for (InequalityKind family : ineqKinds) {
-			sb.append(family).append(' ');
-		}
 	}
 	
 	public static interface INodeVarHandler {
@@ -186,21 +143,18 @@ public class Constraint {
 	public static interface IColorVarHandler {
 		void handle(int j, int coef);
 	}
-	
-	public static interface ITermWriter {
-		String term(int coef, Integer i, Integer j);
-	}
 
 	public static ITermWriter defaultTermWriter(final int base) {
 		return new ITermWriter() {
-			public String term(int coef, Integer i, Integer j) {
-				if (i == null) return NameUtils.asTerm(coef, j+base);
-				else return NameUtils.asTerm(coef, i+base, j+base);
+			public String term(int coef, BaseVariable v) {
+				Variable var = (Variable)v;
+				if (var.node == null) return NameUtils.asTerm(coef, var.color+base);
+				else return NameUtils.asTerm(coef, var.node+base, var.color+base);
 			}
 		};
 	}
 	
-	ITermWriter getTermWriter() {
+	protected ITermWriter getTermWriter() {
 		return defaultTermWriter(1);
 	}
 
@@ -214,6 +168,12 @@ public class Constraint {
 		result = prime * result + ((index == null) ? 0 : index.hashCode());
 		result = prime * result + nodeCount;
 		return result;
+	}
+
+	@Override
+	public BaseConstraint withVar(BaseVariable var, int coef) {
+		Variable v = (Variable)var;
+		return this.addVar(v.node, v.color, coef);
 	}
 
 }

@@ -4,23 +4,31 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
+import pcp.porta.Parameters;
 import pcp.porta.model.Constraint;
+import pcp.porta.model.Family;
 import pcp.porta.model.Model;
 import pcp.utils.IntUtils;
+import porta.model.BaseModel;
+import porta.processing.ConstraintsMatcher;
+import porta.processing.IProcessor;
 
-public class Processor {
+public class Processor implements IProcessor {
 
-	final Cardinals cards;
+	final Parameters cards;
 	final BuilderStrategy strategy;
 	final IPartitionedGraph graph;
 	
-	public Processor(IPartitionedGraph g, Cardinals c, BuilderStrategy strategy) {
+	public Processor(IPartitionedGraph g, Parameters c, BuilderStrategy strategy) {
 		this.graph = g;
 		this.cards = c;
 		this.strategy = strategy;
 	}
 
-	public void process(Model model) {
+	@Override
+	@SuppressWarnings("unchecked")
+	public void process(BaseModel m) {
+		Model model = (Model) m;
 		if (strategy.getPartitionConstraints() == Partition.PaintExactlyOne) {
 			restoreNodeFirstColorVariable(model);
 		} groupConstraintsByColor(model);
@@ -30,7 +38,7 @@ public class Processor {
 	 * Attempts to group similar constraints with different colors
 	 */
 	public void groupConstraintsByColor(Model model) {
-		new ConstraintsMatcher(model){
+		new ConstraintsMatcher<Constraint, Family, Parameters>(model){
 			public boolean process(Constraint c) {
 				current.setColorVariable();
 				current.getColorValues().add(0);
@@ -40,7 +48,7 @@ public class Processor {
 				Integer diff = colorsDifference(c1, c2);
 				if (diff != null) {
 					current.getColorValues().add(diff);
-					current.representingConstraint(c2);
+					current.withConstraint(c2);
 					return true;
 				} else {
 					return false;
@@ -207,4 +215,5 @@ public class Processor {
 		
 		return diff;
 	}
+
 }

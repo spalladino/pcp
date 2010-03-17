@@ -6,6 +6,7 @@ import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
 import pcp.model.BuilderStrategy;
+import props.Settings;
 
 public class Heuristic {
 

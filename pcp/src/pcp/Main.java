@@ -14,19 +14,15 @@ import pcp.model.ModelBuilder;
 import pcp.solver.Kind;
 import pcp.solver.Solver;
 import pcp.solver.io.Printer;
+import props.Settings;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		String filename, runId;
 		Settings.load("run");
 		
-		if (args.length >= 2) {
-			filename = args[0];
-			runId = args[1];
-		} else {
-			filename = Settings.get().getString("run.filename");
-			runId = Settings.get().getString("run.id");
-		}
+		filename = Settings.get().getPath("run.folder", "run.filename");
+		runId = Settings.get().getString("run.id");
 		
 		solve(filename, runId);
 		System.exit(0);

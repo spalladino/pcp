@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="config" basedir="..">
+
+    <dirname property="config.basedir" file="${ant.file.config}"/>
+	<property file="${config.basedir}/config.properties"/>
+	
+</project>

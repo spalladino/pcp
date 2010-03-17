@@ -9,9 +9,9 @@ import ilog.concert.IloObjective;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.AlgorithmException;
+
 import pcp.Factory;
-import pcp.Settings;
-import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.clique.CliqueCover;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.InducedGraph;
@@ -19,6 +19,7 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.utils.GraphUtils;
+import props.Settings;
 
 public class ModelBuilder {
 	

@@ -9,7 +9,6 @@ import ilog.cplex.IloCplex;
 
 import java.util.List;
 
-import pcp.Settings;
 import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.clique.ExtendedCliqueCutter;
 import pcp.algorithms.clique.ExtendedCliqueDetector;
@@ -27,6 +26,7 @@ import pcp.model.Model;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
 import pcp.utils.IntUtils;
+import props.Settings;
 
 
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cuts, ICutBuilder, IModelData {

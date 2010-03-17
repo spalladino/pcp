@@ -3,28 +3,31 @@ package pcp.porta.poi;
 import java.util.ArrayList;
 import java.util.List;
 
-import pcp.algorithms.AlgorithmException;
+import exceptions.AlgorithmException;
+
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
 import pcp.model.strategy.Symmetry;
-import pcp.porta.processing.Cardinals;
+import pcp.porta.Parameters;
+import pcp.porta.model.Variable;
 import pcp.porta.processing.Translator;
+import porta.poi.IPointsGenerator;
 
 
-public class PointsGenerator {
+public class PointsGenerator implements IPointsGenerator {
 	
 	private BuilderStrategy strategy;
 	private IPartitionedGraph graph;
-	private Cardinals cardinals;
+	private Parameters cardinals;
 	private List<int[]> points;
 	private int[] current;
 	
 	private int dimension;
 	private Translator translator;
 	
-	public PointsGenerator(IPartitionedGraph graph, Cardinals cardinals, BuilderStrategy strategy) throws AlgorithmException {
+	public PointsGenerator(IPartitionedGraph graph, Parameters cardinals, BuilderStrategy strategy) throws AlgorithmException {
 		this.graph = graph;
 		this.strategy = strategy;
 		this.cardinals = cardinals;
@@ -79,8 +82,8 @@ public class PointsGenerator {
 		
 		for (int i = 0; i < cardinals.nodeCount; i++) {
 			if (current[i] != -1) { 
-				int index = translator.convertNodeColorToPorta(i, current[i]);
-				int color = translator.convertNodeColorToPorta(null, current[i]);
+				int index = translator.convertModelToPorta(new Variable(i, current[i]));
+				int color = translator.convertModelToPorta(new Variable(null, current[i]));
 				poi[index-1] = 1;
 				poi[color-1] = 1;
 			}

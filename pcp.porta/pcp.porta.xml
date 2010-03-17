@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pcp.porta" basedir="..">
+	
+	<property name="pcp.porta.dir" value="./pcp.porta" />
+	<property file="${pcp.porta.dir}/porta.properties" />
+	
+	<property name="main-class" value="pcp.porta.Main" />
+	
+	<property name="data.dir" value="./data/porta" />
+	<property name="data.abs.dir" value="${basedir}/data/porta" />
+	<property name="cygwin.data.abs.dir" value="${cygdir}/data/porta" />
+	
+	<property name="src.dir" value="${pcp.porta.dir}/src" />
+	<property name="build.dir" value="./build" />
+	<property name="lib.dir" value="./pcp.lib"/>
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	
+	<property name="pcp.antfile" value="./pcp/socrates.xml" />
+	<property name="porta.antfile" value="./common.porta/common.porta.xml" />
+	
+	<import file="../common/config.xml" />
+	<import file="../common.porta/porta.tasks.xml" />
+	
+	<path id="buildpath">
+        <fileset dir="${lib.dir}" includes="**/cplex.jar"/>
+	</path>
+	
+	<path id="classpath" path="${classes.dir}" >
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<target name="clean" description="Deletes output build directory">
+		<delete dir="${build.dir}" />
+	</target>
+	
+	<target name="dependencies" description="Builds dependent projects">
+		<ant antfile="${pcp.antfile}" target="compile" inheritall="false" />
+		<ant antfile="${porta.antfile}" target="compile" inheritall="false" />
+	</target>
+	
+	<target name="compile" depends="dependencies" description="Compiles all java classes in source directory">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="buildpath" />
+	</target>
+	
+	<target name="jar" depends="compile" description="Creates a jar file from compiled classes">
+		<ant antfile="${pcp.antfile}" target="jar" inheritall="false" />
+		<ant antfile="${porta.antfile}" target="jar" inheritall="false" />
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="cplex.jar pcp.jar common.porta.jar common.jar" />
+			</manifest>
+		</jar>
+	</target>
+	
+</project>

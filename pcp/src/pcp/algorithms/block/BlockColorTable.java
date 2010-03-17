@@ -1,12 +1,12 @@
 package pcp.algorithms.block;
 
-import pcp.Settings;
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.interfaces.ICutBuilder;
 import pcp.model.Model;
+import props.Settings;
 
 public class BlockColorTable {
 	

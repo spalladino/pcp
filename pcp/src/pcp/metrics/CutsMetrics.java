@@ -4,9 +4,9 @@ import ilog.concert.IloRange;
 
 import java.util.LinkedList;
 
-import pcp.Settings;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.definitions.Cuts;
+import props.Settings;
 
 public class CutsMetrics implements Cuts {
 

@@ -1,6 +1,5 @@
 package pcp.algorithms.block;
 
-import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.definitions.Constants;
@@ -9,6 +8,7 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
+import props.Settings;
 
 public class BlockColorCuts implements Constants, Cuts, IBoundedAlgorithm {
 

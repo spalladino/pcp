@@ -1,7 +1,7 @@
 package pcp.solver;
 
+import exceptions.AlgorithmException;
 import ilog.concert.IloException;
-import pcp.algorithms.AlgorithmException;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
 

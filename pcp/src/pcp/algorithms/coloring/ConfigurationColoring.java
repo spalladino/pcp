@@ -1,7 +1,7 @@
 package pcp.algorithms.coloring;
 
-import pcp.Settings;
 import pcp.entities.IPartitionedGraph;
+import props.Settings;
 
 
 public class ConfigurationColoring extends NodesColoring {

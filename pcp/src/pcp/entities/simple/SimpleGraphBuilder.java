@@ -8,7 +8,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import pcp.common.TupleInt;
+import entities.TupleInt;
+
 import pcp.entities.ISimpleGraph;
 import pcp.entities.ISimpleGraphBuilder;
 

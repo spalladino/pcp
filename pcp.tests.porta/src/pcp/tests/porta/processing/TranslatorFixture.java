@@ -8,10 +8,10 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pcp.Settings;
-import pcp.common.TupleInt;
-import pcp.porta.processing.Cardinals;
+import pcp.porta.Parameters;
+import pcp.porta.model.Variable;
 import pcp.porta.processing.Translator;
+import props.Settings;
 
 
 public class TranslatorFixture {
@@ -20,22 +20,22 @@ public class TranslatorFixture {
 	int nodes = 4;
 	
 	Set<PortaNodeColor> pnc;
-	Cardinals p;
+	Parameters p;
 	Translator t;
 	
 	@Before
 	public void setup() {
 		Settings.init();
 		pnc = new HashSet<PortaNodeColor>();
-		p = new Cardinals(nodes, colors);
+		p = new Parameters(nodes, colors);
 		t = new Translator(p);
 	}
 	
 	@Test
 	public void shouldConvertFromPortaToNodeColor() {
 		for(int i = 0; i < colors * nodes + colors; i++) {
-			TupleInt nodeColor = t.convertPortaToNodeColor(i+1);
-			pnc.add(new PortaNodeColor(i+1, nodeColor.getFirst(), nodeColor.getSecond()));
+			Variable nodeColor = t.convertPortaToModel(i+1);
+			pnc.add(new PortaNodeColor(i+1, nodeColor.getNode(), nodeColor.getColor()));
 		} checkVars(p);
 	}
 	
@@ -43,19 +43,19 @@ public class TranslatorFixture {
 	public void shouldConvertFromNodeColorToPorta() {
 		for(int i = 0; i <  nodes; i++) {
 			for(int j = 0; j < colors; j++) {
-				int porta = t.convertNodeColorToPorta(i, j);
+				int porta = t.convertModelToPorta(new Variable(i, j));
 				pnc.add(new PortaNodeColor(porta, i, j));
 			}
 		}
 		for(int j = 0; j < colors; j++) {
-			int porta = t.convertNodeColorToPorta(null, j);
+			int porta = t.convertModelToPorta(new Variable(null, j));
 			pnc.add(new PortaNodeColor(porta, null, j));
 		}
 
 		checkVars(p);
 	}
 
-	private void checkVars(Cardinals p) {
+	private void checkVars(Parameters p) {
 		checkVar("x[1,1]", 1, 0, 0);
 		checkVar("x[1,2]", 2, 0, 1);
 		checkVar("x[1,3]", 3, 0, 2);

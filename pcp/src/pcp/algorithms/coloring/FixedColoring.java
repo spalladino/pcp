@@ -1,6 +1,6 @@
 package pcp.algorithms.coloring;
 
-import pcp.algorithms.AlgorithmException;
+import exceptions.AlgorithmException;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
 
