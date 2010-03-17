@@ -1,13 +1,13 @@
 package pcp.algorithms.coloring;
 
-import pcp.Settings;
-import pcp.algorithms.AlgorithmException;
+import exceptions.AlgorithmException;
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
+import props.Settings;
 
 public abstract class DSaturPartitionColoring extends Coloring implements IBoundedAlgorithm {
 	

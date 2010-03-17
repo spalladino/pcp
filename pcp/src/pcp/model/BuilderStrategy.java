@@ -1,10 +1,10 @@
 package pcp.model;
 
-import pcp.Settings;
 import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
 import pcp.model.strategy.Partition;
 import pcp.model.strategy.Symmetry;
+import props.Settings;
 
 
 

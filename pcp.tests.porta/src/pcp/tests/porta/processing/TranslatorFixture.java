@@ -8,10 +8,11 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pcp.Settings;
-import pcp.common.TupleInt;
-import pcp.porta.processing.Cardinals;
+import common.TupleInt;
+
+import pcp.porta.PcpCardinals;
 import pcp.porta.processing.Translator;
+import props.Settings;
 
 
 public class TranslatorFixture {
@@ -20,14 +21,14 @@ public class TranslatorFixture {
 	int nodes = 4;
 	
 	Set<PortaNodeColor> pnc;
-	Cardinals p;
+	PcpCardinals p;
 	Translator t;
 	
 	@Before
 	public void setup() {
 		Settings.init();
 		pnc = new HashSet<PortaNodeColor>();
-		p = new Cardinals(nodes, colors);
+		p = new PcpCardinals(nodes, colors);
 		t = new Translator(p);
 	}
 	
@@ -55,7 +56,7 @@ public class TranslatorFixture {
 		checkVars(p);
 	}
 
-	private void checkVars(Cardinals p) {
+	private void checkVars(PcpCardinals p) {
 		checkVar("x[1,1]", 1, 0, 0);
 		checkVar("x[1,2]", 2, 0, 1);
 		checkVar("x[1,3]", 3, 0, 2);

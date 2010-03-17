@@ -3,10 +3,10 @@ package pcp.algorithms.clique;
 import java.util.Comparator;
 import java.util.List;
 
-import pcp.Settings;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
+import props.Settings;
 
 
 public class ExtendedCliqueCutter extends ExtendedCliqueDetector {

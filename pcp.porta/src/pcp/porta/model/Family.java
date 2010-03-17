@@ -6,9 +6,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import pcp.utils.NameUtils;
+import porta.interfaces.ITermWriter;
+import porta.model.BaseConstraint;
+import porta.model.BaseFamily;
+import porta.model.BaseVariable;
 
 
-public class Family extends Constraint {
+public class Family extends BaseFamily {
 
 	List<Constraint> represented;
 	
@@ -18,21 +22,26 @@ public class Family extends Constraint {
 	boolean colorVariable;
 	boolean nodeVariable;
 	
+	Constraint inner;
+	
 	public Family(int nodecount, int colorcount, int compare, int bound) {
-		super(nodecount, colorcount, compare, bound);
+		inner = new Constraint(nodecount, colorcount, compare, bound);
 		this.represented = new ArrayList<Constraint>();
 		this.colorValues = new TreeSet<Integer>();
 		this.nodeValues = new TreeSet<Integer>();
 	}
 	
-	public void representingConstraint(Constraint c) {
+	public void withConstraint(Constraint c) {
 		represented.add(c);
 	}
 	
 	@Override
-	ITermWriter getTermWriter() {
+	public ITermWriter getTermWriter() {
 		return new ITermWriter() {
-			public String term(int coef, Integer i, Integer j) {
+			public String term(int coef, BaseVariable v) {
+				Variable var = (Variable) v;
+				Integer i = var.getNode();
+				Integer j = var.getColor();
 				String s = NameUtils.asCoef(coef);
 				String strj = colorVariable ? "j" + NameUtils.plus(j) : String.valueOf(j);
 				if (i == null) {
@@ -46,8 +55,8 @@ public class Family extends Constraint {
 	}
 	
 	@Override
-	void innerToString(ITermWriter termWriter, StringBuilder sb) {
-		super.innerToString(termWriter, sb);
+	protected void innerToString(ITermWriter termWriter, StringBuilder sb) {
+		inner.innerToString(termWriter, sb);
 		
 		if (colorVariable && colorValues.size() > 0) {
 			sb.append(" for j=");
@@ -65,12 +74,23 @@ public class Family extends Constraint {
 		if (represented.size() > 0) {
 			sb.append(" (");
 			for (Constraint r : represented) {
-				sb.append(r.index).append(' ');
+				sb.append(r.getIndex()).append(' ');
 			} sb.append(")");
 		}
 	}
 
 	
+	@Override
+	public BaseConstraint withVar(BaseVariable var, int coef) {
+		inner.withVar(var, coef);
+		return this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BaseConstraint> getRepresented() {
+		return (List) represented;
+	}
+
 	public boolean isColorVariable() {
 		return colorVariable;
 	}
@@ -91,11 +111,6 @@ public class Family extends Constraint {
 	}
 
 	
-	public List<Constraint> getRepresented() {
-		return represented;
-	}
-
-	
 	public Set<Integer> getColorValues() {
 		return colorValues;
 	}
@@ -103,6 +118,10 @@ public class Family extends Constraint {
 	
 	public Set<Integer> getNodeValues() {
 		return nodeValues;
+	}
+
+	public boolean isOnlyColors() {
+		return inner.isOnlyColors();
 	}
 	
 }

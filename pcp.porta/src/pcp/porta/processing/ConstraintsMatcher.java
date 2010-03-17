@@ -6,7 +6,7 @@ import java.util.Set;
 
 import pcp.porta.model.Constraint;
 import pcp.porta.model.Family;
-import pcp.porta.model.Model;
+import pcp.porta.model.PcpModel;
 
 
 public abstract class ConstraintsMatcher {
@@ -17,13 +17,13 @@ public abstract class ConstraintsMatcher {
 	
 	boolean repeatProcessed = false;
 	
-	final Model model;
+	final PcpModel model;
 	final Set<Constraint> handled = new HashSet<Constraint>();
 	private final List<Constraint> cs;
 	
 	Family current;
 	
-	public ConstraintsMatcher(Model model) {
+	public ConstraintsMatcher(PcpModel model) {
 		this.model = model;
 		this.cs= model.getConstraints();
 	}

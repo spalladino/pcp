@@ -4,7 +4,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import pcp.common.Tuple;
+import entities.Tuple;
+
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ICutBuilder;

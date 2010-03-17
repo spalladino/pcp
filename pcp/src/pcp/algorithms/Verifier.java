@@ -2,6 +2,7 @@ package pcp.algorithms;
 
 import static pcp.utils.DoubleUtils.doubleEquals;
 import static pcp.utils.DoubleUtils.isTrue;
+import exceptions.AlgorithmException;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex.UnknownObjectException;
 import pcp.entities.IPartitionedGraph;

@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pcp.Settings;
-import pcp.algorithms.AlgorithmException;
+import exceptions.AlgorithmException;
+
 import pcp.algorithms.bounding.Bounder;
 import pcp.algorithms.coloring.Coloring;
 import pcp.algorithms.coloring.ColoringVerifier;
@@ -17,6 +17,7 @@ import pcp.algorithms.coloring.DSaturColoring;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import props.Settings;
 
 public class DSaturFixture {
 	

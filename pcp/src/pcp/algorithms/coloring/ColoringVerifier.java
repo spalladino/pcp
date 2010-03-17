@@ -1,6 +1,6 @@
 package pcp.algorithms.coloring;
 
-import pcp.algorithms.AlgorithmException;
+import exceptions.AlgorithmException;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;

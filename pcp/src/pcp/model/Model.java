@@ -1,9 +1,9 @@
 package pcp.model;
 
+import exceptions.AlgorithmException;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
-import pcp.algorithms.AlgorithmException;
 import pcp.algorithms.coloring.Coloring;
 import pcp.entities.partitioned.PartitionedGraph;
 

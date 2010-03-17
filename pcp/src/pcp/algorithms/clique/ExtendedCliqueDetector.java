@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import pcp.Settings;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.common.iterate.ArrayIterator;
@@ -18,6 +17,7 @@ import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 import pcp.utils.GraphUtils;
+import props.Settings;
 
 /**
  * Detects subsets of nodes in a graph in which every pair is either adjacent 

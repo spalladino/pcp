@@ -4,23 +4,29 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.strategy.Partition;
+import pcp.porta.PcpCardinals;
 import pcp.porta.model.Constraint;
-import pcp.porta.model.Model;
+import pcp.porta.model.PcpModel;
 import pcp.utils.IntUtils;
+import porta.model.Model;
+import porta.processing.IProcessor;
 
-public class Processor {
+public class Processor implements IProcessor {
 
-	final Cardinals cards;
+	final PcpCardinals cards;
 	final BuilderStrategy strategy;
 	final IPartitionedGraph graph;
 	
-	public Processor(IPartitionedGraph g, Cardinals c, BuilderStrategy strategy) {
+	public Processor(IPartitionedGraph g, PcpCardinals c, BuilderStrategy strategy) {
 		this.graph = g;
 		this.cards = c;
 		this.strategy = strategy;
 	}
 
-	public void process(Model model) {
+	@Override
+	@SuppressWarnings("unchecked")
+	public void process(Model m) {
+		PcpModel model = (PcpModel) m;
 		if (strategy.getPartitionConstraints() == Partition.PaintExactlyOne) {
 			restoreNodeFirstColorVariable(model);
 		} groupConstraintsByColor(model);
@@ -29,7 +35,7 @@ public class Processor {
 	/**
 	 * Attempts to group similar constraints with different colors
 	 */
-	public void groupConstraintsByColor(Model model) {
+	public void groupConstraintsByColor(PcpModel model) {
 		new ConstraintsMatcher(model){
 			public boolean process(Constraint c) {
 				current.setColorVariable();
@@ -40,7 +46,7 @@ public class Processor {
 				Integer diff = colorsDifference(c1, c2);
 				if (diff != null) {
 					current.getColorValues().add(diff);
-					current.representingConstraint(c2);
+					current.withConstraint(c2);
 					return true;
 				} else {
 					return false;
@@ -53,7 +59,7 @@ public class Processor {
 	 * Whenever an expression like x[i,1] + ... + x[i,c-1] is found,
 	 * it is replaced by x[i,0]. 
 	 */
-	public void restoreNodeFirstColorVariable(Model model) {
+	public void restoreNodeFirstColorVariable(PcpModel model) {
 		for (Constraint c : model.getConstraints()) {
 			restoreNodeFirstColorVariable(c);
 		}
@@ -207,4 +213,5 @@ public class Processor {
 		
 		return diff;
 	}
+
 }

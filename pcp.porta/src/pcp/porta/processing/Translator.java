@@ -3,21 +3,25 @@ package pcp.porta.processing;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import pcp.common.TupleInt;
+import pcp.porta.PcpCardinals;
+import pcp.porta.model.Variable;
+import porta.BaseParameters;
+import porta.processing.ITranslator;
 
 
-public class Translator {
+public class Translator implements ITranslator<Variable> {
 	
-	Cardinals p;
+	PcpCardinals p;
 	
 	static Pattern xRegex = Pattern.compile("(X|x)\\[(\\d+),(\\d+)\\]");
 	static Pattern wRegex = Pattern.compile("(W|w)\\[(\\d+)\\]");
 	
-	public Translator(Cardinals cardinals) {
+	public Translator(PcpCardinals cardinals) {
 		this.p = cardinals;
 	}
 	
-	public TupleInt convertNameToNodeColor(String name) {
+	@Override
+	public Variable convertNameToModel(String name) {
 		Matcher xmatcher = xRegex.matcher(name);
 		Matcher wmatcher = wRegex.matcher(name);
 		Integer node = null, color = null;
@@ -31,10 +35,11 @@ public class Translator {
 			throw new RuntimeException("Could not parse name " + name);
 		}
 		
-		return new TupleInt(node, color);
+		return new Variable(node, color);
 	}
 	
-	public TupleInt convertPortaToNodeColor(int index) {
+	@Override
+	public Variable convertPortaToModel(int index) {
 		Integer color = null;
 		Integer node = null;
 		--index;
@@ -46,19 +51,20 @@ public class Translator {
 			color = index % p.colorCount;
 		}
 		
-		return new TupleInt(node, color);
+		return new Variable(node, color);
 	}
 	
-	public int convertNodeColorToPorta(Integer node, Integer color) {
-		if (node == null) {
-			return color + p.nodeVarsCount + 1; 
+	@Override
+	public int convertModelToPorta(Variable var) {
+		if (var.getNode() == null) {
+			return var.getColor() + p.nodeVarsCount + 1; 
 		} else {
-			return node * p.colorCount + color + 1;
+			return var.getNode() * p.colorCount + var.getColor()+ 1;
 		}
 	}
 
-	public Cardinals getCardinals() {
+	@Override
+	public BaseParameters getParameters() {
 		return p;
 	}
-	
 }

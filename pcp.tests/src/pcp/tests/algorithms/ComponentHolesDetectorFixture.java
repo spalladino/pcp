@@ -8,16 +8,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pcp.Settings;
-import pcp.algorithms.AlgorithmException;
+import common.BoxInt;
+import exceptions.AlgorithmException;
+
 import pcp.algorithms.holes.ComponentHolesDetector;
 import pcp.algorithms.holes.IHolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
-import pcp.common.BoxInt;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import props.Settings;
 
 
 public class ComponentHolesDetectorFixture {

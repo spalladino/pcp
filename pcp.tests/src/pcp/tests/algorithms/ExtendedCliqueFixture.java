@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pcp.Settings;
 import pcp.algorithms.clique.ExtendedCliqueCutter;
 import pcp.algorithms.data.ModelData;
 import pcp.algorithms.data.StubModelData;
@@ -13,6 +12,7 @@ import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.model.Model;
 import pcp.solver.cuts.StubCutBuilder;
 import pcp.solver.data.Iteration;
+import props.Settings;
 
 
 public class ExtendedCliqueFixture {

@@ -1,18 +1,18 @@
 package pcp.solver;
 
+import exceptions.AlgorithmException;
 import ilog.concert.IloException;
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
 import ilog.cplex.IloCplex.IntParam;
-import pcp.Settings;
-import pcp.algorithms.AlgorithmException;
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
 import pcp.model.strategy.Coloring;
 import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
+import props.Settings;
 
 
 public class Solver extends AbstractSolutionData {

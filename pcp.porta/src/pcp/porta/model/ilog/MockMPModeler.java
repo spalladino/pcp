@@ -6,11 +6,12 @@ import ilog.concert.IloNumExpr;
 import java.util.ArrayList;
 import java.util.List;
 
-import pcp.common.TupleInt;
+import pcp.porta.PcpCardinals;
 import pcp.porta.model.Constraint;
-import pcp.porta.model.Model;
+import pcp.porta.model.PcpModel;
+import pcp.porta.model.Variable;
 import pcp.porta.model.ilog.base.BaseMPModeler;
-import pcp.porta.processing.Translator;
+import porta.processing.ITranslator;
 
 
 public class MockMPModeler extends BaseMPModeler {
@@ -21,14 +22,14 @@ public class MockMPModeler extends BaseMPModeler {
 		constraints = new ArrayList<MockRange>();
 	}
 	
-	public Model asModel(Translator t) {
-		Model model = new Model(t.getCardinals());
+	public PcpModel asModel(ITranslator<Variable> t) {
+		PcpModel model = new PcpModel((PcpCardinals)t.getParameters());
 		
 		for (MockRange range : constraints) {
 			Constraint constraint = model.createConstraint(range.compare, (int)range.bound);
 			for (MockLinearTerm term : range.expression.terms) {
-				TupleInt nodeColor = t.convertNameToNodeColor(term.getVar().name);
-				constraint.addVar(nodeColor.getFirst(), nodeColor.getSecond(), term.coef);
+				Variable nodeColor = t.convertNameToModel(term.getVar().name);
+				constraint.addVar(nodeColor, term.coef);
 			}
 		}
 		
