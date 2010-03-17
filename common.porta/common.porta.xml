@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="common.porta" basedir="..">
 	
-	<property name="cygdir" value="/cygdrive/e/Workspace" />
-	
 	<property name="porta.dir" value="./common.porta" />
 	
 	<property name="data.dir" value="./data/porta" />

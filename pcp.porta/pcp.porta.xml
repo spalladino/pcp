@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="pcp.porta" basedir="..">
 	
-	<property name="cygdir" value="/cygdrive/e/Workspace" />
-	
 	<property name="pcp.porta.dir" value="./pcp.porta" />
 	<property file="${pcp.porta.dir}/porta.properties" />
 	
@@ -20,6 +18,9 @@
 	
 	<property name="pcp.antfile" value="./pcp/socrates.xml" />
 	<property name="porta.antfile" value="./common.porta/common.porta.xml" />
+	
+	<import file="../common/config.xml" />
+	<import file="../common.porta/porta.tasks.xml" />
 	
 	<path id="buildpath">
         <fileset dir="${lib.dir}" includes="**/cplex.jar"/>
@@ -53,75 +54,6 @@
 				<attribute name="Class-Path" value="cplex.jar pcp.jar common.porta.jar common.jar" />
 			</manifest>
 		</jar>
-	</target>
-
-    <target name="ieq" depends="compile" description="Generates initial ieq from graph file">
-    	<java classpathref="classpath" classname="${main-class}">
-    		<arg value="--ieq"/>	
-    	</java>
-    </target>
-	
-	<target name="model" depends="compile" description="Processes existing ieq and outputs a model file">
-    	<java classpathref="classpath" classname="${main-class}">
-    		<arg value="--process"/>	
-    	</java>
-    </target>
-
-	<target name="name" description="Returns name for a configuration run">
-    	<java classpathref="classpath" classname="${main-class}" outputproperty="file.detailedname">
-    		<arg value="--name"/>	
-    	</java>
-    </target>
-	
-	<target name="sname" description="Returns specific name for a configuration run">
-    	<java classpathref="classpath" classname="${main-class}" outputproperty="file.specificname">
-    		<arg value="--sname"/>	
-    	</java>
-    </target>
-	
-	<target name="vint" depends="name" description="Generates all integral points from an ieq">
-    	<java classpathref="classpath" classname="${main-class}">
-    		<arg value="--poi"/>	
-    	</java>
-	</target>
-	
-	<target name="porta-vint" depends="name" description="Generates all integral points from an ieq">
-		<exec executable="bash">
-			<arg value="vint"/>
-			<arg value="${data.abs.dir}/${file.detailedname}.ieq"/>
-		</exec>
-	</target>
-	
-	<target name="traf" depends="name" description="Generates the convex hull from a poi">
-		<exec executable="bash">
-			<arg value="traf"/>
-			<arg value="${data.abs.dir}/${file.detailedname}.poi"/>
-		</exec>
-	</target>
-
-	<target name="translate" description="Translates a model file back into porta">
-    	<java classpathref="classpath" classname="${main-class}">
-    		<arg value="--translate"/>	
-    	</java>
-	</target>
-	
-	<target name="fctp" depends="name, sname, translate" description="Tests if a constraint is a facet">
-		<exec executable="bash">
-			<arg value="fctp"/>
-			<arg value="${cygwin.data.abs.dir}/${file.detailedname}.${file.specificname}.ieq"/>
-			<arg value="${cygwin.data.abs.dir}/${file.detailedname}.poi"/>
-		</exec>
-	</target>
-	
-	<target name="dims" depends="fctp" description="Displays dimensions of inequalities">
-		<java classpathref="classpath" classname="${main-class}">
-    		<arg value="--readdim"/>	
-    	</java>
-		<delete dir="${data.abs.dir}" includes="${file.detailedname}.${file.specificname}.ieq*" />
-	</target>
-	
-	<target name="hull" depends="ieq, vint, traf, model" description="Generates convex hull model from graph">
-		<echo message="Generated model in ${file.detailedname}.model from ${file.basename}.in" />	
 	</target>
 	
 </project>
