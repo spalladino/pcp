@@ -1,0 +1,163 @@
+/**
+ * JavaCC file
+ */
+	
+options {
+	JDK_VERSION = "1.6";
+	STATIC = false;
+}
+PARSER_BEGIN(PortaParser)
+package porta.parser;
+
+import porta.processing.*;
+import porta.model.*;
+
+public class PortaParser { 
+
+	Model model;
+	ITranslator translator;
+	BaseConstraint current;
+
+	public PortaParser initialize(Model model, ITranslator t) {
+		this.model = model;
+		this.translator = t;
+		this.current = null;
+		return this;
+	}
+	
+}
+PARSER_END(PortaParser)
+
+SKIP :
+{
+ 	" "
+|	"\r"
+|	"\t"
+|	"\n"
+}
+TOKEN :
+{
+	< PLUS: "+" >
+|	< MINUS: "-" >
+| 	< EQUALS: "==">
+| 	< LEQ: "<=">
+| 	< GEQ: ">=">
+| 	< ASSIGN: "=">
+| 	< LPAREN: "(">
+| 	< RPAREN: ")">
+}
+TOKEN :
+{
+	< DIM: "DIM" >
+| 	< LOWERB: "LOWER_BOUNDS">
+| 	< UPPERB: "UPPER_BOUNDS">
+| 	< VALID: "VALID">
+| 	< INEQS: "INEQUALITIES_SECTION">
+| 	< END: "END">
+| 	< VARNAME: "X"|"x" >
+|	< NUMBER: (["0" - "9"])+ >
+}
+Model ieq() : 
+{ }
+{
+	dimension()
+	( lower() | upper() | valid() )*
+	inequalities()
+	end()
+	{ return this.model; }
+}
+
+void inequalities() : {}
+{
+	<INEQS> ( inequality() )+ }
+
+void inequality() :
+{
+	current = model.createConstraint();
+	Integer c, b, i = null;
+}
+{
+	( i=index() )?	( term() )+
+	( c=comparison() )
+	( b=integer() )
+	
+	{ current.withBound(b).withCompare(c).withIndex(String.valueOf(i)); }
+} 
+
+Integer comparison() : {}
+{
+	( < EQUALS > { return 0; } )
+	| ( < LEQ > { return -1; } )
+	| ( < GEQ > { return 1; } )
+}
+
+void term() :
+{
+	int s = 1;
+	int n = 1;
+	int i = 0;
+}
+{
+	s = sign()
+	( n = natural() )?
+	< VARNAME >
+	i = natural()
+	
+	{ 
+		Variable var = translator.convertPortaToModel(i);
+		current.addVar(var, s * n);
+	}
+}
+
+int integer() : 
+{
+	int s = 1;
+	int n = 1;
+}
+{
+	( s = sign() )?
+	n = natural()
+	{ return s * n;}
+}
+
+int natural() : 
+{
+	Token t;
+}
+{
+	t = < NUMBER > { return Integer.valueOf(t.image); }	
+}
+
+int sign() : {}{
+	( < PLUS >	{ return 1;	} )
+	| ( < MINUS >	{ return -1;	} ) }
+
+int index() : 
+{
+	int i;
+}{
+	< LPAREN > i=natural() < RPAREN >
+	{ return i; }}
+
+void dimension() : {}{
+	< DIM > < ASSIGN > < NUMBER >}
+
+void lower() : {}
+{
+	< LOWERB > ( < NUMBER > )+
+}
+
+void upper() : {}
+{
+	< UPPERB > ( < NUMBER > )+
+}
+
+void valid() : {}
+{
+	< VALID > ( < NUMBER > )+
+}
+
+void end() : {}
+{
+	< END >
+}

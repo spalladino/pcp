@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="common" basedir="..">
+	
+	<property name="common.dir" value="./common" />
+	<property name="src.dir" value="${common.dir}/src" />
+	<property name="build.dir" value="./build" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	
+	<path id="classpath" path="${classes.dir}" />
+	
+	<target name="clean" description="Deletes output build directory">
+		<delete dir="${build.dir}" />
+	</target>
+	
+	<target name="compile" depends="" description="Compiles all java classes in source directory">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
+	</target>
+	
+	<target name="jar" depends="compile" description="Creates a jar file from compiled classes">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
+	</target>
+
+</project>
