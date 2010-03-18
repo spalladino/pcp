@@ -16,7 +16,7 @@ import pcp.porta.model.*;
 import porta.interfaces.*;
 
 public class ModelParser { 
-	PcpModel model;
+	Model model;
 	Constraint current;
 }
 PARSER_END(ModelParser)
@@ -72,7 +72,7 @@ void cardinals() :
 	<COLORS> <COLON> (c = natural())
 	<NODES> <COLON> (n = natural())
 	{
-		this.model = new PcpModel(new PcpCardinals(n, c)); 
+		this.model = new Model(new Parameters(n, c)); 
 	}
 }
 

@@ -12,7 +12,7 @@ public class ModelParser implements ModelParserConstants {
         Model model;
         Constraint current;
 
-  final public BaseModel model() throws ParseException {
+  final public Model model() throws ParseException {
     cardinals();
     inequalities();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
