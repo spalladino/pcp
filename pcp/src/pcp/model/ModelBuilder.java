@@ -9,10 +9,8 @@ import ilog.concert.IloObjective;
 import java.util.List;
 import java.util.Map;
 
-import exceptions.AlgorithmException;
-
-import pcp.Factory;
 import pcp.algorithms.clique.CliqueCover;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.InducedGraph;
 import pcp.entities.partitioned.Node;
@@ -20,6 +18,7 @@ import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.utils.GraphUtils;
 import props.Settings;
+import exceptions.AlgorithmException;
 
 public class ModelBuilder {
 	
@@ -39,15 +38,14 @@ public class ModelBuilder {
 		this.modeler = modeler;
 	}
 
-	public Model buildModel(BuilderStrategy strategy) throws IloException, AlgorithmException {
+	public Model buildModel(BuilderStrategy strategy, ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		this.xs = null;
 		this.ws = null;
 		this.objective = null;
 		
 		Model model = new Model(this.graph);
 		model.strategy = strategy;
-		model.coloring = Factory.get().coloring(strategy.getColoring(), graph);
-		this.colors = model.colors = model.coloring.getChi();
+		this.colors = model.colors = coloring.getChi();
 		
 		// Initialize variables and objective function
 		initializeVariables();

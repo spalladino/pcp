@@ -3,6 +3,7 @@ package pcp.porta;
 import java.io.FileInputStream;
 
 import pcp.algorithms.Preprocessor;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
@@ -106,7 +107,8 @@ public class Factory implements IFactory<
 	public Model generateModel(IPartitionedGraph graph) throws Exception {
 		MockMPModeler<Model> modeler = new MockMPModeler<Model>(this);
 		ModelBuilder builder = new ModelBuilder((PartitionedGraph) graph, modeler);
-		builder.buildModel(strategy);
+		ColoringAlgorithm coloring = pcp.Factory.get().coloring(strategy.getColoring(), graph);
+		builder.buildModel(strategy, coloring);
 		return modeler.asModel(this.createTranslator(), getParameters());
 	}
 

@@ -16,7 +16,7 @@
 	<import file="./pcp.xml"/>	
 	
 	<path id="classpath" path="${classes.dir}" >
-        <fileset dir="${lib.dir}" includes="**/cplex.jar **/guava.jar"/>
+        <fileset dir="${lib.dir}" includes="**/cplex.jar **/guava.jar **/snakeyaml-1.6.jar"/>
     </path>
 
 	<target name="data" description="Copies the generated data to the server">

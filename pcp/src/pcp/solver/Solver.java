@@ -1,23 +1,22 @@
 package pcp.solver;
 
-import exceptions.AlgorithmException;
 import ilog.concert.IloException;
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.CplexStatus;
 import ilog.cplex.IloCplex.IntParam;
+
+import java.util.Map;
+
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
-import pcp.model.strategy.Coloring;
 import pcp.solver.cuts.InitialCutBuilder;
 import pcp.solver.cuts.InitialCutsGenerator;
 import pcp.solver.data.AbstractSolutionData;
-import props.Settings;
+import exceptions.AlgorithmException;
 
 
 public class Solver extends AbstractSolutionData {
-	
-	static final boolean useInitialSolution = Settings.get().getBoolean("start.useInitialSolution"); 
 	
 	IloCplex cplex;
 	Model model;
@@ -43,17 +42,13 @@ public class Solver extends AbstractSolutionData {
 	}
 	
 	protected void beforeSolve() throws IloException, AlgorithmException {
-		if(useInitialSolution && Coloring.supportingAssignment.contains(model.getStrategy().getColoring())) {
-			System.out.println("Using initial solution from coloring with value " + model.getColoring().getChi());
-			loadInitialSolution();
-		}
 	}
 
-	protected void loadInitialSolution() throws IloException, AlgorithmException {
+	public void loadInitialSolution(pcp.algorithms.coloring.ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		cplex.setParam(IntParam.AdvInd, 1);
 		int n = model.getNodeCount();
 		int c = model.getColorCount();
-		int chi = model.getColoring().getChi();
+		int chi = coloring.getChi();
 		
 		double[] vals = new double[n*c + c];
 		IloNumVar[] vars = new IloNumVar[n*c + c];
@@ -67,7 +62,7 @@ public class Solver extends AbstractSolutionData {
 			for (int i = 0; i < n; i++) {
 				// Set x variable value
 				vars[idx] = model.getXs()[i][j];
-				vals[idx] = model.getColoring().getColor(i) == j ? 1 : 0;
+				vals[idx] = coloring.getColor(i) == j ? 1 : 0;
 				idx++;
 			}
 		}
@@ -96,7 +91,7 @@ public class Solver extends AbstractSolutionData {
 		return solved;
 	}
 	
-	public int getChi() throws IloException {
+	public int getChromaticNumber() throws IloException {
 		if (model.isTrivial()) return 1;
 		return (int)Math.ceil(cplex.getObjValue() - epsilon);
 	}
@@ -146,6 +141,12 @@ public class Solver extends AbstractSolutionData {
 		InitialCutsGenerator generator = new InitialCutsGenerator(model);
 		InitialCutBuilder builder = new InitialCutBuilder(cplex, model);
 		generator.makeCuts(builder);
+	}
+	
+	public void fillExecutionData(Map<String,Object> data) throws Exception {
+		data.put("solution.chi", getChromaticNumber());
+		data.put("solution.time", elapsed);
+		data.put("solution.solver", this.getClass().getName());
 	}
 
 }

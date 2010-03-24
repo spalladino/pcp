@@ -11,7 +11,7 @@ import org.junit.Test;
 import exceptions.AlgorithmException;
 
 import pcp.algorithms.bounding.Bounder;
-import pcp.algorithms.coloring.Coloring;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.coloring.DSaturColoring;
 import pcp.entities.IPartitionedGraph;
@@ -21,7 +21,7 @@ import props.Settings;
 
 public class DSaturFixture {
 	
-	protected Coloring dsatur;
+	protected ColoringAlgorithm dsatur;
 	protected PartitionedGraphBuilder builder;
 	protected List<Node> clique;
 	
@@ -167,7 +167,7 @@ public class DSaturFixture {
 		new ColoringVerifier(graph).verify(dsatur);
 	}
 	
-	protected Coloring createDSatur() {
+	protected ColoringAlgorithm createDSatur() {
 		 DSaturColoring saturColoring = new DSaturColoring(graph);
 		 saturColoring.setClique(clique);
 		 saturColoring.setBounder(bounder);

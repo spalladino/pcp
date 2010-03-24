@@ -190,6 +190,10 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		this.graph = model.getGraph();
 	}
 
+	public CutsMetrics getMetrics() {
+		return metrics;
+	}
+
 	private void add(int cut, IloNumExpr expr, boolean cmp, String name) throws IloException {
 		IloRange range = cmp == LeqtZero 
 			? modeler.le(expr, 0, name)

@@ -1,5 +1,6 @@
 import os.path
 import pickle
+import yaml
 
 from runner import *
 from config import *
@@ -39,8 +40,7 @@ class Fixture:
     def execute(self):
         for run in self.runs:
             runner = Runner()
-            runner.props = run
-            out, err = runner.run()
+            out, err = runner.run(self.runid, run)
             print out
             self.add_success_status()
         
@@ -54,7 +54,7 @@ class Fixture:
             return False
         
         with open(cfgs_path, 'r') as current:
-            self.runs = pickle.load(current)
+            self.runs = yaml.load(current)
         
         with open(curr_path, 'r') as current:
             self.runid = int(current.readline())
@@ -74,7 +74,7 @@ class Fixture:
             current.write("\n")
         
         with open(cfgs_path, 'w') as current:
-            pickle.dump(self.runs, current)
+            yaml.dump(self.runs, current)
         
         
     def clear_status(self):

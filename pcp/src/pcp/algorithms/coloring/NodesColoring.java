@@ -5,7 +5,7 @@ import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
 
 
-public class NodesColoring extends Coloring {
+public class NodesColoring extends ColoringAlgorithm {
 	
 	public NodesColoring(IPartitionedGraph graph) {
 		super(graph);

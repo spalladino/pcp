@@ -14,7 +14,7 @@ public class ColoringVerifier {
 		this.graph = graph;
 	}
 	
-	public void verify(Coloring coloring) throws AlgorithmException {
+	public void verify(ColoringAlgorithm coloring) throws AlgorithmException {
 		int chi = coloring.getChi();
 		
 		for (Edge edge : graph.getEdges()) {

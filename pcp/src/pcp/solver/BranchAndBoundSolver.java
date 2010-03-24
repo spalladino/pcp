@@ -35,7 +35,6 @@ public class BranchAndBoundSolver extends Solver {
         // Other
         cplex.setParam(IntParam.PreDual, -1);
 	}
-	
-	
+
 
 }

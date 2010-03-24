@@ -11,7 +11,7 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 
-public class DSaturColoring extends Coloring implements IBoundedAlgorithm {
+public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	private IAlgorithmBounder bounder;
 	private List<Node> clique;

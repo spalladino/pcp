@@ -2,7 +2,11 @@ package pcp.metrics;
 
 import ilog.concert.IloRange;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.definitions.Cuts;
@@ -72,6 +76,38 @@ public class CutsMetrics implements Cuts {
 	
 	public int getNIters() {
 		return this.counts.size();
+	}
+
+	public void fillData(Map<String, Object> data) {
+		Map<String, Object> cuts;
+		data.put("cuts", cuts = new HashMap<String, Object>());
+		data.put("cuts.niters", getNIters());
+		
+		for (int i = 0; i < Cuts; i++) {
+			Map<String, Object> cut;
+			cuts.put(Names[i], cut = new HashMap<String, Object>());
+			
+			int totalc = 0;
+			long totalt = 0;
+			
+			List<Map<String, Object>> iters = new ArrayList<Map<String,Object>>();
+			for (int j = 0; j < counts.size(); j++) {
+				Map<String, Object> iter;
+				iters.add(iter = new HashMap<String, Object>());
+				
+				int count = counts.get(j)[i];
+				long tick = ticks.get(j)[i];
+				
+				iter.put("count", count);
+				iter.put("ticks", tick);
+				
+				totalc += count;
+				totalt += tick;
+			}
+			
+			cut.put("count", totalc);
+			cut.put("ticks", totalt);
+		}
 	}
 	
 }

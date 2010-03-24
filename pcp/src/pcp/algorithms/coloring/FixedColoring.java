@@ -5,7 +5,7 @@ import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
 
 
-public class FixedColoring extends Coloring {
+public class FixedColoring extends ColoringAlgorithm {
 	
 	int colors;
 	

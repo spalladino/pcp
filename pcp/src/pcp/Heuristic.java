@@ -1,7 +1,7 @@
 package pcp;
 
 import pcp.algorithms.Preprocessor;
-import pcp.algorithms.coloring.Coloring;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
@@ -32,7 +32,7 @@ public class Heuristic {
 
 		PartitionedGraphBuilder builder = factory.getGraphBuilder(filename);
 		PartitionedGraph graph = new Preprocessor(builder).preprocess().getGraph();
-		Coloring solver = factory.coloring(strategy.getColoring(), graph);
+		ColoringAlgorithm solver = factory.coloring(strategy.getColoring(), graph);
 			
 		System.out.println("Using solver type " + solver.getClass().getName());
 		System.out.println("Chromatic number is " + solver.getChi());

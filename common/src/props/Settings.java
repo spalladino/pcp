@@ -60,6 +60,10 @@ public class Settings {
 		catch (Exception ex) { return null; }
 	}
 	
+	public Properties getProps() {
+		return props;
+	}
+	
 	@Override
 	public String toString() {
 		return props == null ? "Settings" : props.toString();

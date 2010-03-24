@@ -3,13 +3,13 @@ package pcp;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import pcp.algorithms.coloring.Coloring;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ConfigurationColoring;
 import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
 import pcp.algorithms.coloring.DSaturPartitionColoringHardestPartition;
 import pcp.algorithms.coloring.NodesColoring;
 import pcp.algorithms.coloring.PartitionsColoring;
-import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
 import pcp.model.parsing.DimacsParser;
@@ -26,7 +26,7 @@ public class Factory implements IFactory {
 		return factory;
 	}
 
-	public Coloring coloring(pcp.model.strategy.Coloring coloring, PartitionedGraph graph) {
+	public ColoringAlgorithm coloring(pcp.model.strategy.Coloring coloring, IPartitionedGraph graph) {
 		switch (coloring) {
 			case Configuration:
 				return new ConfigurationColoring(graph);

@@ -9,7 +9,7 @@ import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import props.Settings;
 
-public abstract class DSaturPartitionColoring extends Coloring implements IBoundedAlgorithm {
+public abstract class DSaturPartitionColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	protected static final boolean log = Settings.get().getBoolean("logging.coloring");
 	protected static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");

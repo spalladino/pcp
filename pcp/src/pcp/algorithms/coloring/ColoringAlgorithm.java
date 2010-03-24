@@ -5,11 +5,11 @@ import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
 
 
-public abstract class Coloring implements IBoundedAlgorithm {
+public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	IPartitionedGraph graph;
 	
-	public Coloring(IPartitionedGraph graph) {
+	public ColoringAlgorithm(IPartitionedGraph graph) {
 		this.graph = graph;
 	}
 	
