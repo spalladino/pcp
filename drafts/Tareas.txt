@@ -14,3 +14,5 @@
 			while candidates no vacio
 			
 - Usar greedy randomised en los casos en q ordeno nodos?
+
+- muchas series en un mismo grafo?
