@@ -27,7 +27,7 @@ public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 	IAlgorithmSource provider;
 	IModelData data;
 
-	IHolesDetector detector;
+	IHolesDetector<Node> detector;
 	SortedPartitionedGraph graph;
 	
 	int colorCount = 0;
@@ -61,14 +61,14 @@ public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 			this.graph = provider.getSorted().getSortedGraph(color, false);
 			this.detector = new ComponentHolesDetector(graph);
 			
-			detector.holes(new IHoleHandler() {
+			detector.holes(new IHoleHandler<Node>() {
 				public boolean handle(final List<Node> hole) {
 					if (DataUtils.sumXi(hole, color, data) - Epsilon > IntUtils.floorhalf(hole.size()) * data.w(color)) {
 						provider.getCutBuilder().addHole(hole, color);
 						return (++holeCount <= maxHoles);
 					} return true;
 				}
-			}, IHolesDetector.AllFilter);
+			}, null);
 		}
 		
 		provider.getBounder().stop();

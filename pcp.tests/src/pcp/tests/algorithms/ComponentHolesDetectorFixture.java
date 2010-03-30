@@ -9,7 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import pcp.algorithms.holes.ComponentHolesDetector;
-import pcp.algorithms.holes.IHolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.entities.partitioned.Node;
@@ -189,7 +188,7 @@ public class ComponentHolesDetectorFixture {
 		builder.addEdge(8, 5);
 		builder.addEdge(5, 2);
 
-		IHoleFilter odds = new IHoleFilter() {
+		IHoleFilter<Node> odds = new IHoleFilter<Node>() {
 			public boolean use(List<Node> hole) {
 				return hole.size() % 2 == 1;
 			}
@@ -215,18 +214,18 @@ public class ComponentHolesDetectorFixture {
 		builder.addEdge(8, 5);
 		builder.addEdge(5, 2);
 
-		assertHoles(new IHoleHandler() {
+		assertHoles(new IHoleHandler<Node>() {
 			public boolean handle(List<Node> hole) {
 				Assert.assertEquals(5, hole.size());
 				return false;
 			}
-		}, IHolesDetector.AllFilter);
+		}, null);
 	}
 	
-	private void assertCount(int expected, IHoleFilter filter) throws AlgorithmException {
+	private void assertCount(int expected, IHoleFilter<Node> filter) throws AlgorithmException {
 		System.out.println("Running...");
 		final BoxInt count = new BoxInt(0);
-		IHoleHandler handler = new IHoleHandler() {
+		IHoleHandler<Node> handler = new IHoleHandler<Node>() {
 			public boolean handle(List<Node> hole) {
 				count.incData();
 				return true;
@@ -241,10 +240,10 @@ public class ComponentHolesDetectorFixture {
 	}
 	
 	private void assertCount(int expected) throws AlgorithmException {
-		assertCount(expected, IHolesDetector.AllFilter);
+		assertCount(expected, null);
 	}
 	
-	private void assertHoles(IHoleHandler handler, IHoleFilter filter) throws AlgorithmException {
+	private void assertHoles(IHoleHandler<Node> handler, IHoleFilter<Node> filter) throws AlgorithmException {
 		System.out.println("Running...");
 		detector = new ComponentHolesDetector(builder.getGraph());
 		detector.holes(handler, filter);

@@ -1,51 +1,20 @@
 package pcp.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import pcp.entities.IPartitionedGraph;
-import pcp.entities.partitioned.Node;
-import pcp.entities.partitioned.Partition;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.simple.Node;
 
-public class GraphUtils {
 
-	public static Map<Partition, List<Node>> groupByPartition(Node[] nodes) {
-		Map<Partition, List<Node>> map = new HashMap<Partition, List<Node>>();
-		for (Node node : nodes) {
-			Partition p = node.getPartition();
-			if (!map.containsKey(p)) {
-				map.put(p, new ArrayList<Node>());
-			} map.get(p).add(node);
-		} return map;
-	}
+public class SimpleGraphUtils {
 	
-	public static boolean checkComponentHole(IPartitionedGraph graph, List<Node> nodes) {
-		if (!checkHole(graph, nodes)) {
-			return false;
-		}
-		
-		Set<Partition> visited = new HashSet<Partition>();
-		for (Node node : nodes) {
-			if (visited.contains(node.getPartition())) {
-				System.err.println("Hole is not component hole: " + listNodes(nodes));
-				return false;
-			} visited.add(node.getPartition());
-		}
-		
-		return true;
-	}
-	
-	public static boolean checkClique(IPartitionedGraph graph, List<Node> clique) {
+	public static boolean checkClique(ISimpleGraph graph, List<Node> clique) {
 		for (int i = 0; i < clique.size(); i++) {
 			for (int j = i+1; j < clique.size(); j++) {
-				if (!(graph.areAdjacent(clique.get(i), clique.get(j)) ||
-					graph.areInSamePartition(clique.get(i), clique.get(j)))) {
+				if (!(graph.areAdjacent(clique.get(i), clique.get(j)))) {
 					System.err.println("Invalid clique: " + clique);
 					System.err.println("Nodes " + clique.get(i) + " and " + clique.get(j) + " are not adjacent.");
 					return false;
@@ -53,10 +22,8 @@ public class GraphUtils {
 			}
 		} return true;
 	}
-	
-	
-	
-	public static boolean checkHole(IPartitionedGraph graph, List<Node> nodes) {
+
+	public static boolean checkHole(ISimpleGraph graph, List<Node> nodes) {
 		Set<Node> visited = new HashSet<Node>();
 		LinkedList<Node> pending = new LinkedList<Node>(nodes);
 		
@@ -120,27 +87,5 @@ public class GraphUtils {
         } builder.append("]");
         return builder.toString();
     }
-
-	/**
-	 * Returns true if every node in one partition is adjacent to every node in the other one.
-	 * @return true if every node in one partition is adjacent to every node in the other one.
-	 */
-	public static boolean areBipartite(Partition p1, Partition p2) {
-		return checkAllNodesAdjacent(p1, p2) && checkAllNodesAdjacent(p2, p1);  
-	}
-	
-	private static boolean checkAllNodesAdjacent(Partition p1, Partition p2) {
-		for (Node n1 : p1.getNodes()) {
-			Set<Node> pending = new HashSet<Node>();
-			Collections.addAll(pending, p2.getNodes());
-			for (Node adj : n1.getNeighbours()) {
-				pending.remove(adj);
-			}
-			if (!pending.isEmpty()) {
-				return false;
-			}
-		}
-		return true;
-	}
 	
 }

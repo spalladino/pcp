@@ -9,7 +9,7 @@ import java.util.Queue;
 import pcp.common.sorting.SimpleNodeDegreeComparator;
 import pcp.definitions.Sorting;
 import pcp.entities.ISimpleGraph;
-import pcp.entities.simple.SimpleNode;
+import pcp.entities.simple.Node;
 
 @Deprecated
 public class CliqueCoverSimple {
@@ -24,19 +24,19 @@ public class CliqueCoverSimple {
 	 * Returns a clique coverage of the graph.
 	 * @return a clique coverage of the graph.
 	 */
-	public List<List<SimpleNode>> cliques() {
-		List<List<SimpleNode>> cliques = new ArrayList<List<SimpleNode>>();
-		Queue<SimpleNode> queue = new PriorityQueue<SimpleNode>(graph.N(), new SimpleNodeDegreeComparator(Sorting.Asc)); 
+	public List<List<Node>> cliques() {
+		List<List<Node>> cliques = new ArrayList<List<Node>>();
+		Queue<Node> queue = new PriorityQueue<Node>(graph.N(), new SimpleNodeDegreeComparator(Sorting.Asc)); 
 		Collections.addAll(queue, graph.getNodes());
 		
 		// Iterate over all nodes
 		while (!queue.isEmpty()) {
-			SimpleNode node = queue.poll();
-			List<SimpleNode> clique = new ArrayList<SimpleNode>();
+			Node node = queue.poll();
+			List<Node> clique = new ArrayList<Node>();
 			clique.add(node);
 			
 			// Check all neighbours of the initial node
-			for (SimpleNode neighbour : node.getNeighbours()) {
+			for (Node neighbour : node.getNeighbours()) {
 				
 				// If it has already been added to the clique, return
 				if (!queue.contains(neighbour)) {
@@ -45,7 +45,7 @@ public class CliqueCoverSimple {
 
 				// Ensure each neighbour is adjacent to all nodes in the clique
 				boolean isAdjacent = true;
-				for (SimpleNode inClique : clique) {
+				for (Node inClique : clique) {
 					if (!graph.areAdjacent(inClique, neighbour)) {
 						isAdjacent = false;
 						break;

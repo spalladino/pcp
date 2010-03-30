@@ -8,7 +8,7 @@ import org.junit.Test;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.InducedSimpleGraph;
 import pcp.entities.simple.SimpleGraphBuilder;
-import pcp.entities.simple.SimpleNode;
+import pcp.entities.simple.Node;
 
 
 public class InducedSimpleGraphFixture {
@@ -32,7 +32,7 @@ public class InducedSimpleGraphFixture {
 			.addEdge(3, 1);
 		
 		graph = builder.getGraph();
-		induced = new InducedSimpleGraph(graph, new SimpleNode[] {
+		induced = new InducedSimpleGraph(graph, new Node[] {
 			graph.getNode(0),
 			graph.getNode(2),
 			graph.getNode(3)

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import pcp.entities.ISimpleGraph;
-import pcp.entities.simple.SimpleNode;
-import pcp.utils.GraphUtils;
+import pcp.entities.simple.Node;
+import pcp.utils.SimpleGraphUtils;
 import props.Settings;
 
 
@@ -18,16 +18,16 @@ public class CliqueCover {
 	static final boolean checkClique = Settings.get().getBoolean("validate.clique");
 	
 	private final ISimpleGraph graph;
-	private final SimpleNode[] nodes;
-	private final Map<SimpleNode, Integer> degrees;
-	private final Comparator<SimpleNode> comparator;
+	private final Node[] nodes;
+	private final Map<Node, Integer> degrees;
+	private final Comparator<Node> comparator;
 
 	public CliqueCover(ISimpleGraph graph) {
 		this.graph = graph;
-		this.degrees = new HashMap<SimpleNode, Integer>(graph.N());
+		this.degrees = new HashMap<Node, Integer>(graph.N());
 		this.nodes = graph.getNodes().clone();
-		this.comparator = new Comparator<SimpleNode>() {
-			public int compare(SimpleNode o1, SimpleNode o2) {
+		this.comparator = new Comparator<Node>() {
+			public int compare(Node o1, Node o2) {
 				if (degrees.get(o1) == null) return -1;
 				if (degrees.get(o2) == null) return 1;
 				return degrees.get(o2) - degrees.get(o1);
@@ -39,26 +39,26 @@ public class CliqueCover {
 	 * Returns a clique coverage of the graph.
 	 * @return a clique coverage of the graph.
 	 */
-	public List<List<SimpleNode>> cliques() {
-		List<List<SimpleNode>> cliques = new ArrayList<List<SimpleNode>>();
+	public List<List<Node>> cliques() {
+		List<List<Node>> cliques = new ArrayList<List<Node>>();
 
-		for (SimpleNode node : nodes) {
+		for (Node node : nodes) {
 			degrees.put(node, node.getDegree());
 		} Arrays.sort(nodes, comparator);
 		
 		// Iterate on all nodes available
 		int i = 0;
 		while (i < graph.N()) {
-			SimpleNode current = nodes[i];
-			List<SimpleNode> clique = new ArrayList<SimpleNode>();
+			Node current = nodes[i];
+			List<Node> clique = new ArrayList<Node>();
 			cliques.add(clique);
 			addToClique(current, clique);
 			
 			// Iterate on the rest of the nodes in the graph
 			for (int j = i+1; j < graph.N(); j++) {
-				SimpleNode candidate = nodes[j];
+				Node candidate = nodes[j];
 				boolean adjacent = true;
-				for (SimpleNode inClique : clique) {
+				for (Node inClique : clique) {
 					if (!graph.areAdjacent(inClique, candidate)) {
 						adjacent = false; break;
 					}
@@ -74,8 +74,8 @@ public class CliqueCover {
 		}
 		
 		if (checkClique) {
-			for (List<SimpleNode> clique : cliques) {
-				GraphUtils.checkClique(graph, clique);
+			for (List<Node> clique : cliques) {
+				SimpleGraphUtils.checkClique(graph, clique);
 			}
 		}
 		
@@ -83,14 +83,14 @@ public class CliqueCover {
 	}
 		
 
-	private void addToClique(SimpleNode node, List<SimpleNode> clique) {
+	private void addToClique(Node node, List<Node> clique) {
 		decreaseNeighbours(node);
 		clique.add(node);
 		degrees.put(node, null);
 	}
 	
-	private void decreaseNeighbours(SimpleNode current) {
-		for (SimpleNode n : current.getNeighbours()) {
+	private void decreaseNeighbours(Node current) {
+		for (Node n : current.getNeighbours()) {
 			if (degrees.get(n) != null) {
 				degrees.put(n, degrees.get(n)-1);
 			}

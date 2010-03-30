@@ -13,59 +13,59 @@ public class InducedSimpleGraph implements ISimpleGraph {
 	
 	ISimpleGraph graph;
 
-	Map<Integer, SimpleNode> nodesMap;
-	Map<Integer, SimpleNode[]> nodesAdjacencies;
+	Map<Integer, Node> nodesMap;
+	Map<Integer, Node[]> nodesAdjacencies;
 
-	public InducedSimpleGraph(ISimpleGraph graph, SimpleNode[] nodes) {
+	public InducedSimpleGraph(ISimpleGraph graph, Node[] nodes) {
 		this.graph = graph;
 		
-		this.nodesAdjacencies = new HashMap<Integer, SimpleNode[]>(nodes.length);
-		this.nodesMap = new HashMap<Integer, SimpleNode>(nodes.length);
-		for (SimpleNode node : nodes) {
-			this.nodesMap.put(node.name, new SimpleNode(this, node.name));
+		this.nodesAdjacencies = new HashMap<Integer, Node[]>(nodes.length);
+		this.nodesMap = new HashMap<Integer, Node>(nodes.length);
+		for (Node node : nodes) {
+			this.nodesMap.put(node.name, new Node(this, node.name));
 		}
 	}
 
 	@Override
-	public boolean areAdjacent(SimpleNode n1, SimpleNode n2) {
+	public boolean areAdjacent(Node n1, Node n2) {
 		return graph.areAdjacent(n1, n2);
 	}
 
 	@Override
-	public int getDegree(SimpleNode node) {
+	public int getDegree(Node node) {
 		return this.getNeighbours(node).length;
 	}
 
 	@Override
-	public SimpleEdge[] getEdges() {
+	public Edge[] getEdges() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public SimpleNode[] getNeighbours(SimpleNode simpleNode) {
+	public Node[] getNeighbours(Node simpleNode) {
 		if (!this.nodesAdjacencies.containsKey(simpleNode.index())) {
 			this.nodesAdjacencies.put(simpleNode.name, calculateNeighbours(simpleNode));
 		} return this.nodesAdjacencies.get(simpleNode.index());
 	}
 	
-	private SimpleNode[] calculateNeighbours(SimpleNode node) {
-		List<SimpleNode> neighbours = new ArrayList<SimpleNode>();
-		for (SimpleNode n : graph.getNeighbours(node)) {
+	private Node[] calculateNeighbours(Node node) {
+		List<Node> neighbours = new ArrayList<Node>();
+		for (Node n : graph.getNeighbours(node)) {
 			if (nodesMap.containsKey(n.name)) {
 				neighbours.add(nodesMap.get(n.name));
 			}
-		} return (SimpleNode[]) neighbours.toArray(new SimpleNode[neighbours.size()]);
+		} return (Node[]) neighbours.toArray(new Node[neighbours.size()]);
 	}
 	
 	@Override
-	public SimpleNode getNode(int index) {
+	public Node getNode(int index) {
 		return nodesMap.get(index);
 	}
 
 	@Override
-	public SimpleNode[] getNodes() {
-		Collection<SimpleNode> values = nodesMap.values();
-		return (SimpleNode[]) values.toArray(new SimpleNode[values.size()]);
+	public Node[] getNodes() {
+		Collection<Node> values = nodesMap.values();
+		return (Node[]) values.toArray(new Node[values.size()]);
 	}
 
 	@Override

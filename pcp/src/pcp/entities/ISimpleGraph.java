@@ -1,20 +1,20 @@
 package pcp.entities;
 
-import pcp.entities.simple.SimpleEdge;
-import pcp.entities.simple.SimpleNode;
+import pcp.entities.simple.Edge;
+import pcp.entities.simple.Node;
 import pcp.interfaces.IGraph;
 
 public interface ISimpleGraph extends IGraph {
 	
-	SimpleEdge[] getEdges();
+	Edge[] getEdges();
 	
-	SimpleNode[] getNodes();
+	Node[] getNodes();
 	
-	boolean areAdjacent(SimpleNode n1, SimpleNode n2);
+	boolean areAdjacent(Node n1, Node n2);
 	
-	SimpleNode getNode(int index);
+	Node getNode(int index);
 	
-	int getDegree(SimpleNode node);
+	int getDegree(Node node);
 	
-	SimpleNode[] getNeighbours(SimpleNode simpleNode);
+	Node[] getNeighbours(Node simpleNode);
 }

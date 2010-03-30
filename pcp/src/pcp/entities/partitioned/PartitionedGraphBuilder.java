@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.IPartitionedGraphBuilder;
 import pcp.entities.ISimpleGraph;
-import pcp.entities.simple.SimpleGraph;
+import pcp.entities.simple.Graph;
 import pcp.utils.GraphUtils;
 
 public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedGraphBuilder {
@@ -80,7 +80,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 			graph.matrix[edge.node2.index()][edge.node1.index()] = true;
 		}
 		
-		graph.gprime = (SimpleGraph)getGPrime();
+		graph.gprime = (Graph)getGPrime();
 		
 		return graph;
 	}

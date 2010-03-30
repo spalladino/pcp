@@ -2,37 +2,37 @@ package pcp.entities.simple;
 
 import pcp.entities.ISimpleGraph;
 
-public class SimpleGraph implements ISimpleGraph {
+public class Graph implements ISimpleGraph {
 
 	boolean[][] matrix;
 
-	SimpleNode[][] adjacencies;
-	SimpleNode[] nodes;
-	SimpleEdge[] edges;
+	Node[][] adjacencies;
+	Node[] nodes;
+	Edge[] edges;
 	
 	String name;
 	
-	SimpleGraph() { }
+	Graph() { }
 	
-	SimpleGraph(int nodescount, int edgecount) {
-		this.edges = new SimpleEdge[edgecount];
-		this.nodes = new SimpleNode[nodescount];
+	Graph(int nodescount, int edgecount) {
+		this.edges = new Edge[edgecount];
+		this.nodes = new Node[nodescount];
 		this.matrix = new boolean[nodescount][nodescount];
-		this.adjacencies = new SimpleNode[nodescount][];
+		this.adjacencies = new Node[nodescount][];
 	}
 	
 	@Override
-	public SimpleNode[] getNodes() {
+	public Node[] getNodes() {
 		return nodes;
 	}
 	
 	@Override
-	public SimpleEdge[] getEdges() {
+	public Edge[] getEdges() {
 		return edges;
 	}
 	
 	@Override
-	public boolean areAdjacent(SimpleNode n1, SimpleNode n2) {
+	public boolean areAdjacent(Node n1, Node n2) {
 		return matrix[n1.name][n2.name];
 	}
 
@@ -42,12 +42,12 @@ public class SimpleGraph implements ISimpleGraph {
 	}
 
 	@Override
-	public SimpleNode[] getNeighbours(SimpleNode node) {
+	public Node[] getNeighbours(Node node) {
 		return this.adjacencies[node.name];
 	}
 
 	@Override
-	public int getDegree(SimpleNode node) {
+	public int getDegree(Node node) {
 		return this.adjacencies[node.name].length;
 	}
 
@@ -62,7 +62,7 @@ public class SimpleGraph implements ISimpleGraph {
 	}
 
 	@Override
-	public SimpleNode getNode(int index) {
+	public Node getNode(int index) {
 		return this.nodes[index];
 	}
 

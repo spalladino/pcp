@@ -9,26 +9,25 @@ import org.junit.Test;
 import pcp.algorithms.holes.HolesDetector;
 import pcp.algorithms.holes.IHolesDetector.IHoleFilter;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
-import pcp.entities.partitioned.Node;
-import pcp.entities.partitioned.PartitionedGraphBuilder;
+import pcp.entities.simple.Node;
+import pcp.entities.simple.SimpleGraphBuilder;
 import entities.BoxInt;
 import exceptions.AlgorithmException;
 
 
-@SuppressWarnings("deprecation")
 public class HolesDetectorFixture {
 
-	PartitionedGraphBuilder builder;
+	SimpleGraphBuilder builder;
 	HolesDetector detector;
 	
 	@Before
 	public void setup() {
-		builder = new PartitionedGraphBuilder("test");
+		builder = new SimpleGraphBuilder("test");
 	}
 	
 	@Test
 	public void shouldNotDetectAnything() throws AlgorithmException {
-		builder.createNodes(5);
+		builder.addNodes(5);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -43,7 +42,7 @@ public class HolesDetectorFixture {
 	
 	@Test
 	public void shouldDetectSingle() throws AlgorithmException {
-		builder.createNodes(5);
+		builder.addNodes(5);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -56,7 +55,7 @@ public class HolesDetectorFixture {
 	
 	@Test
 	public void shouldDetectSingleShuffled() throws AlgorithmException {
-		builder.createNodes(7);
+		builder.addNodes(7);
 		
 		builder.addEdge(5, 4);
 		builder.addEdge(1, 0);
@@ -71,7 +70,7 @@ public class HolesDetectorFixture {
 
 	@Test
 	public void shouldDetectBothOverlapping() throws AlgorithmException {
-		builder.createNodes(6);
+		builder.addNodes(6);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -87,7 +86,7 @@ public class HolesDetectorFixture {
 	
 	@Test
 	public void shouldDetectBothDisjoint() throws AlgorithmException {
-		builder.createNodes(9);
+		builder.addNodes(9);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -106,7 +105,7 @@ public class HolesDetectorFixture {
 	
 	@Test
 	public void shouldDetectBothDifferent() throws AlgorithmException {
-		builder.createNodes(10);
+		builder.addNodes(10);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -126,7 +125,7 @@ public class HolesDetectorFixture {
 	
 	@Test
 	public void shouldDetectOnlyOdd() throws AlgorithmException {
-		builder.createNodes(10);
+		builder.addNodes(10);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -141,7 +140,7 @@ public class HolesDetectorFixture {
 		builder.addEdge(8, 5);
 		builder.addEdge(5, 2);
 
-		IHoleFilter odds = new IHoleFilter() {
+		IHoleFilter<Node> odds = new IHoleFilter<Node>() {
 			public boolean use(List<Node> hole) {
 				return hole.size() % 2 == 1;
 			}
@@ -152,7 +151,7 @@ public class HolesDetectorFixture {
 
 	@Test
 	public void shouldStopWhenHandlerStops() throws AlgorithmException {
-		builder.createNodes(10);
+		builder.addNodes(10);
 		
 		builder.addEdge(0, 1);
 		builder.addEdge(1, 2);
@@ -167,18 +166,18 @@ public class HolesDetectorFixture {
 		builder.addEdge(8, 5);
 		builder.addEdge(5, 2);
 
-		assertHoles(new IHoleHandler() {
+		assertHoles(new IHoleHandler<Node>() {
 			public boolean handle(List<Node> hole) {
 				Assert.assertEquals(5, hole.size());
 				return false;
 			}
-		}, HolesDetector.AllFilter);
+		}, null);
 	}
 	
-	private void assertCount(int expected, IHoleFilter filter) throws AlgorithmException {
+	private void assertCount(int expected, IHoleFilter<Node> filter) throws AlgorithmException {
 		System.out.println("Running...");
 		final BoxInt count = new BoxInt(0);
-		IHoleHandler handler = new IHoleHandler() {
+		IHoleHandler<Node> handler = new IHoleHandler<Node>() {
 			public boolean handle(List<Node> hole) {
 				count.incData();
 				return true;
@@ -192,10 +191,10 @@ public class HolesDetectorFixture {
 	}
 	
 	private void assertCount(int expected) throws AlgorithmException {
-		assertCount(expected, HolesDetector.AllFilter);
+		assertCount(expected, null);
 	}
 	
-	private void assertHoles(IHoleHandler handler, IHoleFilter filter) throws AlgorithmException {
+	private void assertHoles(IHoleHandler<Node> handler, IHoleFilter<Node> filter) throws AlgorithmException {
 		System.out.println("Running...");
 		detector = new HolesDetector(builder.getGraph());
 		detector.holes(handler, filter);

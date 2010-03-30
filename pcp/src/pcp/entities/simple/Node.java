@@ -3,7 +3,7 @@ package pcp.entities.simple;
 import pcp.entities.ISimpleGraph;
 
 
-public class SimpleNode implements Comparable<SimpleNode> {
+public class Node implements Comparable<Node> {
 	
 	int name;
 	ISimpleGraph graph;
@@ -12,7 +12,7 @@ public class SimpleNode implements Comparable<SimpleNode> {
 		return name;
 	}
 
-	public SimpleNode[] getNeighbours() {
+	public Node[] getNeighbours() {
 		return graph.getNeighbours(this);
 	}
 	
@@ -20,11 +20,11 @@ public class SimpleNode implements Comparable<SimpleNode> {
 		return graph.getDegree(this);
 	}
 	
-	public boolean isAdjacent(SimpleNode n) {
+	public boolean isAdjacent(Node n) {
 		return graph.areAdjacent(this, n);
 	}
 
-	SimpleNode(ISimpleGraph graph, int name) {
+	Node(ISimpleGraph graph, int name) {
 		this.name = name;
 		this.graph = graph;
 	}
@@ -38,15 +38,15 @@ public class SimpleNode implements Comparable<SimpleNode> {
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (obj instanceof SimpleNode) {
+		if (obj instanceof Node) {
 			return false;
 		} 
-		SimpleNode other = (SimpleNode) obj;
+		Node other = (Node) obj;
 		return (name == other.name);
 	}
 
 	@Override
-	public int compareTo(SimpleNode o) {
+	public int compareTo(Node o) {
 		return ((Integer)name).compareTo(o.name);
 	}
 	

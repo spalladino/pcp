@@ -53,22 +53,22 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 	
 	@Override
 	public ISimpleGraph getGraph() {
-		SimpleGraph graph = new SimpleGraph(nodeCount, edges.size());
+		Graph graph = new Graph(nodeCount, edges.size());
 		graph.name = name;
 		
 		for (int i = 0; i < nodeCount; i++) {
-			graph.nodes[i] = new SimpleNode(graph, i);
+			graph.nodes[i] = new Node(graph, i);
 		}
 		
 		for (int h = 0; h < edges.size(); h++) {
 			TupleInt t = edges.get(h);
-			graph.edges[h] = new SimpleEdge(graph.nodes[t.getFirst()], graph.nodes[t.getSecond()]);
+			graph.edges[h] = new Edge(graph.nodes[t.getFirst()], graph.nodes[t.getSecond()]);
 			graph.matrix[t.getFirst()][t.getSecond()] = true;
 			graph.matrix[t.getSecond()][t.getFirst()] = true;
 		}
 		
 		for (Entry<Integer, Set<Integer>> entry : nodeAdjacencies.entrySet()) {
-			SimpleNode[] neighbours = new SimpleNode[entry.getValue().size()];
+			Node[] neighbours = new Node[entry.getValue().size()];
 			
 			int idx = 0;			
 			for (Integer n : entry.getValue()) {

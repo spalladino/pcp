@@ -2,7 +2,7 @@ package pcp.entities.partitioned;
 
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.ISimpleGraph;
-import pcp.entities.simple.SimpleGraph;
+import pcp.entities.simple.Graph;
 
 
 public class PartitionedGraph implements IPartitionedGraph  {
@@ -29,7 +29,7 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	Node[][] partitionNodeAdjacencies;
 	
 	// G' graph corresponding to this partitioned graph
-	SimpleGraph gprime;
+	Graph gprime;
 	
 	Node[] nodes;
 	Partition[] partitions;

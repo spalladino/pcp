@@ -2,39 +2,40 @@ package pcp.algorithms.holes;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
-import pcp.entities.IPartitionedGraph;
-import pcp.entities.partitioned.Edge;
-import pcp.entities.partitioned.Node;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.simple.Edge;
+import pcp.entities.simple.Node;
+import pcp.utils.SimpleGraphUtils;
+import props.Settings;
 
+public class HolesDetector implements IHolesDetector<Node> {
 
-@Deprecated
-public class HolesDetector implements IHolesDetector {
-
-	static final boolean check = true;
+	static boolean check = Settings.get().getBoolean("validate.holes");
+	static boolean storeVisited = Settings.get().getBoolean("holes.storeVisited");
 	
-    private IPartitionedGraph graph;
+	static boolean printHoles = false;
+	
+    private ISimpleGraph graph;
 
     private boolean[][][] notInHole;
     private int[] inPath;
     private List<Node> pathVertex;
+    
     private boolean[] returned;
     private Set<List<Node>> visited;
     
-    
-    public HolesDetector(IPartitionedGraph g) {
+    public HolesDetector(ISimpleGraph g) {
         this.graph = g;
     }
     
-    public void holes(IHoleHandler handler, IHoleFilter filter) {
+    public void holes(IHoleHandler<Node> handler, IHoleFilter<Node> filter) {
         int n = graph.getNodes().length;    
-    	notInHole = new boolean[n][n][n];
+    	
+        notInHole = new boolean[n][n][n];
         inPath = new int[n];
         pathVertex = new ArrayList<Node>();
         returned = new boolean[n];
@@ -56,7 +57,8 @@ public class HolesDetector implements IHolesDetector {
         }
     }
 
-	private boolean processEdge(IHoleHandler handler, IHoleFilter filter, Node node, int u, Node ev1, Node ev2) {
+	private boolean processEdge(IHoleHandler<Node> handler, IHoleFilter<Node> filter, Node node, int u, Node ev1, Node ev2) {
+		
 		if (node != ev1 && node != ev2
 		    && graph.areAdjacent(node, ev1)
 		    && !graph.areAdjacent(node, ev2)
@@ -72,24 +74,27 @@ public class HolesDetector implements IHolesDetector {
 		    pathVertex.add(ev2);
 
 		    ProcessResult result = process(node, ev1, ev2, 3);
+		    
 		    if (result.success)
 		    {
 		        List<Node> hole = getHole(inPath[result.nodeE.index()], result.k);
+
+		        if (check && !checkHole(hole)) {
+        			return false;
+	        	}
 		        
-		        List<Node> sorted = new ArrayList<Node>(hole);
-		        Collections.sort(sorted);
+		        if (storeVisited) {
+		        	List<Node> sorted = new ArrayList<Node>(hole);
+		        	Collections.sort(sorted);
+		        	if (visited.contains(sorted)) {
+		        		return true;
+		        	} visited.add(sorted);
+		        }
 		        
-		        if (!visited.contains(sorted)) {
-			        visited.add(sorted);
-			        
-		        	if (filter.use(hole)) { 
-			        	if (check) {
-			        		checkHole(hole);
-			        	}
-			            if (!handler.handle(hole)) {
-			            	return false;
-			            }
-			        }
+	        	if (filter == null || filter.use(hole)) { 
+		            if (!handler.handle(hole)) {
+		            	return false;
+		            }
 		        }
 		            
 		        for (Node x : hole) {
@@ -112,10 +117,17 @@ public class HolesDetector implements IHolesDetector {
     	int a = aa.index(), b = bb.index(), c = cc.index();
     	
     	inPath[c] = i;
-        for(Node dd : cc.getNeighbours()) {
+        for(Node dd : graph.getNeighbours(cc)) {
             int d = dd.index();
-        	if (d != a && d != b && d != c && !graph.areAdjacent(aa, dd) && !graph.areAdjacent(bb, dd)) {
+        	
+            if (d != a 
+    			&& d != b 
+    			&& d != c 
+    			&& !graph.areAdjacent(aa, dd) 
+    			&& !graph.areAdjacent(bb, dd)) 
+        	{
                 pathVertex.add(dd);
+                
                 if (inPath[d] != 0) {
                 	return new ProcessResult(true, dd, i);
                 } else if (!notInHole[b][c][d]) {
@@ -124,6 +136,7 @@ public class HolesDetector implements IHolesDetector {
                         return result;
                     }
                 }
+                
                 pathVertex.remove(pathVertex.size() - 1);
             }
         }
@@ -145,7 +158,7 @@ public class HolesDetector implements IHolesDetector {
         do {
             uu = pathVertex.get(i-1);
         	h = imax + 1;
-            for (Node xx : uu.getNeighbours()) {
+            for (Node xx : graph.getNeighbours(uu)) {
             	int x = xx.index();
                 if (inPath[x] >= i + 4 && inPath[x] < h) {
                     h = inPath[x];
@@ -169,58 +182,17 @@ public class HolesDetector implements IHolesDetector {
         return builder.toString();
     }
 
-    private void checkHole(List<Node> hole) {
-        Set<Node> visited = new HashSet<Node>();
-        Map<Node, Node> parent = new HashMap<Node, Node>();
-        Stack<Node> stack = new Stack<Node>();
-        stack.push(hole.get(0));
-
-        int cycle = 0;
-
-        while (stack.size() > 0) {
-     
-        	Node node = stack.pop();
-            if (visited.contains(node)) continue;
-            visited.add(node);
-
-            for (Node adj : node.getNeighbours()) {
-                boolean added = false;
-                if (hole.contains(adj) &&
-                    (!parent.containsKey(node) || parent.get(node) != adj))
-                {
-                    if (!visited.contains(adj)) {
-                        if (added) System.err.println("Error checking hole " + listHole(hole));
-                        added = true;
-                        parent.put(adj, node);
-                        stack.push(adj);
-                    }
-                    else {
-                        cycle++;
-                    }
-                }
-            }
-        }
-
-        if (cycle != 1) { 
-        	System.err.println("Error checking hole " + listHole(hole));
-        }
-
-        for (Node x : hole) {
-            if (!visited.contains(x)) { 
-            	System.err.println("Error checking hole " + listHole(hole));
-            }
-        }
-
-//        Collections.sort(hole);
-//        for (int i = 0; i < returnedHoles.size(); i++) {
-//			List<Node> previous = returnedHoles.get(i);
-//			if (previous.containsAll(hole) || hole.containsAll(previous)) {
-//        		throw new AlgorithmException("Hole already returned");
-//        	}
-//		}
-//        this.returnedHoles.add(new ArrayList<Node>(hole));
+    public boolean checkHole(List<Node> hole) {
         
-        //System.out.println(listHole(hole));
+    	if (!SimpleGraphUtils.checkHole(graph, hole)) {
+    		return false;
+    	}
+    	
+        if (printHoles) {
+        	System.out.println(listHole(hole));
+        }
+        
+        return true;
     }
 
 	private static class ProcessResult

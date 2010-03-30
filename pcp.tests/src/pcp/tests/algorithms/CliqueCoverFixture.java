@@ -12,7 +12,7 @@ import org.junit.Test;
 import pcp.algorithms.clique.CliqueCover;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.SimpleGraphBuilder;
-import pcp.entities.simple.SimpleNode;
+import pcp.entities.simple.Node;
 
 
 public class CliqueCoverFixture {
@@ -36,17 +36,17 @@ public class CliqueCoverFixture {
 			.getGraph();
 		
 		CliqueCover cover = new CliqueCover(graph);
-		List<List<SimpleNode>> cliques = cover.cliques();
+		List<List<Node>> cliques = cover.cliques();
 		
-		Collections.sort(cliques, new Comparator<List<SimpleNode>>() {
-			public int compare(List<SimpleNode> o1, List<SimpleNode> o2) {
+		Collections.sort(cliques, new Comparator<List<Node>>() {
+			public int compare(List<Node> o1, List<Node> o2) {
 				return o2.size() - o1.size();
 			}
 		});
 		
 		Assert.assertEquals(2, cliques.size());
 		
-		List<SimpleNode> clique = cliques.get(0);
+		List<Node> clique = cliques.get(0);
 		Collections.sort(clique);
 		
 		Assert.assertEquals(3, clique.size());

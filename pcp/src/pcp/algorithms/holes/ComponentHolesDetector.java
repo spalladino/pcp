@@ -12,7 +12,7 @@ import pcp.entities.partitioned.Node;
 import pcp.utils.GraphUtils;
 import props.Settings;
 
-public class ComponentHolesDetector implements IHolesDetector {
+public class ComponentHolesDetector implements IHolesDetector<Node> {
 
 	static boolean check = Settings.get().getBoolean("validate.holes");
 	static boolean storeVisited = Settings.get().getBoolean("holes.storeVisited");
@@ -32,7 +32,7 @@ public class ComponentHolesDetector implements IHolesDetector {
         this.graph = g;
     }
     
-    public void holes(IHoleHandler handler, IHoleFilter filter) {
+    public void holes(IHoleHandler<Node> handler, IHoleFilter<Node> filter) {
         int n = graph.getNodes().length;    
     	
         notInHole = new boolean[n][n][n];
@@ -57,7 +57,7 @@ public class ComponentHolesDetector implements IHolesDetector {
         }
     }
 
-	private boolean processEdge(IHoleHandler handler, IHoleFilter filter, Node node, int u, Node ev1, Node ev2) {
+	private boolean processEdge(IHoleHandler<Node> handler, IHoleFilter<Node> filter, Node node, int u, Node ev1, Node ev2) {
 		
 		if (node != ev1 && node != ev2
 		    && graph.areAdjacent(node, ev1)
@@ -99,7 +99,7 @@ public class ComponentHolesDetector implements IHolesDetector {
 		        	} visited.add(sorted);
 		        }
 		        
-	        	if (filter.use(hole)) { 
+	        	if (filter == null || filter.use(hole)) { 
 		            if (!handler.handle(hole)) {
 		            	return false;
 		            }
