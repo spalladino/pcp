@@ -16,6 +16,7 @@ public class StubCutBuilder implements ICutBuilder {
 	List<Tuple<Integer, List<pcp.entities.simple.Node>>> gprimeHoles = new ArrayList<Tuple<Integer,List<pcp.entities.simple.Node>>>();
 	List<Tuple<Integer, List<Node>>> cliques = new ArrayList<Tuple<Integer,List<Node>>>();
 	List<Tuple<Integer, List<Node>>> holes = new ArrayList<Tuple<Integer,List<Node>>>();
+	List<Tuple<Integer, List<Node>>> paths = new ArrayList<Tuple<Integer,List<Node>>>();
 	List<Tuple<Integer, Partition>> blocks = new ArrayList<Tuple<Integer,Partition>>();
 	
 	@Override
@@ -38,6 +39,11 @@ public class StubCutBuilder implements ICutBuilder {
 		gprimeHoles.add(new Tuple<Integer, List<pcp.entities.simple.Node>>(color, hole));
 	}
 
+	@Override
+	public void addPath(List<Node> path, int color) {
+		paths.add(new Tuple<Integer, List<Node>>(color, path));
+	}
+
 	public List<Tuple<Integer, List<Node>>> getCliques() {
 		return cliques;
 	}
@@ -55,15 +61,15 @@ public class StubCutBuilder implements ICutBuilder {
 	}
 
 	public void printIneqs(PrintStream stream) {
-		stream.print("Clique:\n");
-		for (Tuple<Integer, List<Node>> t : cliques) {
-			stream.print(' ');
-			stream.print(t);
-			stream.print('\n');
-		}
-		
-		stream.print("Hole:\n");
-		for (Tuple<Integer, List<Node>> t : holes) {
+		print("Cliques", stream, cliques);
+		print("Holes", stream, holes);
+		print("Paths", stream, paths);
+	}
+
+	private void print(String title, PrintStream stream, List<Tuple<Integer, List<Node>>> ineqs) {
+		stream.print(title);
+		stream.print("\n");
+		for (Tuple<Integer, List<Node>> t : ineqs) {
 			stream.print(' ');
 			stream.print(t);
 			stream.print('\n');

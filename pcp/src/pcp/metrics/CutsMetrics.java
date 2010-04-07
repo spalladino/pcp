@@ -10,6 +10,7 @@ import java.util.Map;
 
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.definitions.Cuts;
+import pcp.solver.cuts.CutFamily;
 import props.Settings;
 
 public class CutsMetrics implements Cuts {
@@ -32,8 +33,8 @@ public class CutsMetrics implements Cuts {
 		}
 		
 		iter++;
-		counts.addLast(new int[Cuts]);
-		ticks.addLast(new long[Cuts]);
+		counts.addLast(new int[CutFamily.values().length]);
+		ticks.addLast(new long[CutFamily.values().length]);
 	}
 	
 	public void added(int cut, IloRange range) {

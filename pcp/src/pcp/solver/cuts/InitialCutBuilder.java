@@ -60,5 +60,10 @@ public class InitialCutBuilder implements ICutBuilder {
 	public void addGPrimeHole(List<pcp.entities.simple.Node> hole, int color) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void addPath(List<Node> path, int color) {
+		throw new UnsupportedOperationException();
+	}
 	
 }

@@ -104,7 +104,7 @@ public abstract class ExtendedCliqueDetector implements Cuts, Constants, Sorting
 		return Cliques;
 	}
 
-	public LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] nodesToRetain, Node currentNode) {
+	protected LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] nodesToRetain, Node currentNode) {
 		ListIterator<Node> it = nodes.listIterator();
 		LinkedList<Node> removed = new LinkedList<Node>();
 		ArrayIterator<Node> itRetain = new ArrayIterator<Node>(nodesToRetain);
@@ -163,6 +163,8 @@ public abstract class ExtendedCliqueDetector implements Cuts, Constants, Sorting
 				backtrackBreakingClique(candidates);
 				if (!bounder.check()) return;
 			} 
+			
+			// If clique is not broken and there is the possibility to backtrack just the last step, do it
 			if ((!broken || !backtrackBrokenIneqs) && backtrackLastCandidate && candidates.isEmpty() && !removed.isEmpty()) {
 				clique.remove(clique.size()-1);
 				candidates = removed;
@@ -204,16 +206,18 @@ public abstract class ExtendedCliqueDetector implements Cuts, Constants, Sorting
 			clique.add(y);
 			backtrackBreakingClique(candidates);
 			
-			if (cliquesFromBrokenCount >= maxCliquesFromBroken) 
+			if (cliquesFromBrokenCount >= maxCliquesFromBroken) { 
 				return;
+			}
 			
 			clique.remove(clique.size()-1);
 			if (!removed.isEmpty()) {
 				candidates.addAll(removed);
 				backtrackBreakingClique(candidates);
 				
-				if (cliquesFromBrokenCount >= maxCliquesFromBroken) 
+				if (cliquesFromBrokenCount >= maxCliquesFromBroken) { 
 					return;
+				}
 			}
 		}
 	}

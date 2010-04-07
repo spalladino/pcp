@@ -96,6 +96,38 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		metrics.iterTime(cliques, holes, blocks, gholes);
 	}
 
+	private void addIndependentSet(List<Node> nodes, int color, int clazz) {
+		try {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("HOLE[%1$d]", color);
+			int alpha = IntUtils.floorhalf(nodes.size());
+			for (Node n : nodes) {
+				expr.addTerm(model.x(n.index(),color), 1);
+			} expr.addTerm(model.w(color), -alpha);
+			
+			int basej = graph.P() - alpha;
+			
+			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
+				for (Node n : graph.getNodes()) {
+					for (int j = basej; j < model.getColorCount(); j++) {
+						expr.addTerm(model.x(n.index(),j), 1);
+					}
+				} expr.addTerm(model.w(basej), -1);
+			}
+			
+			add(Holes, expr, LeqtZero, name);
+			
+		} catch (Exception ex) {
+			System.err.println("Could not generate hole cut: " + ex.getMessage());
+		}
+	}
+	
+	@Override
+	public void addPath(List<Node> path, int color) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Override
 	public void addHole(List<Node> nodes, int color) {
 		try {
