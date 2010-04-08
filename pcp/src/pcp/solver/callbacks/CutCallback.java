@@ -7,6 +7,7 @@ import ilog.concert.IloNumExpr;
 import ilog.concert.IloRange;
 import ilog.cplex.IloCplex;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pcp.algorithms.block.BlockColorCuts;
@@ -96,18 +97,16 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		metrics.iterTime(cliques, holes, blocks, gholes);
 	}
 
-	private void addIndependentSet(List<Node> nodes, int color, int clazz) {
-		// TODO: Abstract ineq
+	private void addIndependentSet(List<Node> nodes, int color, int alpha, CutFamily cut) {
 		try {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("HOLE[%1$d]", color);
-			int alpha = IntUtils.floorhalf(nodes.size());
+			String name = cut.toString().toUpperCase() + String.format("[%1$d]", color);
 			for (Node n : nodes) {
 				expr.addTerm(model.x(n.index(),color), 1);
 			} expr.addTerm(model.w(color), -alpha);
 			
 			int basej = graph.P() - alpha;
-			
+		
 			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
 				for (Node n : graph.getNodes()) {
 					for (int j = basej; j < model.getColorCount(); j++) {
@@ -116,72 +115,35 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 				} expr.addTerm(model.w(basej), -1);
 			}
 			
-			add(null, expr, LeqtZero, name);
-			
+			add(cut, expr, LeqtZero, name);
 		} catch (Exception ex) {
-			System.err.println("Could not generate hole cut: " + ex.getMessage());
+			System.err.println("Could not generate independent set cut: " + ex.getMessage());
 		}
 	}
 	
 	@Override
 	public void addPath(List<Node> path, int color) {
-		// TODO Auto-generated method stub
+		int alpha = IntUtils.ceilhalf(path.size());
+		addIndependentSet(path, color, alpha, CutFamily.Path);
 	}
 
 	@Override
 	public void addHole(List<Node> nodes, int color) {
-		try {
-			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("HOLE[%1$d]", color);
-			int alpha = IntUtils.floorhalf(nodes.size());
-			for (Node n : nodes) {
-				expr.addTerm(model.x(n.index(),color), 1);
-			} expr.addTerm(model.w(color), -alpha);
-			
-			int basej = graph.P() - alpha;
-			
-			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
-				for (Node n : graph.getNodes()) {
-					for (int j = basej; j < model.getColorCount(); j++) {
-						expr.addTerm(model.x(n.index(),j), 1);
-					}
-				} expr.addTerm(model.w(basej), -1);
-			}
-			
-			add(CutFamily.Hole, expr, LeqtZero, name);
-			
-		} catch (Exception ex) {
-			System.err.println("Could not generate hole cut: " + ex.getMessage());
-		}
+		int alpha = IntUtils.floorhalf(nodes.size());
+		addIndependentSet(nodes, color, alpha, CutFamily.Hole);
 	}
 
 	@Override
-	public void addGPrimeHole(List<pcp.entities.simple.Node> nodes, int color) {
-		try {
-			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("HOLE[%1$d]", color);
-			int alpha = IntUtils.floorhalf(nodes.size());
-			for (pcp.entities.simple.Node sn : nodes) {
-				for (Node n : graph.getNodes(sn)) {
-					expr.addTerm(model.x(n.index(),color), 1);
-				}
-			} expr.addTerm(model.w(color), -alpha);
-			
-			int basej = graph.P() - alpha;
-			
-			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
-				for (Node n : graph.getNodes()) {
-					for (int j = basej; j < model.getColorCount(); j++) {
-						expr.addTerm(model.x(n.index(),j), 1);
-					}
-				} expr.addTerm(model.w(basej), -1);
+	public void addGPrimeHole(List<pcp.entities.simple.Node> snodes, int color) {
+		int alpha = IntUtils.floorhalf(snodes.size());
+		List<Node> nodes = new ArrayList<Node>();
+		for (pcp.entities.simple.Node sn : snodes) {
+			for (Node n : graph.getNodes(sn)) {
+				nodes.add(n);
 			}
-			
-			add(CutFamily.GPHole, expr, LeqtZero, name);
-			
-		} catch (Exception ex) {
-			System.err.println("Could not generate hole cut: " + ex.getMessage());
 		}
+		
+		addIndependentSet(nodes, color, alpha, CutFamily.GPHole);
 	}
 
 	
