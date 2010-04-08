@@ -6,16 +6,16 @@ import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.definitions.Constants;
-import pcp.definitions.Cuts;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
+import pcp.solver.cuts.CutFamily;
 import pcp.utils.DataUtils;
 import pcp.utils.IntUtils;
 import props.Settings;
 
-public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
+public class ComponentHolesCuts implements Constants, IBoundedAlgorithm {
 
 	static boolean enabled = Settings.get().getBoolean("holes.enabled");
 	
@@ -78,7 +78,7 @@ public class ComponentHolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 	}
 
 	@Override
-	public Integer getIdentifier() {
-		return Holes;
+	public CutFamily getIdentifier() {
+		return CutFamily.Hole;
 	}
 }

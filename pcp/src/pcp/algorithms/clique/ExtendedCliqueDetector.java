@@ -10,12 +10,12 @@ import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.common.iterate.ArrayIterator;
 import pcp.definitions.Constants;
-import pcp.definitions.Cuts;
 import pcp.definitions.Sorting;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
+import pcp.solver.cuts.CutFamily;
 import pcp.utils.GraphUtils;
 import props.Settings;
 
@@ -23,7 +23,7 @@ import props.Settings;
  * Detects subsets of nodes in a graph in which every pair is either adjacent 
  * or in the same partition. 
  */
-public abstract class ExtendedCliqueDetector implements Cuts, Constants, Sorting, IBoundedAlgorithm {
+public abstract class ExtendedCliqueDetector implements Constants, Sorting, IBoundedAlgorithm {
 	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
 	
 	protected SortedPartitionedGraph graph;
@@ -100,8 +100,8 @@ public abstract class ExtendedCliqueDetector implements Cuts, Constants, Sorting
 	}
 
 	@Override
-	public Integer getIdentifier() {
-		return Cliques;
+	public CutFamily getIdentifier() {
+		return CutFamily.Clique;
 	}
 
 	protected LinkedList<Node> retainFrom(LinkedList<Node> nodes, Node[] nodesToRetain, Node currentNode) {

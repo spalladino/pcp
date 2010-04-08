@@ -3,6 +3,7 @@ package pcp.algorithms.coloring;
 import exceptions.AlgorithmException;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
+import pcp.solver.cuts.CutFamily;
 
 
 public class FixedColoring extends ColoringAlgorithm {
@@ -30,7 +31,7 @@ public class FixedColoring extends ColoringAlgorithm {
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public CutFamily getIdentifier() {
 		return null;
 	}
 	

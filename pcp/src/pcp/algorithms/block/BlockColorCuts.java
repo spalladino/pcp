@@ -3,14 +3,14 @@ package pcp.algorithms.block;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.definitions.Constants;
-import pcp.definitions.Cuts;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
+import pcp.solver.cuts.CutFamily;
 import props.Settings;
 
-public class BlockColorCuts implements Constants, Cuts, IBoundedAlgorithm {
+public class BlockColorCuts implements Constants, IBoundedAlgorithm {
 
 	IAlgorithmSource provider;
 	PartitionedGraph graph;
@@ -61,8 +61,8 @@ public class BlockColorCuts implements Constants, Cuts, IBoundedAlgorithm {
 	}
 
 	@Override
-	public Integer getIdentifier() {
-		return BlockColor;
+	public CutFamily getIdentifier() {
+		return CutFamily.BlockColor;
 	}
 	
 }

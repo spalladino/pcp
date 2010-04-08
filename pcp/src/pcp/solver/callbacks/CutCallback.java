@@ -16,7 +16,6 @@ import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.algorithms.holes.HolesCuts;
 import pcp.definitions.Comparisons;
 import pcp.definitions.Constants;
-import pcp.definitions.Cuts;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
@@ -24,13 +23,14 @@ import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
 import pcp.metrics.CutsMetrics;
 import pcp.model.Model;
+import pcp.solver.cuts.CutFamily;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
 import pcp.utils.IntUtils;
 import props.Settings;
 
 
-public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cuts, ICutBuilder, IModelData {
+public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData {
 
 	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
@@ -97,6 +97,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 	}
 
 	private void addIndependentSet(List<Node> nodes, int color, int clazz) {
+		// TODO: Abstract ineq
 		try {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("HOLE[%1$d]", color);
@@ -115,7 +116,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 				} expr.addTerm(model.w(basej), -1);
 			}
 			
-			add(Holes, expr, LeqtZero, name);
+			add(null, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate hole cut: " + ex.getMessage());
@@ -125,7 +126,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 	@Override
 	public void addPath(List<Node> path, int color) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 				} expr.addTerm(model.w(basej), -1);
 			}
 			
-			add(Holes, expr, LeqtZero, name);
+			add(CutFamily.Hole, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate hole cut: " + ex.getMessage());
@@ -177,7 +177,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 				} expr.addTerm(model.w(basej), -1);
 			}
 			
-			add(GPrimeHoles, expr, LeqtZero, name);
+			add(CutFamily.GPHole, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate hole cut: " + ex.getMessage());
@@ -195,7 +195,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 			}
 			
 			expr.addTerm(model.w(color), -1);
-			add(Cliques, expr, LeqtZero, name);
+			add(CutFamily.Clique, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate clique cut: " + ex.getMessage());
@@ -214,7 +214,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 				}  
 			} expr.addTerm(model.w(color), -1);
 			
-			add(BlockColor, expr, LeqtZero, name);
+			add(CutFamily.BlockColor, expr, LeqtZero, name);
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate block color cut: " + ex.getMessage());
@@ -250,7 +250,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 		return metrics;
 	}
 
-	private void add(int cut, IloNumExpr expr, boolean cmp, String name) throws IloException {
+	private void add(CutFamily cut, IloNumExpr expr, boolean cmp, String name) throws IloException {
 		IloRange range = cmp == LeqtZero 
 			? modeler.le(expr, 0, name)
 			: modeler.ge(expr, 0, name);
@@ -263,7 +263,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, Cu
 			if (checkViolatedCut && ((val > -Constants.Epsilon && cmp == GeqtZero) || (val < Constants.Epsilon && cmp == LeqtZero))) {
 				throw new IloException("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
 			} else if (logIneqs) {
-				System.out.println(Names[cut] + ": " + range.toString() + " VAL=" + val );
+				System.out.println(cut.toString() + ": " + range.toString() + " VAL=" + val );
 			}
 		}
 	}

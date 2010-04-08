@@ -7,6 +7,7 @@ import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
+import pcp.solver.cuts.CutFamily;
 import props.Settings;
 
 public abstract class DSaturPartitionColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
@@ -79,7 +80,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public CutFamily getIdentifier() {
 		return null;
 	}
 	

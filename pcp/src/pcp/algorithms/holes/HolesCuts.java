@@ -6,16 +6,16 @@ import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.definitions.Constants;
-import pcp.definitions.Cuts;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.Node;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
+import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
 import props.Settings;
 
-public class HolesCuts implements Constants, Cuts, IBoundedAlgorithm {
+public class HolesCuts implements Constants, IBoundedAlgorithm {
 
 	static boolean enabled = Settings.get().getBoolean("gprime.holes.enabled");
 	
@@ -90,7 +90,7 @@ public class HolesCuts implements Constants, Cuts, IBoundedAlgorithm {
 	}
 
 	@Override
-	public Integer getIdentifier() {
-		return GPrimeHoles;
+	public CutFamily getIdentifier() {
+		return CutFamily.GPHole;
 	}
 }

@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import pcp.algorithms.bounding.IBoundedAlgorithm;
-import pcp.definitions.Cuts;
 import pcp.solver.cuts.CutFamily;
 import props.Settings;
 
-public class CutsMetrics implements Cuts {
+public class CutsMetrics {
 
 	static boolean logIterMetrics = Settings.get().getBoolean("logging.iterMetrics");
 	static boolean logTotalMetrics = Settings.get().getBoolean("logging.totalMetrics");
@@ -37,13 +36,13 @@ public class CutsMetrics implements Cuts {
 		ticks.addLast(new long[CutFamily.values().length]);
 	}
 	
-	public void added(int cut, IloRange range) {
-		this.counts.getLast()[cut]++;
+	public void added(CutFamily cut, IloRange range) {
+		this.counts.getLast()[cut.ordinal()]++;
 	}
 	
 	public void iterTime(IBoundedAlgorithm... algorithms) {
 		for (IBoundedAlgorithm algorithm : algorithms) {
-			this.iterTime(algorithm.getIdentifier(), algorithm.getBounder().getMillis());
+			this.iterTime(algorithm.getIdentifier().ordinal(), algorithm.getBounder().getMillis());
 		}
 	}
 	
@@ -53,16 +52,16 @@ public class CutsMetrics implements Cuts {
 	
 	public void printIter() {
 		System.out.println("Iteration " + iter);
-		for (int i = 0; i < Cuts; i++) {
+		for (int i = 0; i < CutFamily.count(); i++) {
 			int c = this.counts.getLast()[i];
 			long t = this.ticks.getLast()[i];
-			System.out.println(" Generated " + c + " cuts in " + t + " ms of " + Names[i]);
+			System.out.println(" Generated " + c + " cuts in " + t + " ms of " + CutFamily.values()[i].toString());
 		}
 	}
 	
 	public void printTotal() {
 		System.out.println("Total iterations " + (iter + 1));
-		for (int i = 0; i < Cuts; i++) {
+		for (int i = 0; i < CutFamily.count(); i++) {
 			int totalc = 0;
 			long totalt = 0;
 			for (int[] c : counts) {
@@ -71,7 +70,7 @@ public class CutsMetrics implements Cuts {
 			for (long[] t : ticks) {
 				totalt += t[i];
 			}
-			System.out.println(" Generated a total of " + totalc + " cuts in " + totalt + " ms of " + Names[i]);
+			System.out.println(" Generated a total of " + totalc + " cuts in " + totalt + " ms of " + CutFamily.getName(i));
 		}
 	}
 	
@@ -84,9 +83,9 @@ public class CutsMetrics implements Cuts {
 		data.put("cuts", cuts = new HashMap<String, Object>());
 		data.put("cuts.niters", getNIters());
 		
-		for (int i = 0; i < Cuts; i++) {
+		for (int i = 0; i < CutFamily.count(); i++) {
 			Map<String, Object> cut;
-			cuts.put(Names[i], cut = new HashMap<String, Object>());
+			cuts.put(CutFamily.getName(i), cut = new HashMap<String, Object>());
 			
 			int totalc = 0;
 			long totalt = 0;

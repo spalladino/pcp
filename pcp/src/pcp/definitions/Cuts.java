@@ -1,5 +1,5 @@
 package pcp.definitions;
-
+/*
 public interface Cuts {
 
 	public static final int Holes = 0;
@@ -12,3 +12,4 @@ public interface Cuts {
 	public static final int Cuts = 4;
 	
 }
+*/
