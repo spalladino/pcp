@@ -12,6 +12,5 @@ if __name__ == '__main__':
             series= ["branch.prios.enabled",
                      "branch.prios.psize", 
                      "branch.prios.psadjacent", 
-                     "branch.prios.colorindex",
-                     "branch.prios.reversecolorindex"])
+                     "branch.prios.colorindex"])
     #p.graph("graph.nodes", metrics.cutcount("Holes"), series= ["holes.maxPerColor"])

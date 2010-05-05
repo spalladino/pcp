@@ -5,12 +5,6 @@
   branch.prios.reversecolorindex: 0, run.filename: rand30.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
   branch.prios.reversecolorindex: 1, run.filename: rand30.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 2, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand30.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 0, run.filename: rand30.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 1, run.filename: rand30.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
   branch.prios.reversecolorindex: 0, run.filename: rand30.in}
 - {branch.prios.enabled: 'false', run.filename: rand35.in}
@@ -20,56 +14,14 @@
   branch.prios.reversecolorindex: 0, run.filename: rand35.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
   branch.prios.reversecolorindex: 1, run.filename: rand35.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 2, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand35.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 0, run.filename: rand35.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 1, run.filename: rand35.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
   branch.prios.reversecolorindex: 0, run.filename: rand35.in}
-- {branch.prios.enabled: 'false', run.filename: rand37.in}
+- {branch.prios.enabled: 'false', run.filename: rand36.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand37.in}
+  branch.prios.reversecolorindex: 0, run.filename: rand36.in}
 - {branch.prios.colorindex: 1, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand37.in}
+  branch.prios.reversecolorindex: 0, run.filename: rand36.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand37.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 2, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand37.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 0, run.filename: rand37.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 1, run.filename: rand37.in}
+  branch.prios.reversecolorindex: 1, run.filename: rand36.in}
 - {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
-  branch.prios.reversecolorindex: 0, run.filename: rand37.in}
-- {branch.prios.enabled: 'false', run.filename: rand39.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand39.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand39.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand39.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 2, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand39.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 0, run.filename: rand39.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 1, run.filename: rand39.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
-  branch.prios.reversecolorindex: 0, run.filename: rand39.in}
-- {branch.prios.enabled: 'false', run.filename: rand40.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand40.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand40.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand40.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 2, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand40.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 0, run.filename: rand40.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 0, branch.prios.psize: 1000,
-  branch.prios.reversecolorindex: 1, run.filename: rand40.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
-  branch.prios.reversecolorindex: 0, run.filename: rand40.in}
+  branch.prios.reversecolorindex: 0, run.filename: rand36.in}
