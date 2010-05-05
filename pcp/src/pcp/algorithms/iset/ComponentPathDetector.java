@@ -1,6 +1,7 @@
 package pcp.algorithms.iset;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -31,7 +32,6 @@ public class ComponentPathDetector extends Algorithm  {
 	int[][] edgeVisits;
 	boolean[] inPath;
 	List<Node> path;
-	List<Node> hole;
 	List<Double> sumToEnd;
 	
 	double sumX;
@@ -41,6 +41,7 @@ public class ComponentPathDetector extends Algorithm  {
 	Node end;
 	Node next;
 	
+	int holeStart;
 	boolean foundHole;
 	boolean foundPath;
 	
@@ -90,10 +91,10 @@ public class ComponentPathDetector extends Algorithm  {
 		
 		inPath = new boolean[model.getNodeCount()];
 		path = new ArrayList<Node>(20);
-
+		sumToEnd = new LinkedList<Double>();
+		
 		foundHole = false;
 		foundPath = false;
-		hole = null;
 		
 		// Pick a starting node for the path
 		end = start = node;
@@ -101,14 +102,11 @@ public class ComponentPathDetector extends Algorithm  {
 		addToStart(start, null);
 		
 		// Add nodes to the path
-		while (next != null && !foundHole && !foundPath) {
-			addToEnd(next, end);
-			advance();
-		}
+		while (advance() && !foundHole && !foundPath);
 		
 		// If it ended because it found a hole or path then report it
 		if (foundHole) {
-			provider.getCutBuilder().addHole(hole, color);
+			provider.getCutBuilder().addHole(buildHole(holeStart) , color);
 		} else if (foundPath) {
 			provider.getCutBuilder().addPath(path, color);
 		}
@@ -154,25 +152,32 @@ public class ComponentPathDetector extends Algorithm  {
 			
 	}
 
-	private void advance() {
+	private boolean advance() {
 		foundPath = isCurrentPathBroken();
 		if (!foundPath) {
-			Node prevend = end;
-			end = next;
-			next = pickFollowing(end, prevend);
+			next = pickFollowing(end);
+			if (next != null) {
+				addToEnd(next, end);
+			} end = next;
+			return end != null;
 		}
+		
+		return false;
 	}
 	
-	private Node pickFollowing(Node current, Node excluded) {
+	private Node pickFollowing(Node current) {
+		if (current == null) return null;
+		
 		// Iterate over all neighbours but excluded and those enough visited
 		for (Node n : current.getNeighbours()) {
-			if (excluded == null || !excluded.equals(n)) {
-				if ((nodeVisits[n.index()] > maxNodeVisits) || (edgeVisits[current.index()][n.index()] > maxEdgeVisits)) {
-					
+			// if (excluded == null || !excluded.equals(n)){
+			if (!inPath[n.index()]) {
+				if ((nodeVisits[n.index()] < maxNodeVisits) && (edgeVisits[current.index()][n.index()] < maxEdgeVisits)) {
 					boolean valid = true;
 					
 					// Iterate backwards so a chord can generate a valid hole
 					ListIterator<Node> it = path.listIterator(path.size());
+					it.previous();
 					while (it.hasPrevious()) {
 						int index = it.previousIndex();
 						Node p = it.previous();
@@ -187,7 +192,7 @@ public class ComponentPathDetector extends Algorithm  {
 						// in which case we return it successfully so the path is closed
 						if (graph.areAdjacent(n, p)) {
 							if (holeWouldBeBroken(n, p, index)) {
-								buildHole(n, index);
+								holeStart = index;
 								foundHole = true;
 								return n;
 							} else {
@@ -208,9 +213,8 @@ public class ComponentPathDetector extends Algorithm  {
 		return null;
 	}
 
-	private void buildHole(Node n, int index) {
-		hole = path.subList(index, path.size() - 1);
-		hole.add(n);
+	private List<Node> buildHole(int index) {
+		return path.subList(index, path.size());
 	}
 
 	/**

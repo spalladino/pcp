@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/Tesis/Workspace/pcp.lib/lib/snakeyaml-1.6.jar"/>
+	<classpathentry kind="lib" path="D:/Tesis/Workspace/pcp.lib/lib/snakeyaml-1.6-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Tesis/Workspace/pcp.lib/lib/snakeyaml-1.6-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
