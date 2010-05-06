@@ -170,7 +170,7 @@ public class DSaturFixture {
 	protected ColoringAlgorithm createDSatur() {
 		 DSaturColoring saturColoring = new DSaturColoring(graph);
 		 saturColoring.setClique(clique);
-		 saturColoring.setBounder(bounder);
+		 saturColoring.withBounder(bounder);
 		 return saturColoring;
 	}
 

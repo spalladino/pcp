@@ -4,6 +4,7 @@ public enum Kind {
 
 	BranchAndBound,
 	Cplex,
-	PcpCutAndBranch
+	PcpCutAndBranch, 
+	PcpBranchAndCut
 	
 }

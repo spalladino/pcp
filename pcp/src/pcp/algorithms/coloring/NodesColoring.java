@@ -1,6 +1,5 @@
 package pcp.algorithms.coloring;
 
-import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
 import pcp.solver.cuts.CutFamily;
 import exceptions.AlgorithmException;
@@ -20,11 +19,6 @@ public class NodesColoring extends ColoringAlgorithm {
 	@Override
 	public Integer getColor(int node) throws AlgorithmException {
 		return node;
-	}
-
-	@Override
-	public IAlgorithmBounder getBounder() {
-		return null;
 	}
 
 	@Override

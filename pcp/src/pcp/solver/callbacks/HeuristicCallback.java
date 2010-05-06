@@ -38,7 +38,6 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		
 		// Full run using current information if enough depth
 		if (countNodesEqualOne() >= (model.getGraph().P() - pruningRemaining)) {
-			if (log) System.out.println("Using brute force at " + countNodesEqualOne() + " nodes set");
 			setSolution();
 		}
 	}
@@ -48,10 +47,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			ColoringAlgorithm coloring = Factory.get().coloring(coloringStrategy, graph);
 			fillColoring(coloring);
 			createSolution(coloring);
-			
-			if (log) {
-				System.out.println("Coloring: " + coloring.getChi());
-			}
+			if (log) System.out.println("Using brute force at " + countNodesEqualOne() + " nodes set returning coloring of " + coloring.getChi());
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
 		}

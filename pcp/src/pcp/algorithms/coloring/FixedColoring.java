@@ -1,7 +1,6 @@
 package pcp.algorithms.coloring;
 
 import exceptions.AlgorithmException;
-import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.IPartitionedGraph;
 import pcp.solver.cuts.CutFamily;
 
@@ -23,11 +22,6 @@ public class FixedColoring extends ColoringAlgorithm {
 	@Override
 	public Integer getColor(int node) throws AlgorithmException {
 		throw new AlgorithmException("Color assignment for fixed coloring not implemented.");
-	}
-
-	@Override
-	public IAlgorithmBounder getBounder() {
-		return null;
 	}
 
 	@Override

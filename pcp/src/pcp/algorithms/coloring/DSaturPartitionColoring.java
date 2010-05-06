@@ -2,7 +2,6 @@ package pcp.algorithms.coloring;
 
 import java.util.Arrays;
 
-import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.bounding.IterationsBounder;
 import pcp.entities.IPartitionedGraph;
@@ -49,8 +48,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected int fixed = 0;
 	protected int maxInitialColor = -1;
 	
-	protected IAlgorithmBounder bounder;
-	
 	private boolean hasrun = false;
 	
 	public DSaturPartitionColoring(IPartitionedGraph graph) {
@@ -60,11 +57,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	public DSaturPartitionColoring(IPartitionedGraph graph, String settings) {
 		super(graph);
 		initFields(settings);
-	}
-	
-	@Override
-	public IAlgorithmBounder getBounder() {
-		return this.bounder;
 	}
 	
 	@Override
@@ -124,8 +116,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			return (currentColor);
 		}
 		
-		if (!bounder.check()) { 
-			// TODO: CHECK
+		if (!bounder.iter()) { 
 			return bestColoring;
 		}
 
@@ -142,6 +133,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 				newVal = color(i + 1, currentColor);
 				if (newVal < bestColoring) {
 					if (log) System.out.println("Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
+					bounder.improved();
 					bestColoring = newVal;
 					bestColorClass = colorClass.clone();
 				}
@@ -162,6 +154,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			newVal = color(i + 1, currentColor + 1);
 			if (newVal < bestColoring) {
 				if (log) System.out.println("Attempt succesful. Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
+				bounder.improved();
 				bestColoring = newVal;
 				bestColorClass = colorClass.clone();
 			}

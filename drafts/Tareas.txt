@@ -9,6 +9,7 @@ Heuristicas
 Cplex
 -----
 
+- Encontrar manera de acotar tiempo de corrida
 - Ver CPXGetCallbackNodeLb para ver bounds, si hay un setter (no usar en favor de heur inicial)
 
 Desigualdades

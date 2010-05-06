@@ -14,7 +14,7 @@ import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
 import pcp.model.parsing.DimacsParser;
 import pcp.solver.BranchAndBoundSolver;
-import pcp.solver.PcpCutAndBranchSolver;
+import pcp.solver.CustomBranchAndCutSolver;
 import pcp.solver.Solver;
 
 
@@ -60,7 +60,9 @@ public class Factory implements IFactory {
 				case BranchAndBound:
 					return new BranchAndBoundSolver();
 				case PcpCutAndBranch:
-					return new PcpCutAndBranchSolver();
+					return new CustomBranchAndCutSolver(true);
+				case PcpBranchAndCut:
+					return new CustomBranchAndCutSolver(false);
 				default:
 					return new Solver();
 			}

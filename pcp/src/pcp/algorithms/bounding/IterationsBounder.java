@@ -3,7 +3,7 @@ package pcp.algorithms.bounding;
 import props.Settings;
 
 
-public class IterationsBounder extends TimeBounder implements IAlgorithmIterationsBounder {
+public class IterationsBounder extends TimeBounder implements IAlgorithmBounder {
 	
 	int iters;
 	int itersWithoutImprovement; 

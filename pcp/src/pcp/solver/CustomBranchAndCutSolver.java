@@ -7,14 +7,14 @@ import ilog.concert.IloException;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
 
-public class PcpCutAndBranchSolver extends BranchAndBoundSolver {
+public class CustomBranchAndCutSolver extends BranchAndBoundSolver {
 
 	CutCallback callback;
 
-	public PcpCutAndBranchSolver() throws IloException {
+	public CustomBranchAndCutSolver(boolean cutsOnRootOnly) throws IloException {
 		super();
 		
-		this.callback = new CutCallback(cplex);
+		this.callback = new CutCallback(cplex, cutsOnRootOnly);
 		cplex.use(callback);
 	}
 	

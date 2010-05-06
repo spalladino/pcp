@@ -39,7 +39,8 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	
-	static int maxIters = Settings.get().getInteger("iterations.max");
+	static int maxItersRoot = Settings.get().getInteger("iterations.root.max");
+	static int maxItersNodes = Settings.get().getInteger("iterations.nodes.max");
 	
 	Iteration iteration;
 	Model model;
@@ -52,30 +53,42 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	HolesCuts gholes;
 	
 	CutsMetrics metrics;
+	int iters = 0;
+	int lastNnodes = -1;
+	int maxIters;
 	boolean doneFirst = false;
+	boolean onlyRoot;
 	
 	double[] ws;
 	double[][] xs;
 	
-	public CutCallback(IloMPModeler modeler) {
+	public CutCallback(IloMPModeler modeler, boolean onlyRoot) {
 		this.modeler = modeler;
 		this.metrics = new CutsMetrics();
+		this.onlyRoot = onlyRoot;
+		this.maxIters = onlyRoot ? maxItersRoot : maxItersNodes;
 	}
 	
 	@Override
 	protected void main() throws IloException {
 		// Only cuts on initial node
-		if (super.getNnodes() > 0) {
+		if (onlyRoot && super.getNnodes() > 0) {
 			if (doneFirst) return;
 			metrics.printTotal();
 			doneFirst = true;
 			return;
 		}
+
+		// Reset iter count on node change
+		if (!onlyRoot && lastNnodes != super.getNnodes()) {
+			lastNnodes = super.getNnodes();
+			iters = 0;
+		}
 		
-		// Run a maximum number of times on the root
-		metrics.newIter();
-		if (maxIters > 0 && maxIters < metrics.getNIters()) {
-			System.out.println("Finishing callback execution after " + metrics.getNIters() + " iterations.");
+		// Run a maximum number of times on each node
+		metrics.newIter(); iters++;
+		if (maxIters > 0 && maxIters < iters) {
+			if (onlyRoot) System.out.println("Finishing callback execution after " + iters + " iterations.");
 			return;
 		}
 		

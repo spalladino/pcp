@@ -4,6 +4,7 @@ import ilog.concert.IloException;
 import ilog.cplex.IloCplex.IntParam;
 import pcp.algorithms.Preprocessor;
 import pcp.algorithms.Verifier;
+import pcp.algorithms.bounding.IterationsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.partitioned.PartitionedGraph;
@@ -46,7 +47,7 @@ public class Main {
 		try {
 			long initial = System.currentTimeMillis();
 			graph = new Preprocessor(builder).preprocess().getGraph();
-			coloring = Factory.get().coloring(strategy.getColoring(), graph);
+			coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
 			model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring); 
 			solver.setModel(model);
 			long elapsed = System.currentTimeMillis() - initial;

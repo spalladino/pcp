@@ -51,10 +51,19 @@ public class TimeBounder implements IAlgorithmBounder {
 	public long getMaxTime() {
 		return maxTime;
 	}
-
 	
 	public void setMaxTime(long maxTime) {
 		this.maxTime = maxTime;
+	}
+
+	@Override
+	public boolean improved() {
+		return check();
+	}
+
+	@Override
+	public boolean iter() {
+		return check();
 	}
 	
 	

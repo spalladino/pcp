@@ -5,7 +5,6 @@ import java.util.List;
 import exceptions.AlgorithmException;
 
 import pcp.algorithms.bounding.TimeBounder;
-import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
@@ -14,7 +13,6 @@ import pcp.solver.cuts.CutFamily;
 
 public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
 	
-	private IAlgorithmBounder bounder;
 	private List<Node> clique;
 	
 	private int[] order;
@@ -29,7 +27,7 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	private int lowerBound;
 	private int solution;
 	
-	private boolean hasrun = false;
+	boolean hasrun = false;
 	
 	public DSaturColoring(IPartitionedGraph graph) {
 		super(graph);
@@ -41,20 +39,10 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	}
 	
 	@Override
-	public IAlgorithmBounder getBounder() {
-		return this.bounder;
-	}
-	
-	@Override
 	public void useColor(int node, int color) throws AlgorithmException {
 		throw new AlgorithmException("Painting nodes not supported for " + this.getClass().getName());
 	}
 
-	
-	public void setBounder(IAlgorithmBounder bounder) {
-		this.bounder = bounder;
-		this.hasrun = false;
-	}
 	
 	@Override
 	public Integer getChi() throws AlgorithmException {
