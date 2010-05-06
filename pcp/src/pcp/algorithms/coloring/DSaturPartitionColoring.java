@@ -1,15 +1,17 @@
 package pcp.algorithms.coloring;
 
-import exceptions.AlgorithmException;
-import pcp.algorithms.bounding.Bounder;
+import java.util.Arrays;
+
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
+import pcp.algorithms.bounding.IterationsBounder;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
 import props.Settings;
+import exceptions.AlgorithmException;
 
 public abstract class DSaturPartitionColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
 	
@@ -52,18 +54,17 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	private boolean hasrun = false;
 	
 	public DSaturPartitionColoring(IPartitionedGraph graph) {
+		this(graph, null);
+	}
+	
+	public DSaturPartitionColoring(IPartitionedGraph graph, String settings) {
 		super(graph);
-		initFields();
+		initFields(settings);
 	}
 	
 	@Override
 	public IAlgorithmBounder getBounder() {
 		return this.bounder;
-	}
-	
-	public void setBounder(IAlgorithmBounder bounder) {
-		this.bounder = bounder;
-		this.hasrun = false;
 	}
 	
 	@Override
@@ -113,14 +114,18 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			if (log) System.out.println("Fathoming coloring for node " + i + " with color " + currentColor);
 			return (currentColor);
 		}
+		
 		if (bestColoring <= lowerBound) {
 			return (bestColoring);
 		}
+		
 		if (i >= graph.P()) {
 			if (log) System.out.println("Leaf with current coloring " + currentColor);
 			return (currentColor);
 		}
+		
 		if (!bounder.check()) { 
+			// TODO: CHECK
 			return bestColoring;
 		}
 
@@ -132,18 +137,13 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 
 		// Execute DFS
 		for (j = 1; j <= currentColor; j++) {
-			if (!bounder.check()) {
-				return bestColoring;
-			}
 			if (colorAdj[place][j] == 0) {
 				assignColor(place, j);
 				newVal = color(i + 1, currentColor);
 				if (newVal < bestColoring) {
+					if (log) System.out.println("Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
 					bestColoring = newVal;
 					bestColorClass = colorClass.clone();
-					if (!bounder.check()) {
-						return bestColoring;
-					}
 				}
 				
 				removeColor(place, j);
@@ -154,17 +154,16 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 				}
 			}
 		}
+		
 		if (currentColor + 1 < bestColoring) {
 			if (log) System.out.println("Attempting to color " + place + " with color next to " + currentColor);
 			assignColor(place, currentColor + 1);
 			
 			newVal = color(i + 1, currentColor + 1);
 			if (newVal < bestColoring) {
+				if (log) System.out.println("Attempt succesful. Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
 				bestColoring = newVal;
 				bestColorClass = colorClass.clone();
-				if (!bounder.check()) {
-					return bestColoring;
-				}
 			}
 			
 			removeColor(place, currentColor + 1);
@@ -248,10 +247,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		colorAdj[node1][0]++;
 	}
 	
-	protected void initFields()  {
-		if (bounder == null) {
-			bounder = new Bounder();
-		} 
+	protected void initFields(String settings)  {
+		this.bounder = new IterationsBounder(settings);
 		
 		this.bestColoring = graph.P() + 1;
 		this.colorAdj = new int[graph.N()][graph.P()];

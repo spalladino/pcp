@@ -1,6 +1,6 @@
 package pcp.solver.data;
 
-import pcp.algorithms.bounding.Bounder;
+import pcp.algorithms.bounding.TimeBounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.common.sorting.SortedProvider;
 import pcp.interfaces.IAlgorithmSource;
@@ -18,7 +18,7 @@ public class Iteration implements IAlgorithmSource {
 	ICutBuilder cutBuilder;
 	
 	Model model;
-	Bounder bounder;
+	TimeBounder bounder;
 	SortedProvider sorted;
 	
 	
@@ -31,7 +31,7 @@ public class Iteration implements IAlgorithmSource {
 		this.data = data;
 		this.cutBuilder = cutBuilder;
 		this.sorted = new SortedProvider(model, data);
-		this.bounder = new Bounder();
+		this.bounder = new TimeBounder();
 		this.currentAlgorithm = algorithm;
 	}
 	

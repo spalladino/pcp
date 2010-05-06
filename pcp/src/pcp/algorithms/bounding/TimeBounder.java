@@ -1,13 +1,25 @@
 package pcp.algorithms.bounding;
 
+import props.Settings;
 
-public class Bounder implements IAlgorithmBounder {
+
+public class TimeBounder implements IAlgorithmBounder {
 
 	private boolean stopped = false;
 	private long init = 0;
 	private long end = 0;
 	
 	private long maxTime = Long.MAX_VALUE;
+	
+	public TimeBounder() {
+	}
+	
+	public TimeBounder(String settingsPrefix) {
+		if (settingsPrefix == null) return;
+		Settings s = Settings.get();
+		if (s.hasSetting(settingsPrefix + ".maxTime")) 
+			maxTime = s.getInteger(settingsPrefix + ".maxTime");
+	}
 	
 	@Override
 	public boolean check() {

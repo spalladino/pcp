@@ -4,7 +4,7 @@ import java.util.List;
 
 import exceptions.AlgorithmException;
 
-import pcp.algorithms.bounding.Bounder;
+import pcp.algorithms.bounding.TimeBounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
@@ -219,7 +219,7 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 		}
 		
 		if (bounder == null) {
-			bounder = new Bounder();
+			bounder = new TimeBounder();
 		} bounder.start();
 		
 		this.bestColoring = graph.N() + 1;

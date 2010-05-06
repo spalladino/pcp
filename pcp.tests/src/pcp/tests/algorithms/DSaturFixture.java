@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import exceptions.AlgorithmException;
 
-import pcp.algorithms.bounding.Bounder;
+import pcp.algorithms.bounding.TimeBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.coloring.DSaturColoring;
@@ -26,7 +26,7 @@ public class DSaturFixture {
 	protected List<Node> clique;
 	
 	protected IPartitionedGraph graph;
-	protected Bounder bounder;
+	protected TimeBounder bounder;
 	
 	@BeforeClass
 	public static void load() throws Exception {
@@ -37,7 +37,7 @@ public class DSaturFixture {
 	public void setup() {
 		builder = new PartitionedGraphBuilder("test");
 		clique = new ArrayList<Node>();
-		bounder = new Bounder();
+		bounder = new TimeBounder();
 	}
 	
 	@Test

@@ -4,6 +4,7 @@ import exceptions.AlgorithmException;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
+import props.Settings;
 
 public class DSaturPartitionColoringHardestPartition extends
 		DSaturPartitionColoring {
@@ -11,6 +12,10 @@ public class DSaturPartitionColoringHardestPartition extends
 	int[] partitionColorCount;
 	int[][] partitionColorAdj;
 
+	private static final int colorCountWeight = Settings.get().getInteger("dsatur.partition.weight.colorCount");
+	private static final int sizeWeight = Settings.get().getInteger("dsatur.partition.weight.size");
+	private static final int uncoloredWeight = Settings.get().getInteger("dsatur.partition.weight.uncolored");
+	
 	public DSaturPartitionColoringHardestPartition(IPartitionedGraph graph) {
 		super(graph);
 	}
@@ -19,23 +24,23 @@ public class DSaturPartitionColoringHardestPartition extends
 	protected Node getNextNode() {
 		
 		// Pick the hardest partition first
-		int hardest = -1;
+		Partition hardest = null;
+		int hardestWeight = -1;
 		
 		for (Partition p : graph.getPartitions()) {
 			if (handled[p.index()]) continue;
 			
-			// Hardest partition has greatest color count, among those, lowest count of unpainted neighbours
-			if (hardest == -1 
-				|| partitionColorCount[p.index()] > partitionColorCount[hardest]
-                || (partitionColorCount[p.index()] == partitionColorCount[hardest] 
-                  && partitionColorAdj[p.index()][0] < partitionColorAdj[hardest][0])) {
-				hardest = p.index();
+			// Hardest partition has greatest weight calculated according to config params
+			int partitionWeight = getWeight(p);
+			if (partitionWeight > hardestWeight) { 
+				hardest = p;
+				hardestWeight = partitionWeight;
 			}
 		}
 		
 		// Once chosen, pick the easiest node
 		Node minNode = null;
-		for (Node n : graph.getPartitions()[hardest].getNodes()) {
+		for (Node n : graph.getPartitions()[hardest.index()].getNodes()) {
 			if (minNode == null 
 				|| colorCount[n.index()] < colorCount[minNode.index()] 
                 || (colorCount[n.index()] == colorCount[minNode.index()] 
@@ -47,9 +52,15 @@ public class DSaturPartitionColoringHardestPartition extends
 		return minNode;
 	}
 
+	private int getWeight(Partition p) {
+		return (partitionColorCount[p.index()] * colorCountWeight) +
+			(graph.P() - partitionColorAdj[p.index()][0]) * uncoloredWeight +
+			(p.getNodes().length * sizeWeight);
+	}
+
 	@Override
-	protected void initFields() {
-		super.initFields();
+	protected void initFields(String settings) {
+		super.initFields(settings);
 		partitionColorCount = new int[graph.P()];
 		partitionColorAdj = new int[graph.P()][graph.P()];
 

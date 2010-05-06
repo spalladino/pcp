@@ -41,8 +41,8 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 	}
 	
 	@Override
-	protected void initFields()  {
-		super.initFields();
+	protected void initFields(String settings)  {
+		super.initFields(settings);
 	}
 	
 }

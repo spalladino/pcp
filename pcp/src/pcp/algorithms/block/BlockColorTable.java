@@ -1,6 +1,6 @@
 package pcp.algorithms.block;
 
-import pcp.algorithms.bounding.Bounder;
+import pcp.algorithms.bounding.TimeBounder;
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
@@ -23,7 +23,7 @@ public class BlockColorTable {
 	
 	public BlockColorTable(Model model, IAlgorithmBounder bounder) {
 		this.model = model;
-		this.bounder = bounder == null ? new Bounder() : bounder;
+		this.bounder = bounder == null ? new TimeBounder() : bounder;
 	}
 	
 	public BlockColorTable makeCuts(ICutBuilder requestor) {

@@ -42,6 +42,10 @@ public class Settings {
 		return Enum.valueOf(clazz, getProperty(prop));
 	}
 	
+	public boolean hasSetting(String name) {
+		return props.containsKey(name);
+	}
+	
 	public String getPath(String folder, String filename) {
 		return getProperty(folder) + getProperty(filename);
 	}
