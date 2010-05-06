@@ -1813,5 +1813,17 @@ public class BaseMPModeler implements IloMPModeler {
 		throw new UnsupportedOperationException();
 		
 	}
+
+	// Cplex 12.1
+	public IloNumExpr piecewiseLinear(IloNumExpr arg0, double arg1, double[] arg2, double[] arg3, double arg4)
+			throws IloException {
+		return null;
+	}
+
+	// Cplex 12.1
+	public IloNumExpr piecewiseLinear(IloNumExpr arg0, double arg1, double[] arg2, int arg3, int arg4, double[] arg5,
+			int arg6, double arg7) throws IloException {
+		return null;
+	}
 	
 }
