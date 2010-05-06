@@ -22,7 +22,9 @@ public class ComponentPathDetector extends Algorithm  {
 	static double minColorValue = Settings.get().getDouble("path.minColorValue");
 	static int maxColorCount = Settings.get().getInteger("path.maxColorCount");
 	static int maxNodeVisits = Settings.get().getInteger("path.maxNodeVisits");
+	static int maxInitialNodeVisits = Settings.get().getInteger("path.maxInitialNodeVisits");
 	static int maxEdgeVisits = Settings.get().getInteger("path.maxEdgeVisits");
+	static int minSize = Settings.get().getInteger("path.minSize");
 	static double minInitialNodeValue = Settings.get().getDouble("path.minInitialNodeValue");
 	
 	IPartitionedGraph graph;
@@ -54,7 +56,6 @@ public class ComponentPathDetector extends Algorithm  {
 		if (!enabled) return this;
 		bounder.start();
 		
-		// init here?
 		inPath = new boolean[model.getNodeCount()];
 		path = null;
 		
@@ -73,7 +74,8 @@ public class ComponentPathDetector extends Algorithm  {
 			this.edgeVisits = new int[model.getNodeCount()][model.getNodeCount()];
 			
 			for (Node node : graph.getNodes()) {
-				if (data.x(node.index(), color) < minInitialNodeValue) {
+				if ((data.x(node.index(), color) < minInitialNodeValue) ||
+					(nodeVisits[node.index()] >= maxInitialNodeVisits)) {
 					break;
 				} 
 				
@@ -105,16 +107,18 @@ public class ComponentPathDetector extends Algorithm  {
 		while (advance() && !foundHole && !foundPath);
 		
 		// If it ended because it found a hole or path then report it
-		if (foundHole) {
+		if (foundHole && (path.size() - holeStart >= minSize)) {
+			markNodesAsVisited();
 			provider.getCutBuilder().addHole(buildHole(holeStart) , color);
-		} else if (foundPath) {
+		} else if (foundPath && (path.size() >= minSize)) {
+			markNodesAsVisited();
 			provider.getCutBuilder().addPath(path, color);
 		}
 	}
 		 
 	private boolean isCurrentPathBroken() {
-		double alpha = IntUtils.floorhalf(path.size());
-		return sumX < valW * alpha;
+		double alpha = IntUtils.ceilhalf(path.size());
+		return path.size() >= minSize &&  sumX > valW * alpha;
 	}
 
 	private void addToStart(Node n, Node endpoint) {
@@ -132,12 +136,6 @@ public class ComponentPathDetector extends Algorithm  {
 		double nval = data.x(n.index(), color);
 		sumX += nval;
 		
-		nodeVisits[n.index()]++;
-		if (endpoint != null) {
-			edgeVisits[n.index()][endpoint.index()]++;
-			edgeVisits[endpoint.index()][n.index()]++;
-		}
-		
 		if (isEnd) {
 			path.add(n);
 			ListIterator<Double> it = sumToEnd.listIterator();
@@ -150,6 +148,19 @@ public class ComponentPathDetector extends Algorithm  {
 			sumToEnd.add(0, sumX);
 		}
 			
+	}
+	
+	private void markNodesAsVisited() {
+		Node previous = null;
+		for (Node n : this.path) {
+			nodeVisits[n.index()]++;
+			if (previous != null) {
+				edgeVisits[n.index()][previous.index()]++;
+				edgeVisits[previous.index()][n.index()]++;
+			} previous = n;
+		}
+		
+		
 	}
 
 	private boolean advance() {

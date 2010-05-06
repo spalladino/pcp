@@ -38,7 +38,7 @@ public class ComponentPathDetectorFixture {
 	}
 	
 	@Test
-	public void testFoo() throws AlgorithmException {
+	public void testK5() throws AlgorithmException {
 		
 		builder.createNodes(5);
 		
@@ -49,12 +49,38 @@ public class ComponentPathDetectorFixture {
 		builder.addEdge(4, 0);
 	
 		colors = 3;
-		data = new StubModelData(5).withWs(0.8, 1.0, 0.7)
-			.withXs(0, 0.4, 0.5, 0.4)
+		data = new StubModelData(5).withWs(0.8, 1.0, 0.9)
+			.withXs(0, 0.4, 0.5, 0.2)
+			.withXs(1, 0.4, 0.5, 0.2)
+			.withXs(2, 0.4, 0.5, 0.2)
+			.withXs(3, 0.4, 0.5, 0.2)
+			.withXs(4, 0.4, 0.5, 0.2);
+	
+		test();
+	}
+	
+	@Test
+	public void testK5PlusPath() throws AlgorithmException {
+		
+		builder.createNodes(7);
+		
+		builder.addEdge(0, 1)
+			.addEdge(1, 2)
+			.addEdge(2, 3)
+			.addEdge(3, 4)
+			.addEdge(4, 0)
+			.addEdge(4, 5)
+			.addEdge(5, 6);
+	
+		colors = 3;
+		data = new StubModelData(7).withWs(0.8, 1.0, 1.0)
+			.withXs(0, 0.4, 0.5, 0.2)
 			.withXs(1, 0.4, 0.5, 0.4)
-			.withXs(2, 0.4, 0.5, 0.4)
-			.withXs(3, 0.4, 0.5, 0.4)
-			.withXs(4, 0.4, 0.5, 0.4);
+			.withXs(2, 0.4, 0.5, 0.9)
+			.withXs(3, 0.4, 0.5, 0.1)
+			.withXs(4, 0.4, 0.5, 0.1)
+			.withXs(5, 0.4, 0.5, 0.9)
+			.withXs(6, 0.4, 0.5, 0.6);
 	
 		test();
 	}
@@ -65,7 +91,7 @@ public class ComponentPathDetectorFixture {
 		Iteration iter = new Iteration(model, data, cuts);
 		ComponentPathDetector detector = new ComponentPathDetector(iter);
 		detector.run();
-		
+		System.out.println("\nGraph with " + graph.N() + " nodes and " + graph.E() + " edges.");
 		cuts.printIneqs(System.out);
 	}
 	
