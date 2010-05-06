@@ -38,7 +38,7 @@ public class ComponentPathDetectorFixture {
 	}
 	
 	@Test
-	public void testFoo() throws AlgorithmException {
+	public void testK5WithHole() throws AlgorithmException {
 		
 		builder.createNodes(5);
 		
@@ -49,12 +49,12 @@ public class ComponentPathDetectorFixture {
 		builder.addEdge(4, 0);
 	
 		colors = 3;
-		data = new StubModelData(5).withWs(0.8, 1.0, 0.7)
-			.withXs(0, 0.4, 0.5, 0.4)
-			.withXs(1, 0.4, 0.5, 0.4)
-			.withXs(2, 0.4, 0.5, 0.4)
-			.withXs(3, 0.4, 0.5, 0.4)
-			.withXs(4, 0.4, 0.5, 0.4);
+		data = new StubModelData(5).withWs(0.8, 1.0, 0.9)
+			.withXs(0, 0.4, 0.5, 0.2)
+			.withXs(1, 0.4, 0.5, 0.2)
+			.withXs(2, 0.4, 0.5, 0.2)
+			.withXs(3, 0.4, 0.5, 0.2)
+			.withXs(4, 0.4, 0.5, 0.2);
 	
 		test();
 	}

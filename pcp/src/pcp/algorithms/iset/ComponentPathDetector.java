@@ -54,7 +54,6 @@ public class ComponentPathDetector extends Algorithm  {
 		if (!enabled) return this;
 		bounder.start();
 		
-		// init here?
 		inPath = new boolean[model.getNodeCount()];
 		path = null;
 		
