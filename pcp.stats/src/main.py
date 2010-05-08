@@ -9,8 +9,6 @@ if __name__ == '__main__':
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
     #p.graph("graph.nodes", "solution.time", series= ["holes.maxPerColor"], fname= "nodestime.png")
     p.graph("graph.nodes", "solution.time", 
-            series= ["branch.prios.enabled",
-                     "branch.prios.psize", 
-                     "branch.prios.psadjacent", 
-                     "branch.prios.colorindex"])
+            series= ["strategy.coloring",
+                    "dsatur.colorAdjPartitions" ])
     #p.graph("graph.nodes", metrics.cutcount("Holes"), series= ["holes.maxPerColor"])

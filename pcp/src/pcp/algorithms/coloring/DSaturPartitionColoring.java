@@ -138,6 +138,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 					bestColorClass = colorClass.clone();
 				}
 				
+				if (log) System.out.println("Uncoloring " + place + " which had " + j);
 				removeColor(place, j);
 				if (bestColoring <= currentColor) {
 					if (log) System.out.println("Current coloring " + currentColor + " over best " + bestColoring);
@@ -159,6 +160,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 				bestColorClass = colorClass.clone();
 			}
 			
+			if (log) System.out.println("Uncoloring " + place + " which had " + currentColor + 1);
 			removeColor(place, currentColor + 1);
 		}
 		

@@ -1,27 +1,4 @@
-- {branch.prios.enabled: 'false', run.filename: rand30.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand30.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand30.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand30.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
-  branch.prios.reversecolorindex: 0, run.filename: rand30.in}
-- {branch.prios.enabled: 'false', run.filename: rand35.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand35.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand35.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand35.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
-  branch.prios.reversecolorindex: 0, run.filename: rand35.in}
-- {branch.prios.enabled: 'false', run.filename: rand36.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand36.in}
-- {branch.prios.colorindex: 1, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 0, run.filename: rand36.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 1000, branch.prios.psize: 0,
-  branch.prios.reversecolorindex: 1, run.filename: rand36.in}
-- {branch.prios.colorindex: 0, branch.prios.psadjacent: 5, branch.prios.psize: 1,
-  branch.prios.reversecolorindex: 0, run.filename: rand36.in}
+- {dsatur.colorAdjPartitions: 'true', run.filename: rand10.in, strategy.coloring: DSaturEasyNode}
+- {dsatur.colorAdjPartitions: 'false', run.filename: rand10.in, strategy.coloring: DSaturEasyNode}
+- {dsatur.colorAdjPartitions: 'true', run.filename: rand10.in, strategy.coloring: DSaturHardPartition}
+- {dsatur.colorAdjPartitions: 'false', run.filename: rand10.in, strategy.coloring: DSaturHardPartition}

@@ -2,6 +2,7 @@ package pcp;
 
 import pcp.algorithms.Preprocessor;
 import pcp.algorithms.coloring.ColoringAlgorithm;
+import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
@@ -18,7 +19,7 @@ public class Heuristic {
 			filename = args[0];
 			runId = args[1];
 		} else {
-			filename = Settings.get().getString("run.filename");
+			filename = Settings.get().getPath("run.folder", "run.filename");
 			runId = Settings.get().getString("run.id");
 		}
 		
@@ -30,13 +31,24 @@ public class Heuristic {
 		IFactory factory = Factory.get();
 		BuilderStrategy strategy = BuilderStrategy.fromSettings();
 
-		PartitionedGraphBuilder builder = factory.getGraphBuilder(filename);
-		PartitionedGraph graph = new Preprocessor(builder).preprocess().getGraph();
-		ColoringAlgorithm solver = factory.coloring(strategy.getColoring(), graph);
+		for (PartitionedGraphBuilder builder : factory.getGraphBuilders(filename, Integer.MAX_VALUE)) {
+			ExecutionData data = new ExecutionData().withProblemSettings();
+			data.withOriginalInputData(builder);
 			
-		System.out.println("Using solver type " + solver.getClass().getName());
-		System.out.println("Chromatic number is " + solver.getChi());
-		System.out.println("Solved in " + solver.getBounder().getMillis() + " ticks");
+			PartitionedGraph graph = new Preprocessor(builder).preprocess().getGraph();
+			new ConnectivityChecker(graph).raiseIfUnconnected();
+			
+			data.withInputData(graph);
+			ColoringAlgorithm solver = factory.coloring(strategy.getColoring(), graph);
+		
+			System.out.println("Using solver type " + solver.getClass().getName());
+			System.out.println("Chromatic number is " + solver.getChi());
+			System.out.println("Solved in " + solver.getBounder().getMillis() + " ticks");
+			System.out.println();
+			
+			data.getData().put("solution.time", solver.getBounder().getMillis());
+			data.dump();
+		}
 	}
 
 

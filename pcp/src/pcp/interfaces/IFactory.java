@@ -13,4 +13,6 @@ public interface IFactory {
 	public PartitionedGraphBuilder getGraphBuilder(String filename) throws Exception;
 
 	public Solver createSolver(pcp.solver.Kind kind) throws Exception;
+
+	public PartitionedGraphBuilder[] getGraphBuilders(String filename, int max) throws Exception;
 }

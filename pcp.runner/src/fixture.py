@@ -20,10 +20,11 @@ def newrun(runs, files=[]):
 
 class Fixture:
 
-    def __init__(self):
+    def __init__(self, main=mainclass):
         self.runs = []
         self.runid = None
         self.successful = 0
+        self.main = main
     
     def withprop(self, dict, key, value):
         d = dict.copy()
@@ -52,7 +53,7 @@ class Fixture:
         for run in self.runs:
             runner = Runner()
             print "Running id " + str(self.runid) + " iter " + str(self.successful + 1) + " of " + str(len(self.runs))
-            out, err = runner.run(self.runid, self.successful + 1, run)
+            out, err = runner.run(self.runid, self.successful + 1, self.main, run)
             self.add_success_status()
             time.sleep(sleeptime)
             gc.collect()

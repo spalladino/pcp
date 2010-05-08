@@ -6,3 +6,4 @@ fullrunsdir = basedir + runsdir
 
 # Settings
 sleeptime = 1
+mainclass = 'pcp.Heuristic'

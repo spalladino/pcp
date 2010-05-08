@@ -22,6 +22,10 @@ public class ConnectivityChecker {
 		this.visited[0] = true;
 	}
 	
+	public void raiseIfUnconnected() throws Exception {
+		if (!check()) throw new Exception("Graph is unconnected");
+	}
+	
 	public boolean check() {
 		
 		while(!this.pending.isEmpty()) {

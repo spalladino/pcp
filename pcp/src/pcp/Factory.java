@@ -2,6 +2,8 @@ package pcp;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ConfigurationColoring;
@@ -51,6 +53,28 @@ public class Factory implements IFactory {
 			System.err.println("Error reading graph from " + filename);
 			System.err.println(e.getMessage());
 			throw e;
+		}
+	}
+	
+	public PartitionedGraphBuilder[] getGraphBuilders(String filename, int max) throws Exception {
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new FileReader(filename));
+			DimacsParser parser = new DimacsParser();
+			List<PartitionedGraphBuilder> builders = new ArrayList<PartitionedGraphBuilder>();
+			
+			PartitionedGraphBuilder builder = null;
+			while (null != (builder = parser.parse(in)) && max --> 0) {
+				builders.add(builder);
+			} return (PartitionedGraphBuilder[]) builders.toArray(new PartitionedGraphBuilder[builders.size()]);
+		} catch (Exception e) {
+			System.err.println("Error reading graphs from " + filename);
+			System.err.println(e.getMessage());
+			throw e;
+		} finally {
+			if (in != null) { 
+				in.close();
+			}
 		}
 	}
 	

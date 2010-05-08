@@ -108,13 +108,13 @@ public class DimacsParser implements IGraphParser {
 		
 		do {
 			problemLine = reader.readLine();
-		} while (problemLine != null && problemLine.charAt(0) == 'c');
+		} while (problemLine != null && (problemLine.trim().length() < 1 || problemLine.charAt(0) == 'c'));
 		
 		if (problemLine == null) return null;
 		
 		String[] tokens = problemLine.split(" ");
 		if (tokens.length !=5 || !tokens[0].equalsIgnoreCase("p")) {
-			throw new DimacsParseException("Expecting problem line with parameters: name nodecount edgecount partitioncount");
+			throw new DimacsParseException("Expecting problem line with parameters: name nodecount edgecount partitioncount: " + problemLine);
 		}
 		
 		return tokens;
