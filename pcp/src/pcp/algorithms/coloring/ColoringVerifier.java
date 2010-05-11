@@ -4,6 +4,7 @@ import exceptions.AlgorithmException;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 
 
 public class ColoringVerifier {
@@ -17,16 +18,28 @@ public class ColoringVerifier {
 	public void verify(ColoringAlgorithm coloring) throws AlgorithmException {
 		int chi = coloring.getChi();
 		
+		for (Partition p : graph.getPartitions()) {
+			int colored = 0;
+			for (Node n : p.getNodes()) {
+				if (coloring.getColor(n.index()) != null) {
+					colored++;
+				}
+			}
+			if (colored == 0) {
+				throw new AlgorithmException("Partition " + p + " is not colored");
+			}
+		}
+		
 		for (Edge edge : graph.getEdges()) {
-			int c1 = coloring.getColor(edge.index1());
-			int c2 = coloring.getColor(edge.index2());
-			if (c1 == c2) throw new AlgorithmException("Both nodes in edge " + edge + " have color " + c1);
+			Integer c1 = coloring.getColor(edge.index1());
+			Integer c2 = coloring.getColor(edge.index2());
+			if (c1 != null && c1 == c2) throw new AlgorithmException("Both nodes in edge " + edge + " have color " + c1);
 		}
 		
 		int max = 0;
 		for (Node node : graph.getNodes()) {
-			int c = coloring.getColor(node.index());
-			if (max < c) max = c;
+			Integer c = coloring.getColor(node.index());
+			if (c != null && max < c) max = c;
 		}
 		
 		if (max + 1 != chi) {

@@ -16,6 +16,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	protected static final boolean log = Settings.get().getBoolean("logging.coloring");
 	protected static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");
+	protected static final int logNodeBase = 1;
 	
 	// ColorClass[i] = color assigned to node i
 	protected int[] colorClass;
@@ -80,7 +81,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	@Override
 	public Integer getColor(int node) throws AlgorithmException {
 		if (!hasrun) getChi();
-		return bestColorClass[node] - 1;
+		if (bestColorClass[node] == 0) return null;
+		else return bestColorClass[node] - 1;
 	}
 	
 	@Override
@@ -103,7 +105,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		int place, partition;
 		
 		if (currentColor >= bestColoring) {
-			if (log) System.out.println("Fathoming coloring for node " + i + " with color " + currentColor);
+			if (log) System.out.println("Fathoming coloring for node " + (i + logNodeBase) + " with color " + currentColor);
 			return (currentColor);
 		}
 		
@@ -138,7 +140,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 					bestColorClass = colorClass.clone();
 				}
 				
-				if (log) System.out.println("Uncoloring " + place + " which had " + j);
+				if (log) System.out.println("Uncoloring " + (place + logNodeBase) + " which had " + j);
 				removeColor(place, j);
 				if (bestColoring <= currentColor) {
 					if (log) System.out.println("Current coloring " + currentColor + " over best " + bestColoring);
@@ -149,7 +151,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		}
 		
 		if (currentColor + 1 < bestColoring) {
-			if (log) System.out.println("Attempting to color " + place + " with color next to " + currentColor);
+			if (log) System.out.println("Attempting to color " + (place + logNodeBase) + " with color next to " + currentColor);
 			assignColor(place, currentColor + 1);
 			
 			newVal = color(i + 1, currentColor + 1);
@@ -160,7 +162,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 				bestColorClass = colorClass.clone();
 			}
 			
-			if (log) System.out.println("Uncoloring " + place + " which had " + currentColor + 1);
+			if (log) System.out.println("Uncoloring " + (place + logNodeBase) + " which had " + currentColor + 1);
 			removeColor(place, currentColor + 1);
 		}
 		
@@ -185,8 +187,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		assignColor(graph.getNode(node), color);
 	}
 	
-	private void assignColor(Node node, int color) throws AlgorithmException {
-		if (log) System.out.println("Painting node " + node + " with color " + color);
+	protected void assignColor(Node node, int color) throws AlgorithmException {
+		if (log) System.out.println("Painting node " + (node.index() + logNodeBase) + " with color " + color);
 		colorClass[node.index()] = color;
 		coloredNodeInPartition[node.getPartition().index()] = node;
 		
@@ -199,8 +201,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		removeColor(graph.getNodes()[node], color);
 	}
 	
-	private void removeColor(Node node, int color) throws AlgorithmException {
-		if (log) System.out.println("Unpainting node " + node + " of color " + color);
+	protected void removeColor(Node node, int color) throws AlgorithmException {
+		if (log) System.out.println("Unpainting node " + (node.index() + logNodeBase) + " of color " + color);
 		colorClass[node.index()] = 0;
 		coloredNodeInPartition[node.getPartition().index()] = null;
 		
