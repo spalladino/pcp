@@ -24,7 +24,7 @@ public class TimeBounder implements IAlgorithmBounder {
 	@Override
 	public boolean check() {
 		return !stopped
-			&& end - init < maxTime;
+			&& System.currentTimeMillis() - init < maxTime;
 	}
 
 	@Override

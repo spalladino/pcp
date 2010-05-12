@@ -21,5 +21,5 @@ class Runner:
         
         command = "java %s -classpath %s %s" % (defs, path, main)
         
-        p = Popen(command, stdout=PIPE, cwd=basedir+"/pcp")
+        p = Popen(command, stdout=(PIPE if printoutput else None), cwd=basedir+"/pcp")
         return p.communicate()

@@ -1,7 +1,9 @@
 package pcp;
 
 import pcp.algorithms.Preprocessor;
+import pcp.algorithms.bounding.IterationsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
+import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
@@ -39,14 +41,19 @@ public class Heuristic {
 			new ConnectivityChecker(graph).raiseIfUnconnected();
 			
 			data.withInputData(graph);
-			ColoringAlgorithm solver = factory.coloring(strategy.getColoring(), graph);
+			ColoringAlgorithm solver = factory
+				.coloring(strategy.getColoring(), graph)
+				.withBounder(new IterationsBounder("coloring.initial"));
 		
+			new ColoringVerifier(graph).verify(solver);
+			
 			System.out.println("Using solver type " + solver.getClass().getName());
 			System.out.println("Chromatic number is " + solver.getChi());
 			System.out.println("Solved in " + solver.getBounder().getMillis() + " ticks");
 			System.out.println();
 			
 			data.getData().put("solution.time", solver.getBounder().getMillis());
+			data.getData().put("solution.chi", solver.getChi());
 			data.dump();
 		}
 	}

@@ -8,7 +8,8 @@ if __name__ == '__main__':
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
     #p.graph("graph.nodes", "solution.time", series= ["holes.maxPerColor"], fname= "nodestime.png")
-    p.graph("graph.nodes", "solution.time", 
+    p.graph("graph.nodes", "solution.chi", 
             series= ["strategy.coloring",
-                    "dsatur.colorAdjPartitions" ])
+                     "dsatur.colorAdjPartitions",
+                     ])
     #p.graph("graph.nodes", metrics.cutcount("Holes"), series= ["holes.maxPerColor"])

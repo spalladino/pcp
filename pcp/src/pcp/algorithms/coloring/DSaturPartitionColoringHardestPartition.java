@@ -54,7 +54,7 @@ public class DSaturPartitionColoringHardestPartition extends
 
 	private int getWeight(Partition p) {
 		return (partitionColorCount[p.index()] * colorCountWeight) +
-			(graph.P() - partitionColorAdj[p.index()][0]) * uncoloredWeight +
+			((colorAdjPartitions ? graph.P() : graph.N()) - partitionColorAdj[p.index()][0]) * uncoloredWeight +
 			(p.getNodes().length * sizeWeight);
 	}
 
