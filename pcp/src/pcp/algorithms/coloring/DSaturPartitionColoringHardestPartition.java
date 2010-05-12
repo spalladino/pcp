@@ -75,41 +75,48 @@ public class DSaturPartitionColoringHardestPartition extends
 		}
 	}
 
+	
 	@Override
-	protected void increaseColorCount(Node n1, int color)
-			throws AlgorithmException {
-		super.increaseColorCount(n1, color);
-		int part1 = n1.getPartition().index();
+	protected void assignColor(Node node, int color) throws AlgorithmException {
+		super.assignColor(node, color);
+		
+		for (Partition p : graph.getNeighbourPartitions(node)) {
+			int part1 = p.index();
+			
+			if (partitionColorAdj[part1][color] == 0) {
+				partitionColorCount[part1]++;
+			}
 
-		if (partitionColorAdj[part1][color] == 0) {
-			partitionColorCount[part1]++;
-		}
+			partitionColorAdj[part1][color]++;
+			partitionColorAdj[part1][0]--;
 
-		partitionColorAdj[part1][color]++;
-		partitionColorAdj[part1][0]--;
-
-		if (partitionColorAdj[part1][0] < 0) {
-			throw new AlgorithmException("Error on dsatur assign color");
+			if (partitionColorAdj[part1][0] < 0) {
+				throw new AlgorithmException("Error on dsatur assign color");
+			}
 		}
 	}
 
 	@Override
-	protected void decreaseColorCount(Node n1, int color)
-			throws AlgorithmException {
-		super.decreaseColorCount(n1, color);
-		int part1 = n1.getPartition().index();
+	protected void removeColor(Node node, int color) throws AlgorithmException {
+		super.removeColor(node, color);
+		
+		for (Partition p : graph.getNeighbourPartitions(node)) {
+			int part1 = p.index();
 
-		partitionColorAdj[part1][color]--;
+			partitionColorAdj[part1][color]--;
 
-		if (partitionColorAdj[part1][color] == 0) {
-			partitionColorCount[part1]--;
+			if (partitionColorAdj[part1][color] == 0) {
+				partitionColorCount[part1]--;
+			}
+
+			if (partitionColorAdj[part1][color] < 0) {
+				throw new AlgorithmException("Error on dsatur remove color");
+			}
+
+			partitionColorAdj[part1][0]++;
+
 		}
 
-		if (partitionColorAdj[part1][color] < 0) {
-			throw new AlgorithmException("Error on dsatur remove color");
-		}
-
-		partitionColorAdj[part1][0]++;
 	}
 
 }

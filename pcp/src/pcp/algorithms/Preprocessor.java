@@ -19,6 +19,8 @@ import pcp.entities.partitioned.PartitionedGraphBuilder;
  */
 public class Preprocessor {
 	
+	private final static boolean log = false;
+	
 	private PartitionedGraphBuilder builder;
 	private int partitionsCheckCount;
 	
@@ -91,6 +93,7 @@ public class Preprocessor {
 			
 			// If there is an empty node, remove this partition
 			if (neighbours.length == 0) {
+				if (log) System.out.println("Removing partition " + partition);
 				builder.removePartition(partition);
 				break;
 			}
@@ -101,6 +104,7 @@ public class Preprocessor {
 			for (Node[] existing : neighbourhoods) {
 				if (containsSorted(neighbours, existing)) {
 					markNeighbourPartitionsForCheck(neighbours);
+					if (log) System.out.println("Removing node " + node);
 					builder.removeNode(node);
 					removed = true;
 					break;
@@ -133,6 +137,7 @@ public class Preprocessor {
 		for (Node node : builder.getNodes()) {
 			if (builder.hasNode(node.index())) {
 				if (node.getNeighbours().length == 0) {
+					if (log) System.out.println("Removing partition " + node.getPartition());
 					builder.removePartition(node.getPartition());
 				}
 			}
@@ -142,6 +147,7 @@ public class Preprocessor {
 	private void removeEdgesWithinPartition() {
 		for (Edge edge : builder.getEdges()) {
 			if (edge.getNode1().getPartition().index() == edge.getNode2().getPartition().index()) {
+				if (log) System.out.println("Removing edge " + edge);
 				builder.removeEdge(edge);
 			}
 		}
