@@ -21,4 +21,7 @@ if __name__ == '__main__':
             
             files = [ 
                         "rand10.in",
+                        "rand11.in",
+                        "rand12.in",
+                        "rand13.in",
                     ])
