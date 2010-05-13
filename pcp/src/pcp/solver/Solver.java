@@ -3,7 +3,9 @@ package pcp.solver;
 import ilog.concert.IloException;
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;
+import ilog.cplex.IloCplex.BooleanParam;
 import ilog.cplex.IloCplex.CplexStatus;
+import ilog.cplex.IloCplex.DoubleParam;
 import ilog.cplex.IloCplex.IntParam;
 
 import java.util.Map;
@@ -22,11 +24,15 @@ import pcp.solver.data.AbstractSolutionData;
 import props.Settings;
 import exceptions.AlgorithmException;
 
-
+/**
+ * Base class for all solvers.
+ */
 public class Solver extends AbstractSolutionData {
 	
 	final static boolean useHeuristicCallback = Settings.get().getBoolean("solver.useHeuristicCallback");
 	final static boolean useBranchingCallback = Settings.get().getBoolean("solver.useBranchingCallback");
+	
+	final static double maxTime = Settings.get().getDouble("solver.maxTime");
 	
 	IloCplex cplex;
 	Model model;
@@ -36,13 +42,18 @@ public class Solver extends AbstractSolutionData {
 	
 	public Solver() throws IloException {
 		this.cplex = new IloCplex();
+		
+		if (maxTime > 0.0) { 
+			cplex.setParam(DoubleParam.TiLim, maxTime);
+		}
 	}
 	
 	public boolean solve() throws Exception {
 		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
+		
+		// Presolve, solve it and measure time
 		double start = cplex.getCplexTime();
-		setBranchingSettings();
 		beforeSolve();
 		solved = this.cplex.solve();
 		double end = cplex.getCplexTime();
@@ -50,9 +61,12 @@ public class Solver extends AbstractSolutionData {
 		
 		return solved;
 	}
+
+	protected void beforeSolve() throws IloException, AlgorithmException { }
 	
 	public void loadInitialSolution(pcp.algorithms.coloring.ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		cplex.setParam(IntParam.AdvInd, 1);
+		
 		int n = model.getNodeCount();
 		int c = model.getColorCount();
 		int chi = coloring.getChi();
@@ -96,6 +110,10 @@ public class Solver extends AbstractSolutionData {
 	
 	public boolean isSolved() {
 		return solved;
+	}
+	
+	public double getGap() throws IloException {
+		return cplex.getMIPRelativeGap();
 	}
 	
 	public int getChromaticNumber() throws IloException {
@@ -145,12 +163,15 @@ public class Solver extends AbstractSolutionData {
 	}
 	
 	public void fillExecutionData(Map<String,Object> data) throws Exception {
-		data.put("solution.chi", getChromaticNumber());
+		if (solved) {
+			data.put("solution.chi", getChromaticNumber());
+			data.put("solution.success", true);
+		} else {
+			data.put("solution.success", false);
+		}
+		
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());
-	}
-
-	protected void beforeSolve() throws IloException, AlgorithmException {
 	}
 
 	protected void setBranchingSettings() throws IloException {
@@ -166,6 +187,43 @@ public class Solver extends AbstractSolutionData {
 		InitialCutsGenerator generator = new InitialCutsGenerator(model);
 		InitialCutBuilder builder = new InitialCutBuilder(cplex, model);
 		generator.makeCuts(builder);
+	}
+	
+	protected void turnOffCplexPrimalHeur() throws IloException {
+		cplex.setParam(IntParam.HeurFreq, -1);
+	}
+	
+	
+	protected void turnOffCplexCuts() throws IloException {
+		cplex.setParam(BooleanParam.PreLinear, false);
+        
+        cplex.setParam(IntParam.Cliques, -1);
+        cplex.setParam(IntParam.Covers, -1);
+        cplex.setParam(IntParam.DisjCuts, -1);
+        cplex.setParam(IntParam.FlowCovers, -1);
+        cplex.setParam(IntParam.FlowPaths, -1);
+        cplex.setParam(IntParam.FracCuts, -1);
+        cplex.setParam(IntParam.GUBCovers, -1);
+        cplex.setParam(IntParam.ImplBd, -1);
+        cplex.setParam(IntParam.ZeroHalfCuts, -1);
+        cplex.setParam(IntParam.MIRCuts, -1);
+        
+	}
+	
+	protected void turnOffPreprocess() throws IloException {
+		cplex.setParam(IntParam.AggInd, 0);
+		cplex.setParam(IntParam.BndStrenInd, 0);
+		cplex.setParam(IntParam.CoeRedInd, 0);
+		cplex.setParam(BooleanParam.PreInd, false);
+        cplex.setParam(IntParam.PrePass, 0);
+        cplex.setParam(IntParam.RelaxPreInd, 0);
+		cplex.setParam(IntParam.Reduce, 0);
+        cplex.setParam(IntParam.RepeatPresolve, 0);
+        cplex.setParam(IntParam.PreDual, -1);
+	}
+	
+	protected void turnOffDynamicSearch() throws IloException {
+		cplex.setParam(IntParam.MIPSearch, 1);
 	}
 
 }

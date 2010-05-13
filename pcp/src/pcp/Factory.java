@@ -15,8 +15,10 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IFactory;
 import pcp.model.parsing.DimacsParser;
-import pcp.solver.BranchAndBoundSolver;
-import pcp.solver.CustomBranchAndCutSolver;
+import pcp.solver.CplexBranchAndBoundSolver;
+import pcp.solver.CplexBranchAndCutSolver;
+import pcp.solver.CplexDynamicSearchSolver;
+import pcp.solver.PcpBranchAndCutSolver;
 import pcp.solver.Solver;
 
 
@@ -81,14 +83,18 @@ public class Factory implements IFactory {
 	public Solver createSolver(pcp.solver.Kind kind) throws Exception {
 		try {
 			switch (kind) {
-				case BranchAndBound:
-					return new BranchAndBoundSolver();
+				case CplexBranchAndBound:
+					return new CplexBranchAndBoundSolver();
 				case PcpCutAndBranch:
-					return new CustomBranchAndCutSolver(true);
+					return new PcpBranchAndCutSolver(true);
 				case PcpBranchAndCut:
-					return new CustomBranchAndCutSolver(false);
+					return new PcpBranchAndCutSolver(false);
+				case CplexBranchAndCutSearch:
+					return new CplexBranchAndCutSolver();
+				case CplexDynamicSearch:
+					return new CplexDynamicSearchSolver();
 				default:
-					return new Solver();
+					throw new Exception("Invalid solver kind: " + kind);
 			}
 		} catch (Exception e) {
 			System.err.println("Error initializing solver");

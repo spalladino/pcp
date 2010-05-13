@@ -9,8 +9,9 @@ Heuristicas
 Cplex
 -----
 
-- Encontrar manera de acotar tiempo de corrida
+- Encontrar manera de acotar tiempo de corrida DONE
 - Ver CPXGetCallbackNodeLb para ver bounds, si hay un setter (no usar en favor de heur inicial)
+- Ver recorrida del arbol (DFS, best bound?)
 
 Desigualdades
 -------------

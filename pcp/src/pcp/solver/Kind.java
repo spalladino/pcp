@@ -2,8 +2,9 @@ package pcp.solver;
 
 public enum Kind {
 
-	BranchAndBound,
-	Cplex,
+	CplexBranchAndBound,
+	CplexDynamicSearch,
+	CplexBranchAndCutSearch,
 	PcpCutAndBranch, 
 	PcpBranchAndCut
 	

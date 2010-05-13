@@ -1,0 +1,6 @@
+- Ver CPXGetCallbackNodeLb para ver bounds, si hay un setter (no usar en favor de heur inicial)
+- Las restricciones con G' de IsaPau son menos estrictas pero cubren mas nodos por predicar sobre toda la particion (ver un C5=G'? las cuerdas q efecto tienen?)
+- Manejar restricciones duplicadas (neighbourhood)
+- Ver prop2 de isapau, se puede llevar a ciclos?
+- Multicolors
+- Test bed!

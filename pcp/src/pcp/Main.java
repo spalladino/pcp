@@ -78,6 +78,7 @@ public class Main {
 		
 		solver.getCplex().setParam(IntParam.MIPDisplay, 3);
 		solver.solve();
+		solver.fillExecutionData(execution.getData());
 		
 		if (solver.isSolved()) {
 			new Printer(solver).printSolution(false);
@@ -87,14 +88,11 @@ public class Main {
 				String solDir = Settings.get().getString("output.solutionDir");
 				solver.getCplex().writeSolution(solDir + "run." + runId + ".sol");
 			}
-			
 			System.out.println("Chromatic number is " + solver.getChromaticNumber());
-			System.out.println("Solved in " + solver.getTime() + " ticks");
-			execution.getData().put("solution.success", true);
-			solver.fillExecutionData(execution.getData());
+			System.out.println("Gap is " + solver.getGap());
+			System.out.println("Solved in " + solver.getTime() + " ticks");			
 		} else {
 			System.out.println("Solution failed");
-			execution.getData().put("solution.success", false);
 		}
 		
 		execution.dump();

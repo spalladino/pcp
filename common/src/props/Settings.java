@@ -63,6 +63,11 @@ public class Settings {
 		try { return Double.valueOf(getProperty(name)); }
 		catch (Exception ex) { return null; }
 	}
+
+	public Long getLong(String name) {
+		try { return Long.valueOf(getProperty(name)); }
+		catch (Exception ex) { return null; }
+	}
 	
 	public Integer getInteger(String name) {
 		try { return Integer.valueOf(getProperty(name)); }
