@@ -3,12 +3,14 @@ package pcp.solver.callbacks;
 import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloNumVar;
+import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import pcp.Factory;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
 import pcp.model.strategy.Coloring;
+import pcp.solver.heur.HeuristicMetrics;
 import props.Settings;
 import exceptions.AlgorithmException;
 
@@ -16,47 +18,65 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
 	static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
 	
-	static final boolean log = Settings.get().getBoolean("logging.callback.heuristic");
 	static final boolean enabled = Settings.get().getBoolean("callback.heuristic.enabled");
 	static final int pruningRemaining = Settings.get().getInteger("callback.pruning.remaining");
 	
 	IPartitionedGraph graph;
 	Model model;
 	
+	HeuristicMetrics metrics;
+	
 	public HeuristicCallback() {
-		
+		metrics = new HeuristicMetrics();
 	}
 	
 	public HeuristicCallback(Model model) {
+		this();
 		this.graph = model.getGraph();
 		this.model = model;
 	}
 	
+	public HeuristicMetrics getMetrics() {
+		return metrics;
+	}
+
 	@Override
 	protected void main() throws IloException {
 		if (!enabled) return;
 		
 		// Full run using current information if enough depth
-		if (countNodesEqualOne() >= (model.getGraph().P() - pruningRemaining)) {
-			setSolution();
+		int nodesSet = countNodesEqualOne();
+		if (nodesSet >= (model.getGraph().P() - pruningRemaining)) {
+			setSolution(nodesSet);
 		}
 	}
 	
-	private void setSolution() {
+	private void setSolution(int nodesSet) {
+		ColoringAlgorithm coloring = Factory.get().coloring(coloringStrategy, graph);
+		
 		try {
-			ColoringAlgorithm coloring = Factory.get().coloring(coloringStrategy, graph);
 			fillColoring(coloring);
+			setUpperBound(coloring);
 			createSolution(coloring);
-			if (log) System.out.println("Using brute force at " + countNodesEqualOne() + " nodes set returning coloring of " + coloring.getChi());
+			metrics.leafHeur(coloring, nodesSet);
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
+		}
+	}
+
+	private void setUpperBound(ColoringAlgorithm coloring) throws IloException {
+		double value = super.getIncumbentObjValue();
+		if (!Double.isNaN(value) && value != 0.0) {
+			coloring.setUpperBound((int) Math.ceil(value));
 		}
 	}
 
 	private void createSolution(ColoringAlgorithm coloring) throws AlgorithmException, IloException {
 		int n = model.getNodeCount();
 		int c = model.getColorCount();
-		int chi = coloring.getChi();
+		
+		Integer chi = coloring.getChi();
+		if (chi == null || !coloring.hasSolution()) return;
 		
 		double[] vals = new double[n * c + c];
 		IloNumVar[] vars = new IloNumVar[n * c + c];
@@ -70,7 +90,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			for (int i = 0; i < n; i++) {
 				// Set x variable value
 				vars[idx] = model.getXs()[i][j];
-				vals[idx] = coloring.getColor(i) == j ? 1 : 0;
+				vals[idx] = coloring.getIntColor(i) == j ? 1 : 0;
 				idx++;
 			}
 		}
@@ -82,7 +102,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		for (int j = 0; j < model.getColorCount(); j++) {
 			for (int i = 0; i < model.getNodeCount(); i++) {
 				IloIntVar x = model.x(i, j);
-				if (super.getLB(x) > 0.99) coloring.useColor(i, j);
+				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) {
+					coloring.useColor(i, j);
+				}
 			}
 		}
 	}
@@ -92,7 +114,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		for (int j = 0; j < model.getColorCount(); j++) {
 			for (int i = 0; i < model.getNodeCount(); i++) {
 				IloIntVar x = model.x(i, j);
-				if (super.getLB(x) > 0.99) count++;
+				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) count++;
 			}
 		}
 		return count;

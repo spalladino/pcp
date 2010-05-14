@@ -1,7 +1,7 @@
 /**
  * JavaCC file
  */
-	
+ 
 options {
 	JDK_VERSION = "1.6";
 	STATIC = false;

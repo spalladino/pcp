@@ -31,11 +31,15 @@ public class Solver extends AbstractSolutionData {
 	
 	final static boolean useHeuristicCallback = Settings.get().getBoolean("solver.useHeuristicCallback");
 	final static boolean useBranchingCallback = Settings.get().getBoolean("solver.useBranchingCallback");
+	final static boolean useCplexPrimal = Settings.get().getBoolean("solver.useCplexPrimalHeuristic");
 	
 	final static double maxTime = Settings.get().getDouble("solver.maxTime");
 	
 	IloCplex cplex;
 	Model model;
+	
+	HeuristicCallback heurCallback;
+	BranchCallback branchCallback;
 	
 	boolean solved;
 	double elapsed = 0.0;
@@ -45,6 +49,10 @@ public class Solver extends AbstractSolutionData {
 		
 		if (maxTime > 0.0) { 
 			cplex.setParam(DoubleParam.TiLim, maxTime);
+		}
+		
+		if (!useCplexPrimal) {
+			turnOffCplexPrimalHeur();
 		}
 	}
 	
@@ -83,7 +91,7 @@ public class Solver extends AbstractSolutionData {
 			for (int i = 0; i < n; i++) {
 				// Set x variable value
 				vars[idx] = model.getXs()[i][j];
-				vals[idx] = coloring.getColor(i) == j ? 1 : 0;
+				vals[idx] = coloring.getIntColor(i) == j ? 1 : 0;
 				idx++;
 			}
 		}
@@ -172,11 +180,22 @@ public class Solver extends AbstractSolutionData {
 		
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());
+		
+		if (heurCallback != null) {
+			heurCallback.getMetrics().fillData(data);
+		}
 	}
 
 	protected void setBranchingSettings() throws IloException {
-		if (useHeuristicCallback) cplex.use(new HeuristicCallback(model));
-		if (useBranchingCallback) cplex.use(new BranchCallback(model));
+		if (useBranchingCallback) {
+			System.out.println("Using custom branch callback");	
+			cplex.use(this.branchCallback = new BranchCallback(model));
+		}
+		
+		if (useHeuristicCallback) {
+			System.out.println("Using custom heuristic callback");
+			cplex.use(this.heurCallback = new HeuristicCallback(model));
+		}
 		
 		new BranchingPrioritizer(cplex, model).setPriorities();
 		new BranchingDirectioner(cplex, model).setDirection();

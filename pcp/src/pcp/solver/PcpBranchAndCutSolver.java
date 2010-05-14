@@ -18,8 +18,6 @@ public class PcpBranchAndCutSolver extends Solver {
 		turnOffDynamicSearch();
 		turnOffPreprocess();
 		
-		//turnOffCplexPrimalHeur();
-		
 		this.callback = new CutCallback(cplex, cutsOnRootOnly);
 		cplex.use(callback);
 	}

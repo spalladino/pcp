@@ -25,10 +25,19 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 		return this;
 	}
 	
+	public int getIntColor(int node) throws AlgorithmException {
+		Integer color = getColor(node);
+		if (color == null) return -1;
+		else return color;
+	}
+	
 	public abstract Integer getChi() throws AlgorithmException;
 	
 	public abstract Integer getColor(int node) throws AlgorithmException;
 	
 	public abstract void useColor(int node, int color) throws AlgorithmException;
 
+	public void setUpperBound(int bound) { }
+	
+	public boolean hasSolution() { return true; }
 }

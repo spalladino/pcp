@@ -1,4 +1,4 @@
-package pcp.metrics;
+package pcp.solver.cuts;
 
 import ilog.concert.IloRange;
 
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import pcp.algorithms.bounding.IBoundedAlgorithm;
-import pcp.solver.cuts.CutFamily;
 import props.Settings;
 
 public class CutsMetrics {

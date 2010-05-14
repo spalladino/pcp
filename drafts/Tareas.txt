@@ -1,17 +1,21 @@
 Heuristicas
 -----------
 
-- Ver criterios de desempate para DSatur
-- Ver trick y sewell
-- Jugar con el criterio de peor particion, ver tamaño de la particion en el desempate
-- Boundear dsatur para q sea realmente una heuristica
+- Ver criterios de desempate para DSatur DONE
+- Ver trick y sewell DONE
+- Jugar con el criterio de peor particion, ver tamaño de la particion en el desempate DONE
+- Boundear dsatur para q sea realmente una heuristica DONE
+- Convertir DSatur en primal
+- Usar lower bound del tree para la lower bound del dsatur corrido en las hojas
 
 Cplex
 -----
 
+- Es necesario chequear int feasibility para poder prunear tranquilo?
 - Encontrar manera de acotar tiempo de corrida DONE
 - Ver CPXGetCallbackNodeLb para ver bounds, si hay un setter (no usar en favor de heur inicial)
 - Ver recorrida del arbol (DFS, best bound?)
+- Callbacks para branching en lugar de prioritizer usando grado de saturacion (a la dsatur!)
 
 Desigualdades
 -------------

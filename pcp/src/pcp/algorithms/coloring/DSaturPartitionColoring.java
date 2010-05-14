@@ -73,6 +73,18 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		return solution;
 	}
 	
+	@Override
+	public void setUpperBound(int bound) {
+		if (bound <= this.bestColoring) {
+			this.bestColoring = bound;
+		}
+	}
+	
+	@Override
+	public boolean hasSolution() {
+		return bestColorClass != null;
+	}
+	
 	private int calculateLowerBound() {
 		if (fixed == 0) return 0;
 		return maxInitialColor;
@@ -110,7 +122,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		}
 		
 		if (bestColoring <= lowerBound) {
-			return (bestColoring);
+			return bestColoring;
 		}
 		
 		if (i >= graph.P()) {

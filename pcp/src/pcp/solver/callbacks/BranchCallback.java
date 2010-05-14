@@ -2,6 +2,7 @@ package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
+import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import pcp.model.Model;
 import props.Settings;
 
@@ -32,7 +33,9 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		for (int j = 0; j < model.getColorCount(); j++) {
 			for (int i = 0; i < model.getNodeCount(); i++) {
 				IloIntVar x = model.x(i,j);
-				if (super.getLB(x) > 0.99) count++;
+				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) {
+					count++;
+				}
 			}	
 		}
 		return count;
