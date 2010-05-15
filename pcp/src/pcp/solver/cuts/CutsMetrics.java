@@ -59,7 +59,7 @@ public class CutsMetrics {
 	}
 	
 	public void printTotal() {
-		System.out.println("Total iterations " + (iter + 1));
+		System.out.println("Cut callback total iterations " + (iter + 1));
 		for (int i = 0; i < CutFamily.count(); i++) {
 			int totalc = 0;
 			long totalt = 0;

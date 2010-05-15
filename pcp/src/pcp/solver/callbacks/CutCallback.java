@@ -74,7 +74,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		// Only cuts on initial node
 		if (onlyRoot && super.getNnodes() > 0) {
 			if (doneFirst) return;
-			metrics.printTotal();
 			doneFirst = true;
 			return;
 		}
@@ -86,11 +85,10 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// Run a maximum number of times on each node
-		metrics.newIter(); iters++;
-		if (maxIters > 0 && maxIters < iters) {
-			if (onlyRoot) System.out.println("Finishing callback execution after " + iters + " iterations.");
+		if (maxIters > 0 && maxIters <= iters) {
+			if (onlyRoot || logIterData) System.out.println("Ended cut callback execution after " + iters + " iterations.");
 			return;
-		}
+		} metrics.newIter(); iters++;
 		
 		setupIterationData();
 

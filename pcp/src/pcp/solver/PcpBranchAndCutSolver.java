@@ -11,7 +11,11 @@ public class PcpBranchAndCutSolver extends Solver {
 
 	CutCallback callback;
 
-	public PcpBranchAndCutSolver(boolean cutsOnRootOnly) throws IloException {
+	public PcpBranchAndCutSolver() throws IloException {
+		this(false);
+	}
+	
+	protected PcpBranchAndCutSolver(boolean cutsOnRootOnly) throws IloException {
 		super();
 		
 		turnOffCplexCuts();
@@ -33,6 +37,12 @@ public class PcpBranchAndCutSolver extends Solver {
 		super.beforeSolve();
 		super.addInitialCuts();
 		super.setBranchingSettings();
+	}
+	
+	@Override
+	protected void afterSolve() throws IloException, AlgorithmException {
+		super.afterSolve();
+		callback.getMetrics().printTotal();
 	}
 	
 	@Override

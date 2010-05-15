@@ -26,6 +26,8 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			if (log) System.out.println("Pruning at " + countNodesEqualOne() + " nodes set");
 			prune();
 		}
+		
+		// TODO: Manually do cplex suggested branches in order to generate node data with 1s count, depth, etc
 	}
 	
 	private int countNodesEqualOne() throws IloException {

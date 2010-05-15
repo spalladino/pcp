@@ -39,5 +39,7 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 
 	public void setUpperBound(int bound) { }
 	
+	public void setLowerBound(int bound) { }
+	
 	public boolean hasSolution() { return true; }
 }

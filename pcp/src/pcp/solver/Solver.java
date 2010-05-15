@@ -66,11 +66,18 @@ public class Solver extends AbstractSolutionData {
 		solved = this.cplex.solve();
 		double end = cplex.getCplexTime();
 		elapsed = end - start;
-		
+
+		afterSolve();
 		return solved;
 	}
 
 	protected void beforeSolve() throws IloException, AlgorithmException { }
+	
+	protected void afterSolve() throws IloException, AlgorithmException { 
+		if (heurCallback != null) {
+			heurCallback.getMetrics().printTotal();
+		}
+	}
 	
 	public void loadInitialSolution(pcp.algorithms.coloring.ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		cplex.setParam(IntParam.AdvInd, 1);

@@ -19,6 +19,7 @@ import pcp.solver.CplexBranchAndBoundSolver;
 import pcp.solver.CplexBranchAndCutSolver;
 import pcp.solver.CplexDynamicSearchSolver;
 import pcp.solver.PcpBranchAndCutSolver;
+import pcp.solver.PcpCutAndBranchSolver;
 import pcp.solver.Solver;
 
 
@@ -86,9 +87,9 @@ public class Factory implements IFactory {
 				case CplexBranchAndBound:
 					return new CplexBranchAndBoundSolver();
 				case PcpCutAndBranch:
-					return new PcpBranchAndCutSolver(true);
+					return new PcpCutAndBranchSolver();
 				case PcpBranchAndCut:
-					return new PcpBranchAndCutSolver(false);
+					return new PcpBranchAndCutSolver();
 				case CplexBranchAndCutSearch:
 					return new CplexBranchAndCutSolver();
 				case CplexDynamicSearch:

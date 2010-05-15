@@ -64,7 +64,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	public Integer getChi() throws AlgorithmException {
 		if (hasrun) return solution;
 		
-		lowerBound = calculateLowerBound();
 		bounder.start();
 		solution = color(fixed, lowerBound);
 		bounder.end();
@@ -75,9 +74,12 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	@Override
 	public void setUpperBound(int bound) {
-		if (bound <= this.bestColoring) {
-			this.bestColoring = bound;
-		}
+		bestColoring = IntUtils.min(bound, bestColoring);
+	}
+	
+	@Override
+	public void setLowerBound(int bound) {
+		lowerBound = IntUtils.max(lowerBound, bound);
 	}
 	
 	@Override
@@ -85,11 +87,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		return bestColorClass != null;
 	}
 	
-	private int calculateLowerBound() {
-		if (fixed == 0) return 0;
-		return maxInitialColor;
-	}
-
 	@Override
 	public Integer getColor(int node) throws AlgorithmException {
 		if (!hasrun) getChi();
@@ -102,7 +99,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		handleNode(node);
 		assignColor(node, color);
 		fixed++;
-		maxInitialColor = IntUtils.max(maxInitialColor, color);
+		lowerBound = IntUtils.max(lowerBound, color);
 	}
 
 	@Override
