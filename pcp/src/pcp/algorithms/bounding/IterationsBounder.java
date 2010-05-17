@@ -13,6 +13,7 @@ public class IterationsBounder extends TimeBounder implements IAlgorithmBounder 
 	
 	
 	public IterationsBounder() {
+		super();
 	}
 	
 	public IterationsBounder(String settingsPrefix) {
@@ -20,12 +21,8 @@ public class IterationsBounder extends TimeBounder implements IAlgorithmBounder 
 		if (settingsPrefix == null) return;
 		
 		Settings s = Settings.get();
-		
-		if (s.hasSetting(settingsPrefix + ".maxIters")) 
-			maxIters = s.getInteger(settingsPrefix + ".maxIters");
-		
-		if (s.hasSetting(settingsPrefix + ".maxItersWithoutImprovement")) 
-			maxItersWithoutImprovement = s.getInteger(settingsPrefix + ".maxItersWithoutImprovement");
+		maxIters = s.getInteger(settingsPrefix + ".maxIters");
+		maxItersWithoutImprovement = s.getInteger(settingsPrefix + ".maxItersWithoutImprovement");
 	}
 	
 	public boolean check() {

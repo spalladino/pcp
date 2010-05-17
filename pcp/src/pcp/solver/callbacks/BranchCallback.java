@@ -1,9 +1,9 @@
 package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
-import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import pcp.model.Model;
+import pcp.utils.ModelUtils;
 import props.Settings;
 
 
@@ -11,7 +11,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 
 	static final boolean log = Settings.get().getBoolean("logging.callback.branching");
 	static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
-	static final int pruningRemaining = Settings.get().getInteger("callback.pruning.remaining");
+	static final int pruningRemaining = Settings.get().getInteger("pruning.remaining");
 	
 	Model model;
 	
@@ -26,21 +26,15 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			if (log) System.out.println("Pruning at " + countNodesEqualOne() + " nodes set");
 			prune();
 		}
-		
+
 		// TODO: Manually do cplex suggested branches in order to generate node data with 1s count, depth, etc
 	}
 	
 	private int countNodesEqualOne() throws IloException {
-		int count = 0;
-		for (int j = 0; j < model.getColorCount(); j++) {
-			for (int i = 0; i < model.getNodeCount(); i++) {
-				IloIntVar x = model.x(i,j);
-				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) {
-					count++;
-				}
-			}	
-		}
-		return count;
+		IntegerFeasibilityStatus[] feasibilities = super.getFeasibilities(model.getAllXs());
+		double[] lbs = super.getLBs(model.getAllXs());
+		return ModelUtils.countNodesFixedToOne(feasibilities, lbs);
+
 	}
 	
 }

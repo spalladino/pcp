@@ -24,6 +24,7 @@ public class ModelBuilder {
 	
 	static final boolean useCliqueCover = Settings.get().getBoolean("model.adjacentsNeighbourhood.useCliqueCover");
 	
+	IloIntVar[] allxs;
 	IloIntVar[][] xs;
 	IloIntVar[] ws;
 	IloObjective objective;
@@ -97,11 +98,17 @@ public class ModelBuilder {
 				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getBreakSymmetry());
 		}
 		
-		model.xs = xs;
-		model.ws = ws;
-		model.objective = objective;
+		// Copy all vars and objective to model
+		fillModel(model);
 		
 		return model;
+	}
+
+	private void fillModel(Model model) {
+		model.xs = xs;
+		model.allxs = allxs;
+		model.ws = ws;
+		model.objective = objective;
 	}
 	
 	/**
@@ -111,6 +118,7 @@ public class ModelBuilder {
 	protected void initializeVariables() throws IloException {
 		// Initialize objects
 		Integer nodes = graph.getNodes().length;
+		this.allxs = new IloIntVar[nodes*colors];
 		this.xs = new IloIntVar[nodes][colors];
 		this.ws = new IloIntVar[colors];
 		
@@ -118,6 +126,7 @@ public class ModelBuilder {
 		for (int i = 0; i < nodes; i++) {
 			for (int j = 0; j < colors; j++) {
 				this.xs[i][j] = modeler.boolVar(String.format("x[%1$d,%2$d]", i, j));
+				this.allxs[i * colors + j] = this.xs[i][j]; 
 			}
 		}
 		

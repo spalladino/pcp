@@ -59,8 +59,8 @@ public class DSaturPartitionColoringHardestPartition extends
 	}
 
 	@Override
-	protected void initFields(String settings) {
-		super.initFields(settings);
+	protected void initFields() {
+		super.initFields();
 		partitionColorCount = new int[graph.P()];
 		partitionColorAdj = new int[graph.P()][graph.P()];
 

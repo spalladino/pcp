@@ -40,9 +40,5 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 		return maxNode;
 	}
 	
-	@Override
-	protected void initFields(String settings)  {
-		super.initFields(settings);
-	}
 	
 }

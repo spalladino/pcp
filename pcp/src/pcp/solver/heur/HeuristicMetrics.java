@@ -33,15 +33,15 @@ public class HeuristicMetrics {
 		}
 	}
 
-	public void primalHeur(ColoringAlgorithm coloring) throws AlgorithmException {
+	public void primalHeur(ColoringAlgorithm coloring, int nodeNumber) throws AlgorithmException {
 		if (coloring.hasSolution()) {
 			successfulPrimalHeurs++;
 			successfulPrimalHeursTime += coloring.getBounder().getMillis();
-			if (log) System.out.println("Used primal heuristic returning coloring of " + coloring.getChi());
+			if (log) System.out.println("Used primal heuristic at node " + nodeNumber + " returning coloring of " + coloring.getChi());
 		} else {
 			unsuccessfulPrimalHeurs++;
 			unsuccessfulPrimalHeursTime += coloring.getBounder().getMillis();
-			if (log) System.out.println("Used primal heuristic without obtaining better solution");
+			if (log) System.out.println("Used primal heuristic at node " + nodeNumber + " without obtaining better solution");
 		}
 	}
 

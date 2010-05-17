@@ -7,6 +7,7 @@ import pcp.entities.partitioned.PartitionedGraph;
 
 public class Model {
 	
+	protected IloIntVar[] allxs;
 	protected IloIntVar[][] xs;
 	protected IloIntVar[] ws;
 	protected IloObjective objective;
@@ -29,6 +30,10 @@ public class Model {
 
 	public boolean isTrivial() {
 		return graph.getNodes().length == 0;
+	}
+	
+	public IloIntVar[] getAllXs() {
+		return allxs;
 	}
 	
 	public IloIntVar[][] getXs() {

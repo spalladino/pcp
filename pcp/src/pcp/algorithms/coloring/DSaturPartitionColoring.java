@@ -18,6 +18,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");
 	protected static final int logNodeBase = 1;
 	
+	protected static final boolean verify = Settings.get().getBoolean("validate.coloring");
+	
 	// ColorClass[i] = color assigned to node i
 	protected int[] colorClass;
 
@@ -31,7 +33,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected int[] colorCount;
 	
 	// Partitions handled
-	boolean[] handled;
+	protected boolean[] handled;
 	
 	// ColoredNodeInPartition[q] = index of the node colored in partition q
 	protected Node[] coloredNodeInPartition;
@@ -47,27 +49,29 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	// Number of color fixed nodes
 	protected int fixed = 0;
-	protected int maxInitialColor = -1;
+	protected int fixedColors = 0;
 	
 	private boolean hasrun = false;
 	
 	public DSaturPartitionColoring(IPartitionedGraph graph) {
-		this(graph, null);
-	}
-	
-	public DSaturPartitionColoring(IPartitionedGraph graph, String settings) {
 		super(graph);
-		initFields(settings);
+		initFields();
 	}
 	
 	@Override
 	public Integer getChi() throws AlgorithmException {
-		if (hasrun) return solution;
+		if (hasrun) {
+			return solution;
+		}
 		
 		bounder.start();
-		solution = color(fixed, lowerBound);
+		solution = color(fixed, fixedColors);
 		bounder.end();
 		hasrun = true;
+		
+		if (hasSolution() && verify) {
+			new ColoringVerifier(this.graph).verify(this);
+		}
 		
 		return solution;
 	}
@@ -96,10 +100,12 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	@Override
 	public void useColor(int node, int color) throws AlgorithmException {
+		if (log) System.out.println("Using color " + (color + 1) + " for node " + (node + logNodeBase));
 		handleNode(node);
-		assignColor(node, color);
+		assignColor(node, color+1);
 		fixed++;
-		lowerBound = IntUtils.max(lowerBound, color);
+		fixedColors = IntUtils.max(fixedColors, color+1);
+		lowerBound = IntUtils.max(lowerBound, color+1);
 	}
 
 	@Override
@@ -196,6 +202,10 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		assignColor(graph.getNode(node), color);
 	}
 	
+	private void removeColor(int node, int color) throws AlgorithmException {
+		removeColor(graph.getNodes()[node], color);
+	}
+
 	protected void assignColor(Node node, int color) throws AlgorithmException {
 		if (log) System.out.println("Painting node " + (node.index() + logNodeBase) + " with color " + color);
 		colorClass[node.index()] = color;
@@ -206,10 +216,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		}
 	}
 
-	private void removeColor(int node, int color) throws AlgorithmException {
-		removeColor(graph.getNodes()[node], color);
-	}
-	
 	protected void removeColor(Node node, int color) throws AlgorithmException {
 		if (log) System.out.println("Unpainting node " + (node.index() + logNodeBase) + " of color " + color);
 		colorClass[node.index()] = 0;
@@ -253,8 +259,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		colorAdj[node1][0]++;
 	}
 	
-	protected void initFields(String settings)  {
-		this.bounder = new IterationsBounder(settings);
+	protected void initFields()  {
+		this.bounder = new IterationsBounder();
 		
 		this.bestColoring = graph.P() + 1;
 		this.colorAdj = new int[graph.N()][graph.P()];
