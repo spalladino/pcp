@@ -6,6 +6,7 @@ public enum Kind {
 	CplexDynamicSearch,
 	CplexBranchAndCutSearch,
 	PcpCutAndBranch, 
-	PcpBranchAndCut
+	PcpBranchAndCut,
+	Heuristic
 	
 }

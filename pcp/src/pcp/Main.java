@@ -24,6 +24,12 @@ public class Main {
 		String filename, runId;
 		Settings.load("run");
 		
+		if (Settings.get().getEnum("solver.kind", Kind.class).equals(Kind.Heuristic)) {
+			Heuristic.main(args);
+			System.exit(0);
+			return;
+		}
+		
 		filename = Settings.get().getPath("run.folder", "run.filename");
 		runId = Settings.get().getString("run.id");
 		
