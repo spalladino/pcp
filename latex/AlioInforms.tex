@@ -1,0 +1,76 @@
+\documentclass{beamer}
+%\usepackage[spanish]{babel}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{proof}
+
+\usetheme{warsaw}
+
+
+\begin{document}
+
+\title{PCP}
+\author{Santiago Palladino}
+\date{June 2010}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Index}
+\tableofcontents
+\end{frame} 
+
+\setlength{\parskip}{10pt plus 1pt minus 1pt}
+
+\section{Problem}
+
+\begin{frame}
+\frametitle{PCP}
+
+Problem definition, application, Li and Sinha, previous work as branch and cut
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Model}
+
+Present the definitive model used in the algorithm
+Comment other models considered?
+Compare to standard CP, by showing original model and adding constraints
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Ineqs}
+
+List inequalities, comment separation algorithms, cut application strategies
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Branch and cut}
+
+Branching strategy, primal heuristic, pruning
+Using DSATUR
+Initial?
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Results}
+
+Results in cut and branch, to determine strategies
+Then results in branch and cut, show that there was improvement by applying cuts in more nodes
+Show time and node count
+Compare vs cplex and brazil, br cannot be compared in terms of time, only node size, be polite
+
+\end{frame} 
+
+
+\end{document}

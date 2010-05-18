@@ -1,3 +1,11 @@
+Implementar
+-----------
+
+- Usar familias de cortes segun si clique anda: correr block color y clique, si clique no camina, entonces probar una iteracion de holes o paths.
+- En el B&C, no usar cortes para determinada profundidad y aplicar cada 2 o 4 nodos, cappeando a una determinada cantidad de cortes por nodo
+- Implementar el B&C una vez fijados los parametros en el C&B
+
+
 Fijar
 -----
 
@@ -48,8 +56,3 @@ Desigualdades
 				tomo mejor nodo de candidates
 			while candidates no vacio
 - Usar greedy randomised en los casos en q ordeno nodos?
-
-Corridas
---------
-
-- Muchas series en un mismo grafo?
