@@ -25,13 +25,19 @@ public class Generator {
 		} 
 		
 		try {
-			File file = new File(props.getProperty("generator.outdir"), props.getProperty("generator.name") + ".in");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			GeneratorProperties gp = readProperties(props);
 			IGraphGenerator generator = createGenerator(gp);
-			generator.Generate(writer);
-			writer.close();
-			System.out.println("Generation finished in " + file.getAbsolutePath());
+			for (int i = 0; i < gp.getGraphsCount(); i++) {
+				String name = props.getProperty("generator.name") + String.format(".%03d", i);
+				File file = new File(props.getProperty("generator.outdir"), name + ".in");
+				BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+				generator.generate(writer, name);
+				writer.close();
+				System.out.println("Generation done in " + file.getAbsolutePath());
+			}
+			
+			System.out.println("Generation finished successfully" );
+			
 		} catch (IOException e) {
 			System.err.println("Error writing files");
 			System.err.println(e.getMessage());

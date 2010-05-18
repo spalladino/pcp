@@ -27,6 +27,20 @@ class Processor(object):
             
             print
 
+    def simpletable(self, datas, series=[]):
+        fs = [metrics.metric(data) for data in datas]
+        
+        def runkey(run): 
+            return map(lambda m: metrics.evalmetric(m, run), series)
+        
+        if len(series) == 0: runsets = [(["run"], self.runs)]
+        else: runsets = itertools.groupby(sorted(self.runs, key=runkey), runkey)
+        
+        for key, runset in runsets:
+            print str(key)
+            for run in runset:
+                print ', '.join([str(f(run)) for f in fs])                
+
     def graph(self, datax, datay, fname=None, series=[]):
         fx, fy = metrics.metric(datax), metrics.metric(datay)
         

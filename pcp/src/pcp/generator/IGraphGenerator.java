@@ -4,6 +4,6 @@ import java.io.Writer;
 
 public interface IGraphGenerator {
 
-	void Generate(Writer writer) throws Exception;
+	void generate(Writer writer, String name) throws Exception;
 
 }
