@@ -28,6 +28,7 @@ import pcp.solver.cuts.CutsMetrics;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
 import pcp.utils.IntUtils;
+import pcp.utils.ModelUtils;
 import props.Settings;
 
 
@@ -44,6 +45,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	
 	static int minCliques = Settings.get().getInteger("cuts.minCliques");
 	static int cutEvery = Settings.get().getInteger("cuts.everynodes");
+	static int maxCutsDepth = Settings.get().getInteger("cuts.maxdepth");
 	
 	Iteration iteration;
 	Model model;
@@ -83,6 +85,13 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 
 		// Do not add cuts on every node
 		if (super.getNnodes() > 0 && super.getNnodes() % cutEvery != 0) {
+			return;
+		}
+		
+		// On certain depth, don't make any more cuts
+		if (maxCutsDepth > ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
+				super.getLBs(model.getAllXs()),
+				super.getUBs(model.getAllXs()))) {
 			return;
 		}
 		

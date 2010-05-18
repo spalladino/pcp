@@ -1,8 +1,11 @@
 package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
+import ilog.concert.IloNumVar;
+import ilog.cplex.IloCplex.BranchDirection;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import pcp.model.Model;
+import pcp.solver.branching.PcpNodeData;
 import pcp.utils.ModelUtils;
 import props.Settings;
 
@@ -25,9 +28,17 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		if (countNodesEqualOne() >= (model.getGraph().P() - pruningRemaining)) {
 			if (log) System.out.println("Pruning at " + countNodesEqualOne() + " nodes set");
 			prune();
+			return;
 		}
 
-		// TODO: Manually do cplex suggested branches in order to generate node data with 1s count, depth, etc
+//		IloNumVar[][] vars = new IloNumVar[super.getNbranches()][];
+//		double[][] bounds = new double[super.getNbranches()][];
+//		BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
+//		double[] branches = super.getBranches(vars, bounds, dirs);
+//		
+//		for (int i = 0; i < super.getNbranches(); i++) {
+//			super.makeBranch(vars[i], bounds[i], dirs[i], branches[i]);
+//		}
 	}
 	
 	private int countNodesEqualOne() throws IloException {

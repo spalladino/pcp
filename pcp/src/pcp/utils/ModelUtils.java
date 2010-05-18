@@ -13,4 +13,14 @@ public class ModelUtils {
 		} return count;
 	}
 	
+	public static int countNodesFixed(IntegerFeasibilityStatus[] feasibilities, double[] lbs, double[] ubs) {
+		int count = 0;
+		for (int i = 0; i < feasibilities.length; i++) {
+			if (feasibilities[i] != IntegerFeasibilityStatus.Infeasible 
+					&& (lbs[i] == 1 || ubs[i] == 0)) {
+				count++;
+			}
+		} return count;
+	}
+	
 }
