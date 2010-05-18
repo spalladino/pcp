@@ -4,115 +4,118 @@ if __name__ == '__main__':
     #if not resume():
     newrun([
                 {
-                    "strategy.coloring": 'DSaturEasyNode',
-                    "dsatur.colorAdjPartitions": 'true', 
-                }, {
-                    "strategy.coloring": 'DSaturEasyNode',
-                    "dsatur.colorAdjPartitions": 'false', 
-                }, {
-                    "strategy.coloring": 'DSaturHardPartition',
-                    "dsatur.colorAdjPartitions": 'true', 
-                }, {
-                    "strategy.coloring": 'DSaturHardPartition',
-                    "dsatur.colorAdjPartitions": 'false', 
+                    "path.enabled": 'false', 
+                    "clique.enabled": 'false',
+                    "blockColor.enabled": 'false',
+                    "gprime.enabled": 'false',
+                    "holes.enabled": 'false',
+                    "branch.prios.enabled": 'false',
+                    "primal.enabled": 'false',
                 }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'true',
-#                    "dsatur.partition.weight.size": '10000',
-#                    "dsatur.partition.weight.colorCount": '100',
-#                    "dsatur.partition.weight.uncolored": '1', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'true',
-#                    "dsatur.partition.weight.size": '10000',
-#                    "dsatur.partition.weight.colorCount": '1',
-#                    "dsatur.partition.weight.uncolored": '100', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'true',
-#                    "dsatur.partition.weight.size": '100',
-#                    "dsatur.partition.weight.colorCount": '10000',
-#                    "dsatur.partition.weight.uncolored": '1', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'true',
-#                    "dsatur.partition.weight.size": '1',
-#                    "dsatur.partition.weight.colorCount": '10000',
-#                    "dsatur.partition.weight.uncolored": '100', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'true',
-#                    "dsatur.partition.weight.size": '100',
-#                    "dsatur.partition.weight.colorCount": '1',
-#                    "dsatur.partition.weight.uncolored": '10000', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'true',
-#                    "dsatur.partition.weight.size": '1',
-#                    "dsatur.partition.weight.colorCount": '100',
-#                    "dsatur.partition.weight.uncolored": '10000', 
-#                }, 
-#                
-#                {
-#                    "dsatur.colorAdjPartitions": 'false',
-#                    "dsatur.partition.weight.size": '10000',
-#                    "dsatur.partition.weight.colorCount": '100',
-#                    "dsatur.partition.weight.uncolored": '1', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'false',
-#                    "dsatur.partition.weight.size": '10000',
-#                    "dsatur.partition.weight.colorCount": '1',
-#                    "dsatur.partition.weight.uncolored": '100', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'false',
-#                    "dsatur.partition.weight.size": '100',
-#                    "dsatur.partition.weight.colorCount": '10000',
-#                    "dsatur.partition.weight.uncolored": '1', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'false',
-#                    "dsatur.partition.weight.size": '1',
-#                    "dsatur.partition.weight.colorCount": '10000',
-#                    "dsatur.partition.weight.uncolored": '100', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'false',
-#                    "dsatur.partition.weight.size": '100',
-#                    "dsatur.partition.weight.colorCount": '1',
-#                    "dsatur.partition.weight.uncolored": '10000', 
-#                }, 
-#                {
-#                    "dsatur.colorAdjPartitions": 'false',
-#                    "dsatur.partition.weight.size": '1',
-#                    "dsatur.partition.weight.colorCount": '100',
-#                    "dsatur.partition.weight.uncolored": '10000', 
-#                },
+                {
+                    "path.enabled": 'false', 
+                    "clique.enabled": 'true',
+                    "blockColor.enabled": 'true',
+                    "gprime.enabled": 'false',
+                    "holes.enabled": 'false',
+                    "branch.prios.enabled": 'false',
+                    "primal.enabled": 'false',
+                },
+                {
+                    "path.enabled": 'false', 
+                    "clique.enabled": 'false',
+                    "blockColor.enabled": 'false',
+                    "gprime.enabled": 'false',
+                    "holes.enabled": 'false',
+                    "branch.prios.enabled": 'true',
+                    "primal.enabled": 'true',
+                }, 
+                {
+                    "path.enabled": 'false', 
+                    "clique.enabled": 'false',
+                    "blockColor.enabled": 'false',
+                    "gprime.enabled": 'false',
+                    "holes.enabled": 'false',
+                    "branch.prios.enabled": 'true',
+                    "primal.enabled": 'false',
+                }, 
 
+                {
+                    "path.enabled": 'false', 
+                    "clique.enabled": 'true',
+                    "blockColor.enabled": 'true',
+                    "gprime.enabled": 'false',
+                    "holes.enabled": 'false',
+                    "branch.prios.enabled": 'true',
+                    "primal.enabled": 'true',
+                }, 
+
+                {
+                    "path.enabled": 'false', 
+                    "clique.enabled": 'true',
+                    "blockColor.enabled": 'true',
+                    "gprime.enabled": 'false',
+                    "holes.enabled": 'false',
+                    "branch.prios.enabled": 'true',
+                    "primal.enabled": 'false',
+                }, 
+
+                {
+                    "path.enabled": 'true', 
+                    "clique.enabled": 'true',
+                    "blockColor.enabled": 'true',
+                    "gprime.enabled": 'true',
+                    "holes.enabled": 'true',
+                    "branch.prios.enabled": 'false',
+                    "primal.enabled": 'false',
+                }, 
+
+                {
+                    "path.enabled": 'true', 
+                    "clique.enabled": 'false',
+                    "blockColor.enabled": 'false',
+                    "gprime.enabled": 'true',
+                    "holes.enabled": 'true',
+                    "branch.prios.enabled": 'false',
+                    "primal.enabled": 'false',
+                }, 
+
+                {
+                    "path.enabled": 'true', 
+                    "clique.enabled": 'true',
+                    "blockColor.enabled": 'true',
+                    "gprime.enabled": 'true',
+                    "holes.enabled": 'true',
+                    "branch.prios.enabled": 'true',
+                    "primal.enabled": 'true',
+                }, 
+
+                {
+                    "path.enabled": 'true', 
+                    "clique.enabled": 'false',
+                    "blockColor.enabled": 'false',
+                    "gprime.enabled": 'true',
+                    "holes.enabled": 'true',
+                    "branch.prios.enabled": 'true',
+                    "primal.enabled": 'true',
+                }, 
+
+ 
             ], 
             
             files = [ 
+                        "rand50.in",
+                        "rand60.in",
+                        "rand70.in",
+                        "rand80.in",
+                        "rand90.in",
                         "rand100.in",
+                        "rand110.in",
                         "rand120.in",
-                        "rand140.in",
-                        "rand160.in",
-                        "rand180.in",
-                        "rand200.in",
+                    ],
+                    
+            dirs = [
+                        ".\\..\\data\\rand025\\",
+                        ".\\..\\data\\rand050\\",
+                        ".\\..\\data\\rand075\\",
                     ])
-
-
-#                {
-#                    "strategy.coloring": 'DSaturEasyNode',
-#                    "dsatur.colorAdjPartitions": 'true', 
-#                }, {
-#                    "strategy.coloring": 'DSaturEasyNode',
-#                    "dsatur.colorAdjPartitions": 'false', 
-#                }, {
-#                    "strategy.coloring": 'DSaturHardPartition',
-#                    "dsatur.colorAdjPartitions": 'true', 
-#                }, {
-#                    "strategy.coloring": 'DSaturHardPartition',
-#                    "dsatur.colorAdjPartitions": 'false', 
-#                }, 
-

@@ -78,10 +78,10 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			.withBounder(new SolutionsBounder("coloring.primal"));
 		
 		try {
-			fillPrimalColoring(coloring);
+			int fixed = fillPrimalColoring(coloring);
 			setLowerBound(coloring);
 			createSolution(coloring);
-			metrics.primalHeur(coloring, super.getNnodes());
+			metrics.primalHeur(coloring, super.getNnodes(), fixed);
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
 		}
@@ -141,15 +141,17 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		}
 	}
 	
-	private void fillPrimalColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
+	private int fillPrimalColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
+		int fixedCount = 0;
 		for (int j = 0; j < model.getColorCount(); j++) {
 			for (int i = 0; i < model.getNodeCount(); i++) {
 				IloIntVar x = model.x(i, j);
 				if (super.getValue(x) > nodeLB) {
+					fixedCount++;
 					coloring.useColor(i, j);
 				}
 			}
-		}
+		} return fixedCount;
 	}
 	
 	private int countNodesEqualOne() throws IloException {

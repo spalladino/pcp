@@ -185,6 +185,7 @@ public class Solver extends AbstractSolutionData {
 			data.put("solution.success", false);
 		}
 		
+		data.put("solution.nnodes", cplex.getNnodes());
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());
 		

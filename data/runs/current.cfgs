@@ -1,24 +1,720 @@
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand100.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand100.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand100.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand100.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand120.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand120.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand120.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand120.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand140.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand140.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand140.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand140.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand160.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand160.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand160.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand160.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand180.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand180.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand180.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand180.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand200.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand200.in, strategy.coloring: DSaturEasyNode}
-- {dsatur.colorAdjPartitions: 'true', run.filename: rand200.in, strategy.coloring: DSaturHardPartition}
-- {dsatur.colorAdjPartitions: 'false', run.filename: rand200.in, strategy.coloring: DSaturHardPartition}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand025\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand050\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand50.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand60.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand70.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand80.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand90.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand100.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand110.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'false', holes.enabled: 'false', path.enabled: 'false', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'false', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'false', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'false',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'true', branch.prios.enabled: 'true', clique.enabled: 'true',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}
+- {blockColor.enabled: 'false', branch.prios.enabled: 'true', clique.enabled: 'false',
+  gprime.enabled: 'true', holes.enabled: 'true', path.enabled: 'true', primal.enabled: 'true',
+  run.filename: rand120.in, run.folder: .\..\data\rand075\}

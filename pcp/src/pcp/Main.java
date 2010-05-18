@@ -82,12 +82,15 @@ public class Main {
 		System.out.println("Solving " + filename + " with " + graph.P() + " partitions, " + graph.N() + " nodes and " + graph.E() + " edges.");
 		execution.withInputData(graph);
 		
-		solver.getCplex().setParam(IntParam.MIPDisplay, 3);
+		solver.getCplex().setParam(IntParam.MIPDisplay, Settings.get().getInteger("logging.mipdisplay"));
 		solver.solve();
 		solver.fillExecutionData(execution.getData());
 		
 		if (solver.isSolved()) {
-			new Printer(solver).printSolution(false);
+			if (Settings.get().getBoolean("logging.solution")) {
+				new Printer(solver).printSolution(false);
+			}
+			
 			new Verifier(solver).verify();
 			
 			if (Settings.get().getBoolean("output.exportSol")) {

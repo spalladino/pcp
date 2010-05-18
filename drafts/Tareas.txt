@@ -1,3 +1,16 @@
+Fijar
+-----
+
+- Modelo definitivo
+- Iteraciones de dsatur para primal
+- Frecuencia de primal
+- Iteraciones de cortes por nodo
+- Nivel de pruning
+- Configuraciones finas para desigualdades (b&c vs c&b)
+- Que desigualdades habilitar
+- Branching strategies
+
+
 Heuristicas
 -----------
 
@@ -7,6 +20,9 @@ Heuristicas
 - Boundear dsatur para q sea realmente una heuristica DONE
 - Convertir DSatur en primal
 - Usar lower bound del tree para la lower bound del dsatur corrido en las hojas
+- Apurar primal en dsatur si hay pocos unhandled (usar linked list en lugar de array?)
+- Armar un sequential easiest node para usar de primal
+- Cambiar criterio de construccion inicial para primal si esta PaintAtLeastOne
 
 Cplex
 -----
