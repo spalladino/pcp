@@ -42,6 +42,9 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	static int maxItersRoot = Settings.get().getInteger("iterations.root.max");
 	static int maxItersNodes = Settings.get().getInteger("iterations.nodes.max");
 	
+	static int minCliques = Settings.get().getInteger("cuts.minCliques");
+	static int cutEvery = Settings.get().getInteger("cuts.everynodes");
+	
 	Iteration iteration;
 	Model model;
 	IPartitionedGraph graph;
@@ -71,13 +74,18 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	
 	@Override
 	protected void main() throws IloException {
-		// Only cuts on initial node
+		// Only cuts on initial node if specified
 		if (onlyRoot && super.getNnodes() > 0) {
 			if (doneFirst) return;
 			doneFirst = true;
 			return;
 		}
 
+		// Do not add cuts on every node
+		if (super.getNnodes() > 0 && super.getNnodes() % cutEvery != 0) {
+			return;
+		}
+		
 		// Reset iter count on node change
 		if (!onlyRoot && lastNnodes != super.getNnodes()) {
 			lastNnodes = super.getNnodes();
@@ -90,6 +98,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			return;
 		} metrics.newIter(); iters++;
 		
+		// Create whatever data is needed for this iteration
 		setupIterationData();
 
 		// Log what needs to be logged
@@ -99,13 +108,18 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			System.out.println();
 		}
 		
-		// And cut!
+		// Cut initial families
 		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
-		holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
 		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
-		gholes = new HolesCuts(iteration.forAlgorithm()).run();
 		
-		metrics.iterTime(cliques, holes, blocks, gholes);
+		// If a not good enough number of cuts is performed, try other families
+		if (metrics.getCurrentIterCount(cliques, blocks) < minCliques) {
+			holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
+			gholes = new HolesCuts(iteration.forAlgorithm()).run();
+		}
+		
+		// Log running times
+		metrics.setIterTime(cliques, holes, blocks, gholes);
 	}
 
 	private void addIndependentSet(List<Node> nodes, int color, int alpha, CutFamily cut) {

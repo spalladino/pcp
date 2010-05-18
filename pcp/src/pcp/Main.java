@@ -101,7 +101,7 @@ public class Main {
 			System.out.println("Gap is " + solver.getGap());
 			System.out.println("Solved in " + solver.getTime() + " ticks");			
 		} else {
-			System.out.println("Solution failed");
+			System.out.println("Solution failed after " + solver.getTime());
 		}
 		
 		execution.dump();

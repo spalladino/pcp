@@ -39,14 +39,26 @@ public class CutsMetrics {
 		this.counts.getLast()[cut.ordinal()]++;
 	}
 	
-	public void iterTime(IBoundedAlgorithm... algorithms) {
+	public void setIterTime(IBoundedAlgorithm... algorithms) {
 		for (IBoundedAlgorithm algorithm : algorithms) {
-			this.iterTime(algorithm.getIdentifier().ordinal(), algorithm.getBounder().getMillis());
+			if (algorithm != null) {
+				this.setIterTime(algorithm.getIdentifier().ordinal(), algorithm.getBounder().getMillis());
+			}
 		}
 	}
 	
-	public void iterTime(int cut, long ticks) {
+	public void setIterTime(int cut, long ticks) {
 		this.ticks.getLast()[cut] += ticks;
+	}
+	
+	/**
+	 * Returns the number of cuts added for the algorithms specified.
+	 */
+	public int getCurrentIterCount(IBoundedAlgorithm... algorithms) {
+		int count = 0;
+		for (IBoundedAlgorithm algorithm : algorithms) {
+			count += this.counts.getLast()[algorithm.getIdentifier().ordinal()];
+		} return count;
 	}
 	
 	public void printIter() {
