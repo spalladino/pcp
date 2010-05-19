@@ -178,13 +178,9 @@ public class Solver extends AbstractSolutionData {
 	}
 	
 	public void fillExecutionData(Map<String,Object> data) throws Exception {
-		if (solved) {
-			data.put("solution.chi", getChromaticNumber());
-			data.put("solution.success", true);
-		} else {
-			data.put("solution.success", false);
-		}
-		
+		data.put("solution.chi", solved ? getChromaticNumber() : 0);
+		data.put("solution.success", solved);
+		data.put("solution.gap", solved ? this.getGap() : 0);
 		data.put("solution.nnodes", cplex.getNnodes());
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());

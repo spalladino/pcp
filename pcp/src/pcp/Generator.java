@@ -27,13 +27,15 @@ public class Generator {
 		try {
 			GeneratorProperties gp = readProperties(props);
 			IGraphGenerator generator = createGenerator(gp);
-			for (int i = 0; i < gp.getGraphsCount(); i++) {
-				String name = props.getProperty("generator.name") + String.format(".%03d", i);
-				File file = new File(props.getProperty("generator.outdir"), name + ".in");
-				BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-				generator.generate(writer, name);
-				writer.close();
-				System.out.println("Generation done in " + file.getAbsolutePath());
+			String outdir = props.getProperty("generator.outdir");
+			String name = props.getProperty("generator.name");
+			
+			if (gp.getGraphsCount() == 1) {
+				generateGraph(generator, outdir, name);
+			} else {
+				for (int i = 0; i < gp.getGraphsCount(); i++) {
+					generateGraph(generator, outdir, name + String.format(".%03d", i));
+				}
 			}
 			
 			System.out.println("Generation finished successfully" );
@@ -43,6 +45,16 @@ public class Generator {
 			System.err.println(e.getMessage());
 			return;
 		}
+	}
+
+
+	private static void generateGraph(IGraphGenerator generator, String outdir,
+			String name) throws IOException, Exception {
+		File file = new File(outdir, name + ".in");
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		generator.generate(writer, name);
+		writer.close();
+		System.out.println("Generation done in " + file.getAbsolutePath());
 	}
 	
 	
