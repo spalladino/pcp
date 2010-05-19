@@ -1,0 +1,1882 @@
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 4325 times for 2867 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 4325 times for 2867 millis
+Cut callback total iterations 10
+ Generated a total of 36 cuts in 0 ms of BlockColor
+ Generated a total of 205 cuts in 266 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 274 cuts in 156 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 5
+Gap is 0.199999999996
+Solved in 1800.078 ticks
+
+Running id 20100517210949 iter 130 of 240
+Solving .\..\data\rand050\rand90.in with 34 partitions, 90 nodes and 1971 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 12235 times for 5080 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 12235 times for 5080 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 5
+Gap is 0.199999999996
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 131 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.062 ticks
+
+Running id 20100517210949 iter 132 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 74 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 229 cuts in 79 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.2857142857102041
+Solved in 1800.109 ticks
+
+Running id 20100517210949 iter 133 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 4639 times for 5608 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 4640 times for 5608 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1644.203 ticks
+
+Running id 20100517210949 iter 134 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1444.297 ticks
+
+Running id 20100517210949 iter 135 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2973 times for 4364 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2973 times for 4364 millis
+Cut callback total iterations 10
+ Generated a total of 74 cuts in 16 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 229 cuts in 78 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1388.562 ticks
+
+Running id 20100517210949 iter 136 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 74 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 229 cuts in 94 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1460.219 ticks
+
+Running id 20100517210949 iter 137 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 31 cuts in 0 ms of BlockColor
+ Generated a total of 182 cuts in 173 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 247 cuts in 126 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.094 ticks
+
+Running id 20100517210949 iter 138 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.109 ticks
+
+Running id 20100517210949 iter 139 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1494 times for 3497 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 1495 times for 3497 millis
+Cut callback total iterations 10
+ Generated a total of 31 cuts in 0 ms of BlockColor
+ Generated a total of 182 cuts in 204 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 247 cuts in 110 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1282.953 ticks
+
+Running id 20100517210949 iter 140 of 240
+Solving .\..\data\rand050\rand100.in with 39 partitions, 100 nodes and 2411 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 4639 times for 5475 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 4640 times for 5475 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1632.516 ticks
+
+Running id 20100517210949 iter 141 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 142 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 80 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 317 cuts in 189 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 143 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2766 times for 83973 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2766 times for 83973 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5999999999924823
+Solved in 1800.109 ticks
+
+Running id 20100517210949 iter 144 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 145 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1588 times for 42338 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 1588 times for 42338 millis
+Cut callback total iterations 10
+ Generated a total of 80 cuts in 15 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 317 cuts in 186 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5833333333260379
+Solved in 1800.062 ticks
+
+Running id 20100517210949 iter 146 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 80 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 317 cuts in 187 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5833333333260418
+Solved in 1800.093 ticks
+
+Running id 20100517210949 iter 147 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 105 cuts in 30 ms of BlockColor
+ Generated a total of 217 cuts in 361 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 291 cuts in 202 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 148 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 149 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1569 times for 49162 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 1569 times for 49162 millis
+Cut callback total iterations 10
+ Generated a total of 105 cuts in 0 ms of BlockColor
+ Generated a total of 217 cuts in 407 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 291 cuts in 217 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5624999999929687
+Solved in 1800.063 ticks
+
+Running id 20100517210949 iter 150 of 240
+Solving .\..\data\rand050\rand110.in with 51 partitions, 110 nodes and 2997 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2987 times for 92128 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2987 times for 92128 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5833333333260416
+Solved in 1800.172 ticks
+
+Running id 20100517210949 iter 151 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.499999999993744
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 152 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 92 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 264 cuts in 138 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 153 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2182 times for 31976 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2182 times for 31976 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.6249999999921875
+Solved in 1800.062 ticks
+
+Running id 20100517210949 iter 154 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.6249999999921801
+Solved in 1800.204 ticks
+
+Running id 20100517210949 iter 155 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1798 times for 34047 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 1798 times for 34047 millis
+Cut callback total iterations 10
+ Generated a total of 92 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 264 cuts in 188 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5432862190744808
+Solved in 1800.094 ticks
+
+Running id 20100517210949 iter 156 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 92 cuts in 16 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 264 cuts in 174 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.5418250950502614
+Solved in 1800.14 ticks
+
+Running id 20100517210949 iter 157 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 98 cuts in 62 ms of BlockColor
+ Generated a total of 191 cuts in 377 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 282 cuts in 202 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.3749999999953125
+Solved in 1800.125 ticks
+
+Running id 20100517210949 iter 158 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.499999999993744
+Solved in 1800.078 ticks
+
+Running id 20100517210949 iter 159 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2415 times for 42416 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2415 times for 42416 millis
+Cut callback total iterations 10
+ Generated a total of 98 cuts in 15 ms of BlockColor
+ Generated a total of 191 cuts in 485 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 282 cuts in 157 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.49264705881737125
+Solved in 1800.109 ticks
+
+Running id 20100517210949 iter 160 of 240
+Solving .\..\data\rand050\rand120.in with 49 partitions, 120 nodes and 3559 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2195 times for 32652 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2195 times for 32652 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.6249999999921875
+Solved in 1800.187 ticks
+
+Running id 20100517210949 iter 161 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 2059 times for 16 millis
+ Total ran leaf heuristic 2060 times for 16 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.031 ticks
+
+Running id 20100517210949 iter 162 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 2 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1800 times for 47 millis
+ Total ran leaf heuristic 1802 times for 47 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 32 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 146 cuts in 46 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.031 ticks
+
+Running id 20100517210949 iter 163 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1532 times for 15 millis
+ Total ran leaf heuristic 1532 times for 15 millis
+ Successfully ran primal heuristic 15598 times for 2313 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 15598 times for 2313 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 647.547 ticks
+
+Running id 20100517210949 iter 164 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1545 times for 47 millis
+ Total ran leaf heuristic 1546 times for 47 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 580.64 ticks
+
+Running id 20100517210949 iter 165 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1654 times for 62 millis
+ Total ran leaf heuristic 1654 times for 62 millis
+ Successfully ran primal heuristic 16909 times for 2739 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 16909 times for 2739 millis
+Cut callback total iterations 10
+ Generated a total of 32 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 146 cuts in 16 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1361.343 ticks
+
+Running id 20100517210949 iter 166 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 2 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1534 times for 63 millis
+ Total ran leaf heuristic 1536 times for 63 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 32 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 146 cuts in 32 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1276.516 ticks
+
+Running id 20100517210949 iter 167 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 2 times for 0 millis
+ Unsuccessfully ran leaf heuristic 2492 times for 79 millis
+ Total ran leaf heuristic 2494 times for 79 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 40 cuts in 0 ms of BlockColor
+ Generated a total of 103 cuts in 63 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 145 cuts in 79 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 168 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 2061 times for 48 millis
+ Total ran leaf heuristic 2062 times for 48 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.16666666666388888
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 169 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1627 times for 48 millis
+ Total ran leaf heuristic 1627 times for 48 millis
+ Successfully ran primal heuristic 16431 times for 2398 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 16431 times for 2398 millis
+Cut callback total iterations 10
+ Generated a total of 40 cuts in 0 ms of BlockColor
+ Generated a total of 103 cuts in 111 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 145 cuts in 31 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 1377.844 ticks
+
+Running id 20100517210949 iter 170 of 240
+Solving .\..\data\rand075\rand50.in with 20 partitions, 50 nodes and 894 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1532 times for 16 millis
+ Total ran leaf heuristic 1532 times for 16 millis
+ Successfully ran primal heuristic 15598 times for 1721 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 15598 times for 1721 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 651.813 ticks
+
+Running id 20100517210949 iter 171 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 782.203 ticks
+
+Running id 20100517210949 iter 172 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 68 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 162 cuts in 124 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 238.328 ticks
+
+Running id 20100517210949 iter 173 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 518 times for 314 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 519 times for 314 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 83.062 ticks
+
+Running id 20100517210949 iter 174 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 125.578 ticks
+
+Running id 20100517210949 iter 175 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 467 times for 669 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 468 times for 669 millis
+Cut callback total iterations 10
+ Generated a total of 68 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 162 cuts in 94 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 140.688 ticks
+
+Running id 20100517210949 iter 176 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 68 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 162 cuts in 62 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 169.359 ticks
+
+Running id 20100517210949 iter 177 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 67 cuts in 0 ms of BlockColor
+ Generated a total of 118 cuts in 110 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 169 cuts in 62 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 543.937 ticks
+
+Running id 20100517210949 iter 178 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 782.437 ticks
+
+Running id 20100517210949 iter 179 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1430 times for 1499 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 1431 times for 1499 millis
+Cut callback total iterations 10
+ Generated a total of 67 cuts in 0 ms of BlockColor
+ Generated a total of 118 cuts in 63 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 169 cuts in 93 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 237.547 ticks
+
+Running id 20100517210949 iter 180 of 240
+Solving .\..\data\rand075\rand60.in with 24 partitions, 60 nodes and 1312 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 518 times for 437 millis
+ Unsuccessfully ran primal heuristic 1 times for 0 millis
+ Total ran primal heuristic 519 times for 437 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 6
+Gap is 0.0
+Solved in 82.922 ticks
+
+Running id 20100517210949 iter 181 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.3749999999953064
+Solved in 1800.016 ticks
+
+Running id 20100517210949 iter 182 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 36 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 152 cuts in 79 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.3673469387702594
+Solved in 1800.031 ticks
+
+Running id 20100517210949 iter 183 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 23602 times for 10035 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 23602 times for 10035 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.28571428571019747
+Solved in 1800.063 ticks
+
+Running id 20100517210949 iter 184 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 2 times for 0 millis
+ Total ran leaf heuristic 3 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.28571428571019747
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 185 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 14140 times for 12613 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 14140 times for 12613 millis
+Cut callback total iterations 10
+ Generated a total of 36 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 152 cuts in 62 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.32142857142397957
+Solved in 1800.063 ticks
+
+Running id 20100517210949 iter 186 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 3 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 3 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 36 cuts in 16 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 152 cuts in 31 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.3428571428522395
+Solved in 1800.063 ticks
+
+Running id 20100517210949 iter 187 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 1 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 44 cuts in 0 ms of BlockColor
+ Generated a total of 124 cuts in 188 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 167 cuts in 93 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.2857142857102041
+Solved in 1800.079 ticks
+
+Running id 20100517210949 iter 188 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 1 times for 0 millis
+ Total ran leaf heuristic 1 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 8
+Gap is 0.3749999999953064
+Solved in 1800.016 ticks
+
+Running id 20100517210949 iter 189 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 2 times for 0 millis
+ Total ran leaf heuristic 2 times for 0 millis
+ Successfully ran primal heuristic 14471 times for 11541 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 14471 times for 11541 millis
+Cut callback total iterations 10
+ Generated a total of 44 cuts in 0 ms of BlockColor
+ Generated a total of 124 cuts in 171 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 167 cuts in 94 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.2857142857102041
+Solved in 1800.031 ticks
+
+Running id 20100517210949 iter 190 of 240
+Solving .\..\data\rand075\rand70.in with 26 partitions, 70 nodes and 1789 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 23604 times for 10476 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 23604 times for 10476 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 7
+Gap is 0.28571428571019747
+Solved in 1800.046 ticks
+
+Running id 20100517210949 iter 191 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 192 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 107 cuts in 15 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 211 cuts in 110 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.39999999999599856
+Solved in 1800.078 ticks
+
+Running id 20100517210949 iter 193 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 9716 times for 103641 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 9716 times for 103641 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.4999999999949952
+Solved in 1800.093 ticks
+
+Running id 20100517210949 iter 194 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.49999999999499484
+Solved in 1800.094 ticks
+
+Running id 20100517210949 iter 195 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 8430 times for 87076 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 8430 times for 87076 millis
+Cut callback total iterations 10
+ Generated a total of 107 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 211 cuts in 174 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.45113636363184717
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 196 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 107 cuts in 16 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 211 cuts in 170 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.45113636363184734
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 197 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 108 cuts in 0 ms of BlockColor
+ Generated a total of 174 cuts in 188 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 197 cuts in 125 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 198 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 199 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 5407 times for 58189 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 5407 times for 58189 millis
+Cut callback total iterations 10
+ Generated a total of 108 cuts in 0 ms of BlockColor
+ Generated a total of 174 cuts in 219 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 197 cuts in 139 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.49999999999499833
+Solved in 1800.078 ticks
+
+Running id 20100517210949 iter 200 of 240
+Solving .\..\data\rand075\rand80.in with 36 partitions, 80 nodes and 2297 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 9789 times for 102608 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 9789 times for 102608 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.499999999995
+Solved in 1800.078 ticks
+
+Running id 20100517210949 iter 201 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 202 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 114 cuts in 15 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 213 cuts in 157 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 203 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2374 times for 31347 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2374 times for 31347 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.6999999999929867
+Solved in 1800.125 ticks
+
+Running id 20100517210949 iter 204 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 11
+Gap is 0.7272727272661016
+Solved in 1800.062 ticks
+
+Running id 20100517210949 iter 205 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1407 times for 18621 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 1407 times for 18621 millis
+Cut callback total iterations 10
+ Generated a total of 114 cuts in 16 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 213 cuts in 172 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.7276651860004968
+Solved in 1800.063 ticks
+
+Running id 20100517210949 iter 206 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 114 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 213 cuts in 189 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.7276326207369833
+Solved in 1800.157 ticks
+
+Running id 20100517210949 iter 207 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 10
+ Generated a total of 103 cuts in 15 ms of BlockColor
+ Generated a total of 200 cuts in 219 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 205 cuts in 205 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 208 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 209 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 1667 times for 30380 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 1667 times for 30380 millis
+Cut callback total iterations 10
+ Generated a total of 103 cuts in 15 ms of BlockColor
+ Generated a total of 200 cuts in 202 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 205 cuts in 205 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.6571428571362814
+Solved in 1800.063 ticks
+
+Running id 20100517210949 iter 210 of 240
+Solving .\..\data\rand075\rand90.in with 38 partitions, 90 nodes and 2979 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 2374 times for 31577 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 2374 times for 31577 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Chromatic number is 10
+Gap is 0.6999999999929867
+Solved in 1800.047 ticks
+
+Running id 20100517210949 iter 211 of 240
+Solving .\..\data\rand075\rand100.in with 43 partitions, 100 nodes and 3692 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Heuristic callback
+ Successfully ran leaf heuristic 0 times for 0 millis
+ Unsuccessfully ran leaf heuristic 0 times for 0 millis
+ Total ran leaf heuristic 0 times for 0 millis
+ Successfully ran primal heuristic 0 times for 0 millis
+ Unsuccessfully ran primal heuristic 0 times for 0 millis
+ Total ran primal heuristic 0 times for 0 millis
+Cut callback total iterations 2
+ Generated a total of 0 cuts in 0 ms of BlockColor
+ Generated a total of 0 cuts in 0 ms of Hole
+ Generated a total of 0 cuts in 0 ms of Path
+ Generated a total of 0 cuts in 0 ms of Clique
+ Generated a total of 0 cuts in 0 ms of GPHole
+Solution failed
+
+Running id 20100517210949 iter 212 of 240
+Solving .\..\data\rand075\rand100.in with 43 partitions, 100 nodes and 3692 edges.
+Solving with pcp.solver.PcpCutAndBranchSolver
+Using custom branch callback
+Using custom heuristic callback
+Ended cut callback execution after 10 iterations.
+Ended cut callback execution after 10 iterations.
