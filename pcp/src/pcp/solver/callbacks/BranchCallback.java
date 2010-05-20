@@ -1,11 +1,8 @@
 package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
-import ilog.concert.IloNumVar;
-import ilog.cplex.IloCplex.BranchDirection;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import pcp.model.Model;
-import pcp.solver.branching.PcpNodeData;
 import pcp.utils.ModelUtils;
 import props.Settings;
 
