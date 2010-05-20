@@ -16,7 +16,7 @@ class PlainMetric:
         self.prop = prop
     
     def __call__(self, dict):
-        return dict[self.prop]
+        return dict.get(self.prop) or 'None'
     
     def __str__(self):
         return self.prop

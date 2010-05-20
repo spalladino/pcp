@@ -3,6 +3,7 @@ import config
 import os
 import metrics
 import itertools
+import data
 
 #from matplotlib import pyplot
 
@@ -64,13 +65,12 @@ class Processor(object):
             count += 1
         print '\\end{itemize}'
         
-        
         print '\\begin{tabular}{|%s|}' % ('c' * len(ids) + (('|' + ('c' * (len(datas)))) * count))
         print '\\multicolumn{%s}{|c|}{Id} & ' % len(ids) + ' & '.join(['\\multicolumn{%s}{|c|}{S%s}' % (len(datas), i+1) for i in range(count)])
         print '\\\\'
         
         for key, runset in runsets:
-            print ' & '.join([str(k) for k in key] + [l for l in itertools.chain.from_iterable([[str(f(run)).rjust(4) for f in fs] for run in runset])]) 
+            print ' & '.join([str(k) for k in key] + self.flatten([[str(f(run)).rjust(4) for f in fs] for run in runset])) 
             print '\\\\'
         
         print '\\end{tabular}'
@@ -103,3 +103,10 @@ class Processor(object):
         
         if fname: pyplot.savefig(os.path.join(config.fullrunsdir, self.runid, fname))
         else: pyplot.show()
+
+    def flatten(self, xss):
+        l = []
+        for xs in xss: 
+            for x in xs: 
+                l.append(x)
+        return l
