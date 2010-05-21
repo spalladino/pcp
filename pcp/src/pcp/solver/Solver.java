@@ -176,7 +176,7 @@ public class Solver extends AbstractSolutionData {
 			return cplex.getValue(model.x(i,j));
 		} catch(Exception ex) {return 0.0;}
 	}
-	
+		
 	public void fillExecutionData(Map<String,Object> data) throws Exception {
 		data.put("solution.chi", solved ? getChromaticNumber() : 0);
 		data.put("solution.success", solved);

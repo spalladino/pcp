@@ -6,28 +6,35 @@ import java.util.List;
 import java.util.ListIterator;
 
 import pcp.algorithms.Algorithm;
+import pcp.definitions.Constants;
 import pcp.definitions.Sorting;
 import pcp.entities.IPartitionedGraph;
-import pcp.entities.partitioned.Node;
+import pcp.entities.ISimpleGraph;
+import pcp.entities.simple.Node;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.solver.cuts.CutFamily;
+import pcp.utils.DataUtils;
 import pcp.utils.IntUtils;
+import pcp.utils.SimpleGraphUtils;
 import props.Settings;
 
 /**
- * Detects paths and holes sorting by current fractional values.
+ * Detects paths and holes in a derived simple graph sorting by current fractional values.
  */
 public class SimplePathDetector extends Algorithm  {
-	static boolean enabled = Settings.get().getBoolean("path.enabled");
-	static double minColorValue = Settings.get().getDouble("path.minColorValue");
-	static int maxColorCount = Settings.get().getInteger("path.maxColorCount");
-	static int maxNodeVisits = Settings.get().getInteger("path.maxNodeVisits");
-	static int maxInitialNodeVisits = Settings.get().getInteger("path.maxInitialNodeVisits");
-	static int maxEdgeVisits = Settings.get().getInteger("path.maxEdgeVisits");
-	static int minSize = Settings.get().getInteger("path.minSize");
-	static double minInitialNodeValue = Settings.get().getDouble("path.minInitialNodeValue");
+	static boolean check = Settings.get().getBoolean("validate.paths");
 	
-	IPartitionedGraph graph;
+	static boolean enabled = Settings.get().getBoolean("gprime.path.enabled");
+	static double minColorValue = Settings.get().getDouble("gprime.path.minColorValue");
+	static int maxColorCount = Settings.get().getInteger("gprime.path.maxColorCount");
+	static int maxNodeVisits = Settings.get().getInteger("gprime.path.maxNodeVisits");
+	static int maxInitialNodeVisits = Settings.get().getInteger("gprime.path.maxInitialNodeVisits");
+	static int maxEdgeVisits = Settings.get().getInteger("gprime.path.maxEdgeVisits");
+	static int minSize = Settings.get().getInteger("gprime.path.minSize");
+	static double minInitialNodeValue = Settings.get().getDouble("gprime.path.minInitialNodeValue");
+	
+	IPartitionedGraph partitioned;
+	ISimpleGraph graph;
 	int color;
 	
 	int[] nodeVisits;
@@ -67,14 +74,15 @@ public class SimplePathDetector extends Algorithm  {
 			color++) {
 			
 			this.color = color;
-			this.graph = provider.getSorted().getSortedGraph(color, Sorting.Desc);
+			this.partitioned = provider.getSorted().getSortedGraph(color, Sorting.Desc);
+			this.graph = partitioned.getGPrime();
 			this.valW = data.w(color);
 			
 			this.nodeVisits = new int[model.getNodeCount()];
 			this.edgeVisits = new int[model.getNodeCount()][model.getNodeCount()];
 			
 			for (Node node : graph.getNodes()) {
-				if ((data.x(node.index(), color) < minInitialNodeValue) ||
+				if ((getVar(node, color) < minInitialNodeValue) ||
 					(nodeVisits[node.index()] >= maxInitialNodeVisits)) {
 					break;
 				} 
@@ -87,6 +95,10 @@ public class SimplePathDetector extends Algorithm  {
 		bounder.stop();
 		return this;
 			
+	}
+	
+	private double getVar(Node node, int color) {
+		return DataUtils.sumXi(partitioned.getNodes(node), color, data);
 	}
 
 	private void process(Node node) {
@@ -109,16 +121,19 @@ public class SimplePathDetector extends Algorithm  {
 		// If it ended because it found a hole or path then report it
 		if (foundHole && (path.size() - holeStart >= minSize)) {
 			markNodesAsVisited();
-			provider.getCutBuilder().addHole(buildHole(holeStart) , color);
+			List<Node> hole = buildHole(holeStart);
+			if (!SimpleGraphUtils.checkHole(graph, hole)) return;
+			provider.getCutBuilder().addGPrimeHole(hole , color);
 		} else if (foundPath && (path.size() >= minSize)) {
 			markNodesAsVisited();
-			provider.getCutBuilder().addPath(path, color);
+			if (!SimpleGraphUtils.checkPath(graph, path)) return;
+			provider.getCutBuilder().addGPrimePath(path, color);
 		}
 	}
 		 
 	private boolean isCurrentPathBroken() {
 		double alpha = IntUtils.ceilhalf(path.size());
-		return path.size() >= minSize &&  sumX > valW * alpha;
+		return path.size() >= minSize &&  sumX > valW * alpha + Constants.Epsilon;
 	}
 
 	private void addToStart(Node n, Node endpoint) {
@@ -133,7 +148,7 @@ public class SimplePathDetector extends Algorithm  {
 		if (n == null) return;
 		
 		inPath[n.index()] = true;
-		double nval = data.x(n.index(), color);
+		double nval = getVar(n, color);
 		sumX += nval;
 		
 		if (isEnd) {
@@ -193,12 +208,6 @@ public class SimplePathDetector extends Algorithm  {
 						int index = it.previousIndex();
 						Node p = it.previous();
 						
-						// We are checking component paths only
-						if (graph.areInSamePartition(n, p)) {
-							valid = false;
-							break;
-						}
-						
 						// If it is adjacent to another node in the path, then we must check if the hole is broken,
 						// in which case we return it successfully so the path is closed
 						if (graph.areAdjacent(n, p)) {
@@ -234,11 +243,11 @@ public class SimplePathDetector extends Algorithm  {
 	 * it has in the path is "p" at index "index". 
 	 */
 	private boolean holeWouldBeBroken(Node n, Node p, int index) {
-		double sum = sumToEnd.get(index) + data.x(n.index(), color);
+		double sum = sumToEnd.get(index) + getVar(n, color);
 		int holeLength = path.size() - index + 1;
 		double alpha = IntUtils.floorhalf(holeLength);
 		
-		return sum > alpha * valW;
+		return sum > alpha * valW + Constants.Epsilon;
 	}
 
 	@Override

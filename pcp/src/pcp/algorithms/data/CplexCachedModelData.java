@@ -3,7 +3,7 @@ package pcp.algorithms.data;
 import ilog.cplex.IloCplex;
 import pcp.model.Model;
 
-
+@Deprecated
 public class CplexCachedModelData extends ModelData {
 	
 	public CplexCachedModelData(IloCplex cplex, Model model) {

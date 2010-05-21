@@ -43,5 +43,6 @@ public class ModelData implements IModelData {
 	public void setWs(double[] ws) {
 		this.ws = ws;
 	}
+
 	
 }

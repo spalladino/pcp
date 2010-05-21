@@ -37,9 +37,8 @@ import props.Settings;
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData {
 
 	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
-	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
-	static boolean useGreekAlgorithm = Settings.get().getBoolean("cuts.useGreekAlgorithm");
-	
+	static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
+	static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	
@@ -92,7 +91,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// On certain depth, don't make any more cuts
-		if (maxCutsDepth > ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
+		if (maxCutsDepth < ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
 				super.getLBs(model.getAllXs()),
 				super.getUBs(model.getAllXs()))) {
 			return;
@@ -126,7 +125,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		
 		// If a not good enough number of cuts is performed, try other families
 		if (metrics.getCurrentIterCount(cliques, blocks) < minCliques) {
-			if (useGreekAlgorithm) {
+			if (!usePathsAlgorithm) {
 				holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
 				gholes = new HolesCuts(iteration.forAlgorithm()).run();
 			} else {
@@ -140,30 +139,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		metrics.setIterTime(cliques, holes, blocks, gholes);
 	}
 
-	private void addIndependentSet(List<Node> nodes, int color, int alpha, CutFamily cut) {
-		try {
-			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = cut.toString().toUpperCase() + String.format("[%1$d]", color);
-			for (Node n : nodes) {
-				expr.addTerm(model.x(n.index(),color), 1);
-			} expr.addTerm(model.w(color), -alpha);
-			
-			int basej = graph.P() - alpha;
-		
-			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
-				for (Node n : graph.getNodes()) {
-					for (int j = basej; j < model.getColorCount(); j++) {
-						expr.addTerm(model.x(n.index(),j), 1);
-					}
-				} expr.addTerm(model.w(basej), -1);
-			}
-			
-			add(cut, expr, LeqtZero, name);
-		} catch (Exception ex) {
-			System.err.println("Could not generate independent set cut: " + ex.getMessage());
-		}
-	}
-	
 	@Override
 	public void addPath(List<Node> path, int color) {
 		int alpha = IntUtils.ceilhalf(path.size());
@@ -190,6 +165,19 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	}
 
 	
+	@Override
+	public void addGPrimePath(List<pcp.entities.simple.Node> snodes, int color) {
+		int alpha = IntUtils.ceilhalf(snodes.size());
+		List<Node> nodes = new ArrayList<Node>();
+		for (pcp.entities.simple.Node sn : snodes) {
+			for (Node n : graph.getNodes(sn)) {
+				nodes.add(n);
+			}
+		}
+		
+		addIndependentSet(nodes, color, alpha, CutFamily.GPPath);
+	}
+
 	@Override
 	public void addClique(List<Node> nodes, int color) {
 		try {
@@ -226,6 +214,48 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 	}
 
+	private void addIndependentSet(List<Node> nodes, int color, int alpha, CutFamily cut) {
+		try {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = cut.toString().toUpperCase() + String.format("[%1$d]", color);
+			for (Node n : nodes) {
+				expr.addTerm(model.x(n.index(),color), 1);
+			} expr.addTerm(model.w(color), -alpha);
+			
+			int basej = graph.P() - alpha;
+		
+			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
+				for (Node n : graph.getNodes()) {
+					for (int j = basej; j < model.getColorCount(); j++) {
+						expr.addTerm(model.x(n.index(),j), 1);
+					}
+				} expr.addTerm(model.w(basej), -1);
+			}
+			
+			add(cut, expr, LeqtZero, name);
+		} catch (Exception ex) {
+			System.err.println("Could not generate independent set cut: " + ex.getMessage());
+		}
+	}
+
+	private void add(CutFamily cut, IloNumExpr expr, boolean cmp, String name) throws IloException {
+		IloRange range = cmp == LeqtZero 
+			? modeler.le(expr, 0, name)
+			: modeler.ge(expr, 0, name);
+			
+		super.add(range);
+		metrics.added(cut, range);
+		
+		if (checkViolatedCut || logIneqs) {
+			double val = super.getValue(expr);
+			if (checkViolatedCut && ((val > -Constants.Epsilon && cmp == GeqtZero) || (val < Constants.Epsilon && cmp == LeqtZero))) {
+				throw new IloException("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
+			} else if (logIneqs) {
+				System.out.println(cut.toString() + ": " + range.toString() + " VAL=" + val );
+			}
+		}
+	}
+
 	@Override
 	public double w(int j) {
 		return ws[j];
@@ -253,24 +283,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 
 	public CutsMetrics getMetrics() {
 		return metrics;
-	}
-
-	private void add(CutFamily cut, IloNumExpr expr, boolean cmp, String name) throws IloException {
-		IloRange range = cmp == LeqtZero 
-			? modeler.le(expr, 0, name)
-			: modeler.ge(expr, 0, name);
-			
-		super.add(range);
-		metrics.added(cut, range);
-		
-		if (checkViolatedCut || logIneqs) {
-			double val = super.getValue(expr);
-			if (checkViolatedCut && ((val > -Constants.Epsilon && cmp == GeqtZero) || (val < Constants.Epsilon && cmp == LeqtZero))) {
-				throw new IloException("Adding not violated cut: " + range.toString() + " (evals to " + val + ")");
-			} else if (logIneqs) {
-				System.out.println(cut.toString() + ": " + range.toString() + " VAL=" + val );
-			}
-		}
 	}
 
 	private void setupIterationData() {

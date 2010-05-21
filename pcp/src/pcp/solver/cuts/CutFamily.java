@@ -7,7 +7,8 @@ public enum CutFamily {
 	Hole,
 	Path,
 	Clique,
-	GPHole;
+	GPHole,
+	GPPath;
 
 	public static int count() {
 		return CutFamily.values().length;

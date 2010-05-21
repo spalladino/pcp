@@ -65,5 +65,9 @@ public class InitialCutBuilder implements ICutBuilder {
 	public void addPath(List<Node> path, int color) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void addGPrimePath(List<pcp.entities.simple.Node> path, int color) {
+		throw new UnsupportedOperationException();	}
 	
 }

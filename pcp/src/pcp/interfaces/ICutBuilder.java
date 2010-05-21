@@ -16,5 +16,7 @@ public interface ICutBuilder {
 	void addBlockColor(Partition partition, int j0);
 
 	void addGPrimeHole(List<pcp.entities.simple.Node> hole, int color);
+
+	void addGPrimePath(List<pcp.entities.simple.Node> path, int color);
 	
 }

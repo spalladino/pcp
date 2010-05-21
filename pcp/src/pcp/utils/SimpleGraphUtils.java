@@ -24,6 +24,21 @@ public class SimpleGraphUtils {
 	}
 
 	public static boolean checkHole(ISimpleGraph graph, List<Node> nodes) {
+		return checkPath(graph, nodes) && checkHoleCloses(graph, nodes);
+	}
+	
+	private static boolean checkHoleCloses(ISimpleGraph graph, List<Node> nodes) {
+		Node first = nodes.get(0);
+		Node last = nodes.get(nodes.size() - 1);
+		
+		if (!graph.areAdjacent(first.index(), last.index())) {
+			System.err.println("Hole first and last nodes are not adjacent");
+			return false;
+		} return true;
+	}
+
+	public static boolean checkPath(ISimpleGraph graph, List<Node> nodes) {
+
 		Set<Node> visited = new HashSet<Node>();
 		LinkedList<Node> pending = new LinkedList<Node>(nodes);
 		
@@ -35,14 +50,14 @@ public class SimpleGraphUtils {
 		
 		// First two must be adjacent
 		if (v1.equals(v2) || !graph.areAdjacent(v1, v2)) {
-			System.err.println("Error checking hole " + listNodes(nodes));
+			System.err.println("Error checking path " + listNodes(nodes));
 			return false;
 		}
 		
 		check: while(!pending.isEmpty()) {
 			v3 = pending.poll();
 			if (v2.equals(v3) || !graph.areAdjacent(v2, v3)) {
-				System.err.println("Error checking hole " + listNodes(nodes));
+				System.err.println("Error checking path " + listNodes(nodes));
 				return false;
 			}
 			
@@ -51,7 +66,7 @@ public class SimpleGraphUtils {
 				if (v2adj.equals(v0)) break check;
 				// If we have seen this node, and it isnt the previous or the first one, error
 				if (visited.contains(v2adj)) {
-					System.err.println("Error checking hole " + listNodes(nodes));
+					System.err.println("Error checking path " + listNodes(nodes));
 					return false;
 				}
 			}
@@ -63,16 +78,10 @@ public class SimpleGraphUtils {
 			v2 = v3;
 		}
 		
-		// Last two must be adjacent
-		if (v0.equals(v2) || !graph.areAdjacent(v0, v2)) {
-			System.err.println("Error checking hole " + listNodes(nodes));
-			return false;
-		}
-		
 		// Make sure we have seen all of them
 		for (Node node : nodes) {
 			if (!visited.contains(node)) {
-				System.err.println("Unvisited nodes in hole " + listNodes(nodes));
+				System.err.println("Unvisited nodes in path " + listNodes(nodes));
 				return false;
 			}
 		}

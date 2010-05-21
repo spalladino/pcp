@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.ListIterator;
 
 import pcp.algorithms.Algorithm;
+import pcp.definitions.Constants;
 import pcp.definitions.Sorting;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.solver.cuts.CutFamily;
+import pcp.utils.GraphUtils;
 import pcp.utils.IntUtils;
 import props.Settings;
 
@@ -18,6 +20,8 @@ import props.Settings;
  * Detects paths and holes sorting by current fractional values.
  */
 public class ComponentPathDetector extends Algorithm {
+	static boolean check = Settings.get().getBoolean("validate.paths");
+	
 	static boolean enabled = Settings.get().getBoolean("path.enabled");
 	static double minColorValue = Settings.get().getDouble("path.minColorValue");
 	static int maxColorCount = Settings.get().getInteger("path.maxColorCount");
@@ -109,16 +113,19 @@ public class ComponentPathDetector extends Algorithm {
 		// If it ended because it found a hole or path then report it
 		if (foundHole && (path.size() - holeStart >= minSize)) {
 			markNodesAsVisited();
-			provider.getCutBuilder().addHole(buildHole(holeStart) , color);
+			List<Node> hole = buildHole(holeStart);
+			if (check && !GraphUtils.checkComponentHole(graph, hole)) return;
+			provider.getCutBuilder().addHole(hole , color);
 		} else if (foundPath && (path.size() >= minSize)) {
 			markNodesAsVisited();
+			if (check && !GraphUtils.checkComponentPath(graph, path)) return;
 			provider.getCutBuilder().addPath(path, color);
 		}
 	}
 		 
 	private boolean isCurrentPathBroken() {
 		double alpha = IntUtils.ceilhalf(path.size());
-		return path.size() >= minSize &&  sumX > valW * alpha;
+		return path.size() >= minSize &&  sumX > valW * alpha + Constants.Epsilon;
 	}
 
 	private void addToStart(Node n, Node endpoint) {
@@ -238,7 +245,7 @@ public class ComponentPathDetector extends Algorithm {
 		int holeLength = path.size() - index + 1;
 		double alpha = IntUtils.floorhalf(holeLength);
 		
-		return sum > alpha * valW;
+		return sum > alpha * valW + Constants.Epsilon;
 	}
 
 	@Override

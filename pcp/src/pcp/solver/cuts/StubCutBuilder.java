@@ -14,6 +14,7 @@ import pcp.interfaces.ICutBuilder;
 public class StubCutBuilder implements ICutBuilder {
 
 	List<Tuple<Integer, List<pcp.entities.simple.Node>>> gprimeHoles = new ArrayList<Tuple<Integer,List<pcp.entities.simple.Node>>>();
+	List<Tuple<Integer, List<pcp.entities.simple.Node>>> gprimePaths = new ArrayList<Tuple<Integer,List<pcp.entities.simple.Node>>>();
 	List<Tuple<Integer, List<Node>>> cliques = new ArrayList<Tuple<Integer,List<Node>>>();
 	List<Tuple<Integer, List<Node>>> holes = new ArrayList<Tuple<Integer,List<Node>>>();
 	List<Tuple<Integer, List<Node>>> paths = new ArrayList<Tuple<Integer,List<Node>>>();
@@ -37,6 +38,11 @@ public class StubCutBuilder implements ICutBuilder {
 	@Override
 	public void addGPrimeHole(List<pcp.entities.simple.Node> hole, int color) {
 		gprimeHoles.add(new Tuple<Integer, List<pcp.entities.simple.Node>>(color, hole));
+	}
+	
+	@Override
+	public void addGPrimePath(List<pcp.entities.simple.Node> hole, int color) {
+		gprimePaths.add(new Tuple<Integer, List<pcp.entities.simple.Node>>(color, hole));
 	}
 
 	@Override
@@ -64,12 +70,24 @@ public class StubCutBuilder implements ICutBuilder {
 		print("Cliques", stream, cliques);
 		print("Holes", stream, holes);
 		print("Paths", stream, paths);
+		printGPrime("GPrime Holes", stream, gprimeHoles);
+		printGPrime("GPrime Paths", stream, gprimePaths);
 	}
 
 	private void print(String title, PrintStream stream, List<Tuple<Integer, List<Node>>> ineqs) {
 		stream.print(title);
 		stream.print("\n");
 		for (Tuple<Integer, List<Node>> t : ineqs) {
+			stream.print(' ');
+			stream.print(t);
+			stream.print('\n');
+		}
+	}
+	
+	private void printGPrime(String title, PrintStream stream, List<Tuple<Integer, List<pcp.entities.simple.Node>>> ineqs) {
+		stream.print(title);
+		stream.print("\n");
+		for (Tuple<Integer, List<pcp.entities.simple.Node>> t : ineqs) {
 			stream.print(' ');
 			stream.print(t);
 			stream.print('\n');

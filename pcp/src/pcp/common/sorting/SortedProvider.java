@@ -6,6 +6,8 @@ import java.util.List;
 
 import pcp.definitions.Constants;
 import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Partition;
+import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IModelData;
 import pcp.interfaces.ISortedProvider;
@@ -15,7 +17,8 @@ import pcp.model.Model;
 public class SortedProvider implements ISortedProvider, Constants {
 
 	private IModelData data;
-	private Model model;
+	private PartitionedGraph graph;
+	private int colorCount;
 	
 	List<Integer> ascSortedColorsFrac;
 	List<Integer> descSortedColorsFrac;
@@ -27,11 +30,16 @@ public class SortedProvider implements ISortedProvider, Constants {
 	SortedPartitionedGraph descGraphs[];
 	
 	public SortedProvider(Model model, IModelData data) {
-		this.model = model;
+		this(model.getGraph(), model.getColorCount(), data);
+	}
+	
+	public SortedProvider(PartitionedGraph graph, int colorCount, IModelData data) {
+		this.graph = graph;
 		this.data = data;
+		this.colorCount = colorCount;
 		
-		this.ascGraphs = new SortedPartitionedGraph[model.getColorCount()];
-		this.descGraphs = new SortedPartitionedGraph[model.getColorCount()];
+		this.ascGraphs = new SortedPartitionedGraph[colorCount];
+		this.descGraphs = new SortedPartitionedGraph[colorCount];
 	}
 
 
@@ -47,6 +55,14 @@ public class SortedProvider implements ISortedProvider, Constants {
 		Comparator<Edge> comparator = new EdgeColorValueComparator(data, color);
 		if (!asc) {
 			comparator = new ReverseComparator<Edge>(comparator);
+		} return comparator;
+	}
+
+	@Override
+	public Comparator<Partition> getPartitionComparator(int color, boolean asc) {
+		Comparator<Partition> comparator = new PartitionColorValueComparator(data, color, graph);
+		if (!asc) {
+			comparator = new ReverseComparator<Partition>(comparator);
 		} return comparator;
 	}
 
@@ -101,7 +117,7 @@ public class SortedProvider implements ISortedProvider, Constants {
 	}
 	
 	public void fillSortedColors(LinkedList<Integer> list, boolean asc, boolean onlyFrac) {
-		for (int j = 0; j < model.getColorCount(); j++) {
+		for (int j = 0; j < colorCount; j++) {
 			if (!onlyFrac || (data.w(j) >= Epsilon && data.w(j) <= (1-Epsilon))) {
 				int index = 0;
 				while (index < list.size() && (asc 
@@ -118,10 +134,10 @@ public class SortedProvider implements ISortedProvider, Constants {
 	public SortedPartitionedGraph getSortedGraph(int color, boolean asc) {
 		SortedPartitionedGraph[] graphs = asc ? ascGraphs : descGraphs;
 		if (graphs[color] == null) {
-			graphs[color] = new SortedPartitionedGraph(model.getGraph(), 
+			graphs[color] = new SortedPartitionedGraph(graph, 
 					getNodeComparator(color, asc), 
 					getEdgeComparator(color, asc), 
-					null);
+					getPartitionComparator(color, asc));
 		} return graphs[color];
 	}
 

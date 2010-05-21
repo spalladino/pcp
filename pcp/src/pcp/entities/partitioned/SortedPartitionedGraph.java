@@ -9,6 +9,7 @@ import pcp.entities.ISimpleGraph;
 public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	PartitionedGraph graph;
+	ISimpleGraph gprime;
 	
 	Comparator<Partition> partitionComparer;
 	Comparator<Node> nodeComparer;
@@ -88,11 +89,20 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	@Override
 	public Node[] getNodes(Partition partition) {
-		if (this.partitionNodes[partition.name] == null) {
-			this.partitionNodes[partition.name] = graph.partitionNodes[partition.name].clone();
-			Arrays.sort(this.partitionNodes[partition.name], this.nodeComparer);
+		return getPartitionNodes(partition.name);
+	}
+
+	private Node[] getPartitionNodes(int index) {
+		if (this.partitionNodes[index] == null) {
+			this.partitionNodes[index] = graph.partitionNodes[index].clone();
+			Arrays.sort(this.partitionNodes[index], this.nodeComparer);
 		}
-		return this.partitionNodes[partition.name];
+		return this.partitionNodes[index];
+	}
+
+	@Override
+	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
+		return getPartitionNodes(simpleNode.index());
 	}
 
 	@Override
@@ -197,18 +207,14 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	@Override
 	public ISimpleGraph getGPrime() {
-		throw new UnsupportedOperationException();
-		//return graph.getGPrime();
+		if (gprime == null) {
+			gprime = new GPrimeBuilder(this).getGraph();
+		} return gprime;
 	}
 
 	@Override
 	public boolean areAdjacent(int n1, int n2) {
 		return graph.areAdjacent(n1, n2);
-	}
-
-	@Override
-	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
-		throw new UnsupportedOperationException();
 	}
 	
 }

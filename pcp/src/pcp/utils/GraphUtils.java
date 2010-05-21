@@ -26,21 +26,24 @@ public class GraphUtils {
 	}
 	
 	public static boolean checkComponentHole(IPartitionedGraph graph, List<Node> nodes) {
-		if (!checkHole(graph, nodes)) {
-			return false;
-		}
-		
+		return checkHole(graph, nodes) && checkComponent(graph, nodes);
+	}
+	
+	public static boolean checkComponentPath(IPartitionedGraph graph, List<Node> nodes) {
+		return checkPath(graph, nodes) && checkComponent(graph, nodes);
+	}
+	
+	public static boolean checkComponent(IPartitionedGraph graph, List<Node> nodes) {
 		Set<Partition> visited = new HashSet<Partition>();
 		for (Node node : nodes) {
 			if (visited.contains(node.getPartition())) {
-				System.err.println("Hole is not component hole: " + listNodes(nodes));
+				System.err.println("Set is not component set: " + listNodes(nodes));
 				return false;
 			} visited.add(node.getPartition());
 		}
-		
 		return true;
 	}
-	
+
 	public static boolean checkClique(IPartitionedGraph graph, List<Node> clique) {
 		for (int i = 0; i < clique.size(); i++) {
 			for (int j = i+1; j < clique.size(); j++) {
@@ -54,9 +57,21 @@ public class GraphUtils {
 		} return true;
 	}
 	
-	
-	
 	public static boolean checkHole(IPartitionedGraph graph, List<Node> nodes) {
+		return checkPath(graph, nodes) && checkHoleCloses(graph, nodes);
+	}
+	
+	private static boolean checkHoleCloses(IPartitionedGraph graph, List<Node> nodes) {
+		Node first = nodes.get(0);
+		Node last = nodes.get(nodes.size() - 1);
+		
+		if (!graph.areAdjacent(first.index(), last.index())) {
+			System.err.println("Hole first and last nodes are not adjacent");
+			return false;
+		} return true;
+	}
+
+	public static boolean checkPath(IPartitionedGraph graph, List<Node> nodes) {
 		Set<Node> visited = new HashSet<Node>();
 		LinkedList<Node> pending = new LinkedList<Node>(nodes);
 		
@@ -68,14 +83,14 @@ public class GraphUtils {
 		
 		// First two must be adjacent
 		if (v1.equals(v2) || !graph.areAdjacent(v1, v2)) {
-			System.err.println("Error checking hole " + listNodes(nodes));
+			System.err.println("Error checking path " + listNodes(nodes));
 			return false;
 		}
 		
 		check: while(!pending.isEmpty()) {
 			v3 = pending.poll();
 			if (v2.equals(v3) || !graph.areAdjacent(v2, v3)) {
-				System.err.println("Error checking hole " + listNodes(nodes));
+				System.err.println("Error checking path " + listNodes(nodes));
 				return false;
 			}
 			
@@ -84,7 +99,7 @@ public class GraphUtils {
 				if (v2adj.equals(v0)) break check;
 				// If we have seen this node, and it isnt the previous or the first one, error
 				if (visited.contains(v2adj)) {
-					System.err.println("Error checking hole " + listNodes(nodes));
+					System.err.println("Error checking path " + listNodes(nodes));
 					return false;
 				}
 			}
@@ -96,16 +111,11 @@ public class GraphUtils {
 			v2 = v3;
 		}
 		
-		// Last two must be adjacent
-		if (v0.equals(v2) || !graph.areAdjacent(v0, v2)) {
-			System.err.println("Error checking hole " + listNodes(nodes));
-			return false;
-		}
 		
 		// Make sure we have seen all of them
 		for (Node node : nodes) {
 			if (!visited.contains(node)) {
-				System.err.println("Unvisited nodes in hole " + listNodes(nodes));
+				System.err.println("Unvisited nodes in path " + listNodes(nodes));
 				return false;
 			}
 		}
@@ -142,6 +152,8 @@ public class GraphUtils {
 		}
 		return true;
 	}
+
+	
 	
 	
 }

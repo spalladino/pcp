@@ -9,17 +9,14 @@ options {
 PARSER_BEGIN(PortaParser)
 package porta.parser;
 
-import porta.processing.*;
-import porta.model.*;
-
 @SuppressWarnings("unchecked")
 public class PortaParser { 
 
-	BaseModel model;
-	ITranslator translator;
-	BaseConstraint current;
+	porta.model.BaseModel model;
+	porta.processing.ITranslator translator;
+	porta.model.BaseConstraint current;
 
-	public PortaParser initialize(BaseModel model, ITranslator t) {
+	public PortaParser initialize(porta.model.BaseModel model, porta.processing.ITranslator t) {
 		this.model = model;
 		this.translator = t;
 		this.current = null;
@@ -58,7 +55,7 @@ TOKEN :
 | 	< VARNAME: "X"|"x" >
 |	< NUMBER: (["0" - "9"])+ >
 }
-BaseModel ieq() : 
+porta.model.BaseModel ieq() : 
 { }
 {
 	dimension()
@@ -105,7 +102,7 @@ void term() :
 	i = natural()
 	
 	{ 
-		BaseVariable var = translator.convertPortaToModel(i);
+		porta.model.BaseVariable var = translator.convertPortaToModel(i);
 		current.addVar(var, s * n);
 	}
 }
