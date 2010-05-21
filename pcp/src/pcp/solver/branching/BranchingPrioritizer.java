@@ -43,9 +43,9 @@ public class BranchingPrioritizer {
 			Node node = graph.getNode(i);
 			int nodeprio = 
 					graph.getNeighbourPartitions(node).length * partitionsAdjFactor +
-					node.getPartition().getNodes().length * partitionSizeFactor +
+					graph.getNodes(node.getPartition()).length * partitionSizeFactor +
 					(graph.P() - graph.getNeighbourPartitions(node).length) * reversePartitionsAdjFactor +
-					(graph.N() - node.getPartition().getNodes().length) * reversePartitionSizeFactor;
+					(graph.N() - graph.getNodes(node.getPartition()).length) * reversePartitionSizeFactor;
 			
 			for (int j = 0; j < model.getColorCount(); j++) {
 				IloIntVar var = model.x(i, j);

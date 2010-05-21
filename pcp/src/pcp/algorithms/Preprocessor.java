@@ -82,14 +82,14 @@ public class Preprocessor {
 
 	private void processPartition(Partition partition) {
 		// Setup structures
-		Node[] sorted = partition.getNodes();
+		Node[] sorted = builder.getNodes(partition);
 		Arrays.sort(sorted, new NodeDegreeComparator());
 		List<Node[]> neighbourhoods = new ArrayList<Node[]>(sorted.length);
 		
 		// Iterate through nodes in degree ascending order
 		for (int n = 0; n < sorted.length; n++) {
 			Node node = sorted[n];
-			Node[] neighbours = node.getNeighbours();
+			Node[] neighbours = builder.getNeighbours(node);
 			
 			// If there is an empty node, remove this partition
 			if (neighbours.length == 0) {
@@ -136,7 +136,7 @@ public class Preprocessor {
 	private void removePartitionsWithIsolatedNodes() {
 		for (Node node : builder.getNodes()) {
 			if (builder.hasNode(node.index())) {
-				if (node.getNeighbours().length == 0) {
+				if (builder.getNeighbours(node).length == 0) {
 					if (log) System.out.println("Removing partition " + node.getPartition());
 					builder.removePartition(node.getPartition());
 				}

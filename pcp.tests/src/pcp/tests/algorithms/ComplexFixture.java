@@ -38,7 +38,7 @@ public class ComplexFixture {
 	private IPartitionedGraph[] induceFromNeighbourhoods(Node[] sources) {
 		IPartitionedGraph[] induced = new IPartitionedGraph[sources.length];
 		for (int i = 0; i < sources.length; i++) {
-			induced[i] = new InducedGraph(graph, sources[i].getNeighbours());
+			induced[i] = new InducedGraph(graph, graph.getNeighbours(sources[i]));
 		} return induced;
 	}
 	

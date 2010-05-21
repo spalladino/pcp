@@ -202,7 +202,7 @@ public class ModelBuilder {
 	protected void constrainAdjacencyPerPartitionLeqColor() throws IloException {
 		// Iterate for every i0
 		for (Node n : graph.getNodes()) {
-			Map<Partition, List<Node>> groupByPartition = GraphUtils.groupByPartition(n.getNeighbours());
+			Map<Partition, List<Node>> groupByPartition = GraphUtils.groupByPartition(graph.getNeighbours(n));
 			// Iterate on neighbouring partitions
 			for (List<Node> adjs : groupByPartition.values()) {
 				// Iterate on colors
@@ -231,8 +231,8 @@ public class ModelBuilder {
 		for (Node n : graph.getNodes()) {
 			
 			final int r = useCliqueCover 
-				? new CliqueCover(new InducedGraph(graph, n.getNeighbours()).getGPrime()).count()
-				: GraphUtils.groupByPartition(n.getNeighbours()).size();
+				? new CliqueCover(new InducedGraph(graph, graph.getNeighbours(n)).getGPrime()).count()
+				: GraphUtils.groupByPartition(graph.getNeighbours(n)).size();
 			
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
@@ -240,7 +240,7 @@ public class ModelBuilder {
 				// r * x_i0j0
 				expr.addTerm(xs[n.index()][j], r);
 				// sum i \in N(i0) x_ij0
-				for (Node adj : n.getNeighbours()) {
+				for (Node adj : graph.getNeighbours(n)) {
 					expr.addTerm(xs[adj.index()][j], 1);
 				}
 				// r * w_j0
@@ -292,7 +292,7 @@ public class ModelBuilder {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("P[%1$d]", p.index());
 			for (int j = 0; j < colors; j++) {
-				for (Node n : p.getNodes()) {
+				for (Node n : graph.getNodes(p)) {
 					expr.addTerm(xs[n.index()][j], 1);
 				}
 			}
@@ -309,7 +309,7 @@ public class ModelBuilder {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("P[%1$d]", p.index());
 			for (int j = 0; j < colors; j++) {
-				for (Node n : p.getNodes()) {
+				for (Node n : graph.getNodes(p)) {
 					expr.addTerm(xs[n.index()][j], 1);
 				}
 			}

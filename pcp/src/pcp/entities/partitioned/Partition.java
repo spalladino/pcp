@@ -9,10 +9,6 @@ public class Partition implements Comparable<Partition> {
 	int name;
 	IPartitionedGraph graph;
 	
-	public Node[] getNodes() {
-		return graph.getNodes(this);
-	}
-
 	public int index() {
 		return name;
 	}

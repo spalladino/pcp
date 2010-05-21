@@ -10,13 +10,14 @@ import pcp.definitions.Sorting;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.interfaces.IAlgorithmSource;
+import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
 import props.Settings;
 
 /**
  * Detects paths and holes sorting by current fractional values.
  */
-public class ComponentPathDetector extends Algorithm  {
+public class ComponentPathDetector extends Algorithm {
 	static boolean enabled = Settings.get().getBoolean("path.enabled");
 	static double minColorValue = Settings.get().getDouble("path.minColorValue");
 	static int maxColorCount = Settings.get().getInteger("path.maxColorCount");
@@ -179,7 +180,7 @@ public class ComponentPathDetector extends Algorithm  {
 		if (current == null) return null;
 		
 		// Iterate over all neighbours but excluded and those enough visited
-		for (Node n : current.getNeighbours()) {
+		for (Node n : graph.getNeighbours(current)) {
 			// if (excluded == null || !excluded.equals(n)){
 			if (!inPath[n.index()]) {
 				if ((nodeVisits[n.index()] < maxNodeVisits) && (edgeVisits[current.index()][n.index()] < maxEdgeVisits)) {
@@ -238,6 +239,11 @@ public class ComponentPathDetector extends Algorithm  {
 		double alpha = IntUtils.floorhalf(holeLength);
 		
 		return sum > alpha * valW;
+	}
+
+	@Override
+	public CutFamily getIdentifier() {
+		return CutFamily.Hole;
 	}
 	
 }

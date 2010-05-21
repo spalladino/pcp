@@ -11,10 +11,6 @@ public class Node implements Comparable<Node> {
 	public int index() {
 		return name;
 	}
-
-	public Node[] getNeighbours() {
-		return graph.getNeighbours(this);
-	}
 	
 	public int getDegree() {
 		return graph.getDegree(this);

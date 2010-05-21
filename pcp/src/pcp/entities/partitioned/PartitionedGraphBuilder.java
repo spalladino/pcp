@@ -317,8 +317,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	@Override
 	public Node[] getNeighbours(Partition p) {
 		Set<Node> nodes = new HashSet<Node>();
-		for (Node n : p.getNodes()) {
-			for (Node neighbour : n.getNeighbours()) {
+		for (Node n : getNodes(p)) {
+			for (Node neighbour : this.getNeighbours(n)) {
 				nodes.add(neighbour);
 			}
 		} return (Node[]) nodes.toArray(new Node[nodes.size()]);

@@ -31,7 +31,7 @@ public class InitialCutBuilder implements ICutBuilder {
 			String name = String.format("BLOCK[%1$d]", color);
 			
 			for (int j = color + 1; j < model.getColorCount(); j++) {
-				for (Node node : partition.getNodes()) {
+				for (Node node : model.getGraph().getNodes(partition)) {
 					expr.addTerm(model.x(node.index(), j), 1);
 				}  
 			}

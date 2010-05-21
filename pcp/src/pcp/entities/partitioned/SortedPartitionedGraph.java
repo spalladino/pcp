@@ -107,7 +107,7 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 	public Node[] getNeighboursPlusCopartition(Node node) {
 		if (this.adjacenciesCopartitionNodes[node.name] == null) {
 			final Node[] n = getNeighbours(node);
-			final Node[] p = getPartition(node).getNodes();
+			final Node[] p = getNodes(getPartition(node));
 			final Node[] target = new Node[n.length + p.length - 1];
 			
 			int i = 0;

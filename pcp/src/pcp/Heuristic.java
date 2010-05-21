@@ -34,6 +34,7 @@ public class Heuristic {
 		BuilderStrategy strategy = BuilderStrategy.fromSettings();
 
 		for (PartitionedGraphBuilder builder : factory.getGraphBuilders(filename, Integer.MAX_VALUE)) {
+			System.out.println("Applying heuristic to " + filename);
 			ExecutionData data = new ExecutionData().withProblemSettings();
 			data.withOriginalInputData(builder);
 			

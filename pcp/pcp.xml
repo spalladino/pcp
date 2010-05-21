@@ -37,8 +37,7 @@
 	
 	<target name="compile" depends="dependencies" description="Compiles all java classes in source directory">
 		<mkdir dir="${classes.dir}" />
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" 
-			compiler="javac${remote.version}" target="${remote.version}" source="${remote.version}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
 	</target>
 
 	<target name="jar" depends="compile" description="Creates a jar file from compiled classes">

@@ -30,13 +30,13 @@ public class ConnectivityChecker {
 		
 		while(!this.pending.isEmpty()) {
 			Node current = this.pending.poll();
-			for (Node n : current.getNeighbours()) {
+			for (Node n : graph.getNeighbours(current)) {
 				if (!this.visited[n.index()]) {
 					this.pending.add(n);
 					this.visited[n.index()] = true;
 				}
 			}
-			for (Node n : current.getPartition().getNodes()) {
+			for (Node n : graph.getNodes(current.getPartition())) {
 				if (!this.visited[n.index()]) {
 					this.pending.add(n);
 					this.visited[n.index()] = true;

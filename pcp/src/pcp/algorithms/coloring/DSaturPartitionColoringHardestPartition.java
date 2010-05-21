@@ -40,7 +40,7 @@ public class DSaturPartitionColoringHardestPartition extends
 		
 		// Once chosen, pick the easiest node
 		Node minNode = null;
-		for (Node n : graph.getPartitions()[hardest.index()].getNodes()) {
+		for (Node n : graph.getNodes(graph.getPartitions()[hardest.index()])) {
 			if (minNode == null 
 				|| colorCount[n.index()] < colorCount[minNode.index()] 
                 || (colorCount[n.index()] == colorCount[minNode.index()] 
@@ -55,7 +55,7 @@ public class DSaturPartitionColoringHardestPartition extends
 	private int getWeight(Partition p) {
 		return (partitionColorCount[p.index()] * colorCountWeight) +
 			((colorAdjPartitions ? graph.P() : graph.N()) - partitionColorAdj[p.index()][0]) * uncoloredWeight +
-			(p.getNodes().length * sizeWeight);
+			(graph.getNodes(p).length * sizeWeight);
 	}
 
 	@Override

@@ -9,6 +9,10 @@ drafts/*.aux
 drafts/*.bbl
 drafts/*.blg
 drafts/*.log
+latex/*.aux
+latex/*.bbl
+latex/*.blg
+latex/*.log
 *.orig
 *.pyc
 *.run

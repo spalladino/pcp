@@ -21,7 +21,7 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 			
 			// Pick the easiest node in the partition
 			Node minNode = null;
-			for (Node n : p.getNodes()) {
+			for (Node n : graph.getNodes(p)) {
 				if (minNode == null 
 					|| colorCount[n.index()] < colorCount[minNode.index()] 
                     || (colorCount[n.index()] == colorCount[minNode.index()] 

@@ -10,6 +10,9 @@
 
 \usetheme{warsaw}
 
+\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+\newcommand{\lpineq}[2]{\[ #1 \qquad #2 \]}
 
 \begin{document}
 
@@ -28,30 +31,168 @@
 
 \setlength{\parskip}{10pt plus 1pt minus 1pt}
 
-\section{Problem}
+\section{Introduction}
+\subsection{Problem definition}
 
 \begin{frame}
-\frametitle{PCP}
+\frametitle{Partitioned Colouring Problem}
 
-Problem definition, application, Li and Sinha, previous work as branch and cut
+\begin{definition}
+Given a graph $G=(V,E,P)$, being $P$ a partitioning of the set of nodes $\{V_1,\ldots,V_p\}$, $G$ is \textit{partition coloured} if exactly one node $v_i$ per partition $V_i$ is coloured and no two adjacents nodes have the same colour.
+\end{definition}
+
+As with the standard graph colouring problem, we seek to minimize the number of colours required to partition-colour the graph.
 
 \end{frame} 
+
+\begin{frame} 
+\frametitle{Motivation}
+
+Introduced by Li and Sinha in 2000 as a means to solve the Routing and Wavelength Assignment (RWA) problem in Wavelength Division Multiplexed (WDM) optical networks. 
+
+Used to handle wavelength assignment conflicts between lightpaths sharing common fiber links.
+
+Other techniques to solve the RWA problem itself are out of the scope of this work.
+
+\end{frame} 
+
+\subsection{Related work}
+
+\begin{frame} 
+\frametitle{Related work}
+
+\begin{description}[Noronha, Ribeiro; 2006]
+
+\item[Li, Simha; 2000]{Greedy one step and two step heuristics}
+\item[Noronha, Ribeiro; 2006]{Tabu search heuristic}
+\item[Frota et al; 2009]{Branch and cut based on asymmetric representatives formulation}
+
+\end{description}
+
+\pause
+
+We will propose an alternative integer programming formulation of the problem based on Mendez-Diaz and Zabala's model for standard coloring.
+
+\end{frame} 
+
+\section{Model}
+\subsection{Model definition}
 
 \begin{frame}
 \frametitle{Model}
 
-Present the definitive model used in the algorithm
-Comment other models considered?
-Compare to standard CP, by showing original model and adding constraints
+Every variable $x_ij$ is true if vertex $i$ is colored with color $j$. Variables $w_j$ are true if color $j$ is used in coloring the graph. 
+
+\uncover<1->{
+\lpobjective{Minimize sum of colors used}
+{\min \sum_{j \in C} w_{j}}
+}
+
+\uncover<2->{
+\lprestriction{Neighbours shall not have the same colour, and variable $w_j$ must be true if the color is to be used}
+{x_{ij} + x_{kj} \leq w_j}{\forall j, \forall (i,k) \in E}
+}
+\uncover<3->{
+\lprestriction{Every \only<3>{vertex}\alert<4>{\only<4>{partition}} has exactly one colour assigned}
+{\uncover<4>{\sum _{x_i \in p}} \sum_{j \in C} x_{ij} = 1}{\forall i \in V \uncover<4>{, p \in P}}
+}
 
 \end{frame} 
 
 \begin{frame}
-\frametitle{Ineqs}
+\frametitle{Breaking symmetries}
 
-List inequalities, comment separation algorithms, cut application strategies
+We also take symmetry breaking constraints from the original model.
+
+\lprestriction{Color $j$ cannot be used unless color $j-1$ was used}
+{w_{j} \leq w_{j-1}}{\forall j \neq 0 \in C}
+
+\lprestriction{Color $j$ is only used if there is actually a node colored with it}
+{{\sum_{i \in V}} x_{ij} \geq w_j}{\forall j \in C}
+
 
 \end{frame} 
+
+
+\begin{frame}
+\frametitle{Reworking adjacency constraints}
+
+Adjacency constraints can be replaced by either of the following, which improve the relaxation's resolution.
+
+\lprestriction{A node $i_0$ and all of its neighbours in a partition $p_0$ cannot share the same the color}
+{\sum_{i \in p_0 \cap N(i_0)} x_{ij_0} + x_{i_0j_0} \leq w_{j_0}}{\forall i_0 \in V, j_0 \in C, p_0 \in P}
+
+
+\lprestriction{A color $j_0$ may be used on a node $i_0$ or on at most $r$ of its neighbours, being $r$ the number of different partitions in $N(i_0)$}
+{\sum_{i \in N(i_0)} x_{ij_0} + r \times x_{i_0j_0} \leq r \times w_{j_0}}{ \forall j_0 \in C, i_0 \in V}
+
+\end{frame} 
+
+\subsection{Valid inequalities}
+
+\begin{frame}
+\frametitle{Extended clique inequalities}
+
+Let $K \subseteq V$ an \textit{extended clique} if for every pair $v,w \in K$, either $v$ and $w$ are adjacent or belong to the same partition.
+
+We define the extended clique inequality as
+\lpineq{\sum_{i \in K} x_{ij_0} \leq w_{j_0}}{\forall j_0 \in C}
+
+We use a greedy heuristic to find maximal cliques in the graph which violate this inequality.
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Block color inequalities}
+
+Given the symmetry breaking constraints, if a partition is not be coloured with color $j$ then it cannot be coloured using any colour with a higher label.
+
+This allows us to define the block color constraints as:
+\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}
+
+All these constraints are simply handled by brute force.
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Component independent set inequalities}
+
+Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v,w \in I$, $v$ and $w$ are not adjacent and belong to different partitions.
+
+This allows us to reuse the independent set inequality from the standard coloring problem.
+
+\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
+
+Which can be strengthened considering symmetry breaking.
+
+\lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
+{\forall j_0 \leq n - \alpha(G)}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Hole and path inequalities}
+
+Component independent set inequalities can be specialized as component hole and component path inequalities, using $\lfloor |H|/2 \rfloor$ and $\lceil |P|/2 \rceil$ respectively as their cardinals.
+
+We use a greedy heuristic constructing a path from each node for each colour. The criteria for choosing a node is based on its corresponding $x_ij$ value and whether it has been previously visited or not.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{G' indepentent set inequalities}
+
+Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V' = P$ and $E'$ such that $p_1,p_2 \in V'$ are adjacent iif every node in partition $p_1$ in $G$ is adjacent to every node in partition $p_2$ in $G$. More formally:
+\[
+V' = P, \qquad E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
+\]
+
+This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
+
+\lpineq{\sum{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
+
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Branch and cut}

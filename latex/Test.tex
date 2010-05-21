@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[landscape, 12pt]{report}
 %\usepackage[spanish]{babel}
 \usepackage[ansinew]{inputenc}
 \usepackage{amsmath}
@@ -6,6 +6,7 @@
 \usepackage{exscale}
 \usepackage{indentfirst}
 \usepackage{latexsym}
+\usepackage[landscape]{geometry}
 
 \newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
 \newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
@@ -16,13 +17,16 @@
 \setlength{\textwidth}{\paperwidth}\addtolength{\textwidth}{-2\margen}
 \setlength{\textheight}{\paperheight}\addtolength{\textheight}{-2\margen}
 \setlength{\topmargin}{\margen}\addtolength{\topmargin}{-38mm}
-\setlength{\oddsidemargin}{\margen}\addtolength{\oddsidemargin}{-26mm}
-\setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-26mm}
+\setlength{\oddsidemargin}{\margen}\addtolength{\oddsidemargin}{-46mm}
+\setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-46mm}
 
 \begin{document}
 
+\tiny
+
 Data:
 \begin{itemize}
+\item preprocess.time
 \item solution.time
 \item solution.chi
 \end{itemize}
@@ -32,16 +36,74 @@ Series:
 \item S2: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
 \item S3: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
 \item S4: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
-\item S5: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
+\item S5: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
+\item S6: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
+\item S7: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
+\item S8: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
+\item S9: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
+\item S10: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
 \end{itemize}
-\begin{tabular}{|c|cc|cc|cc|cc|cc|}
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8} & \multicolumn{3}{|c|}{S9} & \multicolumn{3}{|c|}{S10}
 \\
-rand30.in &    1 &    3 &    1 &    3 &    1 &    3 &    1 &    3 &    1 &    3
+rand100.in &  203 & 76.703 &    4 &  203 & 59.953 &    4 &  203 & 36.187 &    4 &  204 & 38.313 &    4 &  203 & 44.875 &    4 &  203 & 47.609 &    4 &  203 & 155.734 &    4 &  203 & 76.843 &    4 &  203 & 43.687 &    4 &  203 & 36.188 &    4
 \\
-rand40.in &    1 &    3 &    1 &    3 &    4 &    3 &    1 &    3 &    1 &    3
+rand110.in &  281 & 53.547 &    4 &  282 & 34.39 &    4 &  281 & 12.953 &    4 &  281 & 39.328 &    4 &  282 & 34.875 &    4 &  281 & 39.265 &    4 &  282 & 65.437 &    4 &  281 & 53.578 &    4 &  281 & 14.281 &    4 &  282 & 12.922 &    4
 \\
-rand50.in &    4 &    3 &    2 &    3 &    3 &    3 &    4 &    3 &    2 &    3
+rand120.in &  328 & 1800.031 &    4 &  344 & 481.0 &    4 &  344 & 782.344 &    4 &  328 & 692.828 &    4 &  344 & 814.547 &    4 &  328 & 848.968 &    4 &  329 & 477.766 &    4 &  328 & 1800.015 &    4 &  328 & 815.093 &    4 &  328 & 782.297 &    4
+\\
+rand50.in &  109 & 0.453 &    3 &   94 & 0.547 &    3 &  109 & 0.172 &    3 &  109 & 0.172 &    3 &   94 & 0.187 &    3 &  109 & 0.203 &    3 &  110 & 0.562 &    3 &  125 & 0.468 &    3 &  109 & 0.203 &    3 &  110 & 0.187 &    3
+\\
+rand60.in &  125 & 0.766 &    3 &  109 & 0.813 &    3 &  157 & 0.172 &    3 &  125 & 0.187 &    3 &  109 & 0.25 &    3 &  125 & 0.266 &    3 &  125 & 0.797 &    3 &  110 & 0.75 &    3 &  125 & 0.25 &    3 &  125 & 0.172 &    3
+\\
+rand70.in &  125 & 0.766 &    3 &  125 & 0.953 &    3 &  125 & 0.219 &    3 &  125 & 0.328 &    3 &  125 & 0.313 &    3 &  125 & 0.421 &    3 &  125 & 0.954 &    3 &  125 & 0.781 &    3 &  125 & 0.313 &    3 &  125 & 0.219 &    3
+\\
+rand80.in &  172 & 3.843 &    4 &  172 & 4.657 &    4 &  188 & 1.578 &    4 &  188 & 1.969 &    4 &  172 & 3.109 &    4 &  172 & 3.25 &    4 &  171 & 7.516 &    4 &  172 & 3.86 &    4 &  172 & 3.235 &    4 &  171 & 1.578 &    4
+\\
+rand90.in &  234 & 48.078 &    4 &  235 & 59.156 &    4 &  234 & 16.344 &    4 &  219 & 8.031 &    4 &  219 & 28.969 &    4 &  219 & 34.906 &    4 &  219 & 19.156 &    4 &  219 & 45.985 &    4 &  219 & 15.828 &    4 &  218 & 16.219 &    4
 \\
 \end{tabular}
+
+\clearpage
+
+Data:
+\begin{itemize}
+\item preprocess.time
+\item solution.time
+\item solution.chi
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
+\item S2: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
+\item S3: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
+\item S4: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
+\item S5: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
+\item S6: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
+\item S7: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
+\item S8: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
+\item S9: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
+\item S10: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8} & \multicolumn{3}{|c|}{S9} & \multicolumn{3}{|c|}{S10}
+\\
+rand100.in &  203 & 76.703 &    4 &  203 & 59.953 &    4 &  203 & 36.187 &    4 &  204 & 38.313 &    4 &  203 & 44.875 &    4 &  203 & 47.609 &    4 &  203 & 155.734 &    4 &  203 & 76.843 &    4 &  203 & 43.687 &    4 &  203 & 36.188 &    4
+\\
+rand110.in &  281 & 53.547 &    4 &  282 & 34.39 &    4 &  281 & 12.953 &    4 &  281 & 39.328 &    4 &  282 & 34.875 &    4 &  281 & 39.265 &    4 &  282 & 65.437 &    4 &  281 & 53.578 &    4 &  281 & 14.281 &    4 &  282 & 12.922 &    4
+\\
+rand120.in &  328 & 1800.031 &    4 &  344 & 481.0 &    4 &  344 & 782.344 &    4 &  328 & 692.828 &    4 &  344 & 814.547 &    4 &  328 & 848.968 &    4 &  329 & 477.766 &    4 &  328 & 1800.015 &    4 &  328 & 815.093 &    4 &  328 & 782.297 &    4
+\\
+rand50.in &  109 & 0.453 &    3 &   94 & 0.547 &    3 &  109 & 0.172 &    3 &  109 & 0.172 &    3 &   94 & 0.187 &    3 &  109 & 0.203 &    3 &  110 & 0.562 &    3 &  125 & 0.468 &    3 &  109 & 0.203 &    3 &  110 & 0.187 &    3
+\\
+rand60.in &  125 & 0.766 &    3 &  109 & 0.813 &    3 &  157 & 0.172 &    3 &  125 & 0.187 &    3 &  109 & 0.25 &    3 &  125 & 0.266 &    3 &  125 & 0.797 &    3 &  110 & 0.75 &    3 &  125 & 0.25 &    3 &  125 & 0.172 &    3
+\\
+rand70.in &  125 & 0.766 &    3 &  125 & 0.953 &    3 &  125 & 0.219 &    3 &  125 & 0.328 &    3 &  125 & 0.313 &    3 &  125 & 0.421 &    3 &  125 & 0.954 &    3 &  125 & 0.781 &    3 &  125 & 0.313 &    3 &  125 & 0.219 &    3
+\\
+rand80.in &  172 & 3.843 &    4 &  172 & 4.657 &    4 &  188 & 1.578 &    4 &  188 & 1.969 &    4 &  172 & 3.109 &    4 &  172 & 3.25 &    4 &  171 & 7.516 &    4 &  172 & 3.86 &    4 &  172 & 3.235 &    4 &  171 & 1.578 &    4
+\\
+rand90.in &  234 & 48.078 &    4 &  235 & 59.156 &    4 &  234 & 16.344 &    4 &  219 & 8.031 &    4 &  219 & 28.969 &    4 &  219 & 34.906 &    4 &  219 & 19.156 &    4 &  219 & 45.985 &    4 &  219 & 15.828 &    4 &  218 & 16.219 &    4
+\\
+\end{tabular}
+
 \end{document}

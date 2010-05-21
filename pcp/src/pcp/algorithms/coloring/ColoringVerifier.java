@@ -20,7 +20,7 @@ public class ColoringVerifier {
 		
 		for (Partition p : graph.getPartitions()) {
 			int colored = 0;
-			for (Node n : p.getNodes()) {
+			for (Node n : graph.getNodes(p)) {
 				if (coloring.getColor(n.index()) != null) {
 					colored++;
 				}

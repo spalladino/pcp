@@ -1,18 +1,18 @@
 import processor
 import metrics
 
-if __name__ == '__main__':
-    p = processor.Processor()
-    #p.summary()
-    #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
-    #p.graphprops("graph.edges", "solution.time", "edges-time.png")
-    #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
-    #p.graph("graph.nodes", "solution.time", series= ["holes.maxPerColor"], fname= "nodestime.png")
+def simpletable(p):    
+    p.simpletable(["graph.nodes", "preprocess.time","solution.time", "solution.chi"], ["path.enabled", 
+                    "clique.enabled",
+                    "blockColor.enabled",
+                    "gprime.holes.enabled",
+                    "holes.enabled",
+                    "branch.prios.enabled",
+                    "primal.enabled"], None, {'run.folder': '.\\..\\data\\rand075\\'})
     
-    #p.graph("graph.nodes", metrics.cutcount("Holes"), series= ["holes.maxPerColor"])
-    
-    p.latextable(ids=['run.filename'],
-                 datas=["solution.time", "solution.chi"], 
+def latextable(p):    
+        p.latextable(ids=['run.filename'],
+                 datas=["preprocess.time","solution.time", "solution.chi"], 
                   series=["path.enabled", 
                     "clique.enabled",
                     "blockColor.enabled",
@@ -22,3 +22,15 @@ if __name__ == '__main__':
                     "primal.enabled"],
                   datafilter= {'run.folder': '.\\..\\data\\rand025\\'}
                   )
+
+if __name__ == '__main__':
+    p = processor.Processor()
+    latextable(p)
+    #p.summary()
+    #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
+    #p.graphprops("graph.edges", "solution.time", "edges-time.png")
+    #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
+    #p.graph("graph.nodes", "solution.time", series= ["holes.maxPerColor"], fname= "nodestime.png")
+    
+    #p.graph("graph.nodes", metrics.cutcount("Holes"), series= ["holes.maxPerColor"])
+
