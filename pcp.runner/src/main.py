@@ -4,9 +4,35 @@ if __name__ == '__main__':
     #if not resume():
     newrun([
                 {
-                    'solver.kind': 'Heuristic'
+                    'solver.kind': 'CplexDynamicSearch', 
+                    'solver.useHeuristicCallback': 'false',
+                    'solver.useBranchingCallback': 'false',
+                    'solver.useCplexPrimalHeuristic': 'true'
                 },
- 
+                {
+                    'solver.kind': 'Heuristic',
+                },
+                {
+                    'solver.kind': 'PcpCutAndBranch',
+                    'primal.enabled': 'true',
+                    'strategy.adjacency': 'AdjacentsNeighbourhood'
+                },
+                {
+                    'solver.kind': 'PcpCutAndBranch',
+                    'primal.enabled': 'true',
+                },
+                {
+                    'solver.kind': 'PcpCutAndBranch',
+                    'primal.enabled': 'false',
+                },
+                {
+                    'solver.kind': 'PcpBranchAndCut',
+                    'primal.enabled': 'true',
+                },
+                {
+                    'solver.kind': 'PcpBranchAndCut',
+                    'primal.enabled': 'false',
+                },
  
             ], 
             
@@ -21,5 +47,6 @@ if __name__ == '__main__':
                     
             dirs = [
                         ".\\..\\data\\rand025\\",
+                        ".\\..\\data\\rand050\\",
                         ".\\..\\data\\rand075\\",
                     ])

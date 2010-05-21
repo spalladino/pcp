@@ -44,7 +44,7 @@ public class Heuristic {
 			data.withInputData(graph);
 			ColoringAlgorithm solver = factory
 				.coloring(strategy.getColoring(), graph)
-				.withBounder(new IterationsBounder("coloring.initial"));
+				.withBounder(new IterationsBounder("coloring.full"));
 		
 			new ColoringVerifier(graph).verify(solver);
 			
