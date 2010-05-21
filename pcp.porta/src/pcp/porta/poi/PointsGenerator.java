@@ -58,10 +58,10 @@ public class PointsGenerator implements IPointsGenerator {
 		if (partitionIndex == graph.P()) {
 			addCurrent();
 		} else {
-			for (Node node : graph.getPartitions()[partitionIndex].getNodes()) {
+			for (Node node : graph.getNodes(graph.getPartitions()[partitionIndex])) {
 				for (int j = 0; j < cardinals.colorCount; j++) {
 					boolean canColor = true;
-					for (Node neighbour : node.getNeighbours()) {
+					for (Node neighbour : graph.getNeighbours(node)) {
 						if (current[neighbour.index()] == j) {
 							canColor = false;
 							break;

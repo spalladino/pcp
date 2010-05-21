@@ -52,13 +52,13 @@ public class GraphBuilderFixture {
 		
 		assertCounts(7, 6, 3);
 		
-		assertEquals(2, graph.getNode(0).getNeighbours().length);
-		assertEquals(2, graph.getNode(1).getNeighbours().length);
-		assertEquals(1, graph.getNode(2).getNeighbours().length);
-		assertEquals(1, graph.getNode(3).getNeighbours().length);
-		assertEquals(3, graph.getNode(4).getNeighbours().length);
-		assertEquals(1, graph.getNode(5).getNeighbours().length);
-		assertEquals(2, graph.getNode(6).getNeighbours().length);
+		assertEquals(2, graph.getNode(0).getDegree());
+		assertEquals(2, graph.getNode(1).getDegree());
+		assertEquals(1, graph.getNode(2).getDegree());
+		assertEquals(1, graph.getNode(3).getDegree());
+		assertEquals(3, graph.getNode(4).getDegree());
+		assertEquals(1, graph.getNode(5).getDegree());
+		assertEquals(2, graph.getNode(6).getDegree());
 		
 		Partition p0 = graph.getPartitions()[0];
 		Partition p1 = graph.getPartitions()[1];
@@ -85,8 +85,8 @@ public class GraphBuilderFixture {
 
 		assertCounts(2, 1, 1);
 		
-		assertEquals(0, graph.getPartitions()[0].getNodes()[0].index());
-		assertEquals(1, graph.getPartitions()[0].getNodes()[1].index());
+		assertEquals(0, graph.getNodes(graph.getPartitions()[0])[0].index());
+		assertEquals(1, graph.getNodes(graph.getPartitions()[0])[1].index());
 		
 		assertEquals(0, graph.getEdges()[0].getNode1().index());
 		assertEquals(1, graph.getEdges()[0].getNode2().index());

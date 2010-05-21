@@ -40,7 +40,7 @@ public class BlockColorCuts implements Constants, IBoundedAlgorithm {
 				// Sum over colors greater than the initial
 				for (int j = j0 + 1; j < provider.getModel().getColorCount(); j++) {
 					// Add all nodes in the partition for that color
-					for (Node node : partition.getNodes()) {
+					for (Node node : graph.getNodes(partition)) {
 						sum += provider.getData().x(node.index(), j);
 					}  
 				}

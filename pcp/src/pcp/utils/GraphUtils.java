@@ -125,15 +125,15 @@ public class GraphUtils {
 	 * Returns true if every node in one partition is adjacent to every node in the other one.
 	 * @return true if every node in one partition is adjacent to every node in the other one.
 	 */
-	public static boolean areBipartite(Partition p1, Partition p2) {
-		return checkAllNodesAdjacent(p1, p2) && checkAllNodesAdjacent(p2, p1);  
+	public static boolean areBipartite(IPartitionedGraph graph, Partition p1, Partition p2) {
+		return checkAllNodesAdjacent(graph, p1, p2) && checkAllNodesAdjacent(graph, p2, p1);  
 	}
 	
-	private static boolean checkAllNodesAdjacent(Partition p1, Partition p2) {
-		for (Node n1 : p1.getNodes()) {
+	private static boolean checkAllNodesAdjacent(IPartitionedGraph graph, Partition p1, Partition p2) {
+		for (Node n1 : graph.getNodes(p1)) {
 			Set<Node> pending = new HashSet<Node>();
-			Collections.addAll(pending, p2.getNodes());
-			for (Node adj : n1.getNeighbours()) {
+			Collections.addAll(pending, graph.getNodes(p2));
+			for (Node adj : graph.getNeighbours(n1)) {
 				pending.remove(adj);
 			}
 			if (!pending.isEmpty()) {

@@ -211,7 +211,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		colorClass[node.index()] = color;
 		coloredNodeInPartition[node.getPartition().index()] = node;
 		
-		for (Node n1 : node.getNeighbours()) {
+		for (Node n1 : graph.getNeighbours(node)) {
 			increaseColorCount(n1, color);
 		}
 	}
@@ -221,7 +221,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		colorClass[node.index()] = 0;
 		coloredNodeInPartition[node.getPartition().index()] = null;
 		
-		for (Node n1 : node.getNeighbours()) {
+		for (Node n1 : graph.getNeighbours(node)) {
 			decreaseColorCount(n1, color);
 		}
 	}

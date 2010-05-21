@@ -22,7 +22,7 @@ public class GPrimeBuilder extends SimpleGraphBuilder {
 		
 		for (int i = 0; i < ps.length; i++) {
 			for (int j = i+1; j < ps.length; j++) {
-				if (GraphUtils.areBipartite(ps[i], ps[j])) {
+				if (GraphUtils.areBipartite(graph, ps[i], ps[j])) {
 					this.addEdge(i, j);
 				}
 			}

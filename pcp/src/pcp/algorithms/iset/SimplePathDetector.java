@@ -17,7 +17,7 @@ import props.Settings;
 /**
  * Detects paths and holes sorting by current fractional values.
  */
-public class ComponentPathDetector extends Algorithm {
+public class SimplePathDetector extends Algorithm  {
 	static boolean enabled = Settings.get().getBoolean("path.enabled");
 	static double minColorValue = Settings.get().getDouble("path.minColorValue");
 	static int maxColorCount = Settings.get().getInteger("path.maxColorCount");
@@ -48,11 +48,11 @@ public class ComponentPathDetector extends Algorithm {
 	boolean foundPath;
 	
 	
-	public ComponentPathDetector(IAlgorithmSource source) {
+	public SimplePathDetector(IAlgorithmSource source) {
 		super(source);
 	}
 	
-	public ComponentPathDetector run() {
+	public SimplePathDetector run() {
 		if (!enabled) return this;
 		bounder.start();
 		
@@ -243,7 +243,7 @@ public class ComponentPathDetector extends Algorithm {
 
 	@Override
 	public CutFamily getIdentifier() {
-		return CutFamily.Hole;
+		return CutFamily.GPHole;
 	}
 	
 }

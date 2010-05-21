@@ -53,7 +53,7 @@ public class Verifier {
 	private void everyPartitionHasOneColoredNode() throws UnknownObjectException, IloException, AlgorithmException {
 		for (Partition p : graph.getPartitions()) {
 			int coloredCount = 0;
-			for (Node n : p.getNodes()) {
+			for (Node n : graph.getNodes(p)) {
 				double[] nodeColors = solver.xs(n.index());
 				int nodeColorsCount = 0;
 				for (int c = 0; c < nodeColors.length; c++) {

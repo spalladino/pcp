@@ -73,7 +73,7 @@ public class Processor implements IProcessor {
 	 */
 	public void restoreNodeFirstColorVariable(Constraint constraint) {
 		for (pcp.entities.partitioned.Partition partition : graph.getPartitions()) {
-			Node[] nodes = partition.getNodes();
+			Node[] nodes = graph.getNodes(partition);
 			
 			int i = 0;
 			Integer minMult = null;

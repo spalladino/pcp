@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pcp.algorithms.block.BlockColorCuts;
+import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.clique.ExtendedCliqueCutter;
-import pcp.algorithms.clique.ExtendedCliqueDetector;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.algorithms.holes.HolesCuts;
+import pcp.algorithms.iset.ComponentPathDetector;
+import pcp.algorithms.iset.SimplePathDetector;
 import pcp.definitions.Comparisons;
 import pcp.definitions.Constants;
 import pcp.entities.IPartitionedGraph;
@@ -36,6 +38,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 
 	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("holes.useBreakingSymmetry");
+	static boolean useGreekAlgorithm = Settings.get().getBoolean("cuts.useGreekAlgorithm");
 	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
@@ -52,10 +55,10 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	IPartitionedGraph graph;
 	IloMPModeler modeler;
 	
-	ExtendedCliqueDetector cliques;
-	ComponentHolesCuts holes;
-	BlockColorCuts blocks;
-	HolesCuts gholes;
+	IBoundedAlgorithm cliques;
+	IBoundedAlgorithm holes;
+	IBoundedAlgorithm blocks;
+	IBoundedAlgorithm gholes;
 	
 	CutsMetrics metrics;
 	int iters = 0;
@@ -123,8 +126,14 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		
 		// If a not good enough number of cuts is performed, try other families
 		if (metrics.getCurrentIterCount(cliques, blocks) < minCliques) {
-			holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
-			gholes = new HolesCuts(iteration.forAlgorithm()).run();
+			if (useGreekAlgorithm) {
+				holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
+				gholes = new HolesCuts(iteration.forAlgorithm()).run();
+			} else {
+				holes = new ComponentPathDetector(iteration.forAlgorithm()).run();
+				gholes = new SimplePathDetector(iteration.forAlgorithm()).run();
+			}
+			 
 		}
 		
 		// Log running times
@@ -205,7 +214,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			String name = String.format("BLOCK[%1$d]", color);
 			
 			for (int j = color + 1; j < model.getColorCount(); j++) {
-				for (Node node : partition.getNodes()) {
+				for (Node node : graph.getNodes(partition)) {
 					expr.addTerm(model.x(node.index(), j), 1);
 				}  
 			} expr.addTerm(model.w(color), -1);

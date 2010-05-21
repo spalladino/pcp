@@ -191,15 +191,15 @@ public class GraphParseFixture {
 		assertEquals(1, n1.index());
 		assertEquals(2, n2.index());
 		
-		assertEquals(2, n0.getNeighbours().length);
-		assertEquals(n1, n0.getNeighbours()[0]);
-		assertEquals(n2, n0.getNeighbours()[1]);
+		assertEquals(2, n0.getDegree());
+		assertEquals(n1, graph.getNeighbours(n0)[0]);
+		assertEquals(n2, graph.getNeighbours(n0)[1]);
 		
-		assertEquals(1, n1.getNeighbours().length);
-		assertEquals(n0, n1.getNeighbours()[0]);
+		assertEquals(1, graph.getNeighbours(n1).length);
+		assertEquals(n0, graph.getNeighbours(n1)[0]);
 		
-		assertEquals(1, n2.getNeighbours().length);
-		assertEquals(n0, n2.getNeighbours()[0]);
+		assertEquals(1, graph.getNeighbours(n2).length);
+		assertEquals(n0, graph.getNeighbours(n2)[0]);
 		
 		assertEquals(true, graph.areAdjacent(n0, n1));
 		assertEquals(true, graph.areAdjacent(n0, n2));
@@ -211,12 +211,12 @@ public class GraphParseFixture {
 		assertEquals(0, p0.index());
 		assertEquals(1, p1.index());
 	
-		assertEquals(2, p0.getNodes().length);
-		assertEquals(1, p1.getNodes().length);
+		assertEquals(2, graph.getNodes(p0).length);
+		assertEquals(1, graph.getNodes(p1).length);
 		
-		assertEquals(n0, p0.getNodes()[0]);
-		assertEquals(n1, p0.getNodes()[1]);
-		assertEquals(n2, p1.getNodes()[0]);
+		assertEquals(n0 ,graph.getNodes(p0)[0]);
+		assertEquals(n1, graph.getNodes(p0)[1]);
+		assertEquals(n2, graph.getNodes(p1)[0]);
 		
 		assertEquals(p0, n0.getPartition());
 		assertEquals(p0, n1.getPartition());
