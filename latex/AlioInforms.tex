@@ -16,7 +16,7 @@
 
 \begin{document}
 
-\title{PCP}
+\title{A Branch \& Cut Algorithm for the Partitioned Graph Coloring Problem}
 \author{Santiago Palladino}
 \date{June 2010}
 
@@ -180,11 +180,11 @@ We use a greedy heuristic constructing a path from each node for each colour. Th
 \end{frame}
 
 \begin{frame}
-\frametitle{G' indepentent set inequalities}
+\frametitle{G' independent set inequalities}
 
 Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V' = P$ and $E'$ such that $p_1,p_2 \in V'$ are adjacent iif every node in partition $p_1$ in $G$ is adjacent to every node in partition $p_2$ in $G$. More formally:
 \[
-V' = P, \qquad E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
+E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
 \]
 
 This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
@@ -193,23 +193,95 @@ This grants another way to reuse independent set inequalities from the standard 
 
 \end{frame}
 
+\section{Branch \& Cut}
 
 \begin{frame}
-\frametitle{Branch and cut}
+\frametitle{Branch and Cut}
 
-Branching strategy, primal heuristic, pruning
-Using DSATUR
-Initial?
+Using the model previously defined along with the valid inequalities implemented as cutting planes, we implemented a branch and cut algorithm to tackle this problem, adding initial and primal heuristics and specific branching strategies.
+
+\end{frame} 
+
+\subsection{Cuts}
+
+\begin{frame}
+\frametitle{Cutting planes}
+
+We implemented the inequalities in the previous section as cutting planes, tested initially in a Cut and Branch algorithm, and then added to a Branch and Cut structure.
+
+Cuts are applied aggressively on the root of the branching tree and every few nodes on the rest of the tree until a certain depth, in order to keep relaxations easy to solve.
+
+\end{frame}
+
+\subsection{DSatur}
+\begin{frame}
+\frametitle{DSatur}
+
+DSatur is an exact method for finding an optimal coloring for a graph by implicitly enumerating all possible colourings.
+
+It is a sequential algorithm in which nodes are chosen based on the \textit{degree of saturation}: the number of different colours used for its neighbours in the current solution. 
+
+Harder nodes (higher 
+degree of saturation) are chosen first.
 
 \end{frame} 
 
 \begin{frame}
+\frametitle{Extending DSatur}
+
+Classic DSatur is used for standard colouring. We propose two extensions for partitioned colouring:
+
+\begin{itemize}
+
+\item{\textit{Easiest node:} We first select the easiest node (lowest degree of saturation) to be coloured in each partition, and then we apply standard criteria to pick the hardest one from that set.}
+
+\item{\textit{Hardest partition:} We first pick the hardest partition to be coloured according to its degree of saturation, size and uncoloured nodes; and then we pick the easiest node (lowest degree) from that partition.}
+
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Heuristics}
+
+Although DSatur is an exact algorithm, it quickly generates good enough solutions, therefore being a good heuristic by bounding the number of iterations or time.
+
+DSatur proved to be an excellent initial heuristic, sometimes actually arriving to the optimal solution by itself.
+
+We also adapted it to serve as a primal heuristic by fixing all nodes with a high enough value in the relaxation and executing DSatur on the remaining ones.
+
+\end{frame} 
+
+\subsection{Branching}
+\begin{frame}
+\frametitle{Branching}
+
+We established a static branching strategy for $x_{ij}$ variables prioritizing on:
+
+\begin{itemize}
+\item{The higher the number of partitions adjacent to node $i$}
+\item{The smaller the size of the partition where node $i$ is}
+\item{The higher the colour label $j$}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Pruning}
+
+When the number of $x_{ij}$ variables fixed to $1$ during the branching process is high enough, we stop the branch and cut algorithm in that node, pruning the subtree.
+
+The exact solution corresponding to that node is found using DSatur as an exact algorithm, enumerating all possible colourings of the remaining partitions.
+
+\end{frame}
+
+\begin{frame}
 \frametitle{Results}
 
-Results in cut and branch, to determine strategies
-Then results in branch and cut, show that there was improvement by applying cuts in more nodes
-Show time and node count
-Compare vs cplex and brazil, br cannot be compared in terms of time, only node size, be polite
+%Results in cut and branch, to determine strategies
+%Then results in branch and cut, show that there was improvement by applying cuts in more nodes
+%Show time and node count
+%Compare vs cplex and brazil, br cannot be compared in terms of time, only node size, be polite
 
 \end{frame} 
 
