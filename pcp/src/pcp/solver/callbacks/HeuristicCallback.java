@@ -8,8 +8,10 @@ import pcp.Factory;
 import pcp.algorithms.bounding.SolutionsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
 import pcp.solver.heur.HeuristicMetrics;
 import pcp.utils.ModelUtils;
@@ -142,6 +144,61 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	}
 	
 	private int fillPrimalColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
+		return (model.getStrategy().getAdjacencyConstraints().equals(Adjacency.AdjacentsNeighbourhood))
+			? fillPrimalColoringAdjacencyStrategy(coloring)
+			: fillPrimalColoringNonAdjacencyStrategy(coloring);
+	}
+
+	private int fillPrimalColoringAdjacencyStrategy(ColoringAlgorithm coloring)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		
+		// Iterate over nodes and colors checking for highest value among neighbours
+		for (Node node : graph.getNodes()) {
+			
+			for (int j = 0; j < model.getColorCount(); j++) {
+				
+				// Check if value is high enough to pass the lower bound
+				double val = super.getValue(model.x(node.index(), j));
+				if (val < nodeLB) continue;
+				boolean isCandidate = true;
+				
+				// Check if it has the highest value among neighbours
+				for (Node adj : graph.getNeighbours(node)) {
+					if (val <= super.getValue(model.x(adj.index(), j))) {
+						isCandidate = false;
+						break;
+					}
+				}
+				
+				if (!isCandidate) {
+					continue;
+				}
+				
+				// Same for copartition
+				for (Node adj : graph.getNodes(node.getPartition())) {
+					if (val <= super.getValue(model.x(adj.index(), j))) {
+						isCandidate = false;
+						break;
+					}
+				}
+				
+				if (!isCandidate) {
+					continue;
+				}
+				
+				// Use that color for the node
+				coloring.useColor(node.index(), j);
+				fixedCount++;
+				break;
+			}
+		}
+		
+		return fixedCount;
+	}
+
+	private int fillPrimalColoringNonAdjacencyStrategy(ColoringAlgorithm coloring)
+			throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		for (int j = 0; j < model.getColorCount(); j++) {
 			for (int i = 0; i < model.getNodeCount(); i++) {
@@ -153,6 +210,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			}
 		} return fixedCount;
 	}
+
 	
 	private int countNodesEqualOne() throws IloException {
 		IntegerFeasibilityStatus[] feasibilities = super.getFeasibilities(model.getAllXs());
