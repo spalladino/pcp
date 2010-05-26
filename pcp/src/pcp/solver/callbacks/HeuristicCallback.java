@@ -177,7 +177,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				
 				// Same for copartition
 				for (Node adj : graph.getNodes(node.getPartition())) {
-					if (val <= super.getValue(model.x(adj.index(), j))) {
+					if (adj.index() != node.index() && val <= super.getValue(model.x(adj.index(), j))) {
 						isCandidate = false;
 						break;
 					}

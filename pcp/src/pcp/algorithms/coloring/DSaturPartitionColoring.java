@@ -98,6 +98,11 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		else return bestColorClass[node] - 1;
 	}
 	
+	public int[] getBestColorClass() throws AlgorithmException {
+		if (!hasrun) getChi();
+		return bestColorClass;
+	}
+	
 	@Override
 	public void useColor(int node, int color) throws AlgorithmException {
 		if (log) System.out.println("Using color " + (color + 1) + " for node " + (node + logNodeBase));
