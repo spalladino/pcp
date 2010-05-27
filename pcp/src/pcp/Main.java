@@ -83,6 +83,8 @@ public class Main {
 		execution.withInputData(graph);
 		
 		solver.getCplex().setParam(IntParam.MIPDisplay, Settings.get().getInteger("logging.mipdisplay"));
+		solver.getCplex().setParam(IntParam.MIPInterval, Settings.get().getInteger("logging.mipinterval"));
+		
 		solver.solve();
 		solver.fillExecutionData(execution.getData());
 		
