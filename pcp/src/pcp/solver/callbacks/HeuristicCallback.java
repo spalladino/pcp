@@ -11,7 +11,6 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
-import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
 import pcp.solver.heur.HeuristicMetrics;
 import pcp.utils.ModelUtils;
@@ -133,10 +132,19 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	}
 	
 	private void fillLeafColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
-		for (int j = 0; j < model.getColorCount(); j++) {
-			for (int i = 0; i < model.getNodeCount(); i++) {
+		boolean[] colored = new boolean[graph.P()];
+		
+		for (int i = 0; i < model.getNodeCount(); i++) {
+			
+			Node node = graph.getNode(i);
+			if (colored[node.getPartition().index()]) {
+				continue;
+			}
+			
+			for (int j = 0; j < model.getColorCount(); j++) {
 				IloIntVar x = model.x(i, j);
 				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) {
+					colored[node.getPartition().index()] = true;
 					coloring.useColor(i, j);
 				}
 			}
@@ -144,17 +152,21 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	}
 	
 	private int fillPrimalColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
-		return (model.getStrategy().getAdjacencyConstraints().equals(Adjacency.AdjacentsNeighbourhood))
-			? fillPrimalColoringAdjacencyStrategy(coloring)
-			: fillPrimalColoringNonAdjacencyStrategy(coloring);
+		return fillPrimalColoringSafe(coloring);
 	}
 
-	private int fillPrimalColoringAdjacencyStrategy(ColoringAlgorithm coloring)
+	private int fillPrimalColoringSafe(ColoringAlgorithm coloring)
 			throws IloException, AlgorithmException {
 		int fixedCount = 0;
+		boolean[] colored = new boolean[graph.P()];
 		
 		// Iterate over nodes and colors checking for highest value among neighbours
 		for (Node node : graph.getNodes()) {
+			
+			// Paint each partition only once regardless of the model
+			if (colored[node.getPartition().index()]) {
+				continue;
+			}
 			
 			for (int j = 0; j < model.getColorCount(); j++) {
 				
@@ -165,7 +177,8 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				
 				// Check if it has the highest value among neighbours
 				for (Node adj : graph.getNeighbours(node)) {
-					if (val <= super.getValue(model.x(adj.index(), j))) {
+					if (val <= super.getValue(model.x(adj.index(), j))
+					|| (val == super.getValue(model.x(adj.index(), j)) && node.index() > adj.index())) {
 						isCandidate = false;
 						break;
 					}
@@ -177,7 +190,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				
 				// Same for copartition
 				for (Node adj : graph.getNodes(node.getPartition())) {
-					if (adj.index() != node.index() && val <= super.getValue(model.x(adj.index(), j))) {
+					if (adj.index() != node.index() && 
+						((val <= super.getValue(model.x(adj.index(), j)))
+						|| (val == super.getValue(model.x(adj.index(), j)) && node.index() > adj.index()))) {
 						isCandidate = false;
 						break;
 					}
@@ -189,6 +204,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				
 				// Use that color for the node
 				coloring.useColor(node.index(), j);
+				colored[node.getPartition().index()] = true;
 				fixedCount++;
 				break;
 			}
@@ -197,7 +213,8 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		return fixedCount;
 	}
 
-	private int fillPrimalColoringNonAdjacencyStrategy(ColoringAlgorithm coloring)
+	@SuppressWarnings("unused")
+	private int fillPrimalColoringFast(ColoringAlgorithm coloring)
 			throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		for (int j = 0; j < model.getColorCount(); j++) {
