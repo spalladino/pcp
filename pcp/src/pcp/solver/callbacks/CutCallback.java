@@ -39,8 +39,10 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
 	static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
+	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
+	static boolean logCallback = Settings.get().getBoolean("logging.callback.cuts");
 	
 	static int maxItersRoot = Settings.get().getInteger("iterations.root.max");
 	static int maxItersNodes = Settings.get().getInteger("iterations.nodes.max");
@@ -62,9 +64,9 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	CutsMetrics metrics;
 	int iters = 0;
 	int lastNnodes = -1;
-	int maxIters;
+
 	boolean doneFirst = false;
-	boolean onlyRoot;
+	boolean onlyRoot = false;
 	
 	double[] ws;
 	double[][] xs;
@@ -73,28 +75,38 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		this.modeler = modeler;
 		this.metrics = new CutsMetrics();
 		this.onlyRoot = onlyRoot;
-		this.maxIters = onlyRoot ? maxItersRoot : maxItersNodes;
 	}
 	
 	@Override
 	protected void main() throws IloException {
+		if (logCallback) System.out.println(("Node " + super.getNnodes()));
+		
+		// Skip first iteration of all as it takes place even before first relaxation is solved
+		if (!doneFirst) {
+			doneFirst = true;
+			return;
+		}
+		
 		// Only cuts on initial node if specified
 		if (onlyRoot && super.getNnodes() > 0) {
-			if (doneFirst) return;
-			doneFirst = true;
 			return;
 		}
 
 		// Do not add cuts on every node
 		if (super.getNnodes() > 0 && super.getNnodes() % cutEvery != 0) {
+			if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes());
 			return;
 		}
 		
 		// On certain depth, don't make any more cuts
-		if (maxCutsDepth < ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
-				super.getLBs(model.getAllXs()),
-				super.getUBs(model.getAllXs()))) {
-			return;
+		if (super.getNnodes() > 0) {
+			final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
+					super.getLBs(model.getAllXs()),
+					super.getUBs(model.getAllXs()));
+			if (maxCutsDepth < countNodesFixed) {
+				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + countNodesFixed);
+				return;
+			}
 		}
 		
 		// Reset iter count on node change
@@ -104,12 +116,14 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// Run a maximum number of times on each node
+		int maxIters = super.getNnodes() == 0 ? maxItersRoot : maxItersNodes;
 		if (maxIters > 0 && maxIters <= iters) {
-			if (onlyRoot || logIterData) System.out.println("Ended cut callback execution after " + iters + " iterations.");
+			if (onlyRoot || logCallback) System.out.println("Ended cut callback execution after " + iters + " iterations.");
 			return;
 		} metrics.newIter(); iters++;
 		
 		// Create whatever data is needed for this iteration
+		if (logCallback) System.out.println("Setting up cuts iteration data");
 		setupIterationData();
 
 		// Log what needs to be logged
@@ -120,15 +134,20 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// Cut initial families
+		if (logCallback) System.out.println("Initiating clique cuts");
 		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
+		
+		if (logCallback) System.out.println("Initiating block color cuts");
 		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
 		
 		// If a not good enough number of cuts is performed, try other families
 		if (metrics.getCurrentIterCount(cliques, blocks) < minCliques) {
 			if (!usePathsAlgorithm) {
+				if (logCallback) System.out.println("Initiating holes and gholes cuts using greek algorithm");
 				holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
 				gholes = new HolesCuts(iteration.forAlgorithm()).run();
 			} else {
+				if (logCallback) System.out.println("Initiating holes and gholes cuts using path greedy algorithm");
 				holes = new ComponentPathDetector(iteration.forAlgorithm()).run();
 				gholes = new SimplePathDetector(iteration.forAlgorithm()).run();
 			}
@@ -137,6 +156,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		
 		// Log running times
 		metrics.setIterTime(cliques, holes, blocks, gholes);
+		if (logCallback) System.out.println("Finished cuts iteration");
 	}
 
 	@Override
