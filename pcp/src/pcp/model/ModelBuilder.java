@@ -89,6 +89,10 @@ public class ModelBuilder {
 				constrainUseLowerLabelFirst();
 				constrainUseColorIfNodesPainted();
 				break;
+			case UseLowerLabelFirstStrengthened:
+				constrainUseLowerLabelFirst();
+				constrainLowerLabelStrengthened();
+				break;
 			case UseLowerLabelFirst:
 				constrainUseLowerLabelFirst();
 				break;
@@ -155,9 +159,26 @@ public class ModelBuilder {
 	protected void constrainUseLowerLabelFirst() throws IloException {
 		for (int j = 0; j < colors-1; j++) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("BS%1$d", j);
+			String name = String.format("BS[%1$d]", j);
 			expr.addTerm(ws[j], 1);
 			expr.addTerm(ws[j+1], -1);
+			modeler.addGe(expr, 0, name);
+		}
+	}
+
+	/**
+	 * Creates symmetry break constraints sum_j w_j \geq sum_j j x_ij 
+	 * @throws IloException 
+	 */
+	protected void constrainLowerLabelStrengthened() throws IloException {
+		for (Node n : graph.getNodes()) {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("BSSTR[%1$d]", n.index());
+			for (int j = 0; j < colors; j++) {
+				expr.addTerm(ws[j], 1);
+				expr.addTerm(xs[n.index()][j], -j);
+			}
+			
 			modeler.addGe(expr, 0, name);
 		}
 	}
