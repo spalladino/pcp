@@ -12,15 +12,11 @@ def simpletable(p):
     
 def latextable(p):    
         p.latextable(ids=['run.filename'],
-                 datas=["preprocess.time","solution.time", "solution.chi"], 
-                  series=["path.enabled", 
-                    "clique.enabled",
-                    "blockColor.enabled",
-                    "gprime.holes.enabled",
-                    "holes.enabled",
-                    "branch.prios.enabled",
-                    "primal.enabled"],
-                  datafilter= {'run.folder': '.\\..\\data\\rand025\\'}
+                 datas=["preprocess.time", "solution.time", "solution.nnodes", "solution.gap"], 
+                  series=["solver.kind",
+                          "primal.enabled"],
+                  datafilter= {'run.folder': '.\\..\\data\\rand050\\'},
+                  runfilter= (lambda x: x['strategy.adjacency'] != 'AdjacentsNeighbourhood') 
                   )
 
 if __name__ == '__main__':

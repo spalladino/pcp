@@ -23,86 +23,37 @@
 \begin{document}
 
 \tiny
-
+Processing Runid 20100521195953
 Data:
 \begin{itemize}
 \item preprocess.time
 \item solution.time
-\item solution.chi
+\item solution.nnodes
+\item solution.gap
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
-\item S2: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
-\item S3: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
-\item S4: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
-\item S5: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
-\item S6: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
-\item S7: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
-\item S8: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
-\item S9: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
-\item S10: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
+\item S1: solver.kind: CplexDynamicSearch, primal.enabled: true
+\item S2: solver.kind: Heuristic, primal.enabled: true
+\item S3: solver.kind: PcpBranchAndCut, primal.enabled: false
+\item S4: solver.kind: PcpBranchAndCut, primal.enabled: true
+\item S5: solver.kind: PcpCutAndBranch, primal.enabled: false
+\item S6: solver.kind: PcpCutAndBranch, primal.enabled: true
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8} & \multicolumn{3}{|c|}{S9} & \multicolumn{3}{|c|}{S10}
+\begin{tabular}{|c|cccc|cccc|cccc|cccc|cccc|cccc|}
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3} & \multicolumn{4}{|c|}{S4} & \multicolumn{4}{|c|}{S5} & \multicolumn{4}{|c|}{S6}
 \\
-rand100.in &  203 & 76.703 &    4 &  203 & 59.953 &    4 &  203 & 36.187 &    4 &  204 & 38.313 &    4 &  203 & 44.875 &    4 &  203 & 47.609 &    4 &  203 & 155.734 &    4 &  203 & 76.843 &    4 &  203 & 43.687 &    4 &  203 & 36.188 &    4
+rand100.in &  438 & 3600.078 & 15926 & 0.166666666664 & None &   16 & None & None &  422 & 1383.625 & 3212 & None &  437 & 1342.5 & 3212 & None &  422 & 3600.063 & 1386 & 0.166666666664 &  422 & 3600.094 & 1388 & 0.166666666664
 \\
-rand110.in &  281 & 53.547 &    4 &  282 & 34.39 &    4 &  281 & 12.953 &    4 &  281 & 39.328 &    4 &  282 & 34.875 &    4 &  281 & 39.265 &    4 &  282 & 65.437 &    4 &  281 & 53.578 &    4 &  281 & 14.281 &    4 &  282 & 12.922 &    4
+rand120.in & 1015 & 3600.094 & 9476 & 0.374999999995 & None &  375 & None & None & 1015 & 3600.047 & 2357 & 0.55921731281 & 1015 & 3600.141 & 2493 & 0.55921731281 & 1016 & 3600.109 & 1021 & 0.54205607476 & 1015 & 3600.156 & 1035 & 0.54205607476
 \\
-rand120.in &  328 & 1800.031 &    4 &  344 & 481.0 &    4 &  344 & 782.344 &    4 &  328 & 692.828 &    4 &  344 & 814.547 &    4 &  328 & 848.968 &    4 &  329 & 477.766 &    4 &  328 & 1800.015 &    4 &  328 & 815.093 &    4 &  328 & 782.297 &    4
+rand140.in &  937 & 3600.125 & 11309 & 0.249999999997 & None &  125 & None & None &  938 & 3600.109 & 2647 & 0.437499999995 &  953 & 3600.031 & 2866 & 0.437499999995 &  953 & 3600.094 &  973 & 0.505403458207 &  953 & 3600.25 &  977 & 0.499999999994
 \\
-rand50.in &  109 & 0.453 &    3 &   94 & 0.547 &    3 &  109 & 0.172 &    3 &  109 & 0.172 &    3 &   94 & 0.187 &    3 &  109 & 0.203 &    3 &  110 & 0.562 &    3 &  125 & 0.468 &    3 &  109 & 0.203 &    3 &  110 & 0.187 &    3
+rand160.in & 5734 & 3600.094 & 2224 & 0.33333333333 & None & 4516 & None & None & 5688 & 3600.157 &  108 & 0.637653127008 & 5688 & 3600.188 &  108 & 0.637653127008 & 5656 & 3600.219 &  139 & 0.722222222214 & 5672 & 3600.187 &  141 & 0.722222222214
 \\
-rand60.in &  125 & 0.766 &    3 &  109 & 0.813 &    3 &  157 & 0.172 &    3 &  125 & 0.187 &    3 &  109 & 0.25 &    3 &  125 & 0.266 &    3 &  125 & 0.797 &    3 &  110 & 0.75 &    3 &  125 & 0.25 &    3 &  125 & 0.172 &    3
+rand180.in & 124438 & 3600.109 &   31 & 0.44444444444 & None & 121828 & None & None & 122859 & 3600.157 &   25 & 0.64285714285 & 122735 & 3600.25 &   25 & 0.64285714285 & 122719 & 3600.125 &  113 & 0.740740740733 & 122719 & 3600.172 &  118 & 0.740740740733
 \\
-rand70.in &  125 & 0.766 &    3 &  125 & 0.953 &    3 &  125 & 0.219 &    3 &  125 & 0.328 &    3 &  125 & 0.313 &    3 &  125 & 0.421 &    3 &  125 & 0.954 &    3 &  125 & 0.781 &    3 &  125 & 0.313 &    3 &  125 & 0.219 &    3
-\\
-rand80.in &  172 & 3.843 &    4 &  172 & 4.657 &    4 &  188 & 1.578 &    4 &  188 & 1.969 &    4 &  172 & 3.109 &    4 &  172 & 3.25 &    4 &  171 & 7.516 &    4 &  172 & 3.86 &    4 &  172 & 3.235 &    4 &  171 & 1.578 &    4
-\\
-rand90.in &  234 & 48.078 &    4 &  235 & 59.156 &    4 &  234 & 16.344 &    4 &  219 & 8.031 &    4 &  219 & 28.969 &    4 &  219 & 34.906 &    4 &  219 & 19.156 &    4 &  219 & 45.985 &    4 &  219 & 15.828 &    4 &  218 & 16.219 &    4
-\\
-\end{tabular}
-
-\clearpage
-
-Data:
-\begin{itemize}
-\item preprocess.time
-\item solution.time
-\item solution.chi
-\end{itemize}
-Series:
-\begin{itemize}
-\item S1: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
-\item S2: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
-\item S3: path.enabled: false, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
-\item S4: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: false, primal.enabled: false
-\item S5: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: false
-\item S6: path.enabled: false, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: false, branch.prios.enabled: true, primal.enabled: true
-\item S7: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
-\item S8: path.enabled: true, clique.enabled: false, blockColor.enabled: false, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
-\item S9: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: false, primal.enabled: false
-\item S10: path.enabled: true, clique.enabled: true, blockColor.enabled: true, gprime.holes.enabled: false, holes.enabled: true, branch.prios.enabled: true, primal.enabled: true
-\end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8} & \multicolumn{3}{|c|}{S9} & \multicolumn{3}{|c|}{S10}
-\\
-rand100.in &  203 & 76.703 &    4 &  203 & 59.953 &    4 &  203 & 36.187 &    4 &  204 & 38.313 &    4 &  203 & 44.875 &    4 &  203 & 47.609 &    4 &  203 & 155.734 &    4 &  203 & 76.843 &    4 &  203 & 43.687 &    4 &  203 & 36.188 &    4
-\\
-rand110.in &  281 & 53.547 &    4 &  282 & 34.39 &    4 &  281 & 12.953 &    4 &  281 & 39.328 &    4 &  282 & 34.875 &    4 &  281 & 39.265 &    4 &  282 & 65.437 &    4 &  281 & 53.578 &    4 &  281 & 14.281 &    4 &  282 & 12.922 &    4
-\\
-rand120.in &  328 & 1800.031 &    4 &  344 & 481.0 &    4 &  344 & 782.344 &    4 &  328 & 692.828 &    4 &  344 & 814.547 &    4 &  328 & 848.968 &    4 &  329 & 477.766 &    4 &  328 & 1800.015 &    4 &  328 & 815.093 &    4 &  328 & 782.297 &    4
-\\
-rand50.in &  109 & 0.453 &    3 &   94 & 0.547 &    3 &  109 & 0.172 &    3 &  109 & 0.172 &    3 &   94 & 0.187 &    3 &  109 & 0.203 &    3 &  110 & 0.562 &    3 &  125 & 0.468 &    3 &  109 & 0.203 &    3 &  110 & 0.187 &    3
-\\
-rand60.in &  125 & 0.766 &    3 &  109 & 0.813 &    3 &  157 & 0.172 &    3 &  125 & 0.187 &    3 &  109 & 0.25 &    3 &  125 & 0.266 &    3 &  125 & 0.797 &    3 &  110 & 0.75 &    3 &  125 & 0.25 &    3 &  125 & 0.172 &    3
-\\
-rand70.in &  125 & 0.766 &    3 &  125 & 0.953 &    3 &  125 & 0.219 &    3 &  125 & 0.328 &    3 &  125 & 0.313 &    3 &  125 & 0.421 &    3 &  125 & 0.954 &    3 &  125 & 0.781 &    3 &  125 & 0.313 &    3 &  125 & 0.219 &    3
-\\
-rand80.in &  172 & 3.843 &    4 &  172 & 4.657 &    4 &  188 & 1.578 &    4 &  188 & 1.969 &    4 &  172 & 3.109 &    4 &  172 & 3.25 &    4 &  171 & 7.516 &    4 &  172 & 3.86 &    4 &  172 & 3.235 &    4 &  171 & 1.578 &    4
-\\
-rand90.in &  234 & 48.078 &    4 &  235 & 59.156 &    4 &  234 & 16.344 &    4 &  219 & 8.031 &    4 &  219 & 28.969 &    4 &  219 & 34.906 &    4 &  219 & 19.156 &    4 &  219 & 45.985 &    4 &  219 & 15.828 &    4 &  218 & 16.219 &    4
+rand200.in & 302204 & 3600.187 & None & 0.794117647052 & None & 3600000 & None & None & 302203 & 3600.343 & None & 0.77272727272 & 302187 & 3600.235 & None & 0.77272727272 & 302188 & 3600.265 &    5 & 0.787878787872 & 302188 & 3600.328 &    5 & 0.787878787872
 \\
 \end{tabular}
 
