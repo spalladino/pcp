@@ -39,6 +39,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
 	static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
+	static boolean local = Settings.get().getBoolean("cuts.local");
 	
 	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
 	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
@@ -263,7 +264,12 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			? modeler.le(expr, 0, name)
 			: modeler.ge(expr, 0, name);
 			
-		super.add(range);
+		if (local) {
+			super.addLocal(range);
+		} else {
+			super.add(range);
+		}
+		
 		metrics.added(cut, range);
 		
 		if (checkViolatedCut || logIneqs) {
