@@ -212,6 +212,12 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		Node node1 = getCreateNode(n1);
 		Node node2 = getCreateNode(n2);
 		
+		// Do not add repeated edges
+		if (this.nodeAdjacencies.get(node1).contains(node2) ||
+			this.nodeAdjacencies.get(node2).contains(node1)) {
+			return this;
+		}
+		
 		edges.add(new Edge(node1, node2));
 		
 		nodeAdjacencies.get(node1).add(node2);

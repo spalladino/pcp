@@ -14,18 +14,29 @@ public class DimacsParser implements IGraphParser {
 		String[] tokens = readProblemLine(reader);
 		if (tokens == null) return null;
 		
+		boolean isPartitioned = tokens.length == 5;
 		int nodeCount = Integer.valueOf(tokens[2]);
 		int edgeCount = Integer.valueOf(tokens[3]);
-		int partCount = Integer.valueOf(tokens[4]);
-	
-		PartitionedGraphBuilder builder = new PartitionedGraphBuilder(tokens[1]);
+		int partCount = isPartitioned ? Integer.valueOf(tokens[4]) : nodeCount;
 		
-		readPartitionsList(reader, builder, partCount, nodeCount);
+		String name = tokens[1];
+		
+		PartitionedGraphBuilder builder = new PartitionedGraphBuilder(name);
+		
+		if (isPartitioned) readPartitionsList(reader, builder, partCount, nodeCount);
+		else createPartitionForEachNode(builder, nodeCount);
 		readEdgesList(reader, builder, edgeCount, nodeCount);
 		
 		checkCounts(nodeCount, edgeCount, partCount, builder);
 		
 		return builder;
+	}
+
+	private void createPartitionForEachNode(PartitionedGraphBuilder builder,
+			int nodeCount) {
+		for (int i = 0; i < nodeCount; i++) {
+			builder.addNode(i, i);
+		}
 	}
 
 	private void checkCounts(int nodeCount, int edgeCount, int partCount, PartitionedGraphBuilder builder) throws DimacsParseException {
@@ -113,7 +124,7 @@ public class DimacsParser implements IGraphParser {
 		if (problemLine == null) return null;
 		
 		String[] tokens = problemLine.split(" ");
-		if (tokens.length !=5 || !tokens[0].equalsIgnoreCase("p")) {
+		if (tokens.length < 4 || tokens.length > 5 || !tokens[0].equalsIgnoreCase("p")) {
 			throw new DimacsParseException("Expecting problem line with parameters: name nodecount edgecount partitioncount: " + problemLine);
 		}
 		
