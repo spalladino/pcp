@@ -48,9 +48,9 @@ As with the standard graph colouring problem, we seek to minimize the number of 
 \begin{frame} 
 \frametitle{Motivation}
 
-Introduced by Li and Sinha in 2000 as a means to solve the Routing and Wavelength Assignment (RWA) problem in Wavelength Division Multiplexed (WDM) optical networks. 
+Introduced as a means to solve the Routing and Wavelength Assignment (RWA) problem in Wavelength Division Multiplexed (WDM) optical networks.
 
-Used to handle wavelength assignment conflicts between lightpaths sharing common fiber links.
+Used to handle wavelength assignment conflicts between lightpaths sharing common fiber links, minimizing the number of wavelengths used, when all connection requirements are already known.
 
 Other techniques to solve the RWA problem itself are out of the scope of this work.
 
@@ -210,6 +210,15 @@ Using the model previously defined along with the valid inequalities implemented
 We implemented the inequalities in the previous section as cutting planes, tested initially in a Cut and Branch algorithm, and then added to a Branch and Cut structure.
 
 Cuts are applied aggressively on the root of the branching tree and every few nodes on the rest of the tree until a certain depth, in order to keep relaxations easy to solve.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Cutting planes}
+
+The cuts with the best performance were Extended Clique and Block Color, and are therefore the most aggressively applied. 
+
+Component independent set and $G'$ independent set cuts are applied only if a minimum number of the previous cuts is not found.
 
 \end{frame}
 
