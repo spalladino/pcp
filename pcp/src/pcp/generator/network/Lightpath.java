@@ -3,22 +3,23 @@ package pcp.generator.network;
 import java.util.ArrayList;
 import java.util.List;
 
+import pcp.utils.IntUtils;
+
 public class Lightpath {
 
+	public static class UndirectedLink extends Link {
+		public UndirectedLink(int from, int to) {
+			super(IntUtils.min(from, to), IntUtils.max(from, to));
+		}
+	}
 	
-	
-	public static class UndirectedLink {
+	public static class Link {
 		int from;
 		int to;
 		
-		public UndirectedLink(int from, int to) {
-			if (to < from) {
-				this.from = to;
-				this.to = from;
-			} else {
-				this.from = from;
-				this.to = to;
-			}
+		public Link(int from, int to) {
+			this.from = from;
+			this.to = to;
 		}
 
 		public int getFrom() {
@@ -61,6 +62,13 @@ public class Lightpath {
 
 		public Route() {
 			this.nodes = new ArrayList<Integer>();
+		}
+		
+		public List<Link> getDirectedLinks() {
+			List<Link> links = new ArrayList<Link>(this.nodes.size()-1);
+			for (int i = 1; i < this.nodes.size(); i++) {
+				links.add(new Link(nodes.get(i-1), nodes.get(i)));
+			} return links;
 		}
 		
 		public List<UndirectedLink> getUndirectedLinks() {

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import pcp.generator.DimacsPartitionedGraph;
 import pcp.generator.GraphProperties;
-import pcp.generator.network.Lightpath.UndirectedLink;
+import pcp.generator.network.Lightpath.Link;
 import pcp.generator.network.Lightpath.Route;
 
 import com.google.common.collect.HashMultimap;
@@ -26,7 +26,7 @@ public class NetworkGraphBuilder {
 		
 		// Extract network graph data
 		Map<Route, Integer> routeIds = getRouteIds(paths);
-		Multimap<UndirectedLink, Route> linksRoutes = getLinksRoutes(paths);
+		Multimap<Link, Route> linksRoutes = getLinksRoutes(paths);
 		
 		// Each route is represented by a node
 		int nodeCount = routeIds.size();  
@@ -42,7 +42,7 @@ public class NetworkGraphBuilder {
 		
 		// Conflicts arise when two routes share a link
 		boolean[][] conflicts = new boolean[nodeCount][nodeCount];
-		for (UndirectedLink link : linksRoutes.keySet()) {
+		for (Link link : linksRoutes.keySet()) {
 			for (Route r1 : linksRoutes.get(link)) {
 				for (Route r2 : linksRoutes.get(link)) {
 					if (r1 != r2) {
@@ -78,11 +78,11 @@ public class NetworkGraphBuilder {
 		return routeIds;
 	}
 	
-	private Multimap<UndirectedLink, Route> getLinksRoutes(List<Lightpath> paths) {
-		Multimap<UndirectedLink, Route> linksRoutes = HashMultimap.create();
+	private Multimap<Link, Route> getLinksRoutes(List<Lightpath> paths) {
+		Multimap<Link, Route> linksRoutes = HashMultimap.create();
 		for (Lightpath path : paths) {
 			for (Route route : path.getRoutes()) {
-				for (UndirectedLink link : route.getUndirectedLinks()) {
+				for (Link link : route.getDirectedLinks()) {
 					linksRoutes.put(link, route);
 				}
 			}
