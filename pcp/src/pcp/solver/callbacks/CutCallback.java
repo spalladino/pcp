@@ -100,7 +100,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// On certain depth, don't make any more cuts
-		if (super.getNnodes() > 0) {
+		if (super.getNnodes() > 0 && maxCutsDepth > 0) {
 			final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
 					super.getLBs(model.getAllXs()),
 					super.getUBs(model.getAllXs()));
