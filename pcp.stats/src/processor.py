@@ -67,15 +67,17 @@ class Processor(object):
         print '\\end{itemize}'
         
         print '\\begin{tabular}{|%s|}' % ('c' * len(ids) + (('|' + ('c' * (len(datas)))) * count))
+        print '\hline'
         print '\\multicolumn{%s}{|c|}{Id} & ' % len(ids) + ' & '.join(['\\multicolumn{%s}{|c|}{S%s}' % (len(datas), i+1) for i in range(count)])
         print '\\\\'
+        print '\hline'
         
         for key, runset in runsets:
             print ' & '.join([str(k) for k in key] \
                  + self.flatten([[str(f(run)).rjust(4) for f in fs] for run in sorted(runset, key=runkey)])) \
                  + '\n\\\\'  
         
-        print '\\end{tabular}'
+        print '\hline \n \\end{tabular}'
 
     def simpletable(self, datas, series=[], runfilter=None, datafilter=None):
         fs = [metrics.metric(data) for data in datas]
