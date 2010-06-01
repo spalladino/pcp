@@ -34,9 +34,9 @@ class Processor(object):
         
     def summary(self):
         for run in self.runs:
-            print "Run fixture %s on %s" % (run['run.id'], run['run.filename'])
+            print "Run fixture %s on %s (%s)" % (run['run.id'], run['run.filename'], run['data.filename'])
             print " Graph N=%03d E=%03d P=%03d" % (run['graph.nodes'], run['graph.edges'], run['graph.partitions'])
-            print " Time: %d millis (chi=%d) with %s" % (run['solution.time'], run.get('solution.chi') or 0, run.get('solution.solver') or '?')
+            print " Time: %d millis (chi=%d) with %s" % (run['solution.time'], run.get('solution.chi') or 0, run.get('solver.kind') or '?')
             if run.has_key('preprocess.time'): print " Preprocessing: %d millis" % run['preprocess.time']
             
             if 'cuts' in run:
@@ -47,6 +47,7 @@ class Processor(object):
 
     def latextable(self, ids=[], datas=[], series=[], runfilter=None, datafilter=None):
         fs = [metrics.metric(data) for data in datas]
+        runkey = lambda run: map(lambda m: metrics.evalmetric(m, run), series)
         
         runsets = self.makerunsets(ids, runfilter, datafilter)
         runseries = self.makerunsets(series, runfilter, datafilter)
@@ -70,8 +71,9 @@ class Processor(object):
         print '\\\\'
         
         for key, runset in runsets:
-            print ' & '.join([str(k) for k in key] + self.flatten([[str(f(run)).rjust(4) for f in fs] for run in runset])) 
-            print '\\\\'
+            print ' & '.join([str(k) for k in key] \
+                 + self.flatten([[str(f(run)).rjust(4) for f in fs] for run in sorted(runset, key=runkey)])) \
+                 + '\n\\\\'  
         
         print '\\end{tabular}'
 
