@@ -4,23 +4,17 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-class DimacsPartitionedGraph {
+public class DimacsPartitionedGraph {
 
-	private int minPartition, maxPartition;
-	private int nodes;
-	private int base;
-	
-	private double edgeProb;
-	private Random random;
-	private String name;
+	protected int nodes;
+	protected int base;
+	protected String name;
+	protected List<Edge> edgeList;
+	protected List<Partition> partitionsList;
 
-	private List<Edge> edgeList;
-	private List<Partition> partitionsList;
-
-	static class Edge {
-		
+	public static class Edge {
+			
 		public Integer vertexOne;
 		public Integer vertexTwo;
 		
@@ -29,13 +23,17 @@ class DimacsPartitionedGraph {
 			this.vertexTwo = vertexTwo;
 		}
 	}
-	
-	static class Partition {
-	
+
+	public static class Partition {
+		
 		List<Integer> nodes;
 		
 		public Partition() {
 			this.nodes = new ArrayList<Integer>();
+		}
+		
+		public Partition(List<Integer> nodes) {
+			this.nodes = nodes;
 		}
 		
 		public void addNode(Integer node) {
@@ -49,54 +47,64 @@ class DimacsPartitionedGraph {
 		}
 
 	}
-
+	
 	public DimacsPartitionedGraph(GraphProperties props) {
-
-		// Init fields
-		this.nodes = props.nodeCount;
-		this.maxPartition = props.maxPartition;
-		this.minPartition = props.minPartition;
-		this.edgeProb = props.edgeProb;
-		this.name = props.name;
-		this.base = props.base;
+		super();
+		this.nodes = props.getNodeCount();
+		this.name = props.getName();
+		this.base = props.getBase();
 		
-		this.random = new Random(System.currentTimeMillis());
 		this.edgeList = new ArrayList<Edge>();
 		this.partitionsList = new ArrayList<Partition>();
-		
-		// Check edge probability
-		if (edgeProb < 0) edgeProb = 0;
-		else if (edgeProb > 1) edgeProb = 1;
-		
-		// Check partition sizes
-		if (minPartition < 1) minPartition = 1;
-		if (maxPartition < minPartition) maxPartition = minPartition;
-		
-		// Create axes
-		for (int i = 0; i < nodes; i++)
-			for (int j = i+1; j < nodes; j++)
-				if (edgeProb > random.nextDouble())
-					this.edgeList.add(new Edge(i,j));
-
-		// Create partitions
-		int nodeIndex = 0;
-		while (nodeIndex < nodes) {
-			int currSize = random.nextInt(maxPartition - minPartition + 1) + minPartition;
-			Partition partition = new Partition();
-			partitionsList.add(partition);
-			while (currSize > 0 && nodeIndex < nodes) { 
-				partition.addNode(nodeIndex);
-				nodeIndex++;
-				currSize--;
-			}
-		}
 	}
 
+	public void addPartition(List<Integer> nodes) {
+		List<Integer> copy = new ArrayList<Integer>(nodes.size());
+		copy.addAll(nodes);
+		this.partitionsList.add(new Partition(copy));
+	}
+	
+	public void addEdge(int n1, int n2) {
+		if (n1 < n2) this.edgeList.add(new Edge(n1, n2));
+		else this.edgeList.add(new Edge(n2, n1));
+	}
+	
+	public int getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(int nodes) {
+		this.nodes = nodes;
+	}
+
+	public int getBase() {
+		return base;
+	}
+
+	public void setBase(int base) {
+		this.base = base;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public List<Edge> getEdgeList() {
+		return edgeList;
+	}
+
+	public List<Partition> getPartitionsList() {
+		return partitionsList;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public void write(Writer writer) throws IOException {
-
+	
 		writer.write("c nodecnt=" + String.valueOf(nodes) + "\n");
-		writer.write("c density=" + String.valueOf(edgeProb) + "\n");
-
+		
 		writer.write("p " + this.name + " " 
 				+ String.valueOf(nodes) + " " 
 				+ String.valueOf(this.edgeList.size()) + " " 
@@ -116,5 +124,4 @@ class DimacsPartitionedGraph {
 		writer.write("\n");
 	}
 
-	
 }

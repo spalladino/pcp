@@ -5,7 +5,7 @@ public class GeneratorProperties extends GraphProperties {
 	int graphsCount;
 	
 	public GeneratorProperties(String name, double edgeProb, int graphsCount, int nodeCount, int minPartition,
-			int maxPartition, int base) {
+			int maxPartition, int base, double requests, GraphType type) {
 		super();
 		this.name = name;
 		this.edgeProb = edgeProb;
@@ -14,6 +14,8 @@ public class GeneratorProperties extends GraphProperties {
 		this.minPartition = minPartition;
 		this.maxPartition = maxPartition;
 		this.base = base;
+		this.requests = requests;
+		this.type = type;
 	}
 	
 	public GeneratorProperties() {
@@ -29,7 +31,7 @@ public class GeneratorProperties extends GraphProperties {
 	}
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return new GeneratorProperties(name, edgeProb, graphsCount, nodeCount, minPartition, maxPartition, base);
+	public Object clone() throws CloneNotSupportedException {
+		return new GeneratorProperties(name, edgeProb, graphsCount, nodeCount, minPartition, maxPartition, base, requests, type);
 	}
 }

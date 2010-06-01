@@ -16,3 +16,4 @@ latex/*.log
 *.orig
 *.pyc
 *.run
+data/runs/**.pkl

@@ -2,33 +2,26 @@ package pcp;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Properties;
 
 import pcp.generator.GeneratorProperties;
+import pcp.generator.GraphType;
 import pcp.generator.IGraphGenerator;
-import pcp.generator.SimpleGraphGenerator;
+import pcp.generator.network.RingNetworkGraphGenerator;
+import pcp.generator.random.RandomGraphGenerator;
+import props.Settings;
 
 public class Generator {
 	
 	public static void main(String[] args) throws Exception {
-		Properties props = new Properties();
+		Settings.load("generator");
 		
 		try {
-			props.load(new FileInputStream(new File("generator.properties")));
-		} catch(IOException e) {
-			System.err.println("Error opening generator.properties");
-			System.err.println(e.getMessage());
-			return;
-		} 
-		
-		try {
-			GeneratorProperties gp = readProperties(props);
+			GeneratorProperties gp = readProperties();
 			IGraphGenerator generator = createGenerator(gp);
-			String outdir = props.getProperty("generator.outdir");
-			String name = props.getProperty("generator.name");
+			String outdir = Settings.get().getString("generator.outdir");
+			String name = Settings.get().getString("generator.name");
 			
 			if (gp.getGraphsCount() == 1) {
 				generateGraph(generator, outdir, name);
@@ -48,6 +41,16 @@ public class Generator {
 	}
 
 
+	private static IGraphGenerator createGenerator(GeneratorProperties gp) {
+		switch (gp.getType()) {
+			case Random: return new RandomGraphGenerator(gp);
+			case Ring: return new RingNetworkGraphGenerator(gp);
+		}
+		
+		return null;
+	}
+
+
 	private static void generateGraph(IGraphGenerator generator, String outdir,
 			String name) throws IOException, Exception {
 		File file = new File(outdir, name + ".in");
@@ -58,28 +61,20 @@ public class Generator {
 	}
 	
 	
-	private static GeneratorProperties readProperties(Properties props) {
+	private static GeneratorProperties readProperties() {
 		GeneratorProperties gp = new GeneratorProperties();
-		gp.setName(props.getProperty("generator.name"));
-		gp.setEdgeProb(getDouble(props, "generator.edgeprob"));
-		gp.setGraphsCount(getInteger(props, "generator.count"));
-		gp.setNodeCount(getInteger(props, "generator.nodes"));
-		gp.setMinPartition(getInteger(props, "generator.minpartition"));
-		gp.setMaxPartition(getInteger(props, "generator.maxpartition"));
-		gp.setBase(getInteger(props, "generator.base"));
+		gp.setName(Settings.get().getString("generator.name"));
+		gp.setEdgeProb(Settings.get().getDouble("generator.edgeprob"));
+		gp.setGraphsCount(Settings.get().getInteger("generator.count"));
+		gp.setNodeCount(Settings.get().getInteger("generator.nodes"));
+		gp.setMinPartition(Settings.get().getInteger("generator.minpartition"));
+		gp.setMaxPartition(Settings.get().getInteger("generator.maxpartition"));
+		gp.setBase(Settings.get().getInteger("generator.base"));
+		gp.setRequests(Settings.get().getDouble("generator.requests"));
+		gp.setType(Settings.get().getEnum("generator.graphtype", GraphType.class));
+		
 		return gp;
 	}
-
-	private static int getInteger(Properties props, String key) {
-		return Integer.valueOf(props.getProperty(key));
-	}
 	
-	private static double getDouble(Properties props, String key) {
-		return Double.valueOf(props.getProperty(key));
-	}
 
-	private static IGraphGenerator createGenerator(GeneratorProperties gp) {
-		return new SimpleGraphGenerator(gp);
-	}
-	
 }

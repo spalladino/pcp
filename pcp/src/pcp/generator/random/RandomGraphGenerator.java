@@ -1,12 +1,17 @@
-package pcp.generator;
+package pcp.generator.random;
 
 import java.io.Writer;
 
-public class SimpleGraphGenerator implements IGraphGenerator {
+import pcp.generator.DimacsPartitionedGraph;
+import pcp.generator.GeneratorProperties;
+import pcp.generator.GraphProperties;
+import pcp.generator.IGraphGenerator;
+
+public class RandomGraphGenerator implements IGraphGenerator {
 	
 	GeneratorProperties properties;
 	
-	public SimpleGraphGenerator(GeneratorProperties properties) {
+	public RandomGraphGenerator(GeneratorProperties properties) {
 		super();
 		this.properties = properties;
 	}
@@ -18,7 +23,7 @@ public class SimpleGraphGenerator implements IGraphGenerator {
 	public void generate(Writer writer, String name) throws Exception {
 		GraphProperties gp = (GraphProperties) properties.clone();
 		gp.setName(name);
-		DimacsPartitionedGraph graph = new DimacsPartitionedGraph(gp);
+		DimacsPartitionedGraph graph = new DimacsRandomPartitionedGraph(gp);
 		graph.write(writer);
 	}
 	
