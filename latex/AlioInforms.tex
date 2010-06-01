@@ -16,8 +16,9 @@
 
 \begin{document}
 
-\title{A Branch \& Cut Algorithm for the Partitioned Graph Coloring Problem}
-\author{Santiago Palladino}
+\title[A Branch \& Cut Algorithm for PCP]{A Branch \& Cut Algorithm for the Partitioned Graph Coloring Problem}
+\author[Santiago Palladino, Isabel Méndez-Díaz, Paula Zabala]{Santiago Palladino, Isabel Méndez-Díaz, Paula Zabala \\ \{spalladino,imendez,pzabala\}@dc.uba.ar \\ \vskip 10pt \scriptsize{Facultad de Ciencias Exactas y Naturales \\ Universidad de Buenos Aires}}
+\institute{ALIO-INFORMS\\Joint International Meeting}
 \date{June 2010}
 
 \begin{frame}
@@ -81,7 +82,7 @@ We will propose an alternative integer programming formulation of the problem ba
 \begin{frame}
 \frametitle{Model}
 
-Every variable $x_ij$ is true if vertex $i$ is colored with color $j$. Variables $w_j$ are true if color $j$ is used in coloring the graph. 
+Every variable $x_{ij}$ is true if vertex $i$ is colored with color $j$. Variables $w_j$ are true if color $j$ is used in coloring the graph. 
 
 \uncover<1->{
 \lpobjective{Minimize sum of colors used}
@@ -102,14 +103,13 @@ Every variable $x_ij$ is true if vertex $i$ is colored with color $j$. Variables
 \begin{frame}
 \frametitle{Improving LP}
 
-We also take symmetry breaking constraints from the original model.
+We also take symmetry breaking constraints from the original model and additional restrictions for eliminating fractional solutions.
 
 \lprestriction{Color $j$ cannot be used unless color $j-1$ was used}
 {w_{j} \leq w_{j-1}}{\forall j \neq 0 \in C}
 
-And elimination of fractional solutions $x_{ij} \leq \chi^{-1}$
-
-
+\lprestriction{The label of a color used for a partition cannot exceed $\chi$}
+{\sum_{j \in C} w_{j} \geq \sum_{x_i \in p} \sum_{j \in C} x_{ij}}{\forall p \in P}
 
 \end{frame} 
 
@@ -124,7 +124,7 @@ Adjacency constraints can be replaced by either of the following, which improve 
 
 
 \lprestriction{A color $j_0$ may be used on a node $i_0$ or on at most $r$ of its neighbours, being $r$ the number of different partitions in $N(i_0)$}
-{\sum_{i \in N(i_0)} x_{ij_0} + r \times x_{i_0j_0} \leq r \times w_{j_0}}{ \forall j_0 \in C, i_0 \in V}
+{\sum_{i \in N(i_0)} x_{ij_0} + r x_{i_0j_0} \leq r w_{j_0}}{ \forall j_0 \in C, i_0 \in V}
 
 \end{frame} 
 
@@ -175,7 +175,7 @@ Which can be strengthened considering symmetry breaking.
 
 Component independent set inequalities can be specialized as component hole and component path inequalities, using $\lfloor |H|/2 \rfloor$ and $\lceil |P|/2 \rceil$ respectively as their cardinals.
 
-We use a greedy heuristic constructing a path from each node for each colour. The criteria for choosing a node is based on its corresponding $x_ij$ value and whether it has been previously visited or not.
+We use a greedy heuristic constructing a path from each node for each colour. The criteria for choosing a node is based on its corresponding $x_{ij}$ value and whether it has been previously visited or not.
 
 \end{frame}
 
