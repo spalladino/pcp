@@ -100,15 +100,15 @@ Every variable $x_ij$ is true if vertex $i$ is colored with color $j$. Variables
 \end{frame} 
 
 \begin{frame}
-\frametitle{Breaking symmetries}
+\frametitle{Improving LP}
 
 We also take symmetry breaking constraints from the original model.
 
 \lprestriction{Color $j$ cannot be used unless color $j-1$ was used}
 {w_{j} \leq w_{j-1}}{\forall j \neq 0 \in C}
 
-\lprestriction{Color $j$ is only used if there is actually a node colored with it}
-{{\sum_{i \in V}} x_{ij} \geq w_j}{\forall j \in C}
+And elimination of fractional solutions $x_{ij} \leq \chi^{-1}$
+
 
 
 \end{frame} 

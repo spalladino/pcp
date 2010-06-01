@@ -93,6 +93,10 @@ public class ModelBuilder {
 				constrainUseLowerLabelFirst();
 				constrainLowerLabelStrengthened();
 				break;
+			case UseLowerLabelFirstStrengthenedPartition:
+				constrainUseLowerLabelFirst();
+				constrainLowerLabelStrengthenedPartition();
+				break;
 			case UseLowerLabelFirst:
 				constrainUseLowerLabelFirst();
 				break;
@@ -180,6 +184,23 @@ public class ModelBuilder {
 			}
 			
 			modeler.addGe(expr, 0, name);
+		}
+	}
+
+	/**
+	 * Creates symmetry break constraints sum_j w_j \geq sum_i \in p sum_j j x_ij 
+	 * @throws IloException 
+	 */
+	private void constrainLowerLabelStrengthenedPartition() throws IloException {
+		for (Partition p : graph.getPartitions()) {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("BSSTRP[%1$d]", p.index());
+			for (Node n : graph.getNodes()) {
+				for (int j = 0; j < colors; j++) {
+					expr.addTerm(ws[j], 1);
+					expr.addTerm(xs[n.index()][j], -j);
+				}
+			} modeler.addGe(expr, 0, name);
 		}
 	}
 
