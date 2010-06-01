@@ -23,38 +23,37 @@
 \begin{document}
 
 \tiny
-Processing Runid 20100521195953
+Processing Runid 20100531174938
+ 
 Data:
 \begin{itemize}
-\item preprocess.time
+\item data.filename
+\item Clique count
 \item solution.time
 \item solution.nnodes
 \item solution.gap
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: CplexDynamicSearch, primal.enabled: true
-\item S2: solver.kind: Heuristic, primal.enabled: true
-\item S3: solver.kind: PcpBranchAndCut, primal.enabled: false
-\item S4: solver.kind: PcpBranchAndCut, primal.enabled: true
-\item S5: solver.kind: PcpCutAndBranch, primal.enabled: false
-\item S6: solver.kind: PcpCutAndBranch, primal.enabled: true
+\item S1: solver.kind: CplexDynamicSearch
+\item S2: solver.kind: Heuristic
+\item S3: solver.kind: PcpBranchAndCut
+\item S4: solver.kind: PcpCutAndBranch
 \end{itemize}
-\begin{tabular}{|c|cccc|cccc|cccc|cccc|cccc|cccc|}
-\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3} & \multicolumn{4}{|c|}{S4} & \multicolumn{4}{|c|}{S5} & \multicolumn{4}{|c|}{S6}
+\begin{tabular}{|c|ccccc|ccccc|ccccc|ccccc|}
+\multicolumn{1}{|c|}{Id} & \multicolumn{5}{|c|}{S1} & \multicolumn{5}{|c|}{S2} & \multicolumn{5}{|c|}{S3} & \multicolumn{5}{|c|}{S4}
 \\
-rand100.in &  438 & 3600.078 & 15926 & 0.166666666664 & None &   16 & None & None &  422 & 1383.625 & 3212 & None &  437 & 1342.5 & 3212 & None &  422 & 3600.063 & 1386 & 0.166666666664 &  422 & 3600.094 & 1388 & 0.166666666664
+benchnodes\\n100.000.in & 001.run & None & 1141 & None & None & 002.run & None & 3600.188 & 1443 & 0.499999999994 & 003.run & 1814 & 3600.125 &  650 & 0.604377306484 & 004.run & 6502 & 3600.188 &  409 & 0.604682850577
 \\
-rand120.in & 1015 & 3600.094 & 9476 & 0.374999999995 & None &  375 & None & None & 1015 & 3600.047 & 2357 & 0.55921731281 & 1015 & 3600.141 & 2493 & 0.55921731281 & 1016 & 3600.109 & 1021 & 0.54205607476 & 1015 & 3600.156 & 1035 & 0.54205607476
+benchnodes\\n120.000.in & 005.run & None & 22156 & None & None & 006.run & None & 3600.156 &  132 & 0.44444444444 & 007.run & 2140 & 3600.188 &   65 & 0.639374505786 & 008.run & 2833 & 3600.203 &   46 & 0.639374505786
 \\
-rand140.in &  937 & 3600.125 & 11309 & 0.249999999997 & None &  125 & None & None &  938 & 3600.109 & 2647 & 0.437499999995 &  953 & 3600.031 & 2866 & 0.437499999995 &  953 & 3600.094 &  973 & 0.505403458207 &  953 & 3600.25 &  977 & 0.499999999994
+benchnodes\\n20.000.in & 009.run & None & None & None & None & 010.run & None & 0.031 & None & None & 011.run &   56 & 0.063 & None & None & 012.run &   56 & 0.063 & None & None
 \\
-rand160.in & 5734 & 3600.094 & 2224 & 0.33333333333 & None & 4516 & None & None & 5688 & 3600.157 &  108 & 0.637653127008 & 5688 & 3600.188 &  108 & 0.637653127008 & 5656 & 3600.219 &  139 & 0.722222222214 & 5672 & 3600.187 &  141 & 0.722222222214
+benchnodes\\n40.000.in & 013.run & None & None & None & None & 014.run & None & 3.703 &   59 & None & 015.run &  665 & 1.687 &    1 & None & 016.run &  665 & 1.688 &    1 & None
 \\
-rand180.in & 124438 & 3600.109 &   31 & 0.44444444444 & None & 121828 & None & None & 122859 & 3600.157 &   25 & 0.64285714285 & 122735 & 3600.25 &   25 & 0.64285714285 & 122719 & 3600.125 &  113 & 0.740740740733 & 122719 & 3600.172 &  118 & 0.740740740733
+benchnodes\\n60.000.in & 017.run & None & None & None & None & 018.run & None & 3600.031 & 47328 & 0.199999999996 & 019.run &  953 & 6.609 &    1 & None & 020.run &  953 & 6.578 &    1 & None
 \\
-rand200.in & 302204 & 3600.187 & None & 0.794117647052 & None & 3600000 & None & None & 302203 & 3600.343 & None & 0.77272727272 & 302187 & 3600.235 & None & 0.77272727272 & 302188 & 3600.265 &    5 & 0.787878787872 & 302188 & 3600.328 &    5 & 0.787878787872
+benchnodes\\n80.000.in & 021.run & None &   47 & None & None & 022.run & None & 3600.094 & 6425 & 0.428571428565 & 023.run & 1521 & 3600.015 & 4785 & 0.523641521791 & 024.run & 23002 & 3600.063 & 2605 & 0.509698155902
 \\
 \end{tabular}
-
 \end{document}

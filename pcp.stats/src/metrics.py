@@ -5,7 +5,8 @@ class CutMetric:
         self.prop = prop
     
     def __call__(self, dict):
-        return dict["cuts"][self.cut][self.prop]
+        try: return dict["cuts"][self.cut][self.prop]
+        except: return None
     
     def __str__(self):
         return "%s %s" % (self.cut, self.prop)

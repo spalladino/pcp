@@ -1,4 +1,19 @@
-benchdens = [
+benchdens_single = [
+    'benchdens\\e02.000.in',
+    'benchdens\\e04.000.in',
+    'benchdens\\e06.000.in',
+    'benchdens\\e08.000.in',
+]
+
+benchnodes_single = ['benchnodes\\n100.000.in',
+'benchnodes\\n120.000.in',
+'benchnodes\\n20.000.in',
+'benchnodes\\n40.000.in',
+'benchnodes\\n60.000.in',
+'benchnodes\\n80.000.in',
+]
+
+benchdens_all = [
     'benchdens\\e01.000.in',
     'benchdens\\e01.001.in',
     'benchdens\\e01.002.in',
@@ -46,7 +61,7 @@ benchdens = [
     'benchdens\\e09.004.in',
 ]
 
-benchnodes = ['benchnodes\\n100.000.in',
+benchnodes_all = ['benchnodes\\n100.000.in',
 'benchnodes\\n100.001.in',
 'benchnodes\\n100.002.in',
 'benchnodes\\n100.003.in',
