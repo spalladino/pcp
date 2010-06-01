@@ -5,12 +5,16 @@ benchdens_single = [
     'benchdens\\e08.000.in',
 ]
 
-benchnodes_single = ['benchnodes\\n100.000.in',
-'benchnodes\\n120.000.in',
+benchnodes_single = [
 'benchnodes\\n20.000.in',
 'benchnodes\\n40.000.in',
 'benchnodes\\n60.000.in',
 'benchnodes\\n80.000.in',
+'benchnodes\\n100.000.in',
+'benchnodes\\n120.000.in',
+'benchnodes\\n140.000.in',
+'benchnodes\\n160.000.in',
+'benchnodes\\n180.000.in',
 ]
 
 benchdens_all = [
