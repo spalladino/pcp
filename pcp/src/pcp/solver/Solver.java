@@ -46,6 +46,7 @@ public class Solver extends AbstractSolutionData {
 	
 	public Solver() throws IloException {
 		this.cplex = new IloCplex();
+		cplex.setParam(IntParam.Threads, 1);
 		
 		if (maxTime > 0.0) { 
 			cplex.setParam(DoubleParam.TiLim, maxTime);
@@ -179,11 +180,14 @@ public class Solver extends AbstractSolutionData {
 		
 	public void fillExecutionData(Map<String,Object> data) throws Exception {
 		data.put("solution.chi", solved ? getChromaticNumber() : 0);
+		data.put("solution.lb", solved ? cplex.getBestObjValue() : 0);
 		data.put("solution.success", solved);
 		data.put("solution.gap", solved ? this.getGap() : 0);
 		data.put("solution.nnodes", cplex.getNnodes());
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());
+		
+		
 		
 		if (heurCallback != null) {
 			heurCallback.getMetrics().fillData(data);

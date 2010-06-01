@@ -6,7 +6,8 @@ public enum Symmetry {
 	None("sno"),
 	UseLowerLabelFirst("slow"),
 	UseLowerLabelFirstStrengthened("slowstr"),
-	OnlyUseColorIfNodesPainted("sstrict");
+	UseLowerLabelFirstStrengthenedPartition("slowstrp"),
+	OnlyUseColorIfNodesPainted("sstrict"), ;
 	
 	String shortId;
 	

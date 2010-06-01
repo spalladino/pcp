@@ -11,13 +11,13 @@ def simpletable(p):
                     "primal.enabled"], None, {'run.folder': '.\\..\\data\\rand075\\'})
     
 def latextable(p):    
-        p.latextable(ids=['run.filename'],
-                 datas=["preprocess.time", "solution.time", "solution.nnodes", "solution.gap"], 
-                  series=["solver.kind",
-                          "primal.enabled"],
-                  datafilter= {'run.folder': '.\\..\\data\\rand050\\'},
-                  runfilter= (lambda x: x['strategy.adjacency'] != 'AdjacentsNeighbourhood') 
-                  )
+        p.latextable(
+                ids=['run.filename'],
+                datas=["data.filename", metrics.CutMetric("Clique", "count"), "solution.time", "solution.nnodes", "solution.gap"], 
+                series=["solver.kind"],
+                datafilter= None,
+                runfilter= (lambda x: x['run.filename'].startswith("benchnodes")) 
+                    )
 
 if __name__ == '__main__':
     p = processor.Processor()
