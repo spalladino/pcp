@@ -6,9 +6,12 @@ import exceptions.AlgorithmException;
 import ilog.concert.IloException;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
+import props.Settings;
 
 public class PcpBranchAndCutSolver extends Solver {
 
+	private final static boolean useCplexPreprocess = Settings.get().getBoolean("solver.useCplexPreprocess");
+	
 	CutCallback callback;
 
 	public PcpBranchAndCutSolver() throws IloException {
@@ -20,6 +23,10 @@ public class PcpBranchAndCutSolver extends Solver {
 		
 		turnOffCplexCuts();
 		turnOffDynamicSearch();
+		
+		if (!useCplexPreprocess) {
+			turnOffPreprocess();
+		}
 		
 		this.callback = new CutCallback(cplex, cutsOnRootOnly);
 		cplex.use(callback);
