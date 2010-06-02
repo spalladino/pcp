@@ -59,7 +59,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			|| pruningFrac <= ((double)nodesSet / (double)model.getGraph().P())) {
 			setSolution(nodesSet);
 		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)) {
-			setPrimal();
+			setPrimal(nodesSet);
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		}
 	}
 	
-	private void setPrimal() {
+	private void setPrimal(int nodesSet) {
 		ColoringAlgorithm coloring = Factory.get().coloring(coloringStrategy, graph)
 			.withBounder(new SolutionsBounder("coloring.primal"));
 		
@@ -85,7 +85,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			int fixed = fillPrimalColoring(coloring);
 			setLowerBound(coloring);
 			createSolution(coloring);
-			metrics.primalHeur(coloring, super.getNnodes(), fixed);
+			metrics.primalHeur(coloring, super.getNnodes(), fixed, nodesSet);
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
 		}

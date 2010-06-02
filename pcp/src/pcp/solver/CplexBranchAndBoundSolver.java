@@ -9,7 +9,6 @@ public class CplexBranchAndBoundSolver extends Solver {
 		
 		turnOffCplexCuts();
 		turnOffDynamicSearch();
-		turnOffPreprocess();
 	}
 
 }

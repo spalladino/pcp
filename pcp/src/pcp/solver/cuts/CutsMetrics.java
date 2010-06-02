@@ -26,10 +26,6 @@ public class CutsMetrics {
 	}
 	
 	public void newIter() {
-		if (iter >= 0 && logIterMetrics) {
-			printIter();
-		}
-		
 		iter++;
 		counts.addLast(new int[CutFamily.values().length]);
 		ticks.addLast(new long[CutFamily.values().length]);
@@ -62,6 +58,7 @@ public class CutsMetrics {
 	}
 	
 	public void printIter() {
+		if (!logIterMetrics) return;
 		System.out.println("Iteration " + iter);
 		for (int i = 0; i < CutFamily.count(); i++) {
 			int c = this.counts.getLast()[i];
@@ -71,6 +68,7 @@ public class CutsMetrics {
 	}
 	
 	public void printTotal() {
+		if (!logTotalMetrics) return;
 		System.out.println("Cut callback total iterations " + (iter + 1));
 		for (int i = 0; i < CutFamily.count(); i++) {
 			int totalc = 0;

@@ -1,6 +1,8 @@
 package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
+import ilog.concert.IloNumVar;
+import ilog.cplex.IloCplex.BranchDirection;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import pcp.model.Model;
 import pcp.utils.ModelUtils;
@@ -33,14 +35,16 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			return;
 		}
 
-//		IloNumVar[][] vars = new IloNumVar[super.getNbranches()][];
-//		double[][] bounds = new double[super.getNbranches()][];
-//		BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
-//		double[] branches = super.getBranches(vars, bounds, dirs);
-//		
-//		for (int i = 0; i < super.getNbranches(); i++) {
-//			super.makeBranch(vars[i], bounds[i], dirs[i], branches[i]);
-//		}
+		IloNumVar[][] vars = new IloNumVar[super.getNbranches()][];
+		double[][] bounds = new double[super.getNbranches()][];
+		BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
+		double[] branches = super.getBranches(vars, bounds, dirs);
+		Integer depth = (Integer) super.getNodeData();
+		depth = depth == null ? 1 : depth + 1;
+
+		for (int i = 0; i < super.getNbranches(); i++) {
+			super.makeBranch(vars[i], bounds[i], dirs[i], branches[i], depth);
+		}
 	}
 	
 	private int countNodesEqualOne() throws IloException {
