@@ -13,7 +13,15 @@ latex/*.aux
 latex/*.bbl
 latex/*.blg
 latex/*.log
+latex/*.pdf
+latex/*.nav
+latex/*.out
+latex/*.snm
+latex/*.toc
 *.orig
 *.pyc
 *.run
 data/runs/**.pkl
+data/runs/**.runs
+data/runs/**.cfgs
+data/runs/**.txt
