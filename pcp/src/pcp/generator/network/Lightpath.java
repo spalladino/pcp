@@ -47,7 +47,7 @@ public class Lightpath {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			UndirectedLink other = (UndirectedLink) obj;
+			Link other = (Link) obj;
 			if (from != other.from)
 				return false;
 			if (to != other.to)

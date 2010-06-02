@@ -157,7 +157,14 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		
 		// Log running times
 		metrics.setIterTime(cliques, holes, blocks, gholes);
+		metrics.printIter();
 		if (logCallback) System.out.println("Finished cuts iteration");
+		
+		// Free objects
+		cliques = null;
+		holes = null;
+		blocks = null;
+		gholes = null;
 	}
 
 	@Override

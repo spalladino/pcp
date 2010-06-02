@@ -48,15 +48,19 @@ public class BranchingPrioritizer {
 					(graph.N() - graph.getNodes(node.getPartition()).length) * reversePartitionSizeFactor;
 			
 			for (int j = 0; j < model.getColorCount(); j++) {
-				IloIntVar var = model.x(i, j);
 				int prio = nodeprio 
 					+ (model.getColorCount() - j) * colorIndexFactor
 					+ j * reverseColorIndexFactor;
-				cplex.setPriority(var, prio);
+				setPriority(i, j, prio);
 			}
 		}
 		
 		return this;
+	}
+	
+	protected void setPriority(int i, int j, int prio) throws IloException {
+		IloIntVar var = model.x(i, j);
+		cplex.setPriority(var, prio);
 	}
 	
 	

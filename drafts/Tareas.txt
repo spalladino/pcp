@@ -1,3 +1,10 @@
+Usar
+----
+
+- Deshabilitar branching estatico
+- Usar nuevas settings de branching
+- Usar linear presolve
+
 Implementar
 -----------
 

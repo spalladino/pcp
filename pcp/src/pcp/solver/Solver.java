@@ -47,6 +47,7 @@ public class Solver extends AbstractSolutionData {
 	public Solver() throws IloException {
 		this.cplex = new IloCplex();
 		cplex.setParam(IntParam.Threads, 1);
+		cplex.setParam(BooleanParam.PreLinear, false);
 		
 		if (maxTime > 0.0) { 
 			cplex.setParam(DoubleParam.TiLim, maxTime);

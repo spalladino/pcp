@@ -9,6 +9,11 @@ public class DoubleUtils {
 		return Math.abs(d1 - d2) < eps;
 	}
 	
+	public static double fractionality(double d) {
+		if (d > 0.5) return 1.0 - d;
+		else return d;
+	}
+	
 	public static boolean isTrue(double d) {
 		return doubleEquals(d, 1.0);
 	}

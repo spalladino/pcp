@@ -1,3 +1,8 @@
+def format_output(str):
+    if not str: return '-'
+    try: return "{0:.3f}".format(float(str))
+    except: return str
+
 class CutMetric:
     
     def __init__(self, cut, prop):
@@ -5,8 +10,8 @@ class CutMetric:
         self.prop = prop
     
     def __call__(self, dict):
-        try: return dict["cuts"][self.cut][self.prop]
-        except: return None
+        try: return format_output(dict["cuts"][self.cut][self.prop])
+        except: return '-'
     
     def __str__(self):
         return "%s %s" % (self.cut, self.prop)
@@ -17,7 +22,7 @@ class PlainMetric:
         self.prop = prop
     
     def __call__(self, dict):
-        return dict.get(self.prop) or 'None'
+        return format_output(dict.get(self.prop)) or '-'
     
     def __str__(self):
         return self.prop
