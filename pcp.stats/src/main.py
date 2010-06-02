@@ -2,7 +2,7 @@ import processor
 import metrics
 
 def simpletable(p):    
-    p.simpletable(["graph.nodes", "preprocess.time","solution.time", "solution.chi"], ["path.enabled", 
+    p.simpletable(["solution.nnodes", "solution.time", "solution.gap"], ["path.enabled", 
                     "clique.enabled",
                     "blockColor.enabled",
                     "gprime.holes.enabled",
@@ -13,7 +13,7 @@ def simpletable(p):
 def latextable(p):    
         p.latextable(
                 ids=['run.filename'],
-                datas=["data.filename", metrics.CutMetric("Clique", "count"), "solution.time", "solution.nnodes", "solution.gap"], 
+                datas=["data.filename", "solution.time", "solution.nnodes", "solution.gap"], 
                 series=["solver.kind"],
                 datafilter= None,
                 runfilter= (lambda x: x['run.filename'].startswith("benchnodes")) 
