@@ -12,16 +12,16 @@ def simpletable(p):
     
 def latextable(p):    
         p.latextable(
-                ids=['original.graph.nodes'],
+                ids=['run.filename'],
                 datas=["solution.time", "solution.nnodes", "solution.gap"], 
                 series=["solver.kind"],
                 datafilter= None,
-                runfilter= (lambda x: x['run.filename'].startswith("benchnodes")) 
+                runfilter= None#(lambda x: x['run.filename'].startswith("benchnodes")) 
                     )
 
 
 if __name__ == '__main__':
-    p = processor.Processor('20100531174938')
+    p = processor.Processor('20100602172511')
     #p.summary()
     latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")

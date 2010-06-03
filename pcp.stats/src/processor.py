@@ -73,7 +73,7 @@ class Processor(object):
         print '\hline'
         
         for key, runset in runsets:
-            print ' & '.join([str(k) for k in key] \
+            print ' & '.join([str(k).replace('\\', '') for k in key] \
                  + self.flatten([[str(f(run)).rjust(4) for f in fs] for run in sorted(runset, key=runkey)])) \
                  + '\n\\\\'  
         
