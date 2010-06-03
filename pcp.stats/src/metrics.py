@@ -1,7 +1,11 @@
 def format_output(str):
-    if not str: return '-'
-    try: return "{0:.3f}".format(float(str))
-    except: return str
+    if not str: 
+        return '-'
+    try:
+        f = float(str) 
+        return "{0:.3f}".format(f) if f > 5 else str
+    except: 
+        return str
 
 class CutMetric:
     

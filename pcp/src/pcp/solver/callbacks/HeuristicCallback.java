@@ -12,6 +12,7 @@ import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
 import pcp.model.strategy.Coloring;
+import pcp.solver.helpers.PruneEvaluator;
 import pcp.solver.heur.HeuristicMetrics;
 import pcp.utils.ModelUtils;
 import props.Settings;
@@ -23,9 +24,6 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	
 	static final boolean enabled = Settings.get().getBoolean("callback.heuristic.enabled");
 	static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
-	
-	static final int pruningRemaining = Settings.get().getInteger("pruning.remaining");
-	static final double pruningFrac = Settings.get().getDouble("pruning.frac");
 	
 	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	static final int everynodes = Settings.get().getInteger("primal.everynodes");
@@ -55,8 +53,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		
 		// Full run using current information if enough depth, or primal if frequency
 		int nodesSet = countNodesEqualOne();
-		if (nodesSet >= (model.getGraph().P() - pruningRemaining)
-			|| pruningFrac <= ((double)nodesSet / (double)model.getGraph().P())) {
+		if (new PruneEvaluator(model).shouldPrune(nodesSet)) {
 			setSolution(nodesSet);
 		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)) {
 			setPrimal(nodesSet);

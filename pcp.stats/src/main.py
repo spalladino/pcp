@@ -13,10 +13,10 @@ def simpletable(p):
 def latextable(p):    
         p.latextable(
                 ids=['run.filename'],
-                datas=["data.filename", "solution.time", "solution.nnodes", "solution.gap"], 
-                series=["solver.kind"],
+                datas=["solution.time", "solution.nnodes", "solution.gap"], 
+                series=["branch.prios.enabled", 'branch.dynamic.fractional', 'branch.dynamic.dsatur'],
                 datafilter= None,
-                runfilter= (lambda x: x['run.filename'].startswith("benchnodes")) 
+                 
                     )
 
 if __name__ == '__main__':
