@@ -25,7 +25,6 @@
 \tiny
 
 
-Processing Runid 20100531174938
 Data:
 \begin{itemize}
 \item solution.time
@@ -34,33 +33,55 @@ Data:
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: CplexDynamicSearch
-\item S2: solver.kind: Heuristic
-\item S3: solver.kind: PcpBranchAndCut
-\item S4: solver.kind: PcpCutAndBranch
+\item S1: branch.prios.enabled: false, branch.prios.psize: -10, branch.prios.psadjacent: 100.000
+\item S2: branch.prios.enabled: true, branch.prios.psize: -10, branch.prios.psadjacent: -100
+\item S3: branch.prios.enabled: true, branch.prios.psize: -10, branch.prios.psadjacent: 100.000
+\item S4: branch.prios.enabled: true, branch.prios.psize: 10.000, branch.prios.psadjacent: -100
+\item S5: branch.prios.enabled: true, branch.prios.psize: 10.000, branch.prios.psadjacent: 100.000
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
 \\
 \hline
-100.000 & 3600.188 & 1443.000 & 0.500 & 1141.000 &    - &    - & 3600.188 & 409.000 & 0.605 & 3600.125 & 650.000 & 0.604
+n50.000.in & 60.016 & 1225.000 & 0.199999999996 & 60.016 & 921.000 & 0.305299469928 & 60.016 & 865.000 & 0.284246611856 & 60.031 & 923.000 & 0.305299469928 & 60.016 & 865.000 & 0.284246611856
 \\
-120.000 & 3600.156 & 132.000 & 0.444 & 22156.000 &    - &    - & 3600.203 & 46.000 & 0.639 & 3600.188 & 65.000 & 0.639
+n50.001.in & 60.031 & 1231.000 & 0.199999999996 & 60.016 & 924.000 & 0.305299469928 & 60.016 & 866.000 & 0.284246611856 & 60.031 & 921.000 & 0.305299469928 & 60.016 & 865.000 & 0.284246611856
 \\
-20.000 & 0.031 &    - &    - &    - &    - &    - & 0.063 &    - &    - & 0.063 &    - &    -
-\\
-40.000 & 3.703 & 59.000 &    - &    - &    - &    - & 1.688 & 1.000 &    - & 1.687 & 1.000 &    -
-\\
-60.000 & 3600.031 & 47328.000 & 0.200 &    - &    - &    - & 6.578 & 1.000 &    - & 6.609 & 1.000 &    -
-\\
-80.000 & 3600.094 & 6425.000 & 0.429 & 47.000 &    - &    - & 3600.063 & 2605.000 & 0.510 & 3600.015 & 4785.000 & 0.524
+n50.002.in & 60.016 & 1098.000 & 0.199999999996 & 60.016 & 838.000 & 0.299702277477 & 60.016 & 1019.000 & 0.288656057817 & 60.031 & 842.000 & 0.299680054758 & 60.016 & 1014.000 & 0.289941333094
 \\
 \hline 
+ \end{tabular}
 
-\end{tabular}
+\clearpage
 
-
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.nnodes
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: branch.prios.enabled: false, branch.dynamic.fractional: false, branch.dynamic.dsatur: false
+\item S2: branch.prios.enabled: false, branch.dynamic.fractional: false, branch.dynamic.dsatur: true
+\item S3: branch.prios.enabled: false, branch.dynamic.fractional: true, branch.dynamic.dsatur: false
+\item S4: branch.prios.enabled: true, branch.dynamic.fractional: false, branch.dynamic.dsatur: true
+\item S5: branch.prios.enabled: true, branch.dynamic.fractional: true, branch.dynamic.dsatur: false
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+\hline
+n50.000.in & 60.031 & 1231.000 & 0.199999999996 & 60.016 & 2032.000 & 0.199999999996 & 60.016 & 1210.000 & 0.199999999996 & 60.016 & 908.000 & 0.297763977928 & 60.016 & 1035.000 & 0.285420848822
+\\
+n50.001.in & 60.016 & 1230.000 & 0.199999999996 & 60.016 & 2030.000 & 0.199999999996 & 60.016 & 1209.000 & 0.199999999996 & 60.031 & 908.000 & 0.297763977928 & 60.031 & 1036.000 & 0.285388644462
+\\
+n50.002.in & 60.031 & 1099.000 & 0.199999999996 & 60.016 & 4474.000 & 0.335016833167 & 60.016 & 1487.000 & 0.27880854444 & 60.016 & 987.000 & 0.290342886907 & 60.016 & 916.000 & 0.292141558666
+\\
+\hline 
+ \end{tabular}
 
 
 \end{document}
