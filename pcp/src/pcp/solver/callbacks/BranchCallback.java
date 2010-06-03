@@ -28,7 +28,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	
 	static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
 	
-	static final boolean manual = false;
+	static final boolean manual = true;
 	
 	Model model;
 	IPartitionedGraph graph;
@@ -48,18 +48,6 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			prune(); return;
 		}
 
-		if (manual) {
-			IloNumVar[][] varss = new IloNumVar[super.getNbranches()][];
-			double[][] bounds = new double[super.getNbranches()][];
-			BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
-			double[] branches = super.getBranches(varss, bounds, dirs);
-			Integer depth = (Integer) super.getNodeData();
-			depth = depth == null ? 1 : depth + 1;
-			for (int i = 0; i < super.getNbranches(); i++) {
-				super.makeBranch(varss[i], bounds[i], dirs[i], branches[i], depth);
-			}
-		}
-		
 		IloNumVar branched = null;
 		
 		if (super.getNbranches() > 0 && getBranchType().equals(BranchType.BranchOnVariable)) {
@@ -74,7 +62,20 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			if (log) System.out.println("Branching on " + branched);
         	super.makeBranch(branched, getValue(branched), BranchDirection.Up, getObjValue());
         	super.makeBranch(branched, getValue(branched), BranchDirection.Down, getObjValue());
+        	return;
         }
+		
+		if (manual) {
+			IloNumVar[][] varss = new IloNumVar[super.getNbranches()][];
+			double[][] bounds = new double[super.getNbranches()][];
+			BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
+			double[] branches = super.getBranches(varss, bounds, dirs);
+			Integer depth = (Integer) super.getNodeData();
+			depth = depth == null ? 1 : depth + 1;
+			for (int i = 0; i < super.getNbranches(); i++) {
+				super.makeBranch(varss[i], bounds[i], dirs[i], branches[i], depth);
+			}
+		}
 		
 	}
 
@@ -90,6 +91,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		
 		int bestNode = 0;
 		int bestSatur = 0;
+		int bestUncolored = 0;
 		int bestPrio = 0;
 		
 		//Pick most saturated, highest prio node
@@ -97,11 +99,15 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			IloIntVar var = model.x(i, 0);
 			if (getFeasibility(var).equals(IntegerFeasibilityStatus.Infeasible)) {
 				int satur = saturs.getSaturation(i);
+				int uncolored = saturs.getUncoloredNeighbours(i);
 				int prio = super.getPriority(var);
-				if ((bestSatur < satur) || (bestSatur == satur && bestPrio < prio)) {
+				if ((bestSatur < satur) 
+					|| (bestSatur == satur && bestUncolored < uncolored)
+					|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
 					bestNode = i;
 					bestSatur = satur;
 					bestPrio = prio;
+					bestUncolored = uncolored;
 				}
 			}
 		}

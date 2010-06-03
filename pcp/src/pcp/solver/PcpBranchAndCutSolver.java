@@ -11,6 +11,7 @@ import props.Settings;
 public class PcpBranchAndCutSolver extends Solver {
 
 	private final static boolean useCplexPreprocess = Settings.get().getBoolean("solver.useCplexPreprocess");
+	private final static boolean useCutCallback = Settings.get().getBoolean("solver.useCutCallback");
 	
 	CutCallback callback;
 
@@ -29,7 +30,7 @@ public class PcpBranchAndCutSolver extends Solver {
 		}
 		
 		this.callback = new CutCallback(cplex, cutsOnRootOnly);
-		cplex.use(callback);
+		if (useCutCallback) cplex.use(callback);
 	}
 	
 	@Override

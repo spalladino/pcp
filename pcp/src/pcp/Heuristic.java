@@ -53,7 +53,7 @@ public class Heuristic {
 			System.out.println("Solved in " + solver.getBounder().getMillis() + " ticks");
 			System.out.println();
 			
-			data.getData().put("solution.time", solver.getBounder().getMillis());
+			data.getData().put("solution.time", (double)solver.getBounder().getMillis() / 1000.0);
 			data.getData().put("solution.chi", solver.getChi());
 			data.dump();
 		}

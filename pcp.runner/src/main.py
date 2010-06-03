@@ -5,9 +5,6 @@ import files
 if __name__ == '__main__':
     newrun([
                 {
-                    'solver.kind': 'Heuristic',
-                },
-                {
                     'solver.kind': 'CplexBranchAndCutSearch',
                     'solver.useCplexPrimalHeuristic': 'true',
                     'primal.enabled': 'false',
@@ -22,7 +19,7 @@ if __name__ == '__main__':
                 },
             ], 
             
-                files = files.benchnodes_single + files.benchdens_single + files.dimacs,
+                files = files.benchparts_single + files.benchdens_single + files.benchnodes_single,
                 
                 dirs = [ '.\\..\\data\\' ]
             )

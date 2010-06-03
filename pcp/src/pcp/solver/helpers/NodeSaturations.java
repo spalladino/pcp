@@ -43,6 +43,10 @@ public class NodeSaturations implements IColorAssigner {
 	public int getSaturation(int node) {
 		return colorCount[node];
 	}
+	
+	public int getUncoloredNeighbours(int node) {
+		return colorAdj[node][0];
+	}
 
 	private void increaseColorCount(int node1, int color) throws AlgorithmException {
 		

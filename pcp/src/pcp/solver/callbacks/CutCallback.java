@@ -30,7 +30,6 @@ import pcp.solver.cuts.CutsMetrics;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
 import pcp.utils.IntUtils;
-import pcp.utils.ModelUtils;
 import props.Settings;
 
 
@@ -101,11 +100,11 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		
 		// On certain depth, don't make any more cuts
 		if (super.getNnodes() > 0 && maxCutsDepth > 0) {
-			final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
-					super.getLBs(model.getAllXs()),
-					super.getUBs(model.getAllXs()));
-			if (maxCutsDepth < countNodesFixed) {
-				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + countNodesFixed);
+			//final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
+			//		super.getLBs(model.getAllXs()), super.getUBs(model.getAllXs()));
+			Integer depth = (Integer)getNodeData();
+			if (depth != null && maxCutsDepth < depth) {
+				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + depth);
 				return;
 			}
 		}

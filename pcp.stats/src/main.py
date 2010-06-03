@@ -21,7 +21,7 @@ def latextable(p):
 
 
 if __name__ == '__main__':
-    p = processor.Processor('20100602172511')
+    p = processor.Processor('20100603132539')
     #p.summary()
     latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")

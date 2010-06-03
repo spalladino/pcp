@@ -33,55 +33,26 @@ Data:
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: branch.prios.enabled: false, branch.prios.psize: -10, branch.prios.psadjacent: 100.000
-\item S2: branch.prios.enabled: true, branch.prios.psize: -10, branch.prios.psadjacent: -100
-\item S3: branch.prios.enabled: true, branch.prios.psize: -10, branch.prios.psadjacent: 100.000
-\item S4: branch.prios.enabled: true, branch.prios.psize: 10.000, branch.prios.psadjacent: -100
-\item S5: branch.prios.enabled: true, branch.prios.psize: 10.000, branch.prios.psadjacent: 100.000
+\item S1: solver.kind: CplexBranchAndCutSearch
+\item S2: solver.kind: PcpBranchAndCut
+\item S3: solver.kind: PcpCutAndBranch
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\begin{tabular}{|c|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
 \\
 \hline
-n50.000.in & 60.016 & 1225.000 & 0.199999999996 & 60.016 & 921.000 & 0.305299469928 & 60.016 & 865.000 & 0.284246611856 & 60.031 & 923.000 & 0.305299469928 & 60.016 & 865.000 & 0.284246611856
+benchdense02.000.in & 600.027 & 12409.000 & 0.249999999994 & 600.089 & 8525.000 & 0.453075798366 & 600.136 & 16982.000 & 0.461594383832
 \\
-n50.001.in & 60.031 & 1231.000 & 0.199999999996 & 60.016 & 924.000 & 0.305299469928 & 60.016 & 866.000 & 0.284246611856 & 60.031 & 921.000 & 0.305299469928 & 60.016 & 865.000 & 0.284246611856
+benchdense04.000.in & 600.042 & 9729.000 & 0.499999999992 & 600.073 & 254.000 & 0.51535151128 & 600.151 & 803.000 & 0.515025358872
 \\
-n50.002.in & 60.016 & 1098.000 & 0.199999999996 & 60.016 & 838.000 & 0.299702277477 & 60.016 & 1019.000 & 0.288656057817 & 60.031 & 842.000 & 0.299680054758 & 60.016 & 1014.000 & 0.289941333094
+benchdense06.000.in & 600.011 & 2962.000 & 0.499999999994 & 600.167 & 58.000 & 0.485473864284 & 600.105 & 1374.000 & 0.489409316624
+\\
+benchdense08.000.in & 600.136 & 604.000 & 0.61538461538 & 600.105 & 6.000 & 0.518476718237 & 600.167 & 6.000 & 0.52113573144
 \\
 \hline 
  \end{tabular}
 
-\clearpage
-
-Data:
-\begin{itemize}
-\item solution.time
-\item solution.nnodes
-\item solution.gap
-\end{itemize}
-Series:
-\begin{itemize}
-\item S1: branch.prios.enabled: false, branch.dynamic.fractional: false, branch.dynamic.dsatur: false
-\item S2: branch.prios.enabled: false, branch.dynamic.fractional: false, branch.dynamic.dsatur: true
-\item S3: branch.prios.enabled: false, branch.dynamic.fractional: true, branch.dynamic.dsatur: false
-\item S4: branch.prios.enabled: true, branch.dynamic.fractional: false, branch.dynamic.dsatur: true
-\item S5: branch.prios.enabled: true, branch.dynamic.fractional: true, branch.dynamic.dsatur: false
-\end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
-\\
-\hline
-n50.000.in & 60.031 & 1231.000 & 0.199999999996 & 60.016 & 2032.000 & 0.199999999996 & 60.016 & 1210.000 & 0.199999999996 & 60.016 & 908.000 & 0.297763977928 & 60.016 & 1035.000 & 0.285420848822
-\\
-n50.001.in & 60.016 & 1230.000 & 0.199999999996 & 60.016 & 2030.000 & 0.199999999996 & 60.016 & 1209.000 & 0.199999999996 & 60.031 & 908.000 & 0.297763977928 & 60.031 & 1036.000 & 0.285388644462
-\\
-n50.002.in & 60.031 & 1099.000 & 0.199999999996 & 60.016 & 4474.000 & 0.335016833167 & 60.016 & 1487.000 & 0.27880854444 & 60.016 & 987.000 & 0.290342886907 & 60.016 & 916.000 & 0.292141558666
-\\
-\hline 
- \end{tabular}
 
 
 \end{document}
