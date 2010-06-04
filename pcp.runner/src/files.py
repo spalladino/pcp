@@ -47,14 +47,8 @@ benchparts_all = [
 ]
 
 benchparts_single = [
-'benchpart\\p1t2.000.in',
-'benchpart\\p1t3.000.in',
-'benchpart\\p1t4.000.in',
 'benchpart\\p2t2.000.in',
-'benchpart\\p2t3.000.in',
-'benchpart\\p2t4.000.in',
 'benchpart\\p3t3.000.in',
-'benchpart\\p3t4.000.in',
 'benchpart\\p4t4.000.in',
 ]
 
@@ -65,11 +59,18 @@ benchdens_single = [
 'benchdens\\e08.000.in',
 ]
 
+benchdens80_single = [
+'benchdens80\\e02n80.000.in',
+'benchdens80\\e04n80.000.in',
+'benchdens80\\e06n80.000.in',
+'benchdens80\\e08n80.000.in',
+]
+
 benchnodes_single = [
 'benchnodes\\n60.000.in',
+'benchnodes\\n70.000.in',
 'benchnodes\\n80.000.in',
-'benchnodes\\n100.000.in',
-'benchnodes\\n120.000.in',
+'benchnodes\\n90.000.in',
 ]
 
 benchdens_all = [
@@ -118,6 +119,54 @@ benchdens_all = [
     'benchdens\\e09.002.in',
     'benchdens\\e09.003.in',
     'benchdens\\e09.004.in',
+]
+
+benchdens80_all = [
+    'benchdens80\\e01n80.000.in',
+    'benchdens80\\e01n80.001.in',
+    'benchdens80\\e01n80.002.in',
+    'benchdens80\\e01n80.003.in',
+    'benchdens80\\e01n80.004.in',
+    'benchdens80\\e02n80.000.in',
+    'benchdens80\\e02n80.001.in',
+    'benchdens80\\e02n80.002.in',
+    'benchdens80\\e02n80.003.in',
+    'benchdens80\\e02n80.004.in',
+    'benchdens80\\e03n80.000.in',
+    'benchdens80\\e03n80.001.in',
+    'benchdens80\\e03n80.002.in',
+    'benchdens80\\e03n80.003.in',
+    'benchdens80\\e03n80.004.in',
+    'benchdens80\\e04n80.000.in',
+    'benchdens80\\e04n80.001.in',
+    'benchdens80\\e04n80.002.in',
+    'benchdens80\\e04n80.003.in',
+    'benchdens80\\e04n80.004.in',
+    'benchdens80\\e05n80.000.in',
+    'benchdens80\\e05n80.001.in',
+    'benchdens80\\e05n80.002.in',
+    'benchdens80\\e05n80.003.in',
+    'benchdens80\\e05n80.004.in',
+    'benchdens80\\e06n80.000.in',
+    'benchdens80\\e06n80.001.in',
+    'benchdens80\\e06n80.002.in',
+    'benchdens80\\e06n80.003.in',
+    'benchdens80\\e06n80.004.in',
+    'benchdens80\\e07n80.000.in',
+    'benchdens80\\e07n80.001.in',
+    'benchdens80\\e07n80.002.in',
+    'benchdens80\\e07n80.003.in',
+    'benchdens80\\e07n80.004.in',
+    'benchdens80\\e08n80.000.in',
+    'benchdens80\\e08n80.001.in',
+    'benchdens80\\e08n80.002.in',
+    'benchdens80\\e08n80.003.in',
+    'benchdens80\\e08n80.004.in',
+    'benchdens80\\e09n80.000.in',
+    'benchdens80\\e09n80.001.in',
+    'benchdens80\\e09n80.002.in',
+    'benchdens80\\e09n80.003.in',
+    'benchdens80\\e09n80.004.in',
 ]
 
 benchnodes_all = ['benchnodes\\n100.000.in',

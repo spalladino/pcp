@@ -27,6 +27,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	
 	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	static final int everynodes = Settings.get().getInteger("primal.everynodes");
+	static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
 	
 	IPartitionedGraph graph;
 	Model model;
@@ -69,6 +70,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			setUpperBound(coloring);
 			createSolution(coloring);
 			metrics.leafHeur(coloring, nodesSet);
+			if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring");
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
 		}
