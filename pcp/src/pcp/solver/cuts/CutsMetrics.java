@@ -16,6 +16,8 @@ public class CutsMetrics {
 	static boolean logIterMetrics = Settings.get().getBoolean("logging.iterMetrics");
 	static boolean logTotalMetrics = Settings.get().getBoolean("logging.totalMetrics");
 	
+	static boolean dumpDetailed = Settings.get().getBoolean("logging.dumpDetailed");
+	
 	int iter = -1;
 	LinkedList<int[]> counts;
 	LinkedList<long[]> ticks;
@@ -100,18 +102,20 @@ public class CutsMetrics {
 			long totalt = 0;
 			
 			List<Map<String, Object>> iters = new ArrayList<Map<String,Object>>();
+			
 			for (int j = 0; j < counts.size(); j++) {
-				Map<String, Object> iter;
-				iters.add(iter = new HashMap<String, Object>());
-				
 				int count = counts.get(j)[i];
 				long tick = ticks.get(j)[i];
 				
-				iter.put("count", count);
-				iter.put("ticks", tick);
-				
 				totalc += count;
 				totalt += tick;
+				
+				if (dumpDetailed) {
+					Map<String, Object> iter;
+					iters.add(iter = new HashMap<String, Object>());
+					iter.put("count", count);
+					iter.put("ticks", tick);
+				}
 			}
 			
 			cut.put("iters", iters);
