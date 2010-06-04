@@ -60,8 +60,8 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		
 		if (branched != null) {
 			if (log) System.out.println("Branching on " + branched);
-        	super.makeBranch(branched, getValue(branched), BranchDirection.Up, getObjValue());
-        	super.makeBranch(branched, getValue(branched), BranchDirection.Down, getObjValue());
+        	super.makeBranch(branched, 1.0, BranchDirection.Up, getObjValue());
+        	super.makeBranch(branched, 0.0, BranchDirection.Down, getObjValue());
         	return;
         }
 		
