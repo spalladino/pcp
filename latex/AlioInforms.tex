@@ -284,15 +284,92 @@ The exact solution corresponding to that node is found using DSatur as an exact 
 
 \end{frame}
 
+\section{Results}
+\subsection{Implementation}
+
 \begin{frame}
-\frametitle{Results}
+\frametitle{Implementation}
+
+The previous algorithm was implemented in Java $1.6$ on top of Cplex $12.1$ and executed on a $2.80$ GHz core with $4$ Gb RAM. 
+
+We implemented both a Cut and Branch and a Branch and Cut algorithm to test the effectiveness of the strategies devised.
+
+Note that work is still in progress and the implementation, much less its parametrization, is not final.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Test Suites}
+
+We built two test suites with random generated graphs:
+\begin{itemize}
+\item Fixed density of $50\%$, nodes from $60$ to $90$
+\item Fixed node count of $80$, density from $20\%$ to $80\%$
+\end{itemize}
+
+Partition size for both suites was fixed to $2$. 
+
+Each instance was run for 30 minutes and the solution gap and node count in the branch tree is reported.
+
+\end{frame} 
+
+\subsection{Preliminary Results}
+
+\begin{frame}
+\frametitle{Fixed node count}
+
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex 12.1} & \multicolumn{2}{|c|}{Branch \& Cut} & \multicolumn{2}{|c|}{Cut \& Branch}
+\\
+\hline
+density & nodes & gap & nodes & gap & nodes & gap
+\\
+\hline
+20\% & 9568 &    0.0 & 1478 &    0.0 & 603 & 0.0
+\\
+40\% & 736217 & 0.33 & 7685 & 0.43 & 22659 & 0.45
+\\
+60\% & 190564 & 0.50 & 646 & 0.45 & 4626 & 0.46
+\\
+80\% & 21736 & 0.50 & 89 & 0.44 & 303 & 0.45
+\\
+\hline
+\end{tabular} 
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Fixed density}
+
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex 12.1} & \multicolumn{2}{|c|}{Branch \& Cut} & \multicolumn{2}{|c|}{Cut \& Branch}
+\\
+\hline
+nodes & nodes & gap & nodes & gap & nodes & gap
+\\
+\hline
+60 & 180611 & 0.20 & 2775 & 0.0 & 11148 & 0.0
+\\
+70 & 495048 & 0.33 & 12866 & 0.34 & 30461 & 0.37
+\\
+80 & 157471 & 0.43 & 887 & 0.33 & 7941 & 0.47 
+\\
+90 & 145067 & 0.43 & 606 & 0.47 & 3543 & 0.48 
+\\
+\hline
+
+ 
+\end{tabular} 
+
+\end{frame} 
 
 %Results in cut and branch, to determine strategies
 %Then results in branch and cut, show that there was improvement by applying cuts in more nodes
 %Show time and node count
 %Compare vs cplex and brazil, br cannot be compared in terms of time, only node size, be polite
 
-\end{frame} 
 
 
 \end{document}
