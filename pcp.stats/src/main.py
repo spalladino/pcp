@@ -14,14 +14,14 @@ def latextable(p):
         p.latextable(
                 ids=['run.filename'],
                 datas=["solution.time", "solution.nnodes", "solution.gap"], 
-                series=["solver.kind"],
+                series=["solver.kind", "branch.selection"],
                 datafilter= None,
                 runfilter= None#(lambda x: x['run.filename'].startswith("benchnodes")) 
                     )
 
 
 if __name__ == '__main__':
-    p = processor.Processor('20100603132539')
+    p = processor.Processor('20100604200934')
     #p.summary()
     latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")

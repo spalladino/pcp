@@ -34,6 +34,8 @@ public class Solver extends AbstractSolutionData {
 	final static boolean useCplexPrimal = Settings.get().getBoolean("solver.useCplexPrimalHeuristic");
 	
 	final static double maxTime = Settings.get().getDouble("solver.maxTime");
+	final static int mipEmph = Settings.get().getInteger("solver.mipEmphasis");
+	final static int probing = Settings.get().getInteger("solver.probing");
 	
 	IloCplex cplex;
 	Model model;
@@ -48,10 +50,10 @@ public class Solver extends AbstractSolutionData {
 		this.cplex = new IloCplex();
 		cplex.setParam(IntParam.Threads, 1);
 		cplex.setParam(BooleanParam.PreLinear, false);
+		cplex.setParam(IntParam.MIPEmphasis, mipEmph);
+		cplex.setParam(IntParam.Probe, probing);
 		
-		if (maxTime > 0.0) { 
-			cplex.setParam(DoubleParam.TiLim, maxTime);
-		}
+		if (maxTime > 0.0)  cplex.setParam(DoubleParam.TiLim, maxTime);
 		
 		if (!useCplexPrimal) {
 			turnOffCplexPrimalHeur();

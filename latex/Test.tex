@@ -23,8 +23,6 @@
 \begin{document}
 
 \tiny
-
-
 Data:
 \begin{itemize}
 \item solution.time
@@ -33,26 +31,18 @@ Data:
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: CplexBranchAndCutSearch
-\item S2: solver.kind: PcpBranchAndCut
-\item S3: solver.kind: PcpCutAndBranch
+\item S1: solver.kind: PcpBranchAndCut, branch.selection: 0
+\item S2: solver.kind: PcpBranchAndCut, branch.selection: 1
+\item S3: solver.kind: PcpCutAndBranch, branch.selection: 0
+\item S4: solver.kind: PcpCutAndBranch, branch.selection: 1
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
 \\
 \hline
-benchdense02.000.in & 600.027 & 12409.000 & 0.249999999994 & 600.089 & 8525.000 & 0.453075798366 & 600.136 & 16982.000 & 0.461594383832
-\\
-benchdense04.000.in & 600.042 & 9729.000 & 0.499999999992 & 600.073 & 254.000 & 0.51535151128 & 600.151 & 803.000 & 0.515025358872
-\\
-benchdense06.000.in & 600.011 & 2962.000 & 0.499999999994 & 600.167 & 58.000 & 0.485473864284 & 600.105 & 1374.000 & 0.489409316624
-\\
-benchdense08.000.in & 600.136 & 604.000 & 0.61538461538 & 600.105 & 6.000 & 0.518476718237 & 600.167 & 6.000 & 0.52113573144
+benchnodesn70.003.in & 300.031 & 363.000 & 0.369890766778 & 300.063 & 367.000 & 0.369890766778 & 300.016 & 1990.000 & 0.382066537679 & 300.016 & 1994.000 & 0.382025822544
 \\
 \hline 
  \end{tabular}
-
-
-
 \end{document}

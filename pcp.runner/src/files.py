@@ -71,7 +71,24 @@ benchnodes_single = [
 'benchnodes\\n70.000.in',
 'benchnodes\\n80.000.in',
 'benchnodes\\n90.000.in',
+'benchnodes\\n100.000.in',
 ]
+
+benchdens80_single_001 = [
+'benchdens80\\e02n80.001.in',
+'benchdens80\\e04n80.001.in',
+'benchdens80\\e06n80.001.in',
+'benchdens80\\e08n80.001.in',
+]
+
+benchnodes_single_001 = [
+'benchnodes\\n60.001.in',
+'benchnodes\\n70.001.in',
+'benchnodes\\n80.001.in',
+'benchnodes\\n90.001.in',
+'benchnodes\\n100.001.in',
+]
+
 
 benchdens_all = [
     'benchdens\\e01.000.in',

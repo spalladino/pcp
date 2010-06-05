@@ -5,18 +5,21 @@ import files
 if __name__ == '__main__':
     newrun([
                 {
-                    'solver.kind': 'CplexBranchAndCutSearch',
-                },
-                {
                     'solver.kind': 'PcpCutAndBranch',
+                    'solver.mipEmphasis': '0' 
                 },
                 {
                     'solver.kind': 'PcpBranchAndCut',
+                    'solver.mipEmphasis': '0' 
+                },
+                {
+                    'solver.kind': 'PcpBranchAndCut',
+                    'solver.mipEmphasis': '2' 
                 },
             ], 
             
-                files = files.benchdens80_single + files.benchparts_single + files.benchnodes_single,
+                files = files.benchdens80_single_001 + files.benchnodes_single_001,
                 
-                dirs = [ '.\\..\\data\\' ]
+                dirs = [ '.\\..\\data\\' ],
             )
     
