@@ -141,7 +141,7 @@ We use a greedy heuristic to find maximal cliques in the graph which violate thi
 \begin{frame}
 \frametitle{Block color inequalities}
 
-Given the symmetry breaking constraints, if a partition is not be coloured with color $j$ then it cannot be coloured using any colour with a higher label.
+Given the symmetry breaking constraints, a partition being coloured with any label greater or equal than $j_0$ is subject to $w_{j_0}$ being set.
 
 This allows us to define the block color constraints as:
 \lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}
@@ -157,6 +157,8 @@ Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v
 
 This allows us to reuse the independent set inequality from the standard coloring problem.
 \lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
+
+\pause
 
 Which can be strengthened considering symmetry breaking.
 \lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
@@ -181,9 +183,11 @@ Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V
 E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
 \]
 
+\pause
+
 This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
 
-\lpineq{\sum{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
+\lpineq{\sum_{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
 
 \end{frame}
 
@@ -220,7 +224,7 @@ The following steps are taken to preprocess the graph:
 
 We implemented the inequalities in the previous section as cutting planes, tested initially in a Cut and Branch algorithm, and then added to a Branch and Cut structure.
 
-Cuts are applied aggressively on the root of the branching tree and every few nodes on the rest of the tree until a certain depth, in order to keep relaxations easy to solve.
+Cuts are applied aggressively on the root of the branching tree, and with fewer iterations on the rest of the tree until a certain depth, in order to keep relaxations easy to solve.
 
 \end{frame}
 
