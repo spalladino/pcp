@@ -1,3 +1,4 @@
+%\documentclass[handout]{beamer}
 \documentclass{beamer}
 %\usepackage[spanish]{babel}
 \usepackage[ansinew]{inputenc}
@@ -24,11 +25,6 @@
 \begin{frame}
 \titlepage
 \end{frame}
-
-\begin{frame}
-\frametitle{Index}
-\tableofcontents
-\end{frame} 
 
 \setlength{\parskip}{10pt plus 1pt minus 1pt}
 
@@ -160,11 +156,9 @@ All these constraints are simply handled by brute force.
 Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v,w \in I$, $v$ and $w$ are not adjacent and belong to different partitions.
 
 This allows us to reuse the independent set inequality from the standard coloring problem.
-
 \lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
 
 Which can be strengthened considering symmetry breaking.
-
 \lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
 {\forall j_0 \leq n - \alpha(G)}
 
@@ -201,6 +195,23 @@ This grants another way to reuse independent set inequalities from the standard 
 Using the model previously defined along with the valid inequalities implemented as cutting planes, we implemented a branch and cut algorithm to tackle this problem, adding initial and primal heuristics and specific branching strategies.
 
 \end{frame} 
+
+\subsection{Preprocessing}
+
+\begin{frame}
+\frametitle{Preprocessing steps}
+
+The following steps are taken to preprocess the graph:
+\begin{itemize}
+
+\item{All edges within a partition are removed}
+\item{All partitions with an isolated vertex are removed}
+\item{All nodes $v$ such that $N(u) \subseteq N(v)$ for a node $u$ in the same partition are removed}
+
+\end{itemize}
+
+\end{frame} 
+
 
 \subsection{Cuts}
 
@@ -413,4 +424,5 @@ nodes & nodes & gap & nodes & gap
 \end{frame}
 
 \end{document}
+
 
