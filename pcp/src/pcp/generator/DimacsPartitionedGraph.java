@@ -5,6 +5,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import pcp.entities.partitioned.PartitionedGraphBuilder;
+
 public class DimacsPartitionedGraph {
 
 	protected int nodes;
@@ -99,6 +101,23 @@ public class DimacsPartitionedGraph {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public PartitionedGraphBuilder getGraphBuilder() {
+		PartitionedGraphBuilder builder = new PartitionedGraphBuilder(this.name);
+		
+		int p = 0;
+		for (Partition partition : partitionsList) {
+			for (Integer node : partition.getNodes()) {
+				builder.addNode(node, p);
+			} p++;
+		}
+		
+		for (Edge axis : this.edgeList) {
+			builder.addEdge(axis.vertexOne, axis.vertexTwo);
+		}
+		
+		return builder;
 	}
 	
 	public void write(Writer writer) throws IOException {

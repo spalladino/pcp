@@ -8,7 +8,7 @@ import java.util.Random;
 import pcp.generator.DimacsPartitionedGraph;
 import pcp.generator.GraphProperties;
 
-class DimacsRandomPartitionedGraph extends DimacsPartitionedGraph {
+public class DimacsRandomPartitionedGraph extends DimacsPartitionedGraph {
 
 	int minPartition, maxPartition;
 	double edgeProb;
@@ -57,6 +57,8 @@ class DimacsRandomPartitionedGraph extends DimacsPartitionedGraph {
 		writer.write("c density=" + String.valueOf(edgeProb) + "\n");
 		super.write(writer);
 	}
+	
+	
 	
 	
 

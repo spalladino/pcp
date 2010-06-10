@@ -23,6 +23,7 @@ import exceptions.AlgorithmException;
 public class ModelBuilder {
 	
 	static final boolean useCliqueCover = Settings.get().getBoolean("model.adjacentsNeighbourhood.useCliqueCover");
+	static final boolean boundVariablesOnDegree = Settings.get().getBoolean("model.variables.boundOnDegree");
 	
 	IloIntVar[] allxs;
 	IloIntVar[][] xs;
@@ -133,8 +134,11 @@ public class ModelBuilder {
 		// Create xs variables
 		for (int i = 0; i < nodes; i++) {
 			for (int j = 0; j < colors; j++) {
-				this.xs[i][j] = modeler.boolVar(String.format("x[%1$d,%2$d]", i, j));
-				this.allxs[i * colors + j] = this.xs[i][j]; 
+				IloIntVar var = modeler.boolVar(String.format("x[%1$d,%2$d]", i, j));
+				if (boundVariablesOnDegree && j > graph.getDegree(graph.getNode(i)))
+					var.setUB(0.0);
+				this.xs[i][j] = var;
+				this.allxs[i * colors + j] = var; 
 			}
 		}
 		
@@ -152,8 +156,7 @@ public class ModelBuilder {
 		IloLinearIntExpr obj = modeler.linearIntExpr();
 		for (int j = 0; j < colors; j++) {
 			obj.addTerm(ws[j], 1);
-		}
-		this.objective = modeler.addMinimize(obj);
+		} this.objective = modeler.addMinimize(obj);
 	}
 
 	/**

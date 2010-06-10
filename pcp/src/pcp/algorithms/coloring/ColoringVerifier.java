@@ -1,5 +1,7 @@
 package pcp.algorithms.coloring;
 
+import java.io.PrintStream;
+
 import exceptions.AlgorithmException;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
@@ -15,7 +17,7 @@ public class ColoringVerifier {
 		this.graph = graph;
 	}
 	
-	public void verify(ColoringAlgorithm coloring) throws AlgorithmException {
+	public ColoringVerifier verify(ColoringAlgorithm coloring) throws AlgorithmException {
 		int chi = coloring.getChi();
 		
 		for (Partition p : graph.getPartitions()) {
@@ -44,6 +46,22 @@ public class ColoringVerifier {
 		
 		if (max + 1 != chi) {
 			throw new AlgorithmException("Number of different colors is " + (max + 1) + " and returned chi is " + chi);
+		}
+		
+		return this;
+	}
+	
+	public void print(ColoringAlgorithm coloring) throws AlgorithmException {
+		print(coloring, System.out);
+	}
+
+	private void print(ColoringAlgorithm coloring, PrintStream out) throws AlgorithmException {
+		out.println("Chi = " + coloring.getChi());
+		for (Node node : graph.getNodes()) {
+			Integer color = coloring.getColor(node.index());
+			if (color != null) {
+				out.println(" " + node.getPartition().toString() + " " + node.toString() + ": " + color);
+			}
 		}
 	}
 	
