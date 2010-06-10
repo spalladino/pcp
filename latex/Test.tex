@@ -23,26 +23,128 @@
 \begin{document}
 
 \tiny
+
+\subsection{20100604210148}
+
 Data:
 \begin{itemize}
-\item solution.time
 \item solution.nnodes
 \item solution.gap
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: PcpBranchAndCut, branch.selection: 0
-\item S2: solver.kind: PcpBranchAndCut, branch.selection: 1
-\item S3: solver.kind: PcpCutAndBranch, branch.selection: 0
-\item S4: solver.kind: PcpCutAndBranch, branch.selection: 1
+\item S1: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 0
+\item S2: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 2
+\item S3: solver.kind: PcpCutAndBranch, solver.mipEmphasis: 0
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+\begin{tabular}{|c|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
 \\
 \hline
-benchnodesn70.003.in & 300.031 & 363.000 & 0.369890766778 & 300.063 & 367.000 & 0.369890766778 & 300.016 & 1990.000 & 0.382066537679 & 300.016 & 1994.000 & 0.382025822544
+benchdens80e02n80.001.in & 485 &    - & 2536 &    -
+\\
+benchdens80e04n80.001.in & 1362 & 0.301947228377 & 31209 & 0.485548406412
+\\
+benchdens80e06n80.001.in & 377 & 0.410984781622 & 7329 & 0.502022741375
+\\
+benchdens80e08n80.001.in & 262 & 0.508957204461 & 8893 & 0.514416469421
+\\
+benchnodesn60.001.in & 3039 &    - & 121779 & 0.222872940653
+\\
+benchnodesn70.001.in & 1856 & 0.297793682273 & 54437 & 0.387227029617
+\\
+benchnodesn80.001.in & 1077 & 0.318000385564 & 25909 & 0.404964415486
+\\
+benchnodesn90.001.in & 244 & 0.451176654698 & 5817 & 0.511503070576
+\\
+benchnodesn100.001.in & 8131 & 0.56344134243 & 15008 & 0.58925966018
 \\
 \hline 
  \end{tabular}
+
+
+\clearpage
+
+\subsection{20100604223000}
+
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 0
+\item S2: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 2
+\item S3: solver.kind: PcpCutAndBranch, solver.mipEmphasis: 0
+\end{itemize}
+\begin{tabular}{|c|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S3}
+\\
+\hline
+benchdens80e02n80.002.in & 1167 &    - & 12317 &    -
+\\
+benchdens80e04n80.002.in & 17272 & 0.445496831858 & 39055 & 0.482950655908
+\\
+benchdens80e06n80.002.in & 2921 & 0.419823836951 & 18781 & 0.470394263089
+\\
+benchdens80e08n80.002.in & 225 & 0.467167729855 & 5135 & 0.514247061617
+\\
+benchnodesn60.002.in & 22680 & 0.202937291743 &115760 & 0.282258731101
+\\
+benchnodesn70.002.in & 14346 & 0.333333333328 &57224 & 0.388299437451
+\\
+benchnodesn80.002.in & 4340 & 0.34810009732 & 34916 & 0.403644739982
+\\
+benchnodesn90.002.in & 419 & 0.443104958315 & 12318 & 0.483983259551
+\\
+benchnodesn100.002.in & 337 & 0.548332856856 & 13267 & 0.583680371494
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
+\subsection{20100603215808}
+ 
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexBranchAndCutSearch, solver.mipEmphasis: -
+\item S2: solver.kind: PcpBranchAndCut, solver.mipEmphasis: -
+\item S3: solver.kind: PcpCutAndBranch, solver.mipEmphasis: -
+\end{itemize}
+\begin{tabular}{|c|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
+\\
+\hline
+benchdens80e02n80.in & 1478 &    - & 603 &    -
+\\
+benchdens80e04n80.in & 7685 & 0.437688976044 & 22659 & 0.451814287488
+\\
+benchdens80e06n80.in & 646 & 0.457916728925 & 4626 & 0.463207167199
+\\
+benchdens80e08n80.in & 89 & 0.441950278559 & 303 & 0.444329997737
+\\
+benchnodesn60.in & 2775 &    - & 11148 &    -
+\\
+benchnodesn70.in & 12866 & 0.344949822446 & 30461 & 0.376554565771
+\\
+benchnodesn80.in & 887 & 0.339296833725 & 7941 & 0.477927489605
+\\
+benchnodesn90.in & 606 & 0.473518285143 & 3543 & 0.485390929189
+\\
+\hline 
+ \end{tabular}
+
+
+
 \end{document}
+

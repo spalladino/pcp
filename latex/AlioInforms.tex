@@ -1,3 +1,4 @@
+%\documentclass[handout]{beamer}
 \documentclass{beamer}
 %\usepackage[spanish]{babel}
 \usepackage[ansinew]{inputenc}
@@ -24,11 +25,6 @@
 \begin{frame}
 \titlepage
 \end{frame}
-
-\begin{frame}
-\frametitle{Index}
-\tableofcontents
-\end{frame} 
 
 \setlength{\parskip}{10pt plus 1pt minus 1pt}
 
@@ -145,7 +141,7 @@ We use a greedy heuristic to find maximal cliques in the graph which violate thi
 \begin{frame}
 \frametitle{Block color inequalities}
 
-Given the symmetry breaking constraints, if a partition is not be coloured with color $j$ then it cannot be coloured using any colour with a higher label.
+Given the symmetry breaking constraints, a partition being coloured with any label greater or equal than $j_0$ is subject to $w_{j_0}$ being set.
 
 This allows us to define the block color constraints as:
 \lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}
@@ -160,11 +156,11 @@ All these constraints are simply handled by brute force.
 Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v,w \in I$, $v$ and $w$ are not adjacent and belong to different partitions.
 
 This allows us to reuse the independent set inequality from the standard coloring problem.
-
 \lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
 
-Which can be strengthened considering symmetry breaking.
+\pause
 
+Which can be strengthened considering symmetry breaking.
 \lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
 {\forall j_0 \leq n - \alpha(G)}
 
@@ -187,9 +183,11 @@ Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V
 E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
 \]
 
+\pause
+
 This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
 
-\lpineq{\sum{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
+\lpineq{\sum_{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
 
 \end{frame}
 
@@ -202,6 +200,23 @@ Using the model previously defined along with the valid inequalities implemented
 
 \end{frame} 
 
+\subsection{Preprocessing}
+
+\begin{frame}
+\frametitle{Preprocessing steps}
+
+The following steps are taken to preprocess the graph:
+\begin{itemize}
+
+\item{All edges within a partition are removed}
+\item{All partitions with an isolated vertex are removed}
+\item{All nodes $v$ such that $N(u) \subseteq N(v)$ for a node $u$ in the same partition are removed}
+
+\end{itemize}
+
+\end{frame} 
+
+
 \subsection{Cuts}
 
 \begin{frame}
@@ -209,7 +224,7 @@ Using the model previously defined along with the valid inequalities implemented
 
 We implemented the inequalities in the previous section as cutting planes, tested initially in a Cut and Branch algorithm, and then added to a Branch and Cut structure.
 
-Cuts are applied aggressively on the root of the branching tree and every few nodes on the rest of the tree until a certain depth, in order to keep relaxations easy to solve.
+Cuts are applied aggressively on the root of the branching tree, and with fewer iterations on the rest of the tree until a certain depth, in order to keep relaxations easy to solve.
 
 \end{frame}
 
@@ -263,9 +278,9 @@ We also adapted it to serve as a primal heuristic by fixing all nodes with a hig
 
 \subsection{Branching}
 \begin{frame}
-\frametitle{Branching}
+\frametitle{Branching priorities}
 
-We established a static branching strategy for $x_{ij}$ variables prioritizing on:
+We implemented a static branching strategy for $x_{ij}$ variables prioritizing on:
 
 \begin{itemize}
 \item{The higher the number of partitions adjacent to node $i$}
@@ -274,6 +289,18 @@ We established a static branching strategy for $x_{ij}$ variables prioritizing o
 \end{itemize}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{DSatur branching}
+
+A second branching strategy implemened was picking the nodes with the highest degree of saturation in the current solution.
+
+The previous strategy was used as a tie-breaker for nodes with equal degree, picking a single node $i_0$.
+
+The chosen $x_{ij}$ variable for branching was the one with the highest value among all $x_{i_0j}$.
+
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Pruning}
@@ -309,7 +336,7 @@ We built two test suites with random generated graphs:
 
 Partition size for both suites was fixed to $2$. 
 
-Each instance was run for 30 minutes and the solution gap and node count in the branch tree is reported.
+Each set was run for 30 minutes and the solution gap and node count in the branch tree is reported for both Branch and Cut and Cut and Branch.
 
 \end{frame} 
 
@@ -318,58 +345,88 @@ Each instance was run for 30 minutes and the solution gap and node count in the 
 \begin{frame}
 \frametitle{Fixed node count}
 
-\begin{tabular}{|c|cc|cc|cc|}
+\begin{center}
+\begin{tabular}{|c|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex 12.1} & \multicolumn{2}{|c|}{Branch \& Cut} & \multicolumn{2}{|c|}{Cut \& Branch}
-\\
-\hline
-density & nodes & gap & nodes & gap & nodes & gap
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Branch \& Cut} & \multicolumn{2}{|c|}{Cut \& Branch}
 \\
 \hline
-20\% & 9568 &    0.0 & 1478 &    0.0 & 603 & 0.0
-\\
-40\% & 736217 & 0.33 & 7685 & 0.43 & 22659 & 0.45
-\\
-60\% & 190564 & 0.50 & 646 & 0.45 & 4626 & 0.46
-\\
-80\% & 21736 & 0.50 & 89 & 0.44 & 303 & 0.45
+density & nodes & gap & nodes & gap 
 \\
 \hline
-\end{tabular} 
-
+0.2 & 485 &    0.00 & 2536 &    0.00
+\\
+0.4 & 1362 & 0.30 & 31209 & 0.48
+\\
+0.6 & 377 & 0.41 & 7329 & 0.50
+\\
+0.8 & 225 & 0.46 & 5135 & 0.51
+\\
+\hline 
+\end{tabular}
+\end{center} 
+ 
 \end{frame} 
 
 \begin{frame}
 \frametitle{Fixed density}
 
-\begin{tabular}{|c|cc|cc|cc|}
+\begin{center}
+\begin{tabular}{|c|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex 12.1} & \multicolumn{2}{|c|}{Branch \& Cut} & \multicolumn{2}{|c|}{Cut \& Branch}
-\\
-\hline
-nodes & nodes & gap & nodes & gap & nodes & gap
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Branch \& Cut} & \multicolumn{2}{|c|}{Cut \& Branch}
 \\
 \hline
-60 & 180611 & 0.20 & 2775 & 0.0 & 11148 & 0.0
-\\
-70 & 495048 & 0.33 & 12866 & 0.34 & 30461 & 0.37
-\\
-80 & 157471 & 0.43 & 887 & 0.33 & 7941 & 0.47 
-\\
-90 & 145067 & 0.43 & 606 & 0.47 & 3543 & 0.48 
+nodes & nodes & gap & nodes & gap 
 \\
 \hline
-
- 
-\end{tabular} 
-
+60 & 3039 &    0.00 & 121779 & 0.22
+\\
+70 & 1856 & 0.29 & 54437 & 0.38
+\\
+80 & 1077 & 0.31 & 25909 & 0.40
+\\
+90 & 244 & 0.45 & 5817 & 0.51
+\\
+100 & 337 & 0.54 & 13267 & 0.58
+\\
+\hline 
+\end{tabular}
+\end{center}
+  
 \end{frame} 
 
-%Results in cut and branch, to determine strategies
-%Then results in branch and cut, show that there was improvement by applying cuts in more nodes
-%Show time and node count
-%Compare vs cplex and brazil, br cannot be compared in terms of time, only node size, be polite
+\subsection{Future work}
 
+\begin{frame}
+\frametitle{Future work}
 
+\begin{itemize}
+
+\item{Theoretical analysis of the polytope}
+
+\item{Implement more families of cutting planes}
+
+\item{Optimize primal and separation heuristics}
+
+\item{Build a larger and more comprehensive test suite}
+
+\item{Determine optimal parametrizations for different graphs}
+
+\item{Check performance of full branch and cut on larger instances}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{center}
+\LARGE{Questions...?}
+\end{center}
+
+\end{frame}
 
 \end{document}
+
+
