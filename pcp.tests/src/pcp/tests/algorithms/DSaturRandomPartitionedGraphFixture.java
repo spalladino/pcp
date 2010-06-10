@@ -1,5 +1,7 @@
 package pcp.tests.algorithms;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,6 +10,7 @@ import pcp.algorithms.coloring.BruteForcePartitionColoring;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ColoringVerifier;
 import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
+import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.generator.GraphProperties;
@@ -22,25 +25,40 @@ public class DSaturRandomPartitionedGraphFixture {
 	PartitionedGraph graph;
 	
 	ColoringAlgorithm dsatur;
-	ColoringAlgorithm exact;
+	BruteForcePartitionColoring exact;
 	
 	public DSaturRandomPartitionedGraphFixture() throws Exception {
 		Settings.load("test");
 	}
 	
 	@Test
-	public void testSmalls() throws AlgorithmException {
-		testMultiple(100, 10, 2, 3, 0.5);
-		
+	public void testUnpartitionedSmalls() throws AlgorithmException, IOException {
+		testMultiple(1000, 10, 1, 1, 0.5);
 	}
 	
-	protected void testMultiple(int iters, int nodecount, int minpart, int maxpart, double density) throws AlgorithmException {
+	@Test
+	public void testVerySmalls() throws AlgorithmException, IOException {
+		testMultiple(1000, 7, 2, 3, 0.5);
+	}
+	
+	@Test
+	public void testSmalls() throws AlgorithmException, IOException {
+		testMultiple(100, 10, 2, 3, 0.5);
+	}
+	
+	@Test
+	public void testMediums() throws AlgorithmException, IOException {
+		testMultiple(100, 20, 2, 3, 0.5);
+	}
+
+	
+	protected void testMultiple(int iters, int nodecount, int minpart, int maxpart, double density) throws AlgorithmException, IOException {
 		for (int i = 0; i < iters; i++) {
 			test(nodecount, minpart, maxpart, density);
 		}
 	}
 	
-	protected void test(int nodecount, int minpart, int maxpart, double density) throws AlgorithmException {
+	protected void test(int nodecount, int minpart, int maxpart, double density) throws AlgorithmException, IOException {
 		GraphProperties props = new GraphProperties();
 		props.setBase(0);
 		props.setEdgeProb(density);
@@ -50,8 +68,13 @@ public class DSaturRandomPartitionedGraphFixture {
 		props.setNodeCount(nodecount);
 		props.setType(GraphType.Random);
 		
-		PartitionedGraphBuilder builder = new DimacsRandomPartitionedGraph(props).getGraphBuilder();
+		DimacsRandomPartitionedGraph dimacs = new DimacsRandomPartitionedGraph(props);
+		PartitionedGraphBuilder builder = dimacs.getGraphBuilder();
 		graph = new Preprocessor(builder).preprocess().getGraph();
+		if (graph.N() == 0 || !new ConnectivityChecker(graph).check()) return;
+		
+		System.out.println("\n\nNew graph:\n");
+		graph.print(System.out);
 		
 		check();
 	}
@@ -60,13 +83,16 @@ public class DSaturRandomPartitionedGraphFixture {
 		dsatur = createDSatur();
 		exact = createExact();
 		
-		Assert.assertEquals(exact.getChi(), dsatur.getChi());
+		System.out.println();
 		new ColoringVerifier(graph)
 			.verify(dsatur)
 			.verify(exact);
+		
+		System.out.println("\n" + exact.getColorClassString());
+		Assert.assertEquals(exact.getChi(), dsatur.getChi());
 	}
 	
-	private ColoringAlgorithm createExact() {
+	private BruteForcePartitionColoring createExact() {
 		return new BruteForcePartitionColoring(graph);
 	}
 

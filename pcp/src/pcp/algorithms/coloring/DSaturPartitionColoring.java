@@ -7,6 +7,7 @@ import pcp.algorithms.bounding.IterationsBounder;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
 import props.Settings;
@@ -32,8 +33,12 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	// ColorCount[i] = number of different colors used by neighbours of i
 	protected int[] colorCount;
 	
-	// Partitions handled
-	protected boolean[] handled;
+	// Partitions and nodes handled (cannot be picked in get next node call)
+	protected boolean[] partitionsHandled;
+	protected boolean[] nodesHandled;
+	
+	// Nodes left in each partition that can still be coloured 
+	protected int[] usablePartitionNodes;
 	
 	// ColoredNodeInPartition[q] = index of the node colored in partition q
 	protected Node[] coloredNodeInPartition;
@@ -52,6 +57,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected int fixedColors = 0;
 	
 	private boolean hasrun = false;
+	private int spaces = 0;
 	
 	public DSaturPartitionColoring(IPartitionedGraph graph) {
 		super(graph);
@@ -118,89 +124,129 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		return null;
 	}
 	
-	protected abstract Node getNextNode();
+	protected abstract Node getNextNode() throws AlgorithmException;
 
-	private int color(int i, int currentColor) throws AlgorithmException {
+	private void indent() {
+		spaces++;
+	}
+	
+	private void unindent() {
+		spaces--;
+	}
+	
+	private void log(String s) {
+		for (int i = 0; i < spaces; i++) s = " " + s;
+		System.out.println(s);
+	}
+	
+	private int color(int painted, int currentColor) throws AlgorithmException {
 		int j, newVal;
-		int place, partition;
+		int place;
+		
+		indent();
 		
 		if (currentColor >= bestColoring) {
-			if (log) System.out.println("Fathoming coloring for node " + (i + logNodeBase) + " with color " + currentColor);
+			if (log) log("Fathoming coloring after painted " + (painted) + " with color count " + currentColor);
+			unindent();
 			return (currentColor);
 		}
 		
 		if (bestColoring <= lowerBound) {
+			unindent();
 			return bestColoring;
 		}
 		
-		if (i >= graph.P()) {
-			if (log) System.out.println("Leaf with current coloring " + currentColor);
+		if (painted >= graph.P()) {
+			if (log) log("Leaf with current coloring " + currentColor);
+			unindent();
 			return (currentColor);
 		}
 		
-		if (!bounder.iter()) { 
+		if (!bounder.iter()) {
+			unindent();
 			return bestColoring;
 		}
 
 		// Find node with maximum color_adj
 		Node next = getNextNode();
 		place = next.index(); 
-		partition = next.getPartition().index(); 
-		handle(partition);
+		handleNode(next.index());
 
-		// Execute DFS
+		// Attempt using all colors from first to current max colors
 		for (j = 1; j <= currentColor; j++) {
 			if (colorAdj[place][j] == 0) {
+				if (log) log("Painting node " + (place + logNodeBase) + " with color " + (j));
 				assignColor(place, j);
-				newVal = color(i + 1, currentColor);
-				if (newVal < bestColoring) {
-					if (log) System.out.println("Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
-					bounder.improved();
-					bestColoring = newVal;
-					bestColorClass = colorClass.clone();
-				}
+				newVal = color(painted + 1, currentColor);
+				tryUpdateBestColoring(newVal);
 				
-				if (log) System.out.println("Uncoloring " + (place + logNodeBase) + " which had " + j);
+				if (log) log("Uncoloring " + (place + logNodeBase) + " which had " + j);
 				removeColor(place, j);
+				
+				// Break loop if best coloring is better than current coloring count
 				if (bestColoring <= currentColor) {
-					if (log) System.out.println("Current coloring " + currentColor + " over best " + bestColoring);
-					unhandled(partition);
+					if (log) log("Current coloring " + currentColor + " over best " + bestColoring);
+					unhandleNode(place); 
+					unindent();
 					return bestColoring;
 				}
+				
+			} else {
+				if (log) log("Cannot apply color " + j + " to node " + (place + logNodeBase));
 			}
 		}
 		
+		// Use new color for this node
 		if (currentColor + 1 < bestColoring) {
-			if (log) System.out.println("Attempting to color " + (place + logNodeBase) + " with color next to " + currentColor);
+			if (log) log("Painting node " + (place + logNodeBase) + " with color " + (currentColor+1) + " (new color)");
 			assignColor(place, currentColor + 1);
 			
-			newVal = color(i + 1, currentColor + 1);
-			if (newVal < bestColoring) {
-				if (log) System.out.println("Attempt succesful. Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
-				bounder.improved();
-				bestColoring = newVal;
-				bestColorClass = colorClass.clone();
-			}
+			newVal = color(painted + 1, currentColor + 1);
+			tryUpdateBestColoring(newVal);
 			
-			if (log) System.out.println("Uncoloring " + (place + logNodeBase) + " which had " + currentColor + 1);
+			if (log) log("Uncoloring " + (place + logNodeBase) + " which had " + (currentColor + 1));
 			removeColor(place, currentColor + 1);
 		}
 		
-		unhandled(partition);
+		// Try leaving this node unpainted if this partition can still be somehow colored
+		int partition = next.getPartition().index();
+		if (usablePartitionNodes[partition] > 0) {
+			unhandlePartition(partition);
+			newVal = color(painted, currentColor);
+			tryUpdateBestColoring(newVal);
+		}
+		
+		// Mark as unused and return
+		unhandleNode(place);
+		unindent();
 		return (bestColoring);
+	}
+
+	private void tryUpdateBestColoring(int newVal) {
+		if (newVal < bestColoring) {
+			if (log)log("Setting new best coloring to " + newVal + ": " + Arrays.toString(colorClass));
+			bounder.improved();
+			bestColoring = newVal;
+			bestColorClass = colorClass.clone();
+		}
 	}
 
 	private void handleNode(int node) {
 		int partition = graph.getNode(node).getPartition().index();
-		handled[partition] = true;
+		partitionsHandled[partition] = true;
+		nodesHandled[node] = true;
+		usablePartitionNodes[partition]--;
 	}
 	
-	private void handle(int partition) {
-		handled[partition] = true;
+	private void unhandlePartition(int partition) {
+		partitionsHandled[partition] = false;
 	}
-
-	private void unhandled(int partition) {
-		handled[partition] = false;
+	
+	private void unhandleNode(int node) {
+		int partition = graph.getNode(node).getPartition().index();
+		partitionsHandled[partition] = false;
+		nodesHandled[node] = false;
+		usablePartitionNodes[partition]++;
 	}
 
 	private void assignColor(int node, int color) throws AlgorithmException {
@@ -212,7 +258,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	}
 
 	protected void assignColor(Node node, int color) throws AlgorithmException {
-		if (log) System.out.println("Painting node " + (node.index() + logNodeBase) + " with color " + color);
 		colorClass[node.index()] = color;
 		coloredNodeInPartition[node.getPartition().index()] = node;
 		
@@ -222,7 +267,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	}
 
 	protected void removeColor(Node node, int color) throws AlgorithmException {
-		if (log) System.out.println("Unpainting node " + (node.index() + logNodeBase) + " of color " + color);
+		//if (log) System.out.println("Unpainting node " + (node.index() + logNodeBase) + " of color " + color);
 		colorClass[node.index()] = 0;
 		coloredNodeInPartition[node.getPartition().index()] = null;
 		
@@ -268,12 +313,18 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		this.bounder = new IterationsBounder();
 		
 		this.bestColoring = graph.P() + 1;
-		this.colorAdj = new int[graph.N()][graph.P()];
+		this.colorAdj = new int[graph.N()][graph.P()+1];
 		this.colorClass = new int[graph.N()];
-		this.colorCount = new int[graph.N()];
-		this.handled = new boolean[graph.P()];
+		this.colorCount = new int[graph.N()+1];
+		this.partitionsHandled = new boolean[graph.P()];
+		this.nodesHandled = new boolean[graph.N()];
 		this.coloredNodeInPartition = new Node[graph.P()];
+		this.usablePartitionNodes = new int[graph.P()];
 		this.lowerBound = 1;
+		
+		for (Partition p : graph.getPartitions()) {
+			usablePartitionNodes[p.index()] = graph.getNodes(p).length;
+		}
 		
 		if (colorAdjPartitions) {
 			for (Node n : graph.getNodes()) {

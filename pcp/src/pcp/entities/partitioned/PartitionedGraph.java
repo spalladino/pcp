@@ -1,5 +1,8 @@
 package pcp.entities.partitioned;
 
+import java.io.PrintStream;
+import java.util.Arrays;
+
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.Graph;
@@ -141,5 +144,18 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	@Override
 	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
 		return this.getNodes(partitions[simpleNode.index()]);
+	}
+	
+	public void print(PrintStream stream) {
+		stream.println("|P|= " + P());
+		stream.println("|N|= " + N());
+		
+		for (Partition p : getPartitions()) {
+			stream.println(p.toString() + ": " + Arrays.toString(getNodes(p)));
+		}
+		
+		for (Node n : getNodes()) {
+			stream.println(n.toString() + ": " + Arrays.toString(getNeighbours(n)));
+		}
 	}
 }

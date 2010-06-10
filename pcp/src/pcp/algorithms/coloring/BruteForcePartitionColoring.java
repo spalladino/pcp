@@ -1,5 +1,7 @@
 package pcp.algorithms.coloring;
 
+import java.util.Arrays;
+
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
@@ -20,7 +22,7 @@ public class BruteForcePartitionColoring extends ColoringAlgorithm {
 	
 	public BruteForcePartitionColoring(IPartitionedGraph graph) {
 		super(graph);
-		counts = new int[graph.N()];
+		counts = new int[graph.N()+1];
 		colors = new int[graph.N()];
 		fixed = new boolean[graph.N()];
 		handled = new boolean[graph.P()];
@@ -101,6 +103,10 @@ public class BruteForcePartitionColoring extends ColoringAlgorithm {
 	@Override
 	public CutFamily getIdentifier() {
 		return null;
+	}
+	
+	public String getColorClassString() {
+		return "Chi = " + bestCount + ": " + Arrays.toString(bestColors);
 	}
 
 }
