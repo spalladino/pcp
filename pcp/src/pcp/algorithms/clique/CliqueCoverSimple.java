@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import pcp.common.sorting.SimpleNodeDegreeComparator;
+import pcp.common.sorting.SimpleNodeDegreeCompleteComparator;
 import pcp.definitions.Sorting;
 import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.Node;
@@ -26,7 +26,7 @@ public class CliqueCoverSimple {
 	 */
 	public List<List<Node>> cliques() {
 		List<List<Node>> cliques = new ArrayList<List<Node>>();
-		Queue<Node> queue = new PriorityQueue<Node>(graph.N(), new SimpleNodeDegreeComparator(Sorting.Asc)); 
+		Queue<Node> queue = new PriorityQueue<Node>(graph.N(), new SimpleNodeDegreeCompleteComparator(Sorting.Asc)); 
 		Collections.addAll(queue, graph.getNodes());
 		
 		// Iterate over all nodes

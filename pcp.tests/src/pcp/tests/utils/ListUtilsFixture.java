@@ -11,6 +11,52 @@ import pcp.utils.ListUtils;
 public class ListUtilsFixture {
 
 	@Test
+	public void testRetainFrom01() {
+		LinkedList<Integer> candidates = new LinkedList<Integer>();
+		
+		candidates.add(2);
+		candidates.add(5);
+		candidates.add(7);
+		
+		Integer[] toRetain = new Integer[] {1,2,4,7}; 
+		
+		LinkedList<Integer> removed = ListUtils.retainFromSorted(candidates, toRetain, new Comparator<Integer>() {
+			public int compare(Integer o1, Integer o2) {
+				return o1.compareTo(o2);
+			}
+		});
+		
+		Assert.assertArrayEquals(new Integer[] { 2,7 }, 
+				(Integer[]) candidates.toArray(new Integer[candidates.size()]));
+		
+		Assert.assertArrayEquals(new Integer[] { 5 }, 
+				(Integer[]) removed.toArray(new Integer[removed.size()]));
+	}
+	
+	@Test
+	public void testRetainFrom02() {
+		LinkedList<Integer> candidates = new LinkedList<Integer>();
+		
+		candidates.add(2);
+		candidates.add(5);
+		candidates.add(7);
+		
+		Integer[] toRetain = new Integer[] {1,2,5,7}; 
+		
+		LinkedList<Integer> removed = ListUtils.retainFromSorted(candidates, toRetain, new Comparator<Integer>() {
+			public int compare(Integer o1, Integer o2) {
+				return o1.compareTo(o2);
+			}
+		});
+		
+		Assert.assertArrayEquals(new Integer[] { 2,5,7 }, 
+				(Integer[]) candidates.toArray(new Integer[candidates.size()]));
+		
+		Assert.assertArrayEquals(new Integer[] { }, 
+				(Integer[]) removed.toArray(new Integer[removed.size()]));
+	}
+	
+	@Test
 	public void testAddSorted01() {
 		LinkedList<Integer> candidates = new LinkedList<Integer>();
 		LinkedList<Integer> toAdd = new LinkedList<Integer>();

@@ -29,7 +29,14 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 	}
 	
 	@Override
-	public ISimpleGraphBuilder addEdge(int n1, int n2) {
+	public SimpleGraphBuilder addEdges(int from, int... to) {
+		for (int n : to) {
+			addEdge(from, n);
+		} return this;
+	}
+	
+	@Override
+	public SimpleGraphBuilder addEdge(int n1, int n2) {
 		edges.add(new TupleInt(n1, n2));
 		nodeAdjacencies.get(n1).add(n2);
 		nodeAdjacencies.get(n2).add(n1);
@@ -37,7 +44,7 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 	}
 
 	@Override
-	public ISimpleGraphBuilder addNode(int node) {
+	public SimpleGraphBuilder addNode(int node) {
 		nodeAdjacencies.put(node, new TreeSet<Integer>());
 		nodeCount++;
 		return this;
