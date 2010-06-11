@@ -8,10 +8,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import entities.TupleInt;
-
-import pcp.entities.ISimpleGraph;
 import pcp.entities.ISimpleGraphBuilder;
+import entities.TupleInt;
 
 
 public class SimpleGraphBuilder implements ISimpleGraphBuilder {
@@ -52,7 +50,7 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 	}
 	
 	@Override
-	public ISimpleGraph getGraph() {
+	public Graph getGraph() {
 		Graph graph = new Graph(nodeCount, edges.size());
 		graph.name = name;
 		
