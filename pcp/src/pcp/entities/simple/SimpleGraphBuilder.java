@@ -9,6 +9,8 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import pcp.entities.ISimpleGraphBuilder;
+import pcp.entities.simple.Edge;
+import pcp.entities.simple.Node;
 import entities.TupleInt;
 
 
@@ -83,7 +85,7 @@ public class SimpleGraphBuilder implements ISimpleGraphBuilder {
 		
 		return graph;
 	}
-
+	
 	
 	
 }

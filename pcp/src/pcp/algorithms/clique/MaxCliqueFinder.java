@@ -12,7 +12,7 @@ import pcp.algorithms.bounding.SolutionsBounder;
 import pcp.common.sorting.SimpleNodeDegreeCompleteComparator;
 import pcp.definitions.Constants;
 import pcp.definitions.Sorting;
-import pcp.entities.simple.Graph;
+import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.Node;
 import pcp.entities.simple.SortedSimpleGraph;
 import pcp.solver.cuts.CutFamily;
@@ -40,7 +40,7 @@ public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 	
 	private int nesting = 0;
 	
-	public MaxCliqueFinder(Graph graph, IAlgorithmBounder bounder) {
+	public MaxCliqueFinder(ISimpleGraph graph, IAlgorithmBounder bounder) {
 		super();
 		this.graph = generateGraph(graph);
 		this.nodes = this.graph.getNodes();
@@ -83,7 +83,7 @@ public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 		} return comparator;
 	}
 	
-	private SortedSimpleGraph generateGraph(Graph graph)	{
+	private SortedSimpleGraph generateGraph(ISimpleGraph graph)	{
 		return new SortedSimpleGraph(graph, getNodeComparator(), null);
 	}
 

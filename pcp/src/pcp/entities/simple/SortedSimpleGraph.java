@@ -7,7 +7,7 @@ import pcp.entities.ISimpleGraph;
 
 public class SortedSimpleGraph implements ISimpleGraph {
 
-	Graph graph;
+	ISimpleGraph graph;
 	
 	Comparator<Node> nodeComparer;
 	Comparator<Edge> edgeComparer;
@@ -17,7 +17,7 @@ public class SortedSimpleGraph implements ISimpleGraph {
 	Node[] nodes;
 	Edge[] edges;
 	
-	public SortedSimpleGraph(Graph graph,
+	public SortedSimpleGraph(ISimpleGraph graph,
 			Comparator<Node> nodeComparer,
 			Comparator<Edge> edgeComparer) {
 		
@@ -33,24 +33,20 @@ public class SortedSimpleGraph implements ISimpleGraph {
 
 	public void reset() {
 		if (this.edgeComparer != null) {
-			this.edges = graph.edges.clone();
+			this.edges = graph.getEdges().clone();
 			Arrays.sort(this.edges, this.edgeComparer);
 		} else {
-			this.edges = graph.edges;
+			this.edges = graph.getEdges();
 		}
 		
 		if (this.nodeComparer != null) {
-			this.nodes = graph.nodes.clone();
+			this.nodes = graph.getNodes().clone();
 			Arrays.sort(this.nodes, this.nodeComparer);
 		} else {
-			this.nodes = graph.nodes;
+			this.nodes = graph.getNodes();
 		}
 		
-		if (this.nodeComparer != null) {
-			this.adjacencies = new Node[graph.N()][];
-		} else {
-			this.adjacencies = graph.adjacencies;
-		} 
+		this.adjacencies = new Node[graph.N()][];
 	}
 	
 	@Override
@@ -67,9 +63,14 @@ public class SortedSimpleGraph implements ISimpleGraph {
 	@Override
 	public Node[] getNeighbours(Node node) {
 		if (this.adjacencies[node.name] == null) {
-			this.adjacencies[node.name] = graph.adjacencies[node.name].clone();
-			Arrays.sort(this.adjacencies[node.name], this.nodeComparer);
+			if (this.nodeComparer != null) {
+				this.adjacencies[node.name] = graph.getNeighbours(node).clone();
+				Arrays.sort(this.adjacencies[node.name], this.nodeComparer);
+			} else {
+				this.adjacencies[node.name] = graph.getNeighbours(node);
+			}
 		}
+		
 		return this.adjacencies[node.name];
 	}
 
