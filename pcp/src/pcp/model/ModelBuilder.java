@@ -24,6 +24,7 @@ public class ModelBuilder {
 	
 	static final boolean useCliqueCover = Settings.get().getBoolean("model.adjacentsNeighbourhood.useCliqueCover");
 	static final boolean boundVariablesOnDegree = Settings.get().getBoolean("model.variables.boundOnDegree");
+	static final boolean fixClique = Settings.get().getBoolean("model.variables.fixClique");
 	
 	IloIntVar[] allxs;
 	IloIntVar[][] xs;
@@ -41,6 +42,10 @@ public class ModelBuilder {
 	}
 
 	public Model buildModel(BuilderStrategy strategy, ColoringAlgorithm coloring) throws IloException, AlgorithmException {
+		return buildModel(strategy, coloring, null);
+	}
+	
+	public Model buildModel(BuilderStrategy strategy, ColoringAlgorithm coloring, List<pcp.entities.simple.Node> maxgpclique) throws IloException, AlgorithmException {
 		this.xs = null;
 		this.ws = null;
 		this.objective = null;
@@ -52,6 +57,7 @@ public class ModelBuilder {
 		// Initialize variables and objective function
 		initializeVariables();
 		createObjective();
+		boundClique(maxgpclique);
 		
 		// Constraints based on painting
 		switch (strategy.getPartitionConstraints()) {
@@ -113,6 +119,25 @@ public class ModelBuilder {
 		return model;
 	}
 
+	/**
+	 * Fixes variables for nodes within the max clique.
+	 * Every variable with color different than the assigned is set to zero.
+	 * @param maxgpclique max clique in g prime graph
+	 * @throws IloException 
+	 */
+	private void boundClique(List<pcp.entities.simple.Node> maxgpclique) throws IloException {
+		int color = 0;
+		for (pcp.entities.simple.Node snode : maxgpclique) {
+			for (Node node : graph.getNodes(snode)) {
+				for (int j = 0; j < colors; j++) {
+					IloIntVar var = this.xs[node.index()][j];
+					if (j != color) var.setUB(0.0);
+				}
+			}
+			color++;
+		}
+	}
+
 	private void fillModel(Model model) {
 		model.xs = xs;
 		model.allxs = allxs;
@@ -135,8 +160,10 @@ public class ModelBuilder {
 		for (int i = 0; i < nodes; i++) {
 			for (int j = 0; j < colors; j++) {
 				IloIntVar var = modeler.boolVar(String.format("x[%1$d,%2$d]", i, j));
-				if (boundVariablesOnDegree && j > graph.getDegree(graph.getNode(i)))
+				// TODO: Check bound
+				if (boundVariablesOnDegree && j > graph.getNeighbourPartitions(graph.getNode(i)).length) {
 					var.setUB(0.0);
+				}
 				this.xs[i][j] = var;
 				this.allxs[i * colors + j] = var; 
 			}

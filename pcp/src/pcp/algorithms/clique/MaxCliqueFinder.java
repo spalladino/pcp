@@ -40,6 +40,10 @@ public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 	
 	private int nesting = 0;
 	
+	public MaxCliqueFinder(ISimpleGraph graph) {
+		this(graph, null);
+	}
+	
 	public MaxCliqueFinder(ISimpleGraph graph, IAlgorithmBounder bounder) {
 		super();
 		this.graph = generateGraph(graph);
@@ -56,6 +60,7 @@ public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 
 		// Iterate over every initial node
 		for (int i = 0; i < nodes.length; i++) {
+			if (!bounder.check()) break;
 			Node initial = nodes[i];
 			clique = new ArrayList<Node>(nodes.length/2);
 			clique.add(initial);

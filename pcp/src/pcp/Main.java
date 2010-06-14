@@ -52,9 +52,10 @@ public class Main {
 		
 		try {
 			long initial = System.currentTimeMillis();
-			graph = new Preprocessor(builder).preprocess().getGraph();
+			Preprocessor preprocessor = new Preprocessor(builder);
+			graph = preprocessor.preprocess().getGraph();
 			coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
-			model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring); 
+			model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, preprocessor.getClique()); 
 			solver.setModel(model);
 			long elapsed = System.currentTimeMillis() - initial;
 			execution.getData().put("preprocess.time", elapsed);
