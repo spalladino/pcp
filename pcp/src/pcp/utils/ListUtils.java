@@ -1,7 +1,9 @@
 package pcp.utils;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 import pcp.common.iterate.ArrayIterator;
@@ -46,6 +48,11 @@ public class ListUtils {
 			if (candidate != null) it.previous(); 
 			it.add(nodeToAdd);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> String toString(List<T> list) {
+		return Arrays.toString((T[]) list.toArray());
 	}
 
 	

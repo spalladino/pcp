@@ -1,6 +1,8 @@
 package pcp.utils;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -153,7 +155,18 @@ public class GraphUtils {
 		return true;
 	}
 
-	
+	public static void print(IPartitionedGraph graph, PrintStream stream) {
+		stream.println("|P|= " + graph.P());
+		stream.println("|N|= " + graph.N());
+		
+		for (Partition p : graph.getPartitions()) {
+			stream.println(p.toString() + ": " + Arrays.toString(graph.getNodes(p)));
+		}
+		
+		for (Node n : graph.getNodes()) {
+			stream.println(n.toString() + ": " + Arrays.toString(graph.getNeighbours(n)));
+		}
+	}
 	
 	
 }

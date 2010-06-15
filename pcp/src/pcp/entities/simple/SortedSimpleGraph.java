@@ -1,5 +1,6 @@
 package pcp.entities.simple;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -107,6 +108,13 @@ public class SortedSimpleGraph implements ISimpleGraph {
 	@Override
 	public boolean areAdjacent(int n1, int n2) {
 		return graph.areAdjacent(n1, n2);
+	}
+	
+	public void print(PrintStream stream) {
+		stream.println("|N|= " + N());
+		for (Node n : getNodes()) {
+			stream.println(n.toString() + ": " + Arrays.toString(getNeighbours(n)));
+		}
 	}
 	
 }

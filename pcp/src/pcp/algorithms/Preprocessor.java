@@ -21,7 +21,7 @@ import pcp.entities.partitioned.PartitionedGraphBuilder;
  */
 public class Preprocessor {
 	
-	private final static boolean log = false;
+	private final static boolean log = true;
 	
 	private PartitionedGraphBuilder builder;
 	private int partitionsCheckCount;
@@ -101,7 +101,9 @@ public class Preprocessor {
 		MaxCliqueFinder finder = new MaxCliqueFinder(gprime);
 		List<pcp.entities.simple.Node> newclique = finder.run().getClique();
 		
+		if (log) System.out.println(newclique == null ? "No clique found" : "Found clique of size " + newclique.size());
 		this.clique = newclique;
+		
 		return (newclique.size() > 1 && (this.clique == null || newclique.size() > this.clique.size()));
 	}
 
@@ -142,7 +144,7 @@ public class Preprocessor {
 	private boolean shouldRemoveNodeOnDegree(Node node) {
 		// TODO: Check bound
 		return builder.getDegree(node) == 0
-			|| (clique != null && builder.getNeighbourPartitions(node).length < clique.size() - 1);
+			|| (clique != null && builder.getNeighbourPartitions(node).length < clique.size());
 	}
 	
 	private boolean processPartition(Partition partition) {

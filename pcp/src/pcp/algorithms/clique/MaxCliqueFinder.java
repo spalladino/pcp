@@ -25,7 +25,8 @@ import props.Settings;
  */
 public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
-	static final boolean log = true;
+	static final boolean log = false;
+	static final int minInitialDegree = 2;
 	
 	private SortedSimpleGraph graph;
 	
@@ -62,6 +63,7 @@ public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 		for (int i = 0; i < nodes.length; i++) {
 			if (!bounder.check()) break;
 			Node initial = nodes[i];
+			if (initial.getDegree() < minInitialDegree) break;
 			clique = new ArrayList<Node>(nodes.length/2);
 			clique.add(initial);
 			candidates = getInitialCandidates(initial);
@@ -135,16 +137,16 @@ public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 		
 		// Remove from candidates those that are not in adjacents to node y
 		LinkedList<Node> removed = ListUtils.retainFromSorted(candidates, graph.getNeighbours(y), getNodeComparator());
-		if (log) log("Added node " + y + " to clique, candidates is now " + Arrays.toString((Node[]) candidates.toArray(new Node[candidates.size()])));
+		if (log) log("Added node " + y + " to clique, candidates is now " + ListUtils.toString(candidates) + " and removed is " + ListUtils.toString(removed));
 		
 		// Execute DFS
 		clique();
 		
-		// Rollback adding y to the clique and take the other branch
+		// Rollback adding y to the clique and take the other branch if there were removed nodes
+		clique.remove(clique.size()-1);
 		if (removed.size() > 0) {
-			clique.remove(clique.size()-1);
 			ListUtils.addSorted(candidates, removed, getNodeComparator());
-			if (log) log("Removing node " + y + " from clique, candidates is now " + Arrays.toString((Node[]) candidates.toArray(new Node[candidates.size()])));
+			if (log) log("Removing node " + y + " from clique, candidates is now " + Arrays.toString((Node[]) candidates.toArray(new Node[candidates.size()])) + " after adding previously removed " + ListUtils.toString(removed));
 			clique();
 		}
 		

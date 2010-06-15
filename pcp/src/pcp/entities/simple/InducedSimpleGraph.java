@@ -1,6 +1,8 @@
 package pcp.entities.simple;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -88,7 +90,12 @@ public class InducedSimpleGraph implements ISimpleGraph {
 		return graph.getName();
 	}
 	
-	
+	public void print(PrintStream stream) {
+		stream.println("|N|= " + N());
+		for (Node n : getNodes()) {
+			stream.println(n.toString() + ": " + Arrays.toString(getNeighbours(n)));
+		}
+	}
 	
 	
 }

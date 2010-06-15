@@ -1,6 +1,10 @@
 package pcp.entities.simple;
 
+import java.io.PrintStream;
+import java.util.Arrays;
+
 import pcp.entities.ISimpleGraph;
+import pcp.entities.simple.Node;
 
 public class Graph implements ISimpleGraph {
 
@@ -69,6 +73,13 @@ public class Graph implements ISimpleGraph {
 	@Override
 	public boolean areAdjacent(int n1, int n2) {
 		return matrix[n1][n2];
+	}
+	
+	public void print(PrintStream stream) {
+		stream.println("|N|= " + N());
+		for (Node n : getNodes()) {
+			stream.println(n.toString() + ": " + Arrays.toString(getNeighbours(n)));
+		}
 	}
 	
 }

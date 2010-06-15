@@ -17,7 +17,7 @@ public class SimpleGraphUtils {
 				if (!(graph.areAdjacent(clique.get(i), clique.get(j)))) {
 					System.err.println("Invalid clique: " + clique);
 					System.err.println("Nodes " + clique.get(i) + " and " + clique.get(j) + " are not adjacent.");
-					return false;
+					graph.print(System.err);
 				}
 			}
 		} return true;

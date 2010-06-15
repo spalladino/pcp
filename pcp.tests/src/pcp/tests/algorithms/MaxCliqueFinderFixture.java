@@ -1,5 +1,6 @@
 package pcp.tests.algorithms;
 
+import java.io.IOException;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -8,16 +9,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pcp.algorithms.clique.MaxCliqueFinder;
-import pcp.entities.simple.Graph;
+import pcp.entities.ISimpleGraph;
 import pcp.entities.simple.Node;
 import pcp.entities.simple.SimpleGraphBuilder;
+import pcp.tests.GraphGeneration;
 import pcp.utils.SimpleGraphUtils;
 import props.Settings;
+import exceptions.AlgorithmException;
 
 public class MaxCliqueFinderFixture {
 
 	SimpleGraphBuilder builder;
-	Graph graph;
+	ISimpleGraph graph;
 	
 	public MaxCliqueFinderFixture() throws Exception {
 		Settings.load("test");
@@ -74,8 +77,31 @@ public class MaxCliqueFinderFixture {
 		test(4);
 	}
 	
+	
+	@Test
+	public void testRandomGraphs() throws AlgorithmException, IOException {
+		int count = 100;
+		while (count --> 0) {
+			graph = GraphGeneration.createGraph(40, 2, 4, 0.5).getGPrime();
+			check();
+		}
+	}
+	
+	
 	private void test(int expected) {
 		graph = builder.getGraph();
+		check(expected);
+	}
+
+	private void check() {
+		MaxCliqueFinder finder = new MaxCliqueFinder(graph, null).run();
+		List<Node> clique = finder.getClique();
+		if (clique != null) {
+			Assert.assertTrue(SimpleGraphUtils.checkClique(graph, clique));
+		}
+	}
+	
+	private void check(int expected) {
 		MaxCliqueFinder finder = new MaxCliqueFinder(graph, null).run();
 		List<Node> clique = finder.getClique();
 		Assert.assertTrue(SimpleGraphUtils.checkClique(graph, clique));

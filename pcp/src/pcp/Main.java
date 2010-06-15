@@ -60,8 +60,7 @@ public class Main {
 			long elapsed = System.currentTimeMillis() - initial;
 			execution.getData().put("preprocess.time", elapsed);
 		} catch (Exception e) {
-			System.err.println("Error creating model");
-			System.err.println(e.getMessage());
+			System.err.println("Error creating model: " + e);
 			return;
 		}
 
