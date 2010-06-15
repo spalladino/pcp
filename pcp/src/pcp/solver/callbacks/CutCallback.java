@@ -35,21 +35,24 @@ import props.Settings;
 
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData {
 
-	static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
-	static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
-	static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
-	static boolean local = Settings.get().getBoolean("cuts.local");
+	final static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
+	final static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
+	final static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
+	final static boolean local = Settings.get().getBoolean("cuts.local");
 	
-	static boolean logIterData = Settings.get().getBoolean("logging.iterData");
-	static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
-	static boolean logCallback = Settings.get().getBoolean("logging.callback.cuts");
+	final static boolean logIterData = Settings.get().getBoolean("logging.iterData");
+	final static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
+	final static boolean logCallback = Settings.get().getBoolean("logging.callback.cuts");
 	
-	static int maxItersRoot = Settings.get().getInteger("iterations.root.max");
-	static int maxItersNodes = Settings.get().getInteger("iterations.nodes.max");
+	final static int maxItersRoot = Settings.get().getInteger("iterations.root.max");
+	final static int maxItersNodes = Settings.get().getInteger("iterations.nodes.max");
 	
-	static int minCliques = Settings.get().getInteger("cuts.minCliques");
-	static int cutEvery = Settings.get().getInteger("cuts.everynodes");
-	static int maxCutsDepth = Settings.get().getInteger("cuts.maxdepth");
+	final static int minCliques = Settings.get().getInteger("cuts.minCliques");
+	final static int cutEvery = Settings.get().getInteger("cuts.everynodes");
+	final static int maxCutsDepth = Settings.get().getInteger("cuts.maxdepth");
+	
+	final static boolean boundWjsRoot = Settings.get().getBoolean("cuts.boundWjs.root");
+	final static boolean boundWjsInternal = Settings.get().getBoolean("cuts.boundWjs.internal");
 	
 	Iteration iteration;
 	Model model;
@@ -88,20 +91,19 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// Only cuts on initial node if specified
-		if (onlyRoot && super.getNnodes() > 0) {
+		if (onlyRoot && isInternalNode()) {
 			return;
 		}
 
 		// Do not add cuts on every node
-		if (super.getNnodes() > 0 && super.getNnodes() % cutEvery != 0) {
+		if (isInternalNode() && super.getNnodes() % cutEvery != 0) {
 			if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes());
 			return;
 		}
 		
 		// On certain depth, don't make any more cuts
-		if (super.getNnodes() > 0 && maxCutsDepth > 0) {
-			//final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), 
-			//		super.getLBs(model.getAllXs()), super.getUBs(model.getAllXs()));
+		if (isInternalNode() && maxCutsDepth > 0) {
+			//final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), super.getLBs(model.getAllXs()), super.getUBs(model.getAllXs()));
 			Integer depth = (Integer)getNodeData();
 			if (depth != null && maxCutsDepth < depth) {
 				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + depth);
@@ -133,6 +135,9 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			System.out.println();
 		}
 		
+		// Bound wjs if necessary
+		boundColorVars(isRoot());
+		
 		// Cut initial families
 		if (logCallback) System.out.println("Initiating clique cuts");
 		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
@@ -151,12 +156,12 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 				holes = new ComponentPathDetector(iteration.forAlgorithm()).run();
 				gholes = new SimplePathDetector(iteration.forAlgorithm()).run();
 			}
-			 
 		}
 		
 		// Log running times
 		metrics.setIterTime(cliques, holes, blocks, gholes);
 		metrics.printIter();
+		
 		if (logCallback) System.out.println("Finished cuts iteration");
 		
 		// Free objects
@@ -164,6 +169,18 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		holes = null;
 		blocks = null;
 		gholes = null;
+	}
+
+	private void boundColorVars(boolean isroot) {
+		// TODO: Implement!
+	}
+
+	private boolean isInternalNode() throws IloException {
+		return super.getNnodes() > 0;
+	}
+	
+	private boolean isRoot() throws IloException {
+		return !isInternalNode();
 	}
 
 	@Override

@@ -1,0 +1,48 @@
+Pendientes
+- Bound wj con cortes segun cota inferior? O solo setear lower bound en root? Usar cota inferior de coloring?
+- O directamente cortar cuando el gap absoluto sea menor a 1?
+- Analizar modelos distintos
+
+Preprocesamiento
+- Chequear cantidad de ejes, nodos y particiones eliminadas
+- Ver tamaño de clique hallado
+- Random de diferente densidad y de diferente partition size, otros modelos de grafos
+
+Modelo
+- Correr para los distintos modelos que haya
+- Algoritmo de planos de corte con todas las familias prendidas por 100 iteraciones
+- Ver cota inferior obtenida, en que iteracion, y tiempo total
+- Random de diferente densidad y de diferente partition size, otros modelos de grafos
+
+Cortes
+- Una vez fijado el modelo, probar distintas combinaciones de cortes en un planos de corte
+- Ver cota inferior obtenida, en que iteracion, y tiempo total
+- Ver cantidad de cortes de cada tipo generados en total
+- Random de diferente densidad y de diferente partition size, otros modelos de grafos
+
+Branching y heuristica primal
+- Que es pseudo cost?
+- En un cut and branch bounded a 1h, con modelo y cortes fijados, probar distintas estrategias de branching, con heur primal on y off
+- Medir tiempo total, cantidad de nodos del arbol, gap
+- Random de diferente densidad y de diferente partition size, otros modelos de grafos
+
+Branch and cut
+- Determinar iteraciones en raiz, skip factor e iteraciones por nodo, con pruning on y off
+- Medir tiempo total, cantidad de nodos del arbol, gap, cant de cortes en total
+- Random de diferente densidad y de diferente partition size, otros modelos de grafos
+
+Cplex
+- Una vez fijados los parametros, correr cplex seteo automagico de parametros
+- Medir tiempo total, cantidad de nodos del arbol, gap, cant de cortes en total
+- Random de diferente densidad y de diferente partition size, otros modelos de grafos
+
+Corridas definitivas
+- Random de diferente cant de nodos, diferente densidad y de diferente partition size
+- Otros modelos de grafos
+- Instancias DIMACS
+- Ring retworks
+- NSFNet
+
+Instancias
+- Ver http://networkx.lanl.gov/reference/generators.html
+- Construir a partir de networks: ring, nsfnet
