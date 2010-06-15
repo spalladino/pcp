@@ -19,6 +19,11 @@ class Generator(object):
         g = barabasi_albert_graph(nodes, int(nodes * density))
         p = self.partitionate(g, minpsize, maxpsize)
         self.write(g,p,nodecnt=nodes,density=density,minpsize=minpsize,maxpsize=maxpsize,algorithm='barabasi_albert')
+
+    def holme_kim(self, nodes, density=0.2, minpsize=2, maxpsize=2):
+        g = powerlaw_cluster_graph(nodes, int(nodes * density), density)
+        p = self.partitionate(g, minpsize, maxpsize)
+        self.write(g,p,nodecnt=nodes,density=density,minpsize=minpsize,maxpsize=maxpsize,algorithm='holme_kim')
     
     def partitionate(self, graph, minpsize, maxpsize):
         nodes = graph.nodes()
