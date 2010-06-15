@@ -1,7 +1,7 @@
 Pendientes
 - Bound wj con cortes segun cota inferior? O solo setear lower bound en root? Usar cota inferior de coloring?
 - O directamente cortar cuando el gap absoluto sea menor a 1?
-- Analizar modelos distintos
+- Correr max clique sobre componentes conexas
 
 Preprocesamiento
 - Chequear cantidad de ejes, nodos y particiones eliminadas
