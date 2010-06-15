@@ -13,6 +13,7 @@ import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import props.Settings;
 
 /**
  * Preprocesses the input graph before solving the PCP problem. This includes
@@ -21,7 +22,7 @@ import pcp.entities.partitioned.PartitionedGraphBuilder;
  */
 public class Preprocessor {
 	
-	private final static boolean log = true;
+	private final static boolean log = Settings.get().getBoolean("logging.preprocess");
 	
 	private PartitionedGraphBuilder builder;
 	private int partitionsCheckCount;

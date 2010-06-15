@@ -126,6 +126,8 @@ public class ModelBuilder {
 	 * @throws IloException 
 	 */
 	private void boundClique(List<pcp.entities.simple.Node> maxgpclique) throws IloException {
+		if (!fixClique) return;
+		
 		int color = 0;
 		for (pcp.entities.simple.Node snode : maxgpclique) {
 			for (Node node : graph.getNodes(snode)) {
