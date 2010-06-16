@@ -6,15 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import pcp.algorithms.Algorithm;
 import pcp.algorithms.bounding.IAlgorithmBounder;
-import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.common.iterate.ArrayIterator;
 import pcp.definitions.Constants;
 import pcp.definitions.Sorting;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
-import pcp.interfaces.IModelData;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.GraphUtils;
 import props.Settings;
@@ -23,14 +22,10 @@ import props.Settings;
  * Detects subsets of nodes in a graph in which every pair is either adjacent 
  * or in the same partition. 
  */
-public abstract class ExtendedCliqueDetector implements Constants, Sorting, IBoundedAlgorithm {
+public abstract class ExtendedCliqueDetector extends Algorithm implements Constants, Sorting {
 	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
 	
 	protected SortedPartitionedGraph graph;
-	
-	protected IAlgorithmSource provider;
-	protected IAlgorithmBounder bounder;
-	protected IModelData data;
 
 	protected List<Integer> colors;
 	
@@ -55,10 +50,7 @@ public abstract class ExtendedCliqueDetector implements Constants, Sorting, IBou
 	static boolean colorsAsc = Settings.get().getBoolean("clique.colorsAsc");
 	
 	public ExtendedCliqueDetector(IAlgorithmSource provider) {
-		super();
-		this.provider = provider;
-		this.bounder = provider.getBounder();
-		this.data = provider.getData();
+		super(provider);
 		this.colors = getColors(colorsAsc); 
 	}
 	

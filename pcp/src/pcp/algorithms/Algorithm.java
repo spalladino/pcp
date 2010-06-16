@@ -2,6 +2,7 @@ package pcp.algorithms;
 
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
+import pcp.algorithms.bounding.TimeBounder;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.IModelData;
 import pcp.model.Model;
@@ -16,7 +17,7 @@ public abstract class Algorithm implements IBoundedAlgorithm {
 	
 	public Algorithm(IAlgorithmSource provider) {
 		this.provider = provider;
-		this.bounder = provider.getBounder();
+		this.bounder = new TimeBounder();
 		this.data = provider.getData();
 		this.model = provider.getModel();
 	}

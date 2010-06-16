@@ -96,6 +96,7 @@ public class Main {
 				String solDir = Settings.get().getString("output.solutionDir");
 				solver.getCplex().writeSolution(solDir + "run." + runId + ".sol");
 			}
+			
 			System.out.println("Chromatic number is " + solver.getChromaticNumber());
 			System.out.println("Gap is " + solver.getGap());
 			System.out.println("Solved in " + solver.getTime() + " seconds");			

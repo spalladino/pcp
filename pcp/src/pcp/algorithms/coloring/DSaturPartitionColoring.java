@@ -11,6 +11,7 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
+import pcp.utils.ListUtils;
 import props.Settings;
 import entities.TupleInt;
 import exceptions.AlgorithmException;
@@ -18,9 +19,10 @@ import exceptions.AlgorithmException;
 public abstract class DSaturPartitionColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	protected static final boolean log = Settings.get().getBoolean("logging.coloring");
-	protected static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");
+	protected static final boolean logFixed = Settings.get().getBoolean("logging.coloring.fixed");
 	protected static final int logNodeBase = 1;
 	
+	protected static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");
 	protected static final boolean verify = Settings.get().getBoolean("validate.coloring");
 	
 	// ColorClass[i] = color assigned to node i
@@ -74,9 +76,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	@Override
 	public Integer getChi() throws AlgorithmException {
-		if (hasrun) {
-			return solution;
-		}
+		if (hasrun) return solution;
+		if (logFixed) logFixed();
 		
 		bounder.start();
 		solution = partitions(fixed, fixedColors);
@@ -112,14 +113,9 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		else return bestColorClass[node] - 1;
 	}
 	
-	public int[] getBestColorClass() throws AlgorithmException {
-		if (!hasrun) getChi();
-		return bestColorClass;
-	}
-	
 	@Override
 	public void useColor(int node, int color) throws AlgorithmException {
-		if (canAssignColor(node, color)) {
+		if (canAssignColor(node, color+1)) {
 			if (log) System.out.println("Using color " + (color + 1) + " for node " + (node + logNodeBase));
 			handleNode(node);
 			assignColor(node, color+1);
@@ -145,7 +141,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 
 	@Override
 	public void forbidColor(int node, int color) throws AlgorithmException {
-		forbidden[node][color] = true;
+		forbidden[node][color+1] = true;
 	}
 	
 	@Override
@@ -320,6 +316,40 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	private void log(String s) {
 		for (int i = 0; i < spaces; i++) s = " " + s;
 		System.out.println(s);
+	}
+
+	private void logFixed() {
+		if (partitionsFixed.size() == 0) {
+			System.out.println("No partitions fixed.");
+		} else {
+			System.out.println("Partitions fixed: " + ListUtils.toString(partitionsFixed));
+		}
+		
+		if (fixed == 0) {
+			System.out.println("No nodes fixed");
+		} else {
+			StringBuilder sb = new StringBuilder("Nodes fixed: ");
+			for (int i = 0; i < colorClass.length; i++) {
+				int j = colorClass[i];
+				if (j != 0)  sb.append(" X" + i + ":" + j);
+			} System.out.println(sb.toString());
+		}
+
+		{
+			StringBuilder sb = new StringBuilder("Forbidden: ");
+			boolean hasForbidden = false;
+			for (int i = 0; i < graph.N(); i++) {
+				for (int j = 0; j < maxColors(); j++) {
+					if (forbidden[i][j]) {
+						hasForbidden = true;
+						sb.append(" X" + i + ":" + j);
+					}
+				}	
+			}
+			if (hasForbidden) System.out.println(sb.toString());
+			else System.out.println("No nodes forbidden");
+		}
+		
 	}
 
 	protected void assignColor(Node node, int color) throws AlgorithmException {

@@ -4,6 +4,9 @@ import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
+
+import java.util.Arrays;
+
 import pcp.Factory;
 import pcp.algorithms.bounding.SolutionsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
@@ -12,23 +15,27 @@ import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
 import pcp.model.strategy.Coloring;
+import pcp.model.strategy.Objective;
 import pcp.solver.helpers.PruneEvaluator;
 import pcp.solver.heur.HeuristicMetrics;
+import pcp.utils.DoubleUtils;
 import pcp.utils.ModelUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
 
-// TODO: Check generated solution complies with bounds set in current node as well as uses consecutive colors
 public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
 	static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
+	static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
 	static final boolean enabled = Settings.get().getBoolean("callback.heuristic.enabled");
 	static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
-	
 	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	static final int everynodes = Settings.get().getInteger("primal.everynodes");
+		
+	static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
 	static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
+	static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
 	
 	IPartitionedGraph graph;
 	Model model;
@@ -52,7 +59,8 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	@Override
 	protected void main() throws IloException {
 		if (!enabled) return;
-		
+		if (logBounds) logBounds();
+
 		// Full run using current information if enough depth, or primal if frequency
 		int nodesSet = countNodesEqualOne();
 		if (new PruneEvaluator(model).shouldPrune(nodesSet)) {
@@ -60,6 +68,11 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)) {
 			setPrimal(nodesSet);
 		}
+	}
+
+	private void logBounds() throws IloException {
+		System.out.println("LBs: " + Arrays.toString(super.getLBs(model.getAllXs())));
+		System.out.println("UBs: " + Arrays.toString(super.getUBs(model.getAllXs())));
 	}
 	
 	private void setSolution(int nodesSet) {
@@ -93,17 +106,21 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
 	private void setLowerBound(ColoringAlgorithm coloring) throws IloException {
 		// Set lower bound as objective value of current relaxation
-		double lower = super.getObjValue();
+		double lower = objectiveStrategy.equals(Objective.Equal) 
+			? super.getObjValue()
+			: DoubleUtils.sum(super.getValues(model.getWs()));
 		if (!Double.isNaN(lower) && lower != 0.0) {
-			coloring.setLowerBound((int) Math.ceil(lower));
+			coloring.setLowerBound(DoubleUtils.ceil(lower));
 		}
 	}
 
 	private void setUpperBound(ColoringAlgorithm coloring) throws IloException {
 		// Set upper bound as objective value of global incumbent
-		double upper = super.getIncumbentObjValue();
+		double upper = objectiveStrategy.equals(Objective.Equal) 
+			? super.getIncumbentObjValue()
+			: DoubleUtils.sum(super.getIncumbentValues(model.getWs()));
 		if (!Double.isNaN(upper) && upper != 0.0) {
-			coloring.setUpperBound((int) Math.ceil(upper));
+			coloring.setUpperBound(DoubleUtils.ceil(upper));
 		}
 	}
 
@@ -131,15 +148,29 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			}
 		}
 
+		if (validateSolutions) validateSolution(vars, vals);
 		super.setSolution(vars, vals);
 	}
 	
+	private void validateSolution(IloNumVar[] vars, double[] vals) throws IloException, AlgorithmException {
+		for (int i = 0; i < vars.length; i++) {
+			IloNumVar var = vars[i];
+			double d = vals[i];
+			
+			if (d < var.getLB() || d > var.getUB()) {
+				logBounds();
+				throw new AlgorithmException("Invalid solution " + d + " for variable " + var + " bounds [" + var.getLB() + "," + var.getUB() + "] with relaxation value " + super.getValue(var));
+			}
+		}
+	}
+
 	private void fillLeafColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		boolean[] colored = new boolean[graph.P()];
 		
 		for (int i = 0; i < model.getNodeCount(); i++) {
 			
 			Node node = graph.getNode(i);
+			
 			if (colored[node.getPartition().index()]) {
 				continue;
 			}
@@ -149,6 +180,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) {
 					colored[node.getPartition().index()] = true;
 					coloring.useColor(i, j);
+					break;
+				}  else if (super.getUB(x) == 0.0) {
+					coloring.forbidColor(i, j);
 				}
 			}
 		}
@@ -172,6 +206,12 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			}
 			
 			for (int j = 0; j < model.getColorCount(); j++) {
+				
+				// Forbid color if it must
+				if (super.getUB(model.x(node.index(), j)) == 0.0) {
+					coloring.forbidColor(node.index(), j);
+					continue;
+				}
 				
 				// Check if value is high enough to pass the lower bound
 				double val = super.getValue(model.x(node.index(), j));

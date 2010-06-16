@@ -29,4 +29,8 @@ public class IterationPrinter {
 		out.println();
 	}
 	
+	public void printColorsIteration() throws IloException {
+		out.println("W: " + ArrayUtils.toString(data.ws()));
+	}
+	
 }
