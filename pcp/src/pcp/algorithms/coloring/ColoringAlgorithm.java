@@ -1,9 +1,11 @@
 package pcp.algorithms.coloring;
 
-import exceptions.AlgorithmException;
+import java.util.List;
+
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
+import exceptions.AlgorithmException;
 
 
 public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
@@ -30,12 +32,29 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 		if (color == null) return -1;
 		else return color;
 	}
+
+	public void setInitialClique(List<pcp.entities.simple.Node> clique) throws AlgorithmException {
+		int index = 0;
+		// Every partition in the clique is assigned a color in ascending order 
+		for(pcp.entities.simple.Node snode : clique) {
+			useColorPartition(snode.index(), index);
+			index++;
+		}
+	}
+
+	protected int maxColors() {
+		return this.graph.P() + 1;
+	}
 	
 	public abstract Integer getChi() throws AlgorithmException;
 	
 	public abstract Integer getColor(int node) throws AlgorithmException;
 	
 	public abstract void useColor(int node, int color) throws AlgorithmException;
+	
+	public abstract void useColorPartition(int partition, int color) throws AlgorithmException;
+	
+	public abstract void forbidColor(int node, int color) throws AlgorithmException;
 
 	public void setUpperBound(int bound) { }
 	

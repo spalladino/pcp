@@ -34,7 +34,15 @@ public class FixedColoring extends ColoringAlgorithm {
 		throw new AlgorithmException("Painting nodes not supported for " + this.getClass().getName());
 	}
 
-	
+	@Override
+	public void useColorPartition(int p, int color) throws AlgorithmException {
+		throw new AlgorithmException("Use color not supported for " + this.getClass().getName());
+	}
+
+	@Override
+	public void forbidColor(int node, int color) throws AlgorithmException {
+		throw new AlgorithmException("Forbidding nodes not supported for " + this.getClass().getName());
+	}
 	
 	
 }

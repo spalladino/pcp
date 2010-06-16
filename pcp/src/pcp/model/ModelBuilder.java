@@ -130,12 +130,25 @@ public class ModelBuilder {
 		
 		int color = 0;
 		for (pcp.entities.simple.Node snode : maxgpclique) {
-			for (Node node : graph.getNodes(snode)) {
+			
+			// Set all colors for the partition in the clique to zero, except assigned one
+			Node[] nodes = graph.getNodes(snode);
+			for (Node node : nodes) {
 				for (int j = 0; j < colors; j++) {
 					IloIntVar var = this.xs[node.index()][j];
 					if (j != color) var.setUB(0.0);
 				}
 			}
+			// If there is a single node, fix it
+			if (nodes.length == 1) {
+				IloIntVar var = this.xs[nodes[0].index()][color];
+				var.setLB(1.0);
+			}
+			
+			// Fix color variable as well
+			IloIntVar var = this.ws[color];
+			var.setLB(1.0);
+			
 			color++;
 		}
 	}

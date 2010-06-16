@@ -149,4 +149,9 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	public void print(PrintStream stream) {
 		GraphUtils.print(this, stream);
 	}
+
+	@Override
+	public Partition getPartition(int partition) {
+		return partitions[partition];
+	}
 }

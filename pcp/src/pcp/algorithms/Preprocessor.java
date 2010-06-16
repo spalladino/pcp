@@ -22,6 +22,7 @@ import props.Settings;
  */
 public class Preprocessor {
 	
+	private final static boolean cliqueEnabled = Settings.get().getBoolean("clique.gprime.initial.enabled");
 	private final static boolean log = Settings.get().getBoolean("logging.preprocess");
 	
 	private PartitionedGraphBuilder builder;
@@ -53,7 +54,7 @@ public class Preprocessor {
 		
 		// Create a gprime clique and remove nodes based on degree
 		// Make sure another check for redundant nodes is made every time
-		while (createGPrimeClique() && removeRedundantNodes());
+		while (cliqueEnabled && createGPrimeClique() && removeRedundantNodes());
 		
 		// Return the builder for further processing
 		return builder;

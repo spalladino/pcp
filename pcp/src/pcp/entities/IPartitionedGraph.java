@@ -122,4 +122,11 @@ public interface IPartitionedGraph extends IGraph {
 	 * @return the nodes in the partition represented by the specified node in G' graph.
 	 */
 	Node[] getNodes(pcp.entities.simple.Node simpleNode);
+
+	/**
+	 * Returns partition with specified index
+	 * @param partition index of the partition
+	 * @return the partition
+	 */
+	Partition getPartition(int partition);
 }

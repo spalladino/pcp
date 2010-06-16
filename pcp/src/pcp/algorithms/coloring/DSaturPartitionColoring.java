@@ -1,6 +1,7 @@
 package pcp.algorithms.coloring;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.bounding.IterationsBounder;
@@ -11,6 +12,7 @@ import pcp.entities.partitioned.Partition;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
 import props.Settings;
+import entities.TupleInt;
 import exceptions.AlgorithmException;
 
 public abstract class DSaturPartitionColoring extends ColoringAlgorithm implements IBoundedAlgorithm {
@@ -43,6 +45,9 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	// ColoredNodeInPartition[q] = index of the node colored in partition q
 	protected Node[] coloredNodeInPartition;
 	
+	// PartitionsFixed keeps pairs (partition,color) to fix
+	protected LinkedList<TupleInt> partitionsFixed;
+	
 	// Best number of colors found so far
 	protected int bestColoring;
 	
@@ -51,6 +56,9 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	// Stored solution
 	protected int solution;
+	
+	// Forbidden[i][j] determines if color j is forbidden for node i
+	protected boolean[][] forbidden;
 	
 	// Number of color fixed nodes
 	protected int fixed = 0;
@@ -71,7 +79,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		}
 		
 		bounder.start();
-		solution = color(fixed, fixedColors);
+		solution = partitions(fixed, fixedColors);
 		bounder.end();
 		hasrun = true;
 		
@@ -111,14 +119,35 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	@Override
 	public void useColor(int node, int color) throws AlgorithmException {
-		if (log) System.out.println("Using color " + (color + 1) + " for node " + (node + logNodeBase));
-		handleNode(node);
-		assignColor(node, color+1);
-		fixed++;
+		if (canAssignColor(node, color)) {
+			if (log) System.out.println("Using color " + (color + 1) + " for node " + (node + logNodeBase));
+			handleNode(node);
+			assignColor(node, color+1);
+			fixed++;
+			// TODO: Is it ok to use these values?
+			fixedColors = IntUtils.max(fixedColors, color+1);
+			lowerBound = IntUtils.max(lowerBound, color+1);
+		} else {
+			if (log) System.out.println("Cannot use color " + (color + 1) + " for node " + (node + logNodeBase));
+		}
+	}
+	
+	@Override
+	public void useColorPartition(int partition, int color) throws AlgorithmException {
+		if (log) System.out.println("Using color " + (color + 1) + " for partition " +  Arrays.toString(graph.getNodes(graph.getPartitions()[partition])));
+		handlePartition(partition);
+		partitionsFixed.add(new TupleInt(partition, color+1));
+		
+		// TODO: Is it ok to use these values?
 		fixedColors = IntUtils.max(fixedColors, color+1);
 		lowerBound = IntUtils.max(lowerBound, color+1);
 	}
 
+	@Override
+	public void forbidColor(int node, int color) throws AlgorithmException {
+		forbidden[node][color] = true;
+	}
+	
 	@Override
 	public CutFamily getIdentifier() {
 		return null;
@@ -126,19 +155,38 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	protected abstract Node getNextNode() throws AlgorithmException;
 
-	private void indent() {
-		spaces++;
+	private int partitions(int painted, int currentColor) throws AlgorithmException {
+		indent();
+		
+		if (partitionsFixed.isEmpty()) {
+			if (log) log("All partitions painted, proceeding to normal coloring");
+			color(painted, currentColor);
+		} else {
+			TupleInt t = partitionsFixed.poll();
+			int partition = t.getFirst();
+			int color = t.getSecond();
+			
+			// Try using chosen color for every node in the partition
+			for (Node node : graph.getNodes(graph.getPartition(partition))) {
+				if (canAssignColor(node.index(), color)) {
+					if (log) log("Assigning color " + color + " to node " + (node.index() + logNodeBase) + " in partition " + (partition + logNodeBase));
+					handleNode(node.index());
+					assignColor(node.index(), color);
+					partitions(painted+1, currentColor);
+					removeColor(node.index(), color);
+					unhandleNode(node.index());
+				}
+			}
+		}
+		
+		unindent();
+		return bestColoring;
 	}
-	
-	private void unindent() {
-		spaces--;
+
+	private boolean canAssignColor(int index, int color) {
+		return colorAdj[index][color] == 0 && !forbidden[index][color];
 	}
-	
-	private void log(String s) {
-		for (int i = 0; i < spaces; i++) s = " " + s;
-		System.out.println(s);
-	}
-	
+
 	private int color(int painted, int currentColor) throws AlgorithmException {
 		int j, newVal;
 		int place;
@@ -174,7 +222,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 
 		// Attempt using all colors from first to current max colors
 		for (j = 1; j <= IntUtils.min(currentColor, next.getDegree()); j++) {
-			if (colorAdj[place][j] == 0) {
+			if (canAssignColor(place, j)) {
 				if (log) log("Painting node " + (place + logNodeBase) + " with color " + (j));
 				assignColor(place, j);
 				newVal = color(painted + 1, currentColor);
@@ -197,7 +245,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		}
 		
 		// Use new color for this node
-		if (currentColor + 1 < bestColoring) {
+		if (currentColor + 1 < bestColoring && canAssignColor(place, currentColor+1)) {
 			if (log) log("Painting node " + (place + logNodeBase) + " with color " + (currentColor+1) + " (new color)");
 			assignColor(place, currentColor + 1);
 			
@@ -238,6 +286,10 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		usablePartitionNodes[partition]--;
 	}
 	
+	private void handlePartition(int partition) {
+		partitionsHandled[partition] = true;
+	}
+	
 	private void unhandlePartition(int partition) {
 		partitionsHandled[partition] = false;
 	}
@@ -255,6 +307,19 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	private void removeColor(int node, int color) throws AlgorithmException {
 		removeColor(graph.getNodes()[node], color);
+	}
+
+	private void indent() {
+		spaces++;
+	}
+
+	private void unindent() {
+		spaces--;
+	}
+
+	private void log(String s) {
+		for (int i = 0; i < spaces; i++) s = " " + s;
+		System.out.println(s);
 	}
 
 	protected void assignColor(Node node, int color) throws AlgorithmException {
@@ -312,14 +377,16 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected void initFields()  {
 		this.bounder = new IterationsBounder();
 		
-		this.bestColoring = graph.P() + 1;
-		this.colorAdj = new int[graph.N()][graph.P()+1];
+		this.bestColoring = maxColors();
+		this.colorAdj = new int[graph.N()][maxColors()];
 		this.colorClass = new int[graph.N()];
 		this.colorCount = new int[graph.N()+1];
 		this.partitionsHandled = new boolean[graph.P()];
+		this.partitionsFixed = new LinkedList<TupleInt>();
 		this.nodesHandled = new boolean[graph.N()];
 		this.coloredNodeInPartition = new Node[graph.P()];
 		this.usablePartitionNodes = new int[graph.P()];
+		this.forbidden = new boolean[graph.N()][maxColors()];
 		this.lowerBound = 1;
 		
 		for (Partition p : graph.getPartitions()) {

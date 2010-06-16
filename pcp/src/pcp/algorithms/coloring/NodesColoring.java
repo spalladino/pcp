@@ -30,5 +30,15 @@ public class NodesColoring extends ColoringAlgorithm {
 	public void useColor(int node, int color) throws AlgorithmException {
 		throw new AlgorithmException("Painting nodes not supported for " + this.getClass().getName());
 	}
+
+	@Override
+	public void useColorPartition(int node, int color) throws AlgorithmException {
+		throw new AlgorithmException("Use color nodes not supported for " + this.getClass().getName());
+	}
+
+	@Override
+	public void forbidColor(int node, int color) throws AlgorithmException {
+		throw new AlgorithmException("Forbidding nodes not supported for " + this.getClass().getName());
+	}
 	
 }

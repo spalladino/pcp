@@ -24,6 +24,7 @@ import props.Settings;
  * Finds the max clique in a simple graph 
  */
 public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
+	
 	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
 	static final boolean log = false;
 	static final int minInitialDegree = 2;

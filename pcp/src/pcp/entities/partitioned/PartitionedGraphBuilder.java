@@ -344,5 +344,10 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	public Node[] getNodes(pcp.entities.simple.Node simpleNode) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public Partition getPartition(int partition) {
+		return getPartitions()[partition];
+	}
 	
 }

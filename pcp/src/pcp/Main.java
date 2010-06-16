@@ -1,5 +1,9 @@
 package pcp;
 
+import java.util.List;
+
+import exceptions.AlgorithmException;
+
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex.IntParam;
 import pcp.algorithms.Preprocessor;
@@ -9,6 +13,7 @@ import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import pcp.entities.simple.Node;
 import pcp.interfaces.IFactory;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
@@ -37,28 +42,20 @@ public class Main {
 		System.exit(0);
 	}
 	
+	private static PartitionedGraph graph;
+	private static Model model;
+	private static ColoringAlgorithm coloring;
+	
 	private static void solve(String filename, String runId) throws Exception {
 		IFactory factory = Factory.get();
 		BuilderStrategy strategy = BuilderStrategy.fromSettings();
 		ExecutionData execution = new ExecutionData().withProblemSettings();
 		
-		PartitionedGraph graph;
-		Model model;
-		ColoringAlgorithm coloring;
-		
 		PartitionedGraphBuilder builder = factory.getGraphBuilder(filename);
 		Solver solver = factory.createSolver(Settings.get().getEnum("solver.kind", Kind.class));
-		execution.withOriginalInputData(builder);
 		
 		try {
-			long initial = System.currentTimeMillis();
-			Preprocessor preprocessor = new Preprocessor(builder);
-			graph = preprocessor.preprocess().getGraph();
-			coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
-			model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, preprocessor.getClique()); 
-			solver.setModel(model);
-			long elapsed = System.currentTimeMillis() - initial;
-			execution.getData().put("preprocess.time", elapsed);
+			build(strategy, execution, builder, solver);
 		} catch (Exception e) {
 			System.err.println("Error creating model: " + e);
 			return;
@@ -101,13 +98,36 @@ public class Main {
 			}
 			System.out.println("Chromatic number is " + solver.getChromaticNumber());
 			System.out.println("Gap is " + solver.getGap());
-			System.out.println("Solved in " + solver.getTime() + " ticks");			
+			System.out.println("Solved in " + solver.getTime() + " seconds");			
 		} else {
 			System.out.println("Solution failed after " + solver.getTime());
 		}
 		
 		execution.dump();
 		solver.end();
+	}
+
+	private static void build(BuilderStrategy strategy, ExecutionData execution, PartitionedGraphBuilder builder,
+			Solver solver) throws IloException, AlgorithmException {
+		execution.withOriginalInputData(builder);
+		long initial = System.currentTimeMillis();
+		
+		// Preprocess graph
+		Preprocessor preprocessor = new Preprocessor(builder);
+		graph = preprocessor.preprocess().getGraph();
+		List<Node> clique = preprocessor.getClique();
+		
+		// Make initial coloring
+		coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
+		if (clique != null) coloring.setInitialClique(clique);
+		
+		// Build model
+		model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, clique); 
+		solver.setModel(model);
+		
+		// Log elapsed time
+		long elapsed = System.currentTimeMillis() - initial;
+		execution.getData().put("preprocess.time", elapsed);
 	}
 
 	private static void exportModel(Solver solver, String filename) throws IloException {
