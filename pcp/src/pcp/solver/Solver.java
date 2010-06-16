@@ -196,8 +196,6 @@ public class Solver extends AbstractSolutionData {
 		data.put("solution.time", elapsed);
 		data.put("solution.solver", this.getClass().getName());
 		
-		
-		
 		if (heurCallback != null) {
 			heurCallback.getMetrics().fillData(data);
 		}

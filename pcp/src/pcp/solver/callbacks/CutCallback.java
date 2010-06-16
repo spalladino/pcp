@@ -31,6 +31,7 @@ import pcp.solver.cuts.CutFamily;
 import pcp.solver.cuts.CutsMetrics;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
+import pcp.utils.DoubleUtils;
 import pcp.utils.IntUtils;
 import props.Settings;
 

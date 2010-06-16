@@ -168,5 +168,13 @@ public class GraphUtils {
 		}
 	}
 	
+	public static void printDegrees(IPartitionedGraph graph, PrintStream stream) {
+		stream.println("<|P|,|N|>= " + graph.P() + ", " + graph.N());
+		
+		for (Node n : graph.getNodes()) {
+			stream.println(n.toString() + ": " + graph.getNeighbours(n).length + " (" + graph.getNeighbourPartitions(n).length + ")" );
+		}
+	}
+	
 	
 }
