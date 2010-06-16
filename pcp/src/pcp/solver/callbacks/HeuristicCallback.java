@@ -18,6 +18,7 @@ import pcp.utils.ModelUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
 
+// TODO: Check generated solution complies with bounds set in current node as well as uses consecutive colors
 public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
 	static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
@@ -129,7 +130,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				idx++;
 			}
 		}
-		
+
 		super.setSolution(vars, vals);
 	}
 	
