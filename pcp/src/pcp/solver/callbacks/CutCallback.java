@@ -24,17 +24,22 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
+import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.strategy.Objective;
 import pcp.solver.cuts.CutFamily;
 import pcp.solver.cuts.CutsMetrics;
 import pcp.solver.data.Iteration;
 import pcp.solver.io.IterationPrinter;
+import pcp.utils.DoubleUtils;
 import pcp.utils.IntUtils;
 import props.Settings;
 
 
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData {
 
+	final static Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
+	
 	final static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	final static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
 	final static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
@@ -167,8 +172,16 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		gholes = null;
 	}
 
-	private void boundColorVars(boolean isroot) {
-		// TODO: Implement!
+	private void boundColorVars(boolean isroot) throws IloException {
+		if (isroot && boundWjsRoot) {
+			double lower = objectiveStrategy.equals(Objective.Equal) 
+				? super.getObjValue()
+				: DoubleUtils.sum(super.getValues(model.getWs()));
+			int colors = DoubleUtils.ceil(lower);
+			
+			System.out.println("Setting lower bound to 1.0 for first " + colors + " colors");
+			// TODO: Implement
+		}
 	}
 
 	@Override
