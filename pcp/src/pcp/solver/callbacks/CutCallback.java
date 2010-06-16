@@ -1,6 +1,7 @@
 package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloNumExpr;
@@ -172,15 +173,22 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		gholes = null;
 	}
 
+	int previousLB = 0;
 	private void boundColorVars(boolean isroot) throws IloException {
-		if (isroot && boundWjsRoot) {
+		if ((isroot && boundWjsRoot)) {
 			double lower = objectiveStrategy.equals(Objective.Equal) 
 				? super.getObjValue()
 				: DoubleUtils.sum(super.getValues(model.getWs()));
 			int colors = DoubleUtils.ceil(lower);
 			
 			System.out.println("Setting lower bound to 1.0 for first " + colors + " colors");
-			// TODO: Implement
+			for (int j = previousLB; j < colors; j++) {
+				IloLinearIntExpr expr = modeler.linearIntExpr();
+				IloIntVar var = model.w(j);
+				expr.addTerm(var, 1);
+				super.addLocal(modeler.eq(expr, 1.0));
+			} 
+			previousLB = IntUtils.max(colors, previousLB);
 		}
 	}
 
