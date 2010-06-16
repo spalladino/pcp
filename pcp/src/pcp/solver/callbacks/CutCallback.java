@@ -24,7 +24,9 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IModelData;
+import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.strategy.Objective;
 import pcp.solver.cuts.CutFamily;
 import pcp.solver.cuts.CutsMetrics;
 import pcp.solver.data.Iteration;
@@ -35,12 +37,15 @@ import props.Settings;
 
 public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData {
 
+	final static Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
+	
 	final static boolean checkViolatedCut = Settings.get().getBoolean("validate.cutsViolated");
 	final static boolean useBreakingSymmetry = Settings.get().getBoolean("cuts.iset.useBreakingSymmetry");
 	final static boolean usePathsAlgorithm = Settings.get().getBoolean("cuts.iset.usePathsAlgorithm");	
 	final static boolean local = Settings.get().getBoolean("cuts.local");
 	
 	final static boolean logIterData = Settings.get().getBoolean("logging.iterData");
+	final static boolean logIterColors = Settings.get().getBoolean("logging.iterColors");
 	final static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	final static boolean logCallback = Settings.get().getBoolean("logging.callback.cuts");
 	
@@ -122,33 +127,28 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		} metrics.newIter(); iters++;
 		
 		// Create whatever data is needed for this iteration
-		if (logCallback) System.out.println("Setting up cuts iteration data");
 		setupIterationData();
 
-		// Log what needs to be logged
-		if (logIterData) { 
-			System.out.println("Current data:");
-			new IterationPrinter(this, iteration.getModel().getGraph()).printVerboseIteration();
-			System.out.println();
-		}
+		// Log what needs to be logged on current iteration
+		logIteration();
 		
 		// Cut initial families
 		if (logCallback) System.out.println("Initiating clique cuts");
-		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
-		
+		cliques = new ExtendedCliqueCutter(iteration.clone()).run();
+
 		if (logCallback) System.out.println("Initiating block color cuts");
-		blocks = new BlockColorCuts(iteration.forAlgorithm()).run();
+		blocks = new BlockColorCuts(iteration.clone()).run();
 		
 		// If a not good enough number of cuts is performed, try other families
 		if (metrics.getCurrentIterCount(cliques, blocks) < minCliques) {
 			if (!usePathsAlgorithm) {
 				if (logCallback) System.out.println("Initiating holes and gholes cuts using greek algorithm");
-				holes = new ComponentHolesCuts(iteration.forAlgorithm()).run();
-				gholes = new HolesCuts(iteration.forAlgorithm()).run();
+				holes = new ComponentHolesCuts(iteration.clone()).run();
+				gholes = new HolesCuts(iteration.clone()).run();
 			} else {
 				if (logCallback) System.out.println("Initiating holes and gholes cuts using path greedy algorithm");
-				holes = new ComponentPathDetector(iteration.forAlgorithm()).run();
-				gholes = new SimplePathDetector(iteration.forAlgorithm()).run();
+				holes = new ComponentPathDetector(iteration.clone()).run();
+				gholes = new SimplePathDetector(iteration.clone()).run();
 			}
 		}
 		
@@ -165,10 +165,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		gholes = null;
 	}
 
-	private boolean isInternalNode() throws IloException {
-		return super.getNnodes() > 0;
-	}
-	
 	@Override
 	public void addPath(List<Node> path, int color) {
 		int alpha = IntUtils.ceilhalf(path.size());
@@ -320,7 +316,23 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		return metrics;
 	}
 
+	private boolean isInternalNode() throws IloException {
+		return super.getNnodes() > 0;
+	}
+
+	private void logIteration() throws IloException {
+		if (logIterData || logIterColors) { 
+			System.out.println("Current data:");
+			IterationPrinter printer = new IterationPrinter(this, iteration.getModel().getGraph());
+			if (logIterData) printer.printVerboseIteration();
+			else printer.printColorsIteration();
+		}
+	}
+
 	private void setupIterationData() {
+		if (logCallback) {
+			System.out.println("Setting up cuts iteration data");
+		}
 		try {
 			ws = getValues(model.getWs());
 			xs = new double[model.getNodeCount()][];

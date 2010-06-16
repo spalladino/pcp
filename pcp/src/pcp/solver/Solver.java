@@ -13,6 +13,7 @@ import java.util.Map;
 import pcp.definitions.Constants;
 import pcp.entities.IPartitionedGraph;
 import pcp.model.Model;
+import pcp.model.strategy.Objective;
 import pcp.solver.branching.BranchingDirectioner;
 import pcp.solver.branching.BranchingPrioritizer;
 import pcp.solver.branching.BranchingSelector;
@@ -136,8 +137,13 @@ public class Solver extends AbstractSolutionData {
 	}
 	
 	public int getChromaticNumber() throws IloException {
-		if (model.isTrivial()) return 1;
-		return (int)Math.ceil(cplex.getObjValue() - Constants.Epsilon);
+		if (model.isTrivial()) {
+			return 1;
+		} else if (model.getStrategy().getObjective().equals(Objective.Equal)) {
+			return (int)Math.ceil(cplex.getObjValue() - Constants.Epsilon);
+		} else {
+			return (int)Math.ceil(cplex.getValue(model.getColorSum()) - Constants.Epsilon);
+		}
 	}
 
 	public CplexStatus getStatus() throws IloException {

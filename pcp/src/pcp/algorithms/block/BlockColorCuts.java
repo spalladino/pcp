@@ -1,7 +1,6 @@
 package pcp.algorithms.block;
 
-import pcp.algorithms.bounding.IAlgorithmBounder;
-import pcp.algorithms.bounding.IBoundedAlgorithm;
+import pcp.algorithms.Algorithm;
 import pcp.definitions.Constants;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
@@ -10,23 +9,21 @@ import pcp.interfaces.IAlgorithmSource;
 import pcp.solver.cuts.CutFamily;
 import props.Settings;
 
-public class BlockColorCuts implements Constants, IBoundedAlgorithm {
+public class BlockColorCuts extends Algorithm implements Constants {
 
-	IAlgorithmSource provider;
 	PartitionedGraph graph;
 
 	static boolean enabled = Settings.get().getBoolean("blockColor.enabled") && !Settings.get().getBoolean("blockColor.usePool");
 	static int maxColorsCount = Settings.get().getInteger("blockColor.maxColorsCount");
 	
 	public BlockColorCuts(IAlgorithmSource provider) {
-		super();
-		this.provider = provider;
+		super(provider);
 		this.graph = provider.getModel().getGraph();
 	}
 	
 	public BlockColorCuts run() {
 		if (!enabled) return this;
-		provider.getBounder().start();
+		bounder.start();
 		
 		// Check ineqs for every initial color
 		for (int j0 = 0; j0 < provider.getModel().getColorCount() - 1; j0++) {
@@ -51,14 +48,10 @@ public class BlockColorCuts implements Constants, IBoundedAlgorithm {
 			}
 		}
 		
-		provider.getBounder().stop();
+		bounder.stop();
 		return this;
 	}
-	
 
-	public IAlgorithmBounder getBounder() {
-		return this.provider.getBounder();
-	}
 
 	@Override
 	public CutFamily getIdentifier() {

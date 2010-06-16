@@ -1,6 +1,7 @@
 package pcp.model;
 
 import ilog.concert.IloException;
+import ilog.concert.IloIntExpr;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
@@ -16,6 +17,7 @@ import pcp.entities.partitioned.InducedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
+import pcp.model.strategy.Objective;
 import pcp.utils.GraphUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
@@ -30,6 +32,7 @@ public class ModelBuilder {
 	IloIntVar[][] xs;
 	IloIntVar[] ws;
 	IloObjective objective;
+	IloIntExpr colorsum;
 	
 	protected PartitionedGraph graph;
 	protected IloMPModeler modeler;
@@ -56,8 +59,10 @@ public class ModelBuilder {
 		
 		// Initialize variables and objective function
 		initializeVariables();
-		createObjective();
 		boundClique(maxgpclique);
+		
+		// Objective function
+		createObjective(strategy.getObjective());
 		
 		// Constraints based on painting
 		switch (strategy.getPartitionConstraints()) {
@@ -158,6 +163,7 @@ public class ModelBuilder {
 		model.allxs = allxs;
 		model.ws = ws;
 		model.objective = objective;
+		model.colorsum = colorsum;
 	}
 	
 	/**
@@ -194,11 +200,25 @@ public class ModelBuilder {
 	 * Creates the default objective function
 	 * @throws IloException
 	 */
-	protected void createObjective() throws IloException {
+	protected void createObjective(Objective strategy) throws IloException {
 		IloLinearIntExpr obj = modeler.linearIntExpr();
+		IloLinearIntExpr colorsum = modeler.linearIntExpr();
+		
 		for (int j = 0; j < colors; j++) {
-			obj.addTerm(ws[j], 1);
-		} this.objective = modeler.addMinimize(obj);
+			int multiplier = 1;
+			switch (strategy) {
+				case Linear: multiplier = colors - j; break;
+				case LinearReverse: multiplier = j + 1; break;
+				case Geometric: multiplier = (colors - j) * colors; break;
+				default: multiplier = 1; break;
+			}
+			
+			obj.addTerm(ws[j], multiplier);
+			colorsum.addTerm(ws[j], 1);
+		} 
+		
+		this.colorsum = colorsum;
+		this.objective = modeler.addMinimize(obj);
 	}
 
 	/**
@@ -236,7 +256,7 @@ public class ModelBuilder {
 	 * Creates symmetry break constraints sum_j w_j \geq sum_i \in p sum_j j x_ij 
 	 * @throws IloException 
 	 */
-	private void constrainLowerLabelStrengthenedPartition() throws IloException {
+	protected void constrainLowerLabelStrengthenedPartition() throws IloException {
 		for (Partition p : graph.getPartitions()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("BSSTRP[%1$d]", p.index());

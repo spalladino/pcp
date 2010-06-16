@@ -2,6 +2,7 @@ package pcp.model;
 
 import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
+import pcp.model.strategy.Objective;
 import pcp.model.strategy.Partition;
 import pcp.model.strategy.Symmetry;
 import props.Settings;
@@ -14,6 +15,7 @@ public class BuilderStrategy  {
 	Partition partition;
 	Symmetry breakSymmetry;
 	Coloring coloring;
+	Objective objective;
 	
 	public BuilderStrategy() {
 		
@@ -22,11 +24,13 @@ public class BuilderStrategy  {
 	public BuilderStrategy(Partition partition,
 			Adjacency adjacency,
 			Symmetry breakSymmetry,
-			Coloring coloring) {
+			Coloring coloring,
+			Objective objective) {
 		this.adjacency = adjacency;
 		this.partition = partition;
 		this.breakSymmetry = breakSymmetry;
 		this.coloring = coloring;
+		this.objective = objective;
 	}
 
 	public Symmetry getBreakSymmetry() {
@@ -44,9 +48,13 @@ public class BuilderStrategy  {
 	public Partition getPartitionConstraints() {
 		return partition;
 	}
+	
+	public Objective getObjective() {
+		return objective;
+	}
 
 	public static BuilderStrategy createDefault() {
-		return new BuilderStrategy(Partition.PaintExactlyOne, Adjacency.AdjacentsLeqColor, Symmetry.UseLowerLabelFirst, Coloring.Partitions);
+		return new BuilderStrategy(Partition.PaintExactlyOne, Adjacency.AdjacentsLeqColor, Symmetry.UseLowerLabelFirst, Coloring.Partitions, Objective.Equal);
 	}
 	
 	public static BuilderStrategy fromSettings() {
@@ -56,6 +64,7 @@ public class BuilderStrategy  {
 		strategy.partition = s.getEnum("strategy.partition", Partition.class);
 		strategy.breakSymmetry = s.getEnum("strategy.symmetry", Symmetry.class);
 		strategy.adjacency = s.getEnum("strategy.adjacency", Adjacency.class);
+		strategy.objective = s.getEnum("strategy.objective", Objective.class);
 		return strategy;
 	}
 

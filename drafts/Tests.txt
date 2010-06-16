@@ -1,16 +1,17 @@
 Pendientes
 - Bound wj con cortes segun cota inferior? O solo setear lower bound en root? Usar cota inferior de coloring?
 - O directamente cortar cuando el gap absoluto sea menor a 1?
-- Correr max clique sobre componentes conexas
+- Usar cota inferior obtenida para eliminar nodos y volver a correr root?
 
 Preprocesamiento
 - Chequear cantidad de ejes, nodos y particiones eliminadas
 - Ver tamaño de clique hallado
 - Random de diferente densidad y de diferente partition size, otros modelos de grafos
+- Pendiente: Chequear que eliminacion de nodos ande ok
 
 Modelo
 - Correr para los distintos modelos que haya
-- Algoritmo de planos de corte con todas las familias prendidas por 100 iteraciones
+- Algoritmo de planos de corte con todas las familias prendidas por 100 iteraciones. O usar familias de cplex?
 - Ver cota inferior obtenida, en que iteracion, y tiempo total
 - Random de diferente densidad y de diferente partition size, otros modelos de grafos
 
@@ -19,6 +20,7 @@ Cortes
 - Ver cota inferior obtenida, en que iteracion, y tiempo total
 - Ver cantidad de cortes de cada tipo generados en total
 - Random de diferente densidad y de diferente partition size, otros modelos de grafos
+- Comparar con flias de cplex? Combinar cortes de gomory con los propios?
 
 Branching y heuristica primal
 - Que es pseudo cost?

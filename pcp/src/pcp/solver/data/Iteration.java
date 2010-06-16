@@ -1,7 +1,5 @@
 package pcp.solver.data;
 
-import pcp.algorithms.bounding.TimeBounder;
-import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.common.sorting.SortedProvider;
 import pcp.interfaces.IAlgorithmSource;
 import pcp.interfaces.ICutBuilder;
@@ -10,37 +8,25 @@ import pcp.interfaces.ISortedProvider;
 import pcp.model.Model;
 
 
-public class Iteration implements IAlgorithmSource {
-	
-	Integer currentAlgorithm;
+public class Iteration implements IAlgorithmSource, Cloneable {
 	
 	IModelData data;
 	ICutBuilder cutBuilder;
-	
 	Model model;
-	TimeBounder bounder;
 	SortedProvider sorted;
 	
 	
 	public Iteration(Model model, IModelData data, ICutBuilder cutBuilder) {
-		this(model, data, cutBuilder, null);
-	}
-	
-	private Iteration(Model model, IModelData data, ICutBuilder cutBuilder, Integer algorithm) {
 		this.model = model;
 		this.data = data;
 		this.cutBuilder = cutBuilder;
 		this.sorted = new SortedProvider(model, data);
-		this.bounder = new TimeBounder();
-		this.currentAlgorithm = algorithm;
 	}
 	
-	public Iteration forAlgorithm() {
-		return forAlgorithm(null);
-	}
-	
-	public Iteration forAlgorithm(Integer code) {
-		return new Iteration(model, data, cutBuilder, code);
+	@Override
+	public Iteration clone() {
+		return this;
+		//return new Iteration(model, data, cutBuilder);
 	}
 
 	@Override
@@ -53,18 +39,10 @@ public class Iteration implements IAlgorithmSource {
 		return model;
 	}
 
-
-	@Override
-	public IAlgorithmBounder getBounder() {
-		return bounder;
-	}
-
-
 	@Override
 	public IModelData getData() {
 		return data;
 	}
-
 
 	@Override
 	public ISortedProvider getSorted() {

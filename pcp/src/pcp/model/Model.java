@@ -1,5 +1,6 @@
 package pcp.model;
 
+import ilog.concert.IloIntExpr;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloObjective;
@@ -11,6 +12,7 @@ public class Model {
 	protected IloIntVar[][] xs;
 	protected IloIntVar[] ws;
 	protected IloObjective objective;
+	protected IloIntExpr colorsum;
 	
 	protected PartitionedGraph graph;
 	protected IloMPModeler modeler;
@@ -70,6 +72,10 @@ public class Model {
 	
 	public BuilderStrategy getStrategy() {
 		return strategy;
+	}
+	
+	public IloIntExpr getColorSum() {
+		return colorsum;
 	}
 
 }

@@ -2,20 +2,18 @@ package pcp.algorithms.holes;
 
 import java.util.List;
 
-import pcp.algorithms.bounding.IAlgorithmBounder;
-import pcp.algorithms.bounding.IBoundedAlgorithm;
+import pcp.algorithms.Algorithm;
 import pcp.algorithms.holes.IHolesDetector.IHoleHandler;
 import pcp.definitions.Constants;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.interfaces.IAlgorithmSource;
-import pcp.interfaces.IModelData;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.DataUtils;
 import pcp.utils.IntUtils;
 import props.Settings;
 
-public class ComponentHolesCuts implements Constants, IBoundedAlgorithm {
+public class ComponentHolesCuts extends Algorithm implements Constants {
 
 	static boolean enabled = Settings.get().getBoolean("holes.enabled");
 	
@@ -23,9 +21,6 @@ public class ComponentHolesCuts implements Constants, IBoundedAlgorithm {
 	static double minColorValue = Settings.get().getDouble("holes.minColorValue");
 	static double maxColorValue = Settings.get().getDouble("holes.maxColorValue");
 	static double maxPerColor = Settings.get().getDouble("holes.maxPerColor");
-	
-	IAlgorithmSource provider;
-	IModelData data;
 
 	IHolesDetector<Node> detector;
 	SortedPartitionedGraph graph;
@@ -37,15 +32,13 @@ public class ComponentHolesCuts implements Constants, IBoundedAlgorithm {
 	int holeCount;
 	
 	public ComponentHolesCuts(IAlgorithmSource provider) {
-		super();
-		this.provider = provider;
-		this.data = provider.getData();
+		super(provider);
 		this.holeCount = 0;
 	}
 	
 	public ComponentHolesCuts run() {
 		if (!enabled) return this;
-		provider.getBounder().start();
+		bounder.start();
 
 		for (int c = 0; c < provider.getModel().getColorCount(); c++) {
 			final Integer color = c;
@@ -69,14 +62,10 @@ public class ComponentHolesCuts implements Constants, IBoundedAlgorithm {
 			}, null);
 		}
 		
-		provider.getBounder().stop();
+		bounder.stop();
 		return this;
 	}
 	
-	public IAlgorithmBounder getBounder() {
-		return this.provider.getBounder();
-	}
-
 	@Override
 	public CutFamily getIdentifier() {
 		return CutFamily.Hole;

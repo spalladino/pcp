@@ -10,7 +10,9 @@ import pcp.Logger;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.interfaces.IColorAssigner;
+import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.strategy.Objective;
 import pcp.solver.helpers.NodeSaturations;
 import pcp.solver.helpers.PruneEvaluator;
 import pcp.utils.DoubleUtils;
@@ -22,11 +24,15 @@ import exceptions.AlgorithmException;
 
 public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 
+	final static Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
+	
 	static final boolean log = Settings.get().getBoolean("logging.callback.branching");
 	static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
 	static final boolean dynamicFractionalStrategy = Settings.get().getBoolean("branch.dynamic.fractional");
 	static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
+	
 	static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
+	static final boolean boundWs = Settings.get().getBoolean("branch.boundws");
 	
 	static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
 	
@@ -38,6 +44,8 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	IloNumVar branched;
 	int branchedNode;
 	int branchedColor;
+	
+	int lastColorFixed = 0;
 	
 	public BranchCallback(Model model) {
 		this.model = model;
@@ -160,10 +168,12 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		BranchDirection[] dirs = new BranchDirection[length];
 		
 		// Set bounds for wj variables, all ceil(obj) are forced to one 
+		int index = 0;
 		for (int j = colorsToFix.getFirst(); j < colorsToFix.getSecond(); j++) {
-			vars[j] = model.w(j);
-			bounds[j] = 1.0;
-			dirs[j] = BranchDirection.Up;
+			vars[index] = model.w(j);
+			bounds[index] = 1.0;
+			dirs[index] = BranchDirection.Up;
+			index++;
 		}
 		
 		// Branch down on chosen var
@@ -175,9 +185,20 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
 	}
 	
-	// TODO: Implement
-	private TupleInt colorCountToFix() {
-		return new TupleInt(0,0);
+	private TupleInt colorCountToFix() throws IloException {
+		if (!boundWs) return new TupleInt(0,0);
+		
+		int j = 0;
+		while (super.getLB(model.w(j)) == 1.0) j++;
+		
+		double ws = objectiveStrategy.equals(Objective.Equal) 
+			? super.getObjValue()
+			: DoubleUtils.sum(super.getValues(model.getWs()));
+		int newj = DoubleUtils.ceil(ws);
+		
+		TupleInt t = new TupleInt(j,newj);
+		lastColorFixed = newj;
+		return t;
 	}
 
 	private int assignColorsFromSolution(IColorAssigner coloring) throws IloException, AlgorithmException {
