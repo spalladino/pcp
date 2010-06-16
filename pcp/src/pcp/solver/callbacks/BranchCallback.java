@@ -16,6 +16,7 @@ import pcp.solver.helpers.PruneEvaluator;
 import pcp.utils.DoubleUtils;
 import pcp.utils.ModelUtils;
 import props.Settings;
+import entities.TupleInt;
 import exceptions.AlgorithmException;
 
 
@@ -25,6 +26,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
 	static final boolean dynamicFractionalStrategy = Settings.get().getBoolean("branch.dynamic.fractional");
 	static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
+	static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
 	
 	static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
 	
@@ -32,6 +34,10 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	
 	Model model;
 	IPartitionedGraph graph;
+	
+	IloNumVar branched;
+	int branchedNode;
+	int branchedColor;
 	
 	public BranchCallback(Model model) {
 		this.model = model;
@@ -48,30 +54,39 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 			prune(); return;
 		}
 
-		IloNumVar branched = null;
+		// Clean up before starting
+		branched = null;
+		branchedNode = branchedColor = 0;
 		
+		// Calculate depth
+		Integer depth = (Integer) super.getNodeData();
+		depth = depth == null ? 1 : depth + 1;
+		
+		// Calculate branching variable
 		if (super.getNbranches() > 0 && getBranchType().equals(BranchType.BranchOnVariable)) {
 			if (dynamicFractionalStrategy) {
-				branched = fractionalBranch();
+				makeFractionalBranch();
 			} else if (dynamicDSaturStrategy) {
-				branched = dsaturBranch();
+				makeDsaturBranch();
 			}
 		}
 		
-		if (branched != null) {
-			if (log) System.out.println("Branching on " + branched);
-        	super.makeBranch(branched, 1.0, BranchDirection.Up, getObjValue());
-        	super.makeBranch(branched, 0.0, BranchDirection.Down, getObjValue());
-        	return;
-        }
+		// If a variable was found, branch on it
+		if (branched != null) { 
+			if (branchSingle) {
+				branchSingle(depth);
+			} else {
+				branchUp(depth);
+				branchDown(depth);
+	        } return;
+		}
 		
+		// Otherwise, manually branch on cplex recommended variable
 		if (manual) {
 			IloNumVar[][] varss = new IloNumVar[super.getNbranches()][];
 			double[][] bounds = new double[super.getNbranches()][];
 			BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
 			double[] branches = super.getBranches(varss, bounds, dirs);
-			Integer depth = (Integer) super.getNodeData();
-			depth = depth == null ? 1 : depth + 1;
 			for (int i = 0; i < super.getNbranches(); i++) {
 				super.makeBranch(varss[i], bounds[i], dirs[i], branches[i], depth);
 			}
@@ -79,55 +94,92 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		
 	}
 
-	private IloNumVar dsaturBranch() throws IloException {
-		NodeSaturations saturs = new NodeSaturations(graph);
+	private void branchSingle(Integer depth) throws IloException {
+		if (log) System.out.println("Branching on single variable " + branched);
+		super.makeBranch(branched, 1.0, BranchDirection.Up, getObjValue(), depth);
+		super.makeBranch(branched, 0.0, BranchDirection.Down, getObjValue(), depth);
+	}
 
-		try {
-			assignColorsFromSolution(saturs);
-		} catch (Exception ex) {
-			Logger.error("Error assigning coloring from solution in dsatur branching", ex);
-			return null;
+	private void branchUp(Integer depth) throws IloException {
+		Node node = graph.getNode(branchedNode);
+		Node[] partition = graph.getNodes(node.getPartition());
+		Node[] adjs = graph.getNeighbours(node);
+		
+		// Initialize branch arrays to pass on to cplex
+		TupleInt colorsToFix = colorCountToFix();
+		int length = colorsToFix.getSecond() - colorsToFix.getFirst()
+		    + model.getColorCount() * partition.length
+		    + adjs.length;
+		
+		IloNumVar[] vars = new IloNumVar[length];
+		double[] bounds = new double[length];
+		BranchDirection[] dirs = new BranchDirection[length];
+		int index = 0;
+		
+		// Set bounds for wj variables, all ceil(obj) are forced to one 
+		for (int j = colorsToFix.getFirst(); j < colorsToFix.getSecond(); j++) {
+			vars[index] = model.w(j);
+			bounds[index] = 1.0;
+			dirs[index] = BranchDirection.Up;
+			index++;
 		}
 		
-		int bestNode = 0;
-		int bestSatur = 0;
-		int bestUncolored = 0;
-		int bestPrio = 0;
-		
-		//Pick most saturated, highest prio node
-		for (int i = 0; i < graph.N(); i++) {
-			IloIntVar var = model.x(i, 0);
-			if (getFeasibility(var).equals(IntegerFeasibilityStatus.Infeasible)) {
-				int satur = saturs.getSaturation(i);
-				int uncolored = saturs.getUncoloredNeighbours(i);
-				int prio = super.getPriority(var);
-				if ((bestSatur < satur) 
-					|| (bestSatur == satur && bestUncolored < uncolored)
-					|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
-					bestNode = i;
-					bestSatur = satur;
-					bestPrio = prio;
-					bestUncolored = uncolored;
-				}
+		// Set all nodes in the partition, except the chosen node with the chosen color, to zero
+		for (Node n : partition) {
+			for (int j = 0; j < model.getColorCount(); j++) {
+				vars[index] = model.x(n.index(), j);
+				if (n.index() == node.index() && j == branchedColor) {
+					bounds[index] = 1.0;
+					dirs[index] = BranchDirection.Up;
+				} else {
+					bounds[index] = 0.0;
+					dirs[index] = BranchDirection.Down;
+				} index++;
 			}
 		}
 		
-		// Branch on highest value color
-		double bestVal = 0.0;
-		IloNumVar branched = null;
-		
-		for (int j = 0; j < model.getColorCount(); j++) {
-			IloNumVar var = model.x(bestNode, j);
-			double val = getValue(var);
-			if (val > bestVal) {
-				val = bestVal;
-				branched = var;
-			}
+		// For every neighbour, forbid usage of chosen color
+		for (Node n : adjs) {
+			vars[index] = model.x(n.index(), branchedColor);
+			bounds[index] = 0.0;
+			dirs[index] = BranchDirection.Down;
+			index++;
 		}
 		
-		return branched;
+		if (log) System.out.println("Branching up on variable " + branched + " for a total of " + length + " bounds set");
+		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
 	}
 	
+	private void branchDown(Integer depth) throws IloException {
+		// Initialize branch arrays to pass on to cplex
+		TupleInt colorsToFix = colorCountToFix();
+		int length = colorsToFix.getSecond() - colorsToFix.getFirst() + 1;
+		
+		IloNumVar[] vars = new IloNumVar[length];
+		double[] bounds = new double[length];
+		BranchDirection[] dirs = new BranchDirection[length];
+		
+		// Set bounds for wj variables, all ceil(obj) are forced to one 
+		for (int j = colorsToFix.getFirst(); j < colorsToFix.getSecond(); j++) {
+			vars[j] = model.w(j);
+			bounds[j] = 1.0;
+			dirs[j] = BranchDirection.Up;
+		}
+		
+		// Branch down on chosen var
+		vars[length-1] = branched;
+		bounds[length-1] = 0.0;
+		dirs[length-1] = BranchDirection.Down;
+		
+		if (log) System.out.println("Branching down on variable " + branched + " for a total of " + length + " bounds set");
+		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
+	}
+	
+	// TODO: Implement
+	private TupleInt colorCountToFix() {
+		return new TupleInt(0,0);
+	}
+
 	private int assignColorsFromSolution(IColorAssigner coloring) throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		boolean[] colored = new boolean[graph.P()];
@@ -186,32 +238,99 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	}
 
 
-	private IloNumVar fractionalBranch() throws IloException {
+	private IloNumVar makeDsaturBranch() throws IloException {
+		NodeSaturations saturs = new NodeSaturations(graph);
+	
+		try {
+			assignColorsFromSolution(saturs);
+		} catch (Exception ex) {
+			Logger.error("Error assigning coloring from solution in dsatur branching", ex);
+			return null;
+		}
+		
+		int bestNode = 0;
+		int bestSatur = 0;
+		int bestUncolored = 0;
+		int bestPrio = 0;
+		
+		//Pick most saturated, highest prio node
+		for (int i = 0; i < graph.N(); i++) {
+			IloIntVar var = model.x(i, 0);
+			if (getFeasibility(var).equals(IntegerFeasibilityStatus.Infeasible)) {
+				int satur = saturs.getSaturation(i);
+				int uncolored = saturs.getUncoloredNeighbours(i);
+				int prio = super.getPriority(var);
+				if ((bestSatur < satur) 
+					|| (bestSatur == satur && bestUncolored < uncolored)
+					|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
+					bestNode = i;
+					bestSatur = satur;
+					bestPrio = prio;
+					bestUncolored = uncolored;
+				}
+			}
+		}
+		
+		// Branch on highest value color
+		double bestVal = 0.0;
+		int bestColor = 0;
+		IloNumVar branched = null;
+		
+		for (int j = 0; j < model.getColorCount(); j++) {
+			IloNumVar var = model.x(bestNode, j);
+			double val = getValue(var);
+			if (val > bestVal) {
+				val = bestVal;
+				branched = var;
+				bestColor = j;
+			}
+		}
+		
+		// Set branch choice
+		this.branched = branched;
+		this.branchedColor = bestColor;
+		this.branchedNode = bestNode;
+		
+		return branched;
+	}
+
+	private IloNumVar makeFractionalBranch() throws IloException {
 		IloNumVar[] vars = model.getAllXs();
 		double[] values = getValues(vars);
 		IntegerFeasibilityStatus[] feasibilities = getFeasibilities(vars);
 		
 		IloNumVar branched = null;
 		int bestPrio = 0;
+		int bestColor = 0;
+		int bestNode = 0;
 		double mostFrac = 0.0;
 		
-		for (int i = 0; i < vars.length; i++) {
-			if (feasibilities[i].equals(IntegerFeasibilityStatus.Infeasible)) {
-				double frac = DoubleUtils.fractionality(values[i]);
-				int prio = getPriority(vars[i]);
-				
-				// Branch on most fractional?
-				if (branched == null 
-					|| frac > mostFrac + 0.1 
-					|| (frac > mostFrac - 0.1 && prio > bestPrio)
-					|| (frac > mostFrac && bestPrio == 0)) {
+		for (int i = 0; i < model.getNodeCount(); i++) {
+			for (int j = 0; j < model.getColorCount(); j++) {
+				int k = i * model.getColorCount() + j;
+				if (feasibilities[k].equals(IntegerFeasibilityStatus.Infeasible)) {
+					double frac = DoubleUtils.fractionality(values[k]);
+					int prio = getPriority(vars[k]);
 					
-					branched = vars[i];
-					bestPrio = prio;
-					mostFrac = frac;
+					// Branch on most fractional?
+					if (branched == null 
+						|| frac > mostFrac + 0.1 
+						|| (frac > mostFrac - 0.1 && prio > bestPrio)
+						|| (frac > mostFrac && bestPrio == 0)) {
+						
+						bestColor = j;
+						bestNode = i;
+						branched = vars[k];
+						bestPrio = prio;
+						mostFrac = frac;
+					}
 				}
 			}
 		}
+		
+		this.branchedColor = bestColor;
+		this.branchedNode = bestNode;
+		this.branched = branched;
 		return branched;
 	}
 	

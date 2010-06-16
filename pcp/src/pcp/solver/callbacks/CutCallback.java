@@ -51,9 +51,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	final static int cutEvery = Settings.get().getInteger("cuts.everynodes");
 	final static int maxCutsDepth = Settings.get().getInteger("cuts.maxdepth");
 	
-	final static boolean boundWjsRoot = Settings.get().getBoolean("cuts.boundWjs.root");
-	final static boolean boundWjsInternal = Settings.get().getBoolean("cuts.boundWjs.internal");
-	
 	Iteration iteration;
 	Model model;
 	IPartitionedGraph graph;
@@ -135,9 +132,6 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			System.out.println();
 		}
 		
-		// Bound wjs if necessary
-		boundColorVars(isRoot());
-		
 		// Cut initial families
 		if (logCallback) System.out.println("Initiating clique cuts");
 		cliques = new ExtendedCliqueCutter(iteration.forAlgorithm()).run();
@@ -171,18 +165,10 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		gholes = null;
 	}
 
-	private void boundColorVars(boolean isroot) {
-		// TODO: Implement!
-	}
-
 	private boolean isInternalNode() throws IloException {
 		return super.getNnodes() > 0;
 	}
 	
-	private boolean isRoot() throws IloException {
-		return !isInternalNode();
-	}
-
 	@Override
 	public void addPath(List<Node> path, int color) {
 		int alpha = IntUtils.ceilhalf(path.size());
