@@ -49,7 +49,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		if (!enabled) return;
 		int nodesSet = countNodesEqualOne(); 
 		
-		if (new PruneEvaluator(model).shouldPrune(nodesSet)) {
+		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			if (log) System.out.println("Pruning at " + nodesSet + " nodes set");
 			prune(); return;
 		}

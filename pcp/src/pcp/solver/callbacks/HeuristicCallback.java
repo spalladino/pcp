@@ -55,7 +55,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		
 		// Full run using current information if enough depth, or primal if frequency
 		int nodesSet = countNodesEqualOne();
-		if (new PruneEvaluator(model).shouldPrune(nodesSet)) {
+		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			setSolution(nodesSet);
 		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)) {
 			setPrimal(nodesSet);
