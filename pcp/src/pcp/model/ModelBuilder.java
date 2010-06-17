@@ -95,19 +95,39 @@ public class ModelBuilder {
 				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getAdjacencyConstraints());
 		}
 		
-		// Breaking symmetry constraints
-		switch(strategy.getBreakSymmetry()) {
-			case OnlyUseColorIfNodesPainted:
-				constrainUseLowerLabelFirst();
+		// Apply bounds on wjs and sums
+		switch(strategy.getColorBound()) {
+			case UpperNodesSumLowerSumPartition:
+				constrainUseColorIfNodesPainted();
+				constrainColorSumStrengthenedPartition();
+				break;
+			case UpperNodesSumLowerSum:
+				constrainUseColorIfNodesPainted();
+				constrainColorSumStrengthened();
+				break;
+			case UpperNodesSum:
 				constrainUseColorIfNodesPainted();
 				break;
-			case UseLowerLabelFirstStrengthened:
-				constrainUseLowerLabelFirst();
-				constrainLowerLabelStrengthened();
+			case None:
 				break;
-			case UseLowerLabelFirstStrengthenedPartition:
+			default:
+				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getColorBound());
+		}
+		
+		// Breaking symmetry constraints
+		switch(strategy.getBreakSymmetry()) {
+			case MinimumNodeLabelVerticesNumber:
+				constrainSymmetryMinimumNodeLabel();
+				constrainSymmetryVerticesNumber();
 				constrainUseLowerLabelFirst();
-				constrainLowerLabelStrengthenedPartition();
+				break;	
+			case MinimumNodeLabel:
+				constrainSymmetryMinimumNodeLabel();
+				constrainUseLowerLabelFirst();
+				break;
+			case VerticesNumber:
+				constrainSymmetryVerticesNumber();
+				constrainUseLowerLabelFirst();
 				break;
 			case UseLowerLabelFirst:
 				constrainUseLowerLabelFirst();
@@ -236,10 +256,50 @@ public class ModelBuilder {
 	}
 
 	/**
-	 * Creates symmetry break constraints sum_j w_j \geq sum_j j x_ij 
+	 * Creates symmetry break constraints sum_i x_ij \geq sum_i x_i(j+1)
 	 * @throws IloException 
 	 */
-	protected void constrainLowerLabelStrengthened() throws IloException {
+	protected void constrainSymmetryVerticesNumber() throws IloException {
+		for (int j = 0; j < colors-1; j++) {
+			IloLinearIntExpr expr = modeler.linearIntExpr();
+			String name = String.format("BSVNUM[%1$d]", j);
+			for (Node n : graph.getNodes()) {
+				expr.addTerm(xs[n.index()][j], 1);
+				expr.addTerm(xs[n.index()][j+1], -1);
+			}
+			
+			modeler.addGe(expr, 0, name);
+		}
+	}
+
+	/**
+	 * Creates fractional break constraints x_ij \leq sum_k x_k(j-1) forall i\x1, 0<j<i
+	 * @throws IloException 
+	 */
+	protected void constrainSymmetryMinimumNodeLabel() throws IloException {
+		for (int i = 1; i < graph.N(); i++) {
+			if (i >= colors-1) {
+				break;
+			}
+			for (int j = 1; j < i; j++) {
+				IloLinearIntExpr expr = modeler.linearIntExpr();
+				String name = String.format("BSLAB[%1$d,%2$d]", i, j);
+				expr.addTerm(xs[i][j], 1);
+				for (int k = j-1; k < colors; k++) {
+					expr.addTerm(xs[k][j-1], -1);
+				}
+				
+				modeler.addLe(expr, 0, name);
+			}
+		}
+		
+	}
+
+	/**
+	 * Creates fractional break constraints sum_j w_j \geq sum_j x_ij 
+	 * @throws IloException 
+	 */
+	protected void constrainColorSumStrengthened() throws IloException {
 		for (Node n : graph.getNodes()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("BSSTR[%1$d]", n.index());
@@ -253,10 +313,10 @@ public class ModelBuilder {
 	}
 
 	/**
-	 * Creates symmetry break constraints sum_j w_j \geq sum_i \in p sum_j j x_ij 
+	 * Creates fractional break constraints sum_j w_j \geq sum_i \in p sum_j j x_ij 
 	 * @throws IloException 
 	 */
-	protected void constrainLowerLabelStrengthenedPartition() throws IloException {
+	protected void constrainColorSumStrengthenedPartition() throws IloException {
 		for (Partition p : graph.getPartitions()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("BSSTRP[%1$d]", p.index());

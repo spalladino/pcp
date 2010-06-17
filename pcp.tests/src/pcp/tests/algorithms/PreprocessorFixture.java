@@ -8,9 +8,14 @@ import org.junit.Test;
 import pcp.algorithms.Preprocessor;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import props.Settings;
 
 public class PreprocessorFixture {
 
+	public PreprocessorFixture() throws Exception {
+		Settings.load("test");
+	}
+	
 	Preprocessor preprocessor;
 	PartitionedGraphBuilder builder;
 	PartitionedGraph graph;
@@ -136,6 +141,22 @@ public class PreprocessorFixture {
 		graph = preprocessor.preprocess().getGraph();
 		
 		assertCounts(7, 4, 3);
+	}
+	
+	@Test
+	public void testRemoveNodesSubsumption() {
+		builder
+			.addNodesInPartition(0, 0,1)
+			.addNodesInPartition(1, 2)
+			.addNodesInPartition(2, 3,7)
+			.addNodesInPartition(3, 4,8)
+			.addNodesInPartition(4, 5,6)
+			.addEdges(0, 2,3,4)
+			.addEdges(1, 3,4,5)
+			.addEdges(7, 8);
+			
+		graph = preprocessor.preprocess().getGraph();
+		assertCounts(5, 3, 3);
 	}
 	
 	@Test

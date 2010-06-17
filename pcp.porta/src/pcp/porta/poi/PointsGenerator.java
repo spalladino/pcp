@@ -37,10 +37,7 @@ public class PointsGenerator implements IPointsGenerator {
 		if (strategy.getPartitionConstraints() == Partition.PaintAtLeastOne) {
 			throw new AlgorithmException("PaintAtLeastOne strategy not supported.");
 		}
-		
-		if (strategy.getBreakSymmetry() != Symmetry.OnlyUseColorIfNodesPainted) {
-			throw new AlgorithmException("OnlyUseColorIfNodesPainted only symmetry strategy supported.");
-		}
+
 	}
 	
 	public List<int[]> getPoints() {
@@ -99,8 +96,8 @@ public class PointsGenerator implements IPointsGenerator {
 			return true;
 		}
 		
-		if (strategy.getBreakSymmetry() == Symmetry.OnlyUseColorIfNodesPainted ||
-			strategy.getBreakSymmetry() == Symmetry.UseLowerLabelFirst) {
+		// TODO: Check strategy
+		if (strategy.getBreakSymmetry() == Symmetry.UseLowerLabelFirst) {
 			
 			boolean using = true;
 			for (int j = cardinals.nodeVarsCount; j < poi.length; j++) {

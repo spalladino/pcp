@@ -189,7 +189,8 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		if (!boundWs) return new TupleInt(0,0);
 		
 		int j = 0;
-		while (super.getLB(model.w(j)) == 1.0) j++;
+		while (j < model.getColorCount() && super.getLB(model.w(j)) == 1.0) j++;
+		if (j == model.getColorCount()) return new TupleInt(0,0);
 		
 		double ws = objectiveStrategy.equals(Objective.Equal) 
 			? super.getObjValue()

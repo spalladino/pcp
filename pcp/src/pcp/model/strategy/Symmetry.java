@@ -5,9 +5,9 @@ public enum Symmetry {
 
 	None("sno"),
 	UseLowerLabelFirst("slow"),
-	UseLowerLabelFirstStrengthened("slowstr"),
-	UseLowerLabelFirstStrengthenedPartition("slowstrp"),
-	OnlyUseColorIfNodesPainted("sstrict"), ;
+	VerticesNumber("snum"),
+	MinimumNodeLabel("slab"),
+	MinimumNodeLabelVerticesNumber("snumlbl");
 	
 	String shortId;
 	

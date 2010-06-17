@@ -1,11 +1,10 @@
 package pcp;
 
-import java.util.List;
-
-import exceptions.AlgorithmException;
-
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex.IntParam;
+
+import java.util.List;
+
 import pcp.algorithms.Preprocessor;
 import pcp.algorithms.Verifier;
 import pcp.algorithms.bounding.IterationsBounder;
@@ -22,7 +21,9 @@ import pcp.model.strategy.Coloring;
 import pcp.solver.Kind;
 import pcp.solver.Solver;
 import pcp.solver.io.Printer;
+import pcp.utils.GraphUtils;
 import props.Settings;
+import exceptions.AlgorithmException;
 public class Main {
 	
 	public static void main(String[] args) throws Exception {
@@ -57,7 +58,8 @@ public class Main {
 		try {
 			build(strategy, execution, builder, solver);
 		} catch (Exception e) {
-			System.err.println("Error creating model: " + e);
+			System.err.println("Error creating model: " + e.getMessage());
+			e.printStackTrace(System.err);
 			return;
 		}
 

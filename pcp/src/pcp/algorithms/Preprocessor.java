@@ -5,6 +5,7 @@ import static pcp.utils.ArrayUtils.containsSorted;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import pcp.algorithms.clique.MaxCliqueFinder;
 import pcp.common.sorting.NodeDegreeCompleteComparator;
@@ -27,8 +28,11 @@ public class Preprocessor {
 	
 	private PartitionedGraphBuilder builder;
 	private int partitionsCheckCount;
-	
 	private List<pcp.entities.simple.Node> clique;
+	
+	private int partitionsRemoved = 0;
+	private int edgesRemoved = 0;
+	private int nodesRemoved = 0;
 	
 	public Preprocessor(PartitionedGraphBuilder builder) {
 		this.builder = builder;
@@ -104,9 +108,10 @@ public class Preprocessor {
 		List<pcp.entities.simple.Node> newclique = finder.run().getClique();
 		
 		if (log) System.out.println(newclique == null ? "No clique found" : "Found clique of size " + newclique.size());
-		this.clique = newclique;
+		boolean retval = (newclique != null && newclique.size() > 1 && (this.clique == null || newclique.size() > this.clique.size()));
 		
-		return (newclique.size() > 1 && (this.clique == null || newclique.size() > this.clique.size()));
+		this.clique = newclique;
+		return retval;
 	}
 
 
@@ -144,7 +149,6 @@ public class Preprocessor {
 	}
 
 	private boolean shouldRemoveNodeOnDegree(Node node) {
-		// TODO: Check bound
 		return builder.getDegree(node) == 0
 			|| (clique != null && builder.getNeighbourPartitions(node).length < clique.size());
 	}
@@ -163,8 +167,7 @@ public class Preprocessor {
 			// If there is an isolated node or its neighbours are lower than the clique number, remove this partition
 			if (shouldRemoveNodeOnDegree(node)) {
 				changes = true;
-				if (log) System.out.println("Removing partition " + partition);
-				builder.removePartition(partition);
+				removePartition(partition);
 				break;
 			}
 			
@@ -175,9 +178,7 @@ public class Preprocessor {
 
 			for (Node[] existing : neighbourhoods) {
 				if (containsSorted(neighbours, existing)) {
-					markNeighbourPartitionsForCheck(neighbours);
-					if (log) System.out.println("Removing node " + node);
-					builder.removeNode(node);
+					removeNode(node, neighbours);
 					changes = true;
 					removed = true;
 					break nodes;
@@ -192,6 +193,21 @@ public class Preprocessor {
 		}
 		
 		return changes;
+	}
+
+	private void removePartition(Partition partition) {
+		if (log) System.out.println("Removing partition " + partition);
+		partitionsRemoved++;
+		nodesRemoved+= builder.getNodes(partition).length;
+		markNeighbourPartitionsForCheck(builder.getNeighbours(partition));
+		builder.removePartition(partition);
+	}
+	
+	private void removeNode(Node node, Node[] neighbours) {
+		if (log) System.out.println("Removing node " + node);
+		nodesRemoved++;
+		markNeighbourPartitionsForCheck(neighbours);
+		builder.removeNode(node);
 	}
 	
 	private PartitionData getPartitionData(Partition p) {
@@ -215,8 +231,7 @@ public class Preprocessor {
 		for (Node node : builder.getNodes()) {
 			if (builder.hasNode(node.index())) {
 				if (builder.getNeighbours(node).length == 0) {
-					if (log) System.out.println("Removing partition " + node.getPartition());
-					builder.removePartition(node.getPartition());
+					removePartition(node.getPartition());
 					changes = true;
 				}
 			}
@@ -228,6 +243,7 @@ public class Preprocessor {
 			if (edge.getNode1().getPartition().index() == edge.getNode2().getPartition().index()) {
 				if (log) System.out.println("Removing edge " + edge);
 				builder.removeEdge(edge);
+				edgesRemoved++;
 			}
 		}
 	}
