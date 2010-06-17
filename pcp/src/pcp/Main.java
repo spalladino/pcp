@@ -28,9 +28,14 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String filename, runId;
 		Settings.load("run");
+		Kind solver = Settings.get().getEnum("solver.kind", Kind.class);
 		
-		if (Settings.get().getEnum("solver.kind", Kind.class).equals(Kind.Heuristic)) {
+		if (solver.equals(Kind.Heuristic)) {
 			Heuristic.main(args);
+			System.exit(0);
+			return;
+		} else if (solver.equals(Kind.Preprocessor)) {
+			Preprocess.main(args);
 			System.exit(0);
 			return;
 		}

@@ -9,6 +9,7 @@ import ilog.cplex.IloCplex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
@@ -23,6 +24,7 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ICutBuilder;
+import pcp.interfaces.IExecutionDataProvider;
 import pcp.interfaces.IModelData;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
@@ -35,7 +37,7 @@ import pcp.utils.IntUtils;
 import props.Settings;
 
 
-public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData {
+public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData, IExecutionDataProvider {
 
 	final static Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
@@ -76,10 +78,13 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	double[] ws;
 	double[][] xs;
 	
+	Double[] rootGaps;
+	
 	public CutCallback(IloMPModeler modeler, boolean onlyRoot) {
 		this.modeler = modeler;
 		this.metrics = new CutsMetrics();
 		this.onlyRoot = onlyRoot;
+		this.rootGaps = new Double[maxItersRoot+1];
 	}
 	
 	@Override
@@ -111,6 +116,11 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + depth);
 				return;
 			}
+		}
+		
+		// Log current gap on root only
+		if (!isInternalNode()) {
+			rootGaps[iters] = super.getMIPRelativeGap();
 		}
 		
 		// Reset iter count on node change
@@ -314,6 +324,11 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 
 	public CutsMetrics getMetrics() {
 		return metrics;
+	}
+
+	public void fillData(Map<String, Object> data) {
+		this.getMetrics().fillData(data);
+		data.put("root.gaps", rootGaps);
 	}
 
 	private boolean isInternalNode() throws IloException {

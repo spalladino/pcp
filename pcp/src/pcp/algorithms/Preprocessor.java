@@ -75,6 +75,7 @@ public class Preprocessor implements IExecutionDataProvider {
 		data.put("preprocess.edgesremoved", edgesRemoved);
 		data.put("preprocess.nodesremoved", nodesRemoved);
 		data.put("preprocess.partitionsremoved", partitionsRemoved);
+		data.put("preprocess.cliquesize", clique == null ? 0 : clique.size());
 	}
 
 	/**

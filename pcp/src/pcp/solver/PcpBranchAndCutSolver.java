@@ -55,6 +55,6 @@ public class PcpBranchAndCutSolver extends Solver {
 	@Override
 	public void fillData(Map<String, Object> data) {
 		super.fillData(data);
-		callback.getMetrics().fillData(data);
+		callback.fillData(data);
 	}
 }

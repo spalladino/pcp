@@ -20,6 +20,7 @@ import pcp.solver.CplexBranchAndCutSolver;
 import pcp.solver.CplexDynamicSearchSolver;
 import pcp.solver.PcpBranchAndCutSolver;
 import pcp.solver.PcpCutAndBranchSolver;
+import pcp.solver.PcpCuttingPlanesSolver;
 import pcp.solver.Solver;
 
 
@@ -94,6 +95,8 @@ public class Factory implements IFactory {
 					return new CplexBranchAndCutSolver();
 				case CplexDynamicSearch:
 					return new CplexDynamicSearchSolver();
+				case PcpCuttingPlanes:
+					return new PcpCuttingPlanesSolver();
 				default:
 					throw new Exception("Invalid solver kind: " + kind);
 			}

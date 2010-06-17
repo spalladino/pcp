@@ -3,7 +3,6 @@ package pcp.solver.cuts;
 
 public enum CutFamily {
 	
-	BoundWjs,
 	BlockColor,
 	Hole,
 	Path,

@@ -8,6 +8,7 @@ public enum Kind {
 	PcpCutAndBranch, 
 	PcpBranchAndCut,
 	Heuristic,
-	Preprocessor
+	Preprocessor,
+	PcpCuttingPlanes
 	
 }
