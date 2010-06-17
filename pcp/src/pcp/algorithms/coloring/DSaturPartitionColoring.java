@@ -158,6 +158,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			if (log) log("All partitions painted, proceeding to normal coloring");
 			color(painted, currentColor);
 		} else {
+			// Poll tuple from the stack for current iteration
 			TupleInt t = partitionsFixed.poll();
 			int partition = t.getFirst();
 			int color = t.getSecond();
@@ -173,6 +174,9 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 					unhandleNode(node.index());
 				}
 			}
+			
+			// Return tuple to the stack for next iteration
+			partitionsFixed.push(t);
 		}
 		
 		unindent();
@@ -323,6 +327,9 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			System.out.println("No partitions fixed.");
 		} else {
 			System.out.println("Partitions fixed: " + ListUtils.toString(partitionsFixed));
+			for (TupleInt t : partitionsFixed) {
+				System.out.println(t.getFirst() + ": " + Arrays.toString(graph.getNodes(graph.getPartition(t.getFirst()))));
+			}
 		}
 		
 		if (fixed == 0) {

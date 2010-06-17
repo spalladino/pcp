@@ -82,7 +82,6 @@ public class Preprocessor implements IExecutionDataProvider {
 	 * @return whether a bigger clique was generated
 	 */
 	private boolean createGPrimeClique() {
-		// TODO: Is not being invoked after processing partitions!
 		ISimpleGraph gprime = builder.getGPrime();
 		MaxCliqueFinder finder = new MaxCliqueFinder(gprime);
 		List<pcp.entities.simple.Node> newclique = finder.run().getClique();
@@ -97,16 +96,18 @@ public class Preprocessor implements IExecutionDataProvider {
 
 	private boolean removeRedundantNodes() {
 		boolean changes = true;
+		boolean retval = false;
 		
 		// Iterate while there are changes in a partition
 		while (changes) {
 			changes = false;
 			for (Partition partition : builder.getPartitions()) {
 				changes = processPartition(partition) || changes;
+				retval = changes || retval;
 			}
 		}
 		
-		return changes;
+		return retval;
 	}
 
 	private boolean shouldRemoveNodeOnDegree(Node node) {

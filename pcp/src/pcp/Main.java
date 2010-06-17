@@ -23,6 +23,7 @@ import pcp.solver.Solver;
 import pcp.solver.io.Printer;
 import pcp.utils.GraphUtils;
 import pcp.utils.ListUtils;
+import pcp.utils.SimpleGraphUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
 public class Main {
@@ -115,8 +116,6 @@ public class Main {
 			Solver solver) throws IloException, AlgorithmException {
 		execution.withOriginalInputData(builder);
 		
-		GraphUtils.printDegrees(builder, System.out);
-		
 		// Preprocess graph
 		Preprocessor preprocessor = new Preprocessor(builder);
 		graph = preprocessor.preprocess().getGraph();
@@ -127,8 +126,8 @@ public class Main {
 		coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
 		if (clique != null) coloring.setInitialClique(clique);
 		
-		if (clique != null) System.out.println("Clique: " + ListUtils.toString(clique)); 
-		GraphUtils.print(graph, System.out);
+		//GraphUtils.print(graph, System.out);
+		//coloring.printColoring(System.out);
 		
 		// Build model
 		model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, clique); 

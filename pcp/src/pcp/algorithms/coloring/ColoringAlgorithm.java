@@ -1,10 +1,12 @@
 package pcp.algorithms.coloring;
 
+import java.io.PrintStream;
 import java.util.List;
 
 import pcp.algorithms.bounding.IAlgorithmBounder;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.entities.IPartitionedGraph;
+import pcp.entities.partitioned.Node;
 import exceptions.AlgorithmException;
 
 
@@ -31,6 +33,13 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 		Integer color = getColor(node);
 		if (color == null) return -1;
 		else return color;
+	}
+	
+	public void printColoring(PrintStream stream) throws AlgorithmException {
+		StringBuilder sb = new StringBuilder("Coloring: ");
+		for (Node node : graph.getNodes()) {
+			sb.append(node).append(":").append(getColor(node.index())).append(", ");
+		} stream.println(sb.toString());
 	}
 
 	public void setInitialClique(List<pcp.entities.simple.Node> clique) throws AlgorithmException {

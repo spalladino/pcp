@@ -1,6 +1,6 @@
 import generator, os
 
-folder='D:/Tesis/Workspace/data/'
+folder='E:/Workspace/data/'
 
 def main():
     holme_basegen = generator.Generator(os.path.join(folder, 'holme'))
@@ -8,7 +8,7 @@ def main():
     
     for density in range(1,5,1):
         for instance in range(5):
-            nodes = 80
+            nodes = 20
             
             h_gen = holme_basegen.with_name('n%dd%02d.%03d' % (nodes, density, instance))
             h_gen.holme_kim(nodes,float(density)/10.0)

@@ -40,6 +40,8 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 	final static int mipEmph = Settings.get().getInteger("solver.mipEmphasis");
 	final static int probing = Settings.get().getInteger("solver.probing");
 	
+	final static boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
+	
 	IloCplex cplex;
 	Model model;
 	
@@ -86,6 +88,17 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 		}
 	}
 	
+	private void validateInitialSolution(IloNumVar[] vars, double[] vals) throws IloException, AlgorithmException {
+		for (int i = 0; i < vars.length; i++) {
+			IloNumVar var = vars[i];
+			double d = vals[i];
+			
+			if (d < var.getLB() || d > var.getUB()) {
+				throw new AlgorithmException("Invalid solution " + d + " for variable " + var + " bounds [" + var.getLB() + "," + var.getUB() + "]");
+			}
+		}
+	}
+	
 	public void loadInitialSolution(pcp.algorithms.coloring.ColoringAlgorithm coloring) throws IloException, AlgorithmException {
 		cplex.setParam(IntParam.AdvInd, 1);
 		
@@ -111,6 +124,7 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 		}
 		
 		// Set the initial solution
+		if (validateSolutions) validateInitialSolution(vars, vals);
 		cplex.setVectors(vals, null, vars, null, null, null);
 	}
 
