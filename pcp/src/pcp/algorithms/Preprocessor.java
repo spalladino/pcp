@@ -5,7 +5,9 @@ import static pcp.utils.ArrayUtils.containsSorted;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import pcp.algorithms.bounding.TimeBounder;
 import pcp.algorithms.clique.MaxCliqueFinder;
 import pcp.common.sorting.NodeDegreeCompleteComparator;
 import pcp.entities.ISimpleGraph;
@@ -13,6 +15,7 @@ import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import pcp.interfaces.IExecutionDataProvider;
 import props.Settings;
 
 /**
@@ -20,7 +23,7 @@ import props.Settings;
  * removing all edges within partitions, isolated nodes with their partitions,
  * and clearing empty partitions.
  */
-public class Preprocessor {
+public class Preprocessor implements IExecutionDataProvider {
 	
 	private final static boolean cliqueEnabled = Settings.get().getBoolean("clique.gprime.initial.enabled");
 	private final static boolean log = Settings.get().getBoolean("logging.preprocess");
@@ -32,11 +35,16 @@ public class Preprocessor {
 	private int edgesRemoved = 0;
 	private int nodesRemoved = 0;
 	
+	private TimeBounder bounder;
+	
 	public Preprocessor(PartitionedGraphBuilder builder) {
 		this.builder = builder;
+		this.bounder = new TimeBounder();
 	}
 	
 	public PartitionedGraphBuilder preprocess() {
+		bounder.start();
+		
 		// Remove edges in the same partition
 		removeEdgesWithinPartition();
 		
@@ -46,44 +54,27 @@ public class Preprocessor {
 		
 		// Create a gprime clique and remove nodes based on degree
 		// Make sure another check for redundant nodes is made every time
-		while (cliqueEnabled && createGPrimeClique() && removeRedundantNodes());
+		while (cliqueEnabled && recreateGraph() && createGPrimeClique() && removeRedundantNodes());
 		
-		// Return the builder for further processing
+		bounder.stop();
 		return builder;
+	}
+
+	private boolean recreateGraph() {
+		builder.recreateGraph();
+		return true;
 	}
 
 	public List<pcp.entities.simple.Node> getClique() {
 		return clique;
 	}
-
-	/**
-	 * Removes all nodes with partition degree less than clique number minus one.
-	 * When a node is removed all its partition is removed from the graph.
-	 * @return whether there was any node removed
-	 * @deprecated use remove redundant nodes method which includes this functionality
-	 */
-	@SuppressWarnings("unused")
-	@Deprecated
-	private boolean removeNodesOnDegree() {
-		boolean ret = false;
-		boolean changes = true;
-		
-		// Iterate while there are changes on the graph
-		while (changes) {
-			changes = false;
-			// Check every node in the partition to see if it can be removed
-			for (Partition p : builder.getPartitions()) {
-				if (builder.hasPartition(p.index())) {
-					for (Node node : builder.getNodes(p)) {
-						if (builder.getNeighbourPartitions(node).length < clique.size() - 1) {
-							builder.removePartition(node.getPartition());
-							ret = changes = true;
-							break;
-						}
-					}
-				}
-			}
-		} return ret;
+	
+	@Override
+	public void fillData(Map<String, Object> data) {
+		data.put("preprocess.time", bounder.getMillis());
+		data.put("preprocess.edgesremoved", edgesRemoved);
+		data.put("preprocess.nodesremoved", nodesRemoved);
+		data.put("preprocess.partitionsremoved", partitionsRemoved);
 	}
 
 	/**
@@ -91,6 +82,7 @@ public class Preprocessor {
 	 * @return whether a bigger clique was generated
 	 */
 	private boolean createGPrimeClique() {
+		// TODO: Is not being invoked after processing partitions!
 		ISimpleGraph gprime = builder.getGPrime();
 		MaxCliqueFinder finder = new MaxCliqueFinder(gprime);
 		List<pcp.entities.simple.Node> newclique = finder.run().getClique();
@@ -147,7 +139,7 @@ public class Preprocessor {
 
 			for (Node[] existing : neighbourhoods) {
 				if (containsSorted(neighbours, existing)) {
-					removeNode(node, neighbours);
+					removeNode(node);
 					changes = true;
 					removed = true;
 					break nodes;
@@ -161,6 +153,12 @@ public class Preprocessor {
 			}
 		}
 		
+		// Remove partition if no nodes were left
+		if (builder.hasPartition(partition.index()) && builder.getNodes(partition).length == 0) {
+			removePartition(partition);
+			changes = true;
+		}
+		
 		return changes;
 	}
 
@@ -171,12 +169,52 @@ public class Preprocessor {
 		builder.removePartition(partition);
 	}
 	
-	private void removeNode(Node node, Node[] neighbours) {
+	private void removeNode(Node node) {
 		if (log) System.out.println("Removing node " + node);
 		nodesRemoved++;
 		builder.removeNode(node);
 	}
 	
+	private void removeEdgesWithinPartition() {
+		for (Edge edge : builder.getEdges()) {
+			if (edge.getNode1().getPartition().index() == edge.getNode2().getPartition().index()) {
+				if (log) System.out.println("Removing edge " + edge);
+				builder.removeEdge(edge);
+				edgesRemoved++;
+			}
+		}
+	}
+
+	/**
+	 * Removes all nodes with partition degree less than clique number minus one.
+	 * When a node is removed all its partition is removed from the graph.
+	 * @return whether there was any node removed
+	 * @deprecated use remove redundant nodes method which includes this functionality
+	 */
+	@SuppressWarnings("unused")
+	@Deprecated
+	private boolean removeNodesOnDegree() {
+		boolean ret = false;
+		boolean changes = true;
+		
+		// Iterate while there are changes on the graph
+		while (changes) {
+			changes = false;
+			// Check every node in the partition to see if it can be removed
+			for (Partition p : builder.getPartitions()) {
+				if (builder.hasPartition(p.index())) {
+					for (Node node : builder.getNodes(p)) {
+						if (builder.getNeighbourPartitions(node).length < clique.size() - 1) {
+							builder.removePartition(node.getPartition());
+							ret = changes = true;
+							break;
+						}
+					}
+				}
+			}
+		} return ret;
+	}
+
 	@Deprecated
 	@SuppressWarnings("unused")
 	private boolean removePartitionsWithIsolatedNodes() {
@@ -189,16 +227,6 @@ public class Preprocessor {
 				}
 			}
 		} return changes;
-	}
-	
-	private void removeEdgesWithinPartition() {
-		for (Edge edge : builder.getEdges()) {
-			if (edge.getNode1().getPartition().index() == edge.getNode2().getPartition().index()) {
-				if (log) System.out.println("Removing edge " + edge);
-				builder.removeEdge(edge);
-				edgesRemoved++;
-			}
-		}
 	}
 	
 }

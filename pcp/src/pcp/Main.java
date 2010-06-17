@@ -21,6 +21,8 @@ import pcp.model.strategy.Coloring;
 import pcp.solver.Kind;
 import pcp.solver.Solver;
 import pcp.solver.io.Printer;
+import pcp.utils.GraphUtils;
+import pcp.utils.ListUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
 public class Main {
@@ -84,7 +86,7 @@ public class Main {
 		solver.getCplex().setParam(IntParam.MIPInterval, Settings.get().getInteger("logging.mipinterval"));
 		
 		solver.solve();
-		solver.fillExecutionData(execution.getData());
+		solver.fillData(execution.getData());
 		
 		if (solver.isSolved()) {
 			if (Settings.get().getBoolean("logging.solution")) {
@@ -112,24 +114,29 @@ public class Main {
 	private static void build(BuilderStrategy strategy, ExecutionData execution, PartitionedGraphBuilder builder,
 			Solver solver) throws IloException, AlgorithmException {
 		execution.withOriginalInputData(builder);
-		long initial = System.currentTimeMillis();
+		
+		GraphUtils.printDegrees(builder, System.out);
 		
 		// Preprocess graph
 		Preprocessor preprocessor = new Preprocessor(builder);
 		graph = preprocessor.preprocess().getGraph();
 		List<Node> clique = preprocessor.getClique();
+		preprocessor.fillData(execution.getData());
 		
 		// Make initial coloring
 		coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
 		if (clique != null) coloring.setInitialClique(clique);
 		
+		if (clique != null) System.out.println("Clique: " + ListUtils.toString(clique)); 
+		GraphUtils.print(graph, System.out);
+		
 		// Build model
 		model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, clique); 
 		solver.setModel(model);
 		
-		// Log elapsed time
-		long elapsed = System.currentTimeMillis() - initial;
-		execution.getData().put("preprocess.time", elapsed);
+		// Log data for initial coloring
+		execution.getData().put("coloring.initial.time", coloring.getBounder().getMillis());
+		execution.getData().put("coloring.initial.chi", coloring.getChi());
 	}
 
 	private static void exportModel(Solver solver, String filename) throws IloException {

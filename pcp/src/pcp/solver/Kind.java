@@ -7,6 +7,7 @@ public enum Kind {
 	CplexBranchAndCutSearch,
 	PcpCutAndBranch, 
 	PcpBranchAndCut,
-	Heuristic
+	Heuristic,
+	Preprocessor
 	
 }

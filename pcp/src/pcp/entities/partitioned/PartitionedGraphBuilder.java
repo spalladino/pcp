@@ -2,6 +2,7 @@ package pcp.entities.partitioned;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,14 +34,9 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		super();
 		this.name = name;
 
-		this.partitionNodes = new TreeMap<Partition, Set<Node>>();
-		this.partitions = new TreeMap<Integer, Partition>();
-		this.nodeAdjacencies = new TreeMap<Node, Set<Node>>();
-		this.nodes = new TreeMap<Integer, Node>();
-		this.edges = new ArrayList<Edge>();
-		this.nodePartition = new TreeMap<Node, Partition>();
+		initialize();
 	}
-	
+
 	public PartitionedGraph getGraph() {
 		if (mustRecreate) recreateGraph();
 		PartitionedGraph graph = new PartitionedGraph();
@@ -85,6 +81,15 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		return graph;
 	}
 
+	private void initialize() {
+		this.partitionNodes = new TreeMap<Partition, Set<Node>>();
+		this.partitions = new TreeMap<Integer, Partition>();
+		this.nodeAdjacencies = new TreeMap<Node, Set<Node>>();
+		this.nodes = new TreeMap<Integer, Node>();
+		this.edges = new ArrayList<Edge>();
+		this.nodePartition = new TreeMap<Node, Partition>();
+	}
+
 	private Node getCreateNode(int node) {
 		if (!nodes.containsKey(node)) {
 			Node n = new Node(this, node);
@@ -101,6 +106,42 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		} return partitions.get(partition);
 	}
 	
+	public void recreateGraph() {
+		Map<Integer,Integer> oldToNewNode = new HashMap<Integer, Integer>();
+		Map<Integer,Integer> oldToNewPartition = new HashMap<Integer, Integer>();
+		
+		Node[] freshNodes = this.getNodes().clone();
+		for (int i = 0; i < freshNodes.length; i++) {
+			Node node = freshNodes[i];
+			oldToNewNode.put(node.name, i);
+		}
+	
+		Partition[] freshPartitions = this.getPartitions().clone();
+		for (int i = 0; i < freshPartitions.length; i++) {
+			Partition partition = freshPartitions[i];
+			oldToNewPartition.put(partition.name, i);
+		}
+		
+		Map<Node, Partition> nodePartition = this.nodePartition;
+		List<Edge> edges = this.edges;
+		
+		initialize();
+	
+		for (Node node : nodePartition.keySet()) {
+			int newkey = oldToNewNode.get(node.index());
+			int newpart = oldToNewPartition.get(nodePartition.get(node).index());
+			this.addNode(newkey, newpart);
+		}
+		
+		for (Edge edge : edges) {
+			int n1 = oldToNewNode.get(edge.index1());
+			int n2 = oldToNewNode.get(edge.index2());
+			this.addEdge(n1, n2);
+		}
+		
+		mustRecreate = false;
+	}
+
 	public void removePartition(Partition partition) {
 		Set<Node> set = partitionNodes.get(partition);
 		Node[] nodes = (Node[]) set.toArray(new Node[set.size()]);
@@ -149,32 +190,6 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		mustRecreate = true;
 	}
 
-	public void recreateGraph() {
-		Node[] remainingNodes = this.getNodes();
-		nodes.clear();
-		for (int i = 0; i < remainingNodes.length; i++) {
-			Node node = remainingNodes[i];
-			nodes.put(i, node);
-			node.name = i;
-		}
-
-		List<Partition> remainingPartitions = new ArrayList<Partition>(partitions.size());
-		for (Partition partition : partitions.values()) {
-			if (!partitionNodes.get(partition).isEmpty()) {
-				remainingPartitions.add(partition);
-			}
-		}
-		
-		partitions.clear();
-		for (int i = 0; i < remainingPartitions.size(); i++) {
-			Partition partition = remainingPartitions.get(i);
-			partitions.put(i, partition);
-			partition.name = i;
-		}
-		
-		mustRecreate = false;
-	}
-	
 	public PartitionedGraphBuilder createNodes(int count) {
 		createNodes(0, count);
 		return this;

@@ -10,8 +10,10 @@ import ilog.cplex.IloCplex.IntParam;
 
 import java.util.Map;
 
+import pcp.Logger;
 import pcp.definitions.Constants;
 import pcp.entities.IPartitionedGraph;
+import pcp.interfaces.IExecutionDataProvider;
 import pcp.model.Model;
 import pcp.model.strategy.Objective;
 import pcp.solver.branching.BranchingDirectioner;
@@ -28,7 +30,7 @@ import exceptions.AlgorithmException;
 /**
  * Base class for all solvers.
  */
-public class Solver extends AbstractSolutionData {
+public class Solver extends AbstractSolutionData implements IExecutionDataProvider {
 	
 	final static boolean useHeuristicCallback = Settings.get().getBoolean("solver.useHeuristicCallback");
 	final static boolean useBranchingCallback = Settings.get().getBoolean("solver.useBranchingCallback");
@@ -187,14 +189,18 @@ public class Solver extends AbstractSolutionData {
 		} catch(Exception ex) {return 0.0;}
 	}
 		
-	public void fillExecutionData(Map<String,Object> data) throws Exception {
-		data.put("solution.chi", solved ? getChromaticNumber() : 0);
-		data.put("solution.lb", solved ? cplex.getBestObjValue() : 0);
-		data.put("solution.success", solved);
-		data.put("solution.gap", solved ? this.getGap() : 0);
-		data.put("solution.nnodes", cplex.getNnodes());
-		data.put("solution.time", elapsed);
-		data.put("solution.solver", this.getClass().getName());
+	public void fillData(Map<String,Object> data) {
+		try {
+			data.put("solution.chi", solved ? getChromaticNumber() : 0);
+			data.put("solution.lb", solved ? cplex.getBestObjValue() : 0);
+			data.put("solution.success", solved);
+			data.put("solution.gap", solved ? this.getGap() : 0);
+			data.put("solution.nnodes", cplex.getNnodes());
+			data.put("solution.time", elapsed);
+			data.put("solution.solver", this.getClass().getName());
+		} catch (Exception ex) {
+			Logger.error("Error filling solver data", ex);
+		}
 		
 		if (heurCallback != null) {
 			heurCallback.getMetrics().fillData(data);

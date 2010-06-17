@@ -5,9 +5,10 @@ import java.util.Map;
 import exceptions.AlgorithmException;
 
 import pcp.algorithms.coloring.ColoringAlgorithm;
+import pcp.interfaces.IExecutionDataProvider;
 import props.Settings;
 
-public class HeuristicMetrics {
+public class HeuristicMetrics implements IExecutionDataProvider {
 
 	static final boolean log = Settings.get().getBoolean("logging.callback.heuristic");
 	

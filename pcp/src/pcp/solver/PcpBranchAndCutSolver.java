@@ -53,8 +53,8 @@ public class PcpBranchAndCutSolver extends Solver {
 	}
 	
 	@Override
-	public void fillExecutionData(Map<String, Object> data) throws Exception {
-		super.fillExecutionData(data);
+	public void fillData(Map<String, Object> data) {
+		super.fillData(data);
 		callback.getMetrics().fillData(data);
 	}
 }
