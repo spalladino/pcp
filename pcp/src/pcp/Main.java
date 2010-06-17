@@ -21,9 +21,6 @@ import pcp.model.strategy.Coloring;
 import pcp.solver.Kind;
 import pcp.solver.Solver;
 import pcp.solver.io.Printer;
-import pcp.utils.GraphUtils;
-import pcp.utils.ListUtils;
-import pcp.utils.SimpleGraphUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
 public class Main {
