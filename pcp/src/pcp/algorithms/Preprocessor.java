@@ -5,7 +5,6 @@ import static pcp.utils.ArrayUtils.containsSorted;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import pcp.algorithms.clique.MaxCliqueFinder;
 import pcp.common.sorting.NodeDegreeCompleteComparator;
@@ -27,7 +26,6 @@ public class Preprocessor {
 	private final static boolean log = Settings.get().getBoolean("logging.preprocess");
 	
 	private PartitionedGraphBuilder builder;
-	private int partitionsCheckCount;
 	private List<pcp.entities.simple.Node> clique;
 	
 	private int partitionsRemoved = 0;
@@ -36,16 +34,6 @@ public class Preprocessor {
 	
 	public Preprocessor(PartitionedGraphBuilder builder) {
 		this.builder = builder;
-		this.partitionsCheckCount = 0;
-	}
-	
-	private static class PartitionData {
-		
-		public boolean check;
-		
-		public PartitionData(boolean check) {
-			this.check = check;
-		}
 	}
 	
 	public PartitionedGraphBuilder preprocess() {
@@ -116,34 +104,15 @@ public class Preprocessor {
 
 
 	private boolean removeRedundantNodes() {
-		boolean changes = false;
-		
-		// Setup partitions data
-		for (Partition partition : builder.getPartitions()) {
-			partition.setData(new PartitionData(true));
-			partitionsCheckCount++;
-		}
+		boolean changes = true;
 		
 		// Iterate while there are changes in a partition
-		while (partitionsCheckCount > 0) {
-			
-			// Go through the whole collection filtering out those not marked for check
+		while (changes) {
+			changes = false;
 			for (Partition partition : builder.getPartitions()) {
-				if (partitionsCheckCount == 0) break;
-				PartitionData data = getPartitionData(partition);
-				if (!data.check) continue;
-				
-				// Mark this partition as processed
-				data.check = false;
-				partitionsCheckCount--;
-				
-				// Process the partition itself
 				changes = processPartition(partition) || changes;
 			}
 		}
-		
-		// Make sure no node was left behind
-		changes = removePartitionsWithIsolatedNodes() || changes;
 		
 		return changes;
 	}
@@ -199,33 +168,17 @@ public class Preprocessor {
 		if (log) System.out.println("Removing partition " + partition);
 		partitionsRemoved++;
 		nodesRemoved+= builder.getNodes(partition).length;
-		markNeighbourPartitionsForCheck(builder.getNeighbours(partition));
 		builder.removePartition(partition);
 	}
 	
 	private void removeNode(Node node, Node[] neighbours) {
 		if (log) System.out.println("Removing node " + node);
 		nodesRemoved++;
-		markNeighbourPartitionsForCheck(neighbours);
 		builder.removeNode(node);
 	}
 	
-	private PartitionData getPartitionData(Partition p) {
-		return (PartitionData) p.getData();
-	}
-	
-	private void markNeighbourPartitionsForCheck(Node[] neighbours) {
-		for (int i = 0; i < neighbours.length; i++) {
-			Node node = neighbours[i];
-			PartitionData data = getPartitionData(builder.getPartition(node)); 
-			if (!data.check) {
-				data.check = true;
-				partitionsCheckCount++;
-			}
-		}
-		
-	}
-	
+	@Deprecated
+	@SuppressWarnings("unused")
 	private boolean removePartitionsWithIsolatedNodes() {
 		boolean changes = false;
 		for (Node node : builder.getNodes()) {
