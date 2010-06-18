@@ -1,25 +1,62 @@
 from fixture import *
+from config import *
 
+import fetcher
 import files
+import os
+
+datadir = ".\\..\\..\\data\\"
 
 if __name__ == '__main__':
+    files = fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n100\\.00[\\d]\\.in') + fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00[\\d]\\.in')   
+    print 'Processing: ', files
+   
     newrun([
                 {
-                    'solver.kind': 'PcpCutAndBranch',
-                    'solver.mipEmphasis': '0' 
+                    'strategy.partition': 'PaintAtLeastOne',
                 },
                 {
-                    'solver.kind': 'PcpBranchAndCut',
-                    'solver.mipEmphasis': '0' 
+                    'strategy.partition': 'PaintExactlyOne',
                 },
                 {
-                    'solver.kind': 'PcpBranchAndCut',
-                    'solver.mipEmphasis': '2' 
+                    'strategy.adjacency': 'AdjacentsLeqColor',
+                },
+                {
+                    'strategy.adjacency': 'AdjacentsLeqOne',
+                },
+                {
+                    'strategy.adjacency': 'AdjacentsNeighbourhood',
+                },
+                {
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                },
+                {
+                    'strategy.symmetry': 'None',
+                },
+                {
+                    'strategy.symmetry': 'UseLowerLabelFirst',
+                },
+                {
+                    'strategy.symmetry': 'MinimumNodeLabel',
+                },
+                {
+                    'strategy.colorBound': 'None',
+                },
+                {
+                    'strategy.colorBound': 'UpperNodesSum',
+                },
+                {
+                    'strategy.colorBound': 'UpperNodesSumLowerSum',
+                },
+                {
+                    'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                },
+                {
+                    'strategy.objective': 'Linear',
                 },
             ], 
             
-                files = files.benchdens80_single_001 + files.benchnodes_single_001,
-                
-                dirs = [ '.\\..\\data\\' ],
+                files = files,
+                dirs = [ datadir ],
             )
     
