@@ -17,6 +17,7 @@ import pcp.interfaces.IFactory;
 import pcp.model.parsing.DimacsParser;
 import pcp.solver.CplexBranchAndBoundSolver;
 import pcp.solver.CplexBranchAndCutSolver;
+import pcp.solver.CplexCuttingPlanesSolver;
 import pcp.solver.CplexDynamicSearchSolver;
 import pcp.solver.PcpBranchAndCutSolver;
 import pcp.solver.PcpCutAndBranchSolver;
@@ -95,6 +96,8 @@ public class Factory implements IFactory {
 					return new CplexBranchAndCutSolver();
 				case CplexDynamicSearch:
 					return new CplexDynamicSearchSolver();
+				case CplexCuttingPlanes:
+					return new CplexCuttingPlanesSolver();
 				case PcpCuttingPlanes:
 					return new PcpCuttingPlanesSolver();
 				default:
