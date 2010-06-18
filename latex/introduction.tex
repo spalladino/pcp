@@ -1,0 +1,103 @@
+\section{Introduction}
+\label{sec:introduction}
+
+In this section we will define the problem and compare it to the standard coloring problem, analyzing the motivations for this variant and previous work dedicated towards its resolution.
+
+\subsection{Graph coloring problem}
+
+Needless to say, graphs are widely used for modelling different scenarios in multiple areas of expertise, as well as for modelling and solving problems on those scenarios by translating them into well-known graphs problems. 
+
+One of those problems is the graph coloring problem, which consists in assigning a color to each of the nodes of a graph, with the constraint that two adjacent nodes may not have the same color. The objective is to generate a coloring using the minimum possible number of colors.
+
+One of the most famous real life problems which led to the generalization of the graph coloring problem was the \textit{4 colors problem}. In 1852, the question of whether any planar map could be coloured using only four colors in such a way that no two neighouring regions had the same color was posed. This led the community towards the coloring problem on a planar graph, which was eventually generalized into coloring a generic graph.
+
+Graph coloring is widely used in multiple applications, such as schedule assignment to solve time incompatibilities, assignment of radio frequencies to prevent interference between neighboring radios, or even assigning variables to registers during the flow of a program.
+
+The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns each node $v \in V$ to a natural number which represents a color. A \textit{k-coloring} is an assignment which uses $k$ different colors.
+
+This problem has been proved to be \textit{NP-Complete}, and has been widely studied in the literature, being tackled both by heuristic approaches and exact methods for its resolution.
+
+In this work we study a generalization of this problem, which is the \textit{partitioned coloring problem} or \PCP.
+
+\subsection{Partitioned graph coloring problem}
+
+A \textit{partitioned graph} is defined as a tuple $G = <V,E,P>$ of $n$ vertices, $m$ edges and $q$ partitions respectively. The set $P$ contains $P_1, \ldots ,P_q$ sets of nodes which constitute a partition of $V$. Therefore, for every node $v \in V$, there is exactly one $P_k \in P$ such that $v \in P_k$, and every $P_i$ is nonempty.
+
+The partitioned coloring problem is defined as an assignment of colors to the nodes of the graph $G$, with the restriction that no two adjacent nodes may have the same color, but requiring only one node per partition to be colored. Once again, the goal is to minimize the number of colors required.
+
+\subsubsection*{Complexity}
+
+It is easy to see that when $|P_i| = 1\ \forall P_i \in P$, this is, there is a single node per partition, the partitioned coloring problem is equivalent to the standard graph coloring problem previously mentioned. In terms of complexity classes, PCP belongs to the same class as the standard coloring problem.
+
+\begin{theorem}
+The decision version of PCP is NP-Complete
+\end{theorem}
+
+\begin{proof}
+We will prove NP-Completeness by proving both belonging to NP and NP-Hard classes.
+
+\begin{itemize}
+\item{\textit{NP:} Given an input partitiones graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
+\item{\textit{NP-Hard:} Any instance of standard graph $k-coloring$ can be converted to an instance of PCP by partitioning the initial graph $G$ in such a way that every partition contains a single node. The solution to the original $k-coloring$ problem is the same as the solution to the constructed PCP. Since coloring is NP-Hard, this implies that PCP is NP-Hard as well.}
+\end{itemize}
+
+\end{proof}
+
+\begin{algorithm}
+\caption{Polynomial algorithm for checking validity of a partition coloring}
+\label{alg:pcpvalidity}
+\begin{algorithmic}
+
+\FORALL{partition $p$ in $P$}
+	\FORALL{node $v$ in $P$}
+		\IF {$v$ has a color $j$ assigned}
+			\STATE mark $p$ as colored
+			\FORALL {neighbour $u$ to $v$}
+				\IF{$u$ has the same color assigned as $v$}
+					\RETURN false
+				\ENDIF	
+			\ENDFOR
+		\ENDIF
+	\ENDFOR
+	\IF {no node $v$ in $P$ was colored}	
+		\RETURN false
+	\ENDIF	
+\ENDFOR
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Motivation}
+
+This problem was first proposed by Li and Sinha \cite{li-sinha} as part of a two-phase resolution for the offline variant of the min-RWA in WDM optical networks.
+
+A Wavelength Division Multiplexed (WDM) optical network consists in a network in which links are optical fibers capable of transmitting a specified number of different wavelengths. The Routing and Wavelength Assignment (RWA) problem consists in, given a desired set of connections between pairs of nodes, establish routes between those nodes using the network's links.
+
+Every route is composed by a set of consecutive lightpath. A lightpath is defined as a point to point connection between two adjacent nodes in the network using a certain wavelength. Although there are networks in which the nodes are capable of transforming wavelengths within the same route, we will assume that every route uses the same wavelength across all of its lightpaths.
+
+In the offline version of the RWA problem, all connections are known beforehand. The counterpart of this version is the dynamic RWA in which connections must be satisfied as they are requested in an online fashion. In this work we will take only the former into consideration.
+
+The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria by which evaluate the quality of a set of routes, such as the number of lightpaths used for each route. Adding weights to links may generate even more criteria. Again, in this work we will be focusing only in the min-RWA.
+
+\subsubsection*{Two-phase resolution}
+
+There are multiple methods, both heuristic and exact, for dealing with the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{li-sinha}, use a two-phase approach: a routing phase and an assignment phase.
+
+In the routing phase, a set of potential routes is generated for every pair of nodes to be connected, mostly using shortest-path criteria.
+
+The assignment phase then requires to pick a route from the set of candidates for every connection. The route chosen is assigned a wavelength, in such a way that no pair of routes that share a physical link have the same wavelength. This phase can be solved by an instance of PCP.
+
+A partitioned graph $G$ can be constructed in the following way:
+\begin{itemize}
+\item{Every potential route generated in the routing phase is represented by a node $v \in V$.}
+\item{Nodes belong to the same partition if the routes they represent satisfy the same connection request.}
+\item{An edge between two nodes $u,v$ is created if the routes share any physical link.}
+\end{itemize}
+
+Each wavelength is represented as a color. The problem then consists in coloring a single node within each partition, this is, assigning a wavelength to a single route from the set of candidates for each connection request. The fact that two nodes may not be colored if they are adjacent guarantees  that no wavelength conflicts may occur between two different lightpaths in the same link.
+
+In this work we will focus on finding an exact solution for the partitioned coloring problem.
+
+\subsection{Previous work}
+
+TODO: List previous work for CP in ILP and all PCP

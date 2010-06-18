@@ -1,0 +1,33 @@
+\documentclass[12pt]{article}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+
+\newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
+\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+
+\newcommand{\PCP}{\textsc{pcp}}
+
+\newtheorem{theorem}{Theorem}
+
+\includeonly{introduction}
+
+\begin{document}
+
+\include{introduction}
+
+\include{models}
+
+\include{algorithm}
+
+\include{results}
+
+\end{document}
+
