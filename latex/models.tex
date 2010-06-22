@@ -1,0 +1,24 @@
+\section{Model}
+
+In this section we will present the BIP formulation for the PCP, as a generalization of the CP model used by M\'endez-D\'iaz and Zabala in \cite{mendez2008cutting}.
+
+\subsection{Formulation}
+
+Let $G = <V,E,P>$ a partitioned graph, being $V$ the set of nodes numbered from $1$ to $n$, $E$ the set of $m$ edges, and $P$ the set of partitions numbered from $1$ to $q$; and let $C$ be the set of color labels numbered from $1$ to $n$.
+
+The standard coloring problem formulation, SCP, uses the following $(n + 1) \times n$ binary variables, where $i \in V$ and $j \in C$:
+\begin{itemize}
+\item $x_ij$ equals $1$ if and only if the node $i$ is colored with label $j$
+\item $w_j$ equals $1$ if there is a node in the graph which uses color $j$
+\end{itemize}
+
+The goal is therefore to minimize the total number of colors used, this is, the number of $w_j$ variables set to $1$.
+
+\begin{align}
+\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \label{eqn:obj} \\
+\text{\textsc{subject to}} \quad & \sum_{j \in C} x_{ij} = 1 \quad \forall i \in V \label{eqn:colorvertex} \\
+& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \\
+& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C
+\end{align}
+
+
