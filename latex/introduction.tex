@@ -44,7 +44,7 @@ We will prove NP-Completeness by proving both belonging to NP and NP-Hard classe
 \end{proof}
 
 \begin{algorithm}
-\caption{Polynomial algorithm for checking validity of a partition coloring}
+\caption{Polynomial time algorithm for checking validity of a partition coloring}
 \label{alg:pcpvalidity}
 \begin{algorithmic}
 
@@ -69,19 +69,21 @@ We will prove NP-Completeness by proving both belonging to NP and NP-Hard classe
 
 \subsection{Motivation}
 
-This problem was first proposed by Li and Sinha \cite{li-sinha} as part of a two-phase resolution for the offline variant of the min-RWA in WDM optical networks.
+This problem was first proposed by Li and Sinha \cite{Li00thepartition} as part of a two-phase resolution for the offline variant of the min-RWA in WDM optical networks.
 
 A Wavelength Division Multiplexed (WDM) optical network consists in a network in which links are optical fibers capable of transmitting a specified number of different wavelengths. The Routing and Wavelength Assignment (RWA) problem consists in, given a desired set of connections between pairs of nodes, establish routes between those nodes using the network's links.
 
-Every route is composed by a set of consecutive lightpath. A lightpath is defined as a point to point connection between two adjacent nodes in the network using a certain wavelength. Although there are networks in which the nodes are capable of transforming wavelengths within the same route, we will assume that every route uses the same wavelength across all of its lightpaths.
+Every route is composed by a set of consecutive lightpath. A lightpath is defined as a point to point connection between two adjacent nodes in the network using a certain wavelength. Although there are networks in which the nodes are capable of transforming wavelengths within the same route, we will assume that every route uses the same wavelength across all of its lightpaths; this restriction is known as the \textit{wavelength continuity constraint}.
 
-In the offline version of the RWA problem, all connections are known beforehand. The counterpart of this version is the dynamic RWA in which connections must be satisfied as they are requested in an online fashion. In this work we will take only the former into consideration.
+The second restriction to be satisfied is the \textit{wavelength clash constraint} which requires that different lightpaths sharing a physical link must have differente wavelengths. Toghether with the previous constraint, it is implied that two different routes that share at least one physical link must use different wavelengths.
 
-The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria by which evaluate the quality of a set of routes, such as the number of lightpaths used for each route. Adding weights to links may generate even more criteria. Again, in this work we will be focusing only in the min-RWA.
+In the offline or static version of the RWA problem, all connections are known beforehand. The counterpart of this version is the \textit{dynamic} RWA in which connections must be satisfied as they are requested in an online fashion. In this work we will take only the former into consideration.
+
+The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria that can be used to evaluate the quality of a set of routes, such as the number of lightpaths used for each route or generating certain traffic patterns. Again, in this work, we will be focusing only in the min-RWA version.
 
 \subsubsection*{Two-phase resolution}
 
-There are multiple methods, both heuristic and exact, for dealing with the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{li-sinha}, use a two-phase approach: a routing phase and an assignment phase.
+There are multiple methods, both heuristic and exact, for dealing with the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{Li00thepartition}, use a two-phase approach: a routing phase and an assignment phase.
 
 In the routing phase, a set of potential routes is generated for every pair of nodes to be connected, mostly using shortest-path criteria.
 
@@ -100,4 +102,40 @@ In this work we will focus on finding an exact solution for the partitioned colo
 
 \subsection{Previous work}
 
-TODO: List previous work for CP in ILP and all PCP
+\subsubsection*{Coloring}
+
+The graph coloring problem has been studied extensively in literature, attempting to find both exact and approximate solutions.
+
+Simplest heuristic approaches consist in greedy algorithms, using different criteria such as \textit{largest-first} \cite{welsh1967upper}, \textit{smallest-last} \cite{matula1972graph} or \textit{degree of saturation} \cite{brelaz1979new}. While the first two rely on a static ordering based on the degree of each node, the last one uses a dynamic ordering based on the number of different colors are found in the neighbourhood of every vertex.
+
+These criteria may also be used in implicit enumeration techniques, which enumerate the possible colorings in an order determined by the chosen criteria. Using a good criteria is vital for finding good solutions as early as possible, therefore pruning a great number of solutions. The implicit solution tree may be traversed in a BFS, DFS or best bound fashion. All these algorithms eventually find the optimal solution for the problem.
+
+The DSATUR enumeration algorithm proposed in \cite{brelaz1979new} has proven to be one of the most efficient implicit enumeration methods for the coloring problem, having several improvements such as \cite{sewell1996improved}.
+
+More complex heuristic algorithms, using different metaheuristics, have also been used for the coloring problem.
+
+There is also extensive work using integer linear programming formulations for the coloring problem by using different models:
+\begin{itemize}
+\item{In \cite{mehrotra1996column} a column generation approach is used based on an independent set formulation of the problem, in which a binary variable $x_S$ defines whether the independent set $S$ is given a color label or not.}
+\item{An ILP model for acyclic orientations with path constraints is presented in \cite{figueiredo2005acyclic} and then applied to solve the vertex coloring problem.}
+\item{The representatives model presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric} uses $x_{uv}$ variables which determine whether vertex $v$ \textit{represents} color $u$; having exactly one node represent each color class allows easy symmetry breaking.}
+\item{M\'endez-D\'iaz and Zabala \cite{mendez2006branch,mendez2008cutting} developed both branch-and-cut and cutting planes algorithms for a standard formulation of the problem, using $x_{ij}$ variables to specify whether node $i$ used color $j$, and $w_j$ variables as witnesses to whether color $j$ was in use. Several symmetry breaking constraints were added to the model to ensure a fast resolution of the model.}
+\end{itemize}
+
+Our goal will be to generalize this last ILP formulation to solve the partitioned coloring problem.
+
+\subsubsection*{min-RWA}
+
+Initial techniques to solve the min-RWA problem as a two-stage problem, such as \cite{hyytia14wavelength}, pick a single route for every connection using shortest-path algorithms and then use different heuristics to solve a standard coloring problem in the assignment stage. In \cite{manohar2002routing} the shortest-path routing solution is replaced by a maximum edge disjoint path solution in order to reduce conflicts between routes.
+
+Other approaches to the problem tackle the routing and wavelength assignment as a single problem, without decomposing it in two separate phases. In \cite{skorin2007routing}, for example, bin packing algorithms are used to handle the problem, whereas \cite{noronha2007random} embeds this heuristic into a genetic evolutionary framework.
+
+An exact approach using an integer programming formulation with column generation is used in \cite{lee2002optimization}, which solves with both the routing and the wavelength assignment problems in the same model.
+
+\subsubsection*{PCP}
+
+Two-stage approaches for min-RWA were improved in \cite{Li00thepartition} by introducing the Partitioned Coloring Problem, which allowed multiple routes to be picked for each connection in the initial phase. In that work, two groups of heuristics were developed: one-step and two-step. The former consists in picking the easiest node to color in every partition, and then picking the hardest one from that set using different criteria (largest-first, smallest-last, color-degree); the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
+
+In \cite{noronha2006routing} the one-step color-degree constructive heuristic is used in a tabu search approach, TS-PCP. Routes are generated in an initial stage using a $k$-EDR constructive procedure, based on the maximum edge disjoint path heuristic by \cite{kleinberg1996approximation}, and the resulting partitioned coloring problem is solved with TS-PCP.
+
+Due to the complexity of the problem, most of the work on PCP is composed by heuristic approaches. However, in \cite{frota2010branch}, a branch and cut algorithm is devised, using an integer linear programming model based on the asymmetric representatives formulation for the standard coloring problem, presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric}.
