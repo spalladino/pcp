@@ -1,6 +1,9 @@
 import processor
 import metrics
 
+from latexprocessor import LatexProcessor
+from latexsqlprocessor import LatexSqlProcessor
+
 def simpletable(p):    
     p.simpletable(["graph.nodes", "preprocess.time","solution.time", "solution.chi"], ["path.enabled", 
                     "clique.enabled",
@@ -11,17 +14,18 @@ def simpletable(p):
                     "primal.enabled"], None, {'run.folder': '.\\..\\data\\rand075\\'})
     
 def latextable(p):    
-        p.latextable(
-                ids=['run.filename'],
-                datas=["solution.time", "solution.nnodes", "solution.gap"], 
-                series=["solver.kind", "branch.selection"],
+        p.process(
+                ids=[metrics.FileName()],
+                datas=['solution.time', 'cuts.niters', 'solution.gap'], 
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
                 datafilter= None,
-                runfilter= None#(lambda x: x['run.filename'].startswith("benchnodes")) 
+                runfilter= None,
+                aggr= processor.avg
                     )
 
 
 if __name__ == '__main__':
-    p = processor.Processor('20100604200934')
+    p = LatexProcessor('20100617215301')
     #p.summary()
     latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")

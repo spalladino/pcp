@@ -5,6 +5,8 @@ import metrics
 import itertools
 import data
 
+from itertools import imap, groupby
+from operator import itemgetter
 #from matplotlib import pyplot
 
 class Processor(object):
@@ -45,52 +47,6 @@ class Processor(object):
             
             print
 
-    def latextable(self, ids=[], datas=[], series=[], runfilter=None, datafilter=None):
-        fs = [metrics.metric(data) for data in datas]
-        runkey = lambda run: map(lambda m: metrics.evalmetric(m, run), series)
-        
-        runsets = self.makerunsets(ids, runfilter, datafilter)
-        runseries = self.makerunsets(series, runfilter, datafilter)
-        
-        print 'Data:'
-        print '\\begin{itemize}'
-        for d in datas:
-            print '\item %s' % d
-        print '\\end{itemize}'
-        
-        print 'Series:'
-        print '\\begin{itemize}'
-        count= 0
-        for i,(key,runset) in enumerate(runseries):
-            print '\item S%s: %s' % (i+1, ', '.join(['%s: %s' % (s,k) for s,k in zip(series,key)]))
-            count += 1
-        print '\\end{itemize}'
-        
-        print '\\begin{tabular}{|%s|}' % ('c' * len(ids) + (('|' + ('c' * (len(datas)))) * count))
-        print '\hline'
-        print '\\multicolumn{%s}{|c|}{Id} & ' % len(ids) + ' & '.join(['\\multicolumn{%s}{|c|}{S%s}' % (len(datas), i+1) for i in range(count)])
-        print '\\\\'
-        print '\hline'
-        
-        for key, runset in runsets:
-            print ' & '.join([str(k).replace('\\', '') for k in key] \
-                 + self.flatten([[str(f(run)).rjust(4) for f in fs] for run in sorted(runset, key=runkey)])) \
-                 + '\n\\\\'  
-        
-        print '\hline \n \\end{tabular}'
-
-    def simpletable(self, datas, series=[], runfilter=None, datafilter=None):
-        fs = [metrics.metric(data) for data in datas]
-        
-        runsets = self.makerunsets(series, runfilter, datafilter)
-        
-        print ', '.join(datas)
-        for key, runset in runsets:
-            print ', '.join(['%s: %s' % (s,k) for s,k in zip(series,key)])
-            for run in runset:
-                print ', '.join([str(f(run)).rjust(6) for f in fs])                
-
-
     def graph(self, datax, datay, fname=None, series=[]):
         fx, fy = metrics.metric(datax), metrics.metric(datay)
 
@@ -108,9 +64,42 @@ class Processor(object):
         if fname: pyplot.savefig(os.path.join(config.fullrunsdir, self.runid, fname))
         else: pyplot.show()
 
-    def flatten(self, xss):
-        l = []
-        for xs in xss: 
-            for x in xs: 
-                l.append(x)
-        return l
+def unique_justseen_sorted(iterable, key=None):
+    return unique_justseen(sorted(runset, key=key), key=key)
+
+def groupby_sorted(iterable, key=None):
+    return groupby_store(sorted(iterable, key=key), key)
+
+def groupby_store(data, keyfunc=None):
+    groups = []
+    uniquekeys = []
+    data = sorted(data, key=keyfunc)
+    for k, g in groupby(data, keyfunc):
+        groups.append(list(g))
+        uniquekeys.append(k)
+    return zip(uniquekeys,groups)
+
+def unique_justseen(iterable, key=None):
+    "List unique elements, preserving order. Remember only the element just seen."
+    return imap(next, imap(itemgetter(1), groupby(iterable, key)))
+
+def flatten(xss):
+    l = []
+    for xs in xss: 
+        for x in xs: 
+            l.append(x)
+    return l
+
+def concat(list):
+    if len(list) > 0: return str(list)
+    else: return str(list[0])
+    
+def avg(list):
+    if len(list) == 0: return 0.0
+    return float(sum(map(tryfloat,list), 0.0)) / float(len(list))
+
+def tryfloat(s):
+    try: return float(s)
+    except: return 0.0
+    
+    

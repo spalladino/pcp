@@ -1,12 +1,11 @@
 \documentclass[landscape, 12pt]{report}
-%\usepackage[spanish]{babel}
+\usepackage[a0paper,landscape]{geometry}
 \usepackage[ansinew]{inputenc}
 \usepackage{amsmath}
 \usepackage{enumerate}
 \usepackage{exscale}
 \usepackage{indentfirst}
 \usepackage{latexsym}
-\usepackage[landscape]{geometry}
 
 \newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
 \newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
@@ -22,128 +21,184 @@
 
 \begin{document}
 
-\tiny
-
-\subsection{20100604210148}
 
 Data:
 \begin{itemize}
-\item solution.nnodes
-\item solution.gap
+\item solution.chi
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 0
-\item S2: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 2
-\item S3: solver.kind: PcpCutAndBranch, solver.mipEmphasis: 0
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S2: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S3: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S4: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S5: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: None, strategy.objective: Equal
+\item S6: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S7: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Linear
+\item S8: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S10: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
 \end{itemize}
-\begin{tabular}{|c|cc|cc|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
+\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{S1} & \multicolumn{1}{|c|}{S2} & \multicolumn{1}{|c|}{S3} & \multicolumn{1}{|c|}{S4} & \multicolumn{1}{|c|}{S5} & \multicolumn{1}{|c|}{S6} & \multicolumn{1}{|c|}{S7} & \multicolumn{1}{|c|}{S8} & \multicolumn{1}{|c|}{S9} & \multicolumn{1}{|c|}{S10} & \multicolumn{1}{|c|}{S11}
 \\
 \hline
-benchdens80e02n80.001.in & 485 &    - & 2536 &    -
+benchdense02n100.000.in &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
 \\
-benchdens80e04n80.001.in & 1362 & 0.301947228377 & 31209 & 0.485548406412
+benchdense02n100.001.in &    4 &    4 &    - &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
 \\
-benchdens80e06n80.001.in & 377 & 0.410984781622 & 7329 & 0.502022741375
+benchdense02n100.002.in &    4 &    4 &    - &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
 \\
-benchdens80e08n80.001.in & 262 & 0.508957204461 & 8893 & 0.514416469421
+benchdense02n100.003.in &    4 &    4 &    - &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
 \\
-benchnodesn60.001.in & 3039 &    - & 121779 & 0.222872940653
+benchdense02n100.004.in &    4 &    4 &    - &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
 \\
-benchnodesn70.001.in & 1856 & 0.297793682273 & 54437 & 0.387227029617
+benchdense04n100.000.in &    6 &    6 &    - &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6
 \\
-benchnodesn80.001.in & 1077 & 0.318000385564 & 25909 & 0.404964415486
+benchdense04n100.001.in &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7
 \\
-benchnodesn90.001.in & 244 & 0.451176654698 & 5817 & 0.511503070576
+benchdense04n100.002.in &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7
 \\
-benchnodesn100.001.in & 8131 & 0.56344134243 & 15008 & 0.58925966018
+benchdense04n100.003.in &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7
+\\
+benchdense04n100.004.in &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7
+\\
+benchdense06n100.000.in &   10 &   10 &    - &   10 &   10 &   10 &   10 &   10 &   10 &   10 &   10
+\\
+benchdense06n100.001.in &   10 &   10 &    - &   10 &   10 &   10 &   10 &   10 &   10 &   10 &   10
+\\
+benchdense06n100.002.in &   10 &   10 &    - &   10 &   10 &   10 &   10 &   10 &   10 &   10 &   10
+\\
+benchdense06n100.003.in &   10 &   10 &    - &   10 &   10 &   10 &   10 &   10 &   10 &   10 &   10
+\\
+benchdense06n100.004.in &   10 &   10 &    - &   10 &   10 &   10 &   10 &   10 &   10 &   10 &   10
+\\
+benchdense08n100.000.in &   14 &   14 &    - &   14 &   14 &   14 &   14 &   14 &   14 &   14 &   14
+\\
+benchdense08n100.001.in &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15
+\\
+benchdense08n100.002.in &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15
+\\
+benchdense08n100.003.in &   15 &   15 &    - &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15
+\\
+benchdense08n100.004.in &   15 &   15 &    - &   15 &   15 &   15 &   15 &   15 &   15 &   15 &   15
+\\
+holmen100d01.000.in &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
+\\
+holmen100d01.001.in &    4 &    4 &    - &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
+\\
+holmen100d01.002.in &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
+\\
+holmen100d01.003.in &    3 &    3 &    3 &    3 &    3 &    3 &    3 &    3 &    3 &    3 &    3
+\\
+holmen100d01.004.in &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4 &    4
+\\
+holmen100d02.000.in &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5
+\\
+holmen100d02.001.in &    5 &    5 &    - &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5
+\\
+holmen100d02.002.in &    5 &    5 &    - &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5
+\\
+holmen100d02.003.in &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5
+\\
+holmen100d02.004.in &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5 &    5
+\\
+holmen100d03.000.in &    6 &    6 &    - &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6
+\\
+holmen100d03.001.in &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6
+\\
+holmen100d03.002.in &    6 &    6 &    - &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6
+\\
+holmen100d03.003.in &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6
+\\
+holmen100d03.004.in &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6 &    6
+\\
+holmen100d04.000.in &    7 &    7 &    - &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7
+\\
+holmen100d04.001.in &    8 &    8 &    - &    8 &    8 &    8 &    8 &    8 &    8 &    8 &    8
+\\
+holmen100d04.002.in &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7 &    7
+\\
+holmen100d04.003.in &    8 &    8 &    - &    8 &    8 &    8 &    8 &    8 &    8 &    8 &    8
+\\
+holmen100d04.004.in &    8 &    8 &    - &    8 &    8 &    8 &    8 &    8 &    8 &    8 &    8
 \\
 \hline 
  \end{tabular}
-
 
 \clearpage
 
-\subsection{20100604223000}
-
-Data:
-\begin{itemize}
-\item solution.nnodes
-\item solution.gap
-\end{itemize}
-Series:
-\begin{itemize}
-\item S1: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 0
-\item S2: solver.kind: PcpBranchAndCut, solver.mipEmphasis: 2
-\item S3: solver.kind: PcpCutAndBranch, solver.mipEmphasis: 0
-\end{itemize}
-\begin{tabular}{|c|cc|cc|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S3}
+\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{S1} & \multicolumn{1}{|c|}{S2} & \multicolumn{1}{|c|}{S3} & \multicolumn{1}{|c|}{S4} & \multicolumn{1}{|c|}{S5} & \multicolumn{1}{|c|}{S6} & \multicolumn{1}{|c|}{S7} & \multicolumn{1}{|c|}{S8} & \multicolumn{1}{|c|}{S9} & \multicolumn{1}{|c|}{S10} & \multicolumn{1}{|c|}{S11}
 \\
 \hline
-benchdens80e02n80.002.in & 1167 &    - & 12317 &    -
+benchdense02n100 & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4] & [4, '-', '-', '-', '-'] & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4] & [4, 4, 4, 4, 4]
 \\
-benchdens80e04n80.002.in & 17272 & 0.445496831858 & 39055 & 0.482950655908
+benchdense04n100 & [6, 7, 7, 7, 7] & [6, 7, 7, 7, 7] & ['-', 7, 7, 7, 7] & [6, 7, 7, 7, 7] & [6, 7, 7, 7, 7] & [6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7] & [6, 7, 7, 7, 7] & [6, 7, 7, 7, 7] & [6, 7, 7, 7, 7] & [6, 7, 7, 7, 7] & [6, 7, 7, 7, 7]
 \\
-benchdens80e06n80.002.in & 2921 & 0.419823836951 & 18781 & 0.470394263089
+benchdense06n100 & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10] & ['-', '-', '-', '-', '-'] & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10] & [10, 10, 10, 10, 10]
 \\
-benchdens80e08n80.002.in & 225 & 0.467167729855 & 5135 & 0.514247061617
+benchdense08n100 & [14, 15, 15, 15, 15] & [14, 15, 15, 15, 15] & ['-', 15, 15, '-', '-'] & [14, 15, 15, 15, 15] & [14, 15, 15, 15, 15] & [14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] & [14, 15, 15, 15, 15] & [14, 15, 15, 15, 15] & [14, 15, 15, 15, 15] & [14, 15, 15, 15, 15] & [14, 15, 15, 15, 15]
 \\
-benchnodesn60.002.in & 22680 & 0.202937291743 &115760 & 0.282258731101
+holmen100d01 & [4, 4, 4, 3, 4] & [4, 4, 4, 3, 4] & [4, '-', 4, 3, 4] & [4, 4, 4, 3, 4] & [4, 4, 4, 3, 4] & [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4] & [4, 4, 4, 3, 4] & [4, 4, 4, 3, 4] & [4, 4, 4, 3, 4] & [4, 4, 4, 3, 4] & [4, 4, 4, 3, 4]
 \\
-benchnodesn70.002.in & 14346 & 0.333333333328 &57224 & 0.388299437451
+holmen100d02 & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5] & [5, '-', '-', 5, 5] & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5] & [5, 5, 5, 5, 5]
 \\
-benchnodesn80.002.in & 4340 & 0.34810009732 & 34916 & 0.403644739982
+holmen100d03 & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6] & ['-', 6, '-', 6, 6] & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6] & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6] & [6, 6, 6, 6, 6]
 \\
-benchnodesn90.002.in & 419 & 0.443104958315 & 12318 & 0.483983259551
-\\
-benchnodesn100.002.in & 337 & 0.548332856856 & 13267 & 0.583680371494
+holmen100d04 & [7, 8, 7, 8, 8] & [7, 8, 7, 8, 8] & ['-', '-', 7, '-', '-'] & [7, 8, 7, 8, 8] & [7, 8, 7, 8, 8] & [7, 7, 7, 7, 8, 8, 8, 8, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8] & [7, 8, 7, 8, 8] & [7, 8, 7, 8, 8] & [7, 8, 7, 8, 8] & [7, 8, 7, 8, 8] & [7, 8, 7, 8, 8]
 \\
 \hline 
  \end{tabular}
 
 \clearpage
 
-\subsection{20100603215808}
- 
 Data:
 \begin{itemize}
-\item solution.nnodes
+\item solution.time
+\item cuts.niters
 \item solution.gap
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: CplexBranchAndCutSearch, solver.mipEmphasis: -
-\item S2: solver.kind: PcpBranchAndCut, solver.mipEmphasis: -
-\item S3: solver.kind: PcpCutAndBranch, solver.mipEmphasis: -
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S2: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S3: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S4: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S5: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: None, strategy.objective: Equal
+\item S6: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S7: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Linear
+\item S8: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S10: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
 \end{itemize}
-\begin{tabular}{|c|cc|cc|}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8} & \multicolumn{3}{|c|}{S9} & \multicolumn{3}{|c|}{S10} & \multicolumn{3}{|c|}{S11}
 \\
 \hline
-benchdens80e02n80.in & 1478 &    - & 603 &    -
+benchdense02n100 & 6.4094 & 23.6 & 0.4746 & 8.7374 & 32.6 & 0.4758 & 3.0344 &  9.8 & 0.091 & 14.2158 & 68.6 & 0.4622 & 11.95 & 57.0 & 0.4698 & 18.29475 & 59.6 & 0.4648 & 8.6784 & 54.0 & 0.3716 & 13.4874 & 60.4 & 0.4614 & 9.8784 & 45.0 & 0.4706 & 9.7906 & 26.8 & 0.4582 & 7.5658 & 56.2 & 0.4824
 \\
-benchdens80e04n80.in & 7685 & 0.437688976044 & 22659 & 0.451814287488
+benchdense04n100 & 29.4002 & 50.4 & 0.4762 & 28.7658 & 48.8 & 0.4738 & 24.0374 & 80.0 & 0.3896 & 25.9406 & 99.4 & 0.4744 & 24.9062 & 94.2 & 0.4778 & 22.8541 & 78.8 & 0.4786 & 29.228 & 100.0 & 0.302 & 25.5094 & 92.0 & 0.475 & 27.103 & 100.0 & 0.4754 & 21.25 & 52.0 & 0.4748 & 26.2438 & 97.8 & 0.4744
 \\
-benchdens80e06n80.in & 646 & 0.457916728925 & 4626 & 0.463207167199
+benchdense06n100 & 146.572 & 96.4 & 0.436 & 130.547 & 93.6 & 0.4352 & 0.369 &  0.0 &  0.0 & 80.644 & 100.0 & 0.4408 & 73.419 & 100.0 & 0.4404 & 76.4439 & 100.0 & 0.4404 & 72.866 & 100.0 & 0.2894 & 77.4002 & 100.0 & 0.4408 & 76.4126 & 100.0 & 0.4398 & 116.0658 & 91.6 & 0.4352 & 75.975 & 100.0 & 0.4406
 \\
-benchdens80e08n80.in & 89 & 0.441950278559 & 303 & 0.444329997737
+benchdense08n100 & 203.6002 & 43.8 & 0.3716 & 192.9686 & 41.4 & 0.3982 & 60.6564 & 40.0 & 0.1324 & 153.3282 & 100.0 & 0.3248 & 140.45 & 100.0 & 0.3232 & 144.8422 & 100.0 & 0.323 & 159.1186 & 100.0 & 0.177 & 144.4002 & 100.0 & 0.3242 & 141.7812 & 100.0 & 0.3234 & 285.625 & 100.0 & 0.3126 & 144.7722 & 100.0 & 0.3208
 \\
-benchnodesn60.in & 2775 &    - & 11148 &    -
+holmen100d01 & 0.3096 &  3.0 & 0.2094 & 0.3408 &  3.6 & 0.2094 & 0.075 &  0.4 & 0.15 & 0.4656 & 10.4 & 0.2076 & 0.0938 &  0.8 &  0.2 & 0.0953 &  0.8 &  0.2 & 0.0906 &  0.8 & 0.08 &  0.1 &  0.8 &  0.2 & 0.097 &  0.8 &  0.2 & 0.1658 &  0.8 &  0.2 & 0.0906 &  0.8 &  0.2
 \\
-benchnodesn70.in & 12866 & 0.344949822446 & 30461 & 0.376554565771
+holmen100d02 & 0.897 &  7.2 & 0.1294 & 0.8562 &  6.6 & 0.131 & 0.1344 &  0.6 & 0.12 & 1.0126 & 16.8 & 0.212 & 0.1406 &  0.8 &  0.2 & 0.15785 &  1.0 &  0.2 & 0.1718 &  1.0 & 0.067 & 0.15 &  0.8 &  0.2 & 0.153 &  0.8 &  0.2 & 0.3126 &  0.6 & 0.12 & 0.178 &  1.0 &  0.2
 \\
-benchnodesn80.in & 887 & 0.339296833725 & 7941 & 0.477927489605
+holmen100d03 & 1.0064 &  4.6 & 0.0376 & 0.9282 &  3.6 & 0.0386 & 0.1188 &  0.2 & 0.0334 & 0.728 & 10.0 & 0.0726 & 0.8406 & 11.6 & 0.0708 & 0.7195 &  9.2 & 0.0728 & 0.756 & 10.6 & 0.0254 & 0.697 &  9.2 & 0.0704 & 0.8972 & 12.6 & 0.07 & 0.5596 &  7.2 & 0.0346 & 0.7438 &  9.8 & 0.0366
 \\
-benchnodesn90.in & 606 & 0.473518285143 & 3543 & 0.485390929189
+holmen100d04 & 0.4814 &  0.0 & 0.1036 & 0.4814 &  0.0 & 0.1036 & 0.125 &  0.0 &  0.0 & 0.547 &  7.6 & 0.0808 & 0.447 &  6.2 & 0.0786 & 0.50005 &  7.6 & 0.0786 & 0.4094 &  6.2 & 0.0184 & 0.494 &  7.4 & 0.0786 & 0.6814 & 11.0 & 0.0786 & 0.3906 &  5.0 & 0.05 & 0.4128 &  5.8 & 0.0786
 \\
 \hline 
  \end{tabular}
-
 
 
 \end{document}
