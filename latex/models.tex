@@ -1,3 +1,5 @@
+%!TEX root = pcp.tex
+
 \section{Model}
 
 In this section we will present the BIP formulation for the PCP, as a generalization of the CP model used by M\'endez-D\'iaz and Zabala in \cite{mendez2008cutting}.
@@ -6,7 +8,7 @@ In this section we will present the BIP formulation for the PCP, as a generaliza
 
 Let $G = <V,E,P>$ a partitioned graph, being $V$ the set of nodes numbered from $1$ to $n$, $E$ the set of $m$ edges, and $P$ the set of partitions numbered from $1$ to $q$; and let $C$ be the set of color labels numbered from $1$ to $n$.
 
-The standard coloring problem formulation, SCP, uses the following $(n + 1) \times n$ binary variables, where $i \in V$ and $j \in C$:
+The standard coloring problem formulation, SCP, uses the following $(n + 1) \times c$ binary variables, where $i \in V$ and $j \in C$:
 \begin{itemize}
 \item $x_ij$ equals $1$ if and only if the node $i$ is colored with label $j$
 \item $w_j$ equals $1$ if there is a node in the graph which uses color $j$
@@ -15,10 +17,109 @@ The standard coloring problem formulation, SCP, uses the following $(n + 1) \tim
 The goal is therefore to minimize the total number of colors used, this is, the number of $w_j$ variables set to $1$.
 
 \begin{align}
-\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \label{eqn:obj} \\
-\text{\textsc{subject to}} \quad & \sum_{j \in C} x_{ij} = 1 \quad \forall i \in V \label{eqn:colorvertex} \\
-& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \\
-& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C
+\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \nonumber \\
+\text{\textsc{subject to}} \quad & \sum_{j \in C} x_{ij} = 1 \quad \forall i \in V \label{eqn:vertexsum} \\
+& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \sumheight \label{eqn:adjscolor}\\
+& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
 \end{align}
 
+Equation \ref{eqn:adjscolor} implies that two adjacent vertices may not use the same color, and also ensures that any variable $x_{ij}$ set to $1$ will cause color $j$ witness $w_j$ to be set as well.
 
+Restriction \ref{eqn:vertexsum} requires that every node is assigned exactly one color. Since the difference between standard coloring and partition coloring relies solely in the fact that only a node per partition must be colored, instead of every node, adjusting this last restriction provides a simple model for PCP.
+
+\begin{align}
+\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \nonumber \\
+\text{\textsc{subject to}} \quad & \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad \forall P_k \in P \label{eqn:partsum} \\
+& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \sumheight \label{eqn:adjscolorp}\\
+& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
+\end{align}
+
+This model has $(n + 1) \times c$ variables as well, $q$ restrictions \ref{eqn:partsum} and $m \times c$ \ref{eqn:adjscolorp} restrictions, plus all integrality constraints.
+
+\subsection{Variants}
+
+There are several variants for the previously presented model for PCP, all of which return valid partition colorings. We will explore different alternatives to the basic formulation.
+
+\subsubsection*{Color a single node per partition}
+
+Restriction \ref{eqn:partsum} can be relaxed by requiring that at least one node is colored per partition, instead of requiring that exactly one node is colored. Even more, we may also accept coloring in which a single node is assigned more than one color. 
+
+\begin{equation}
+\label{eqn:partsumgeq}
+\sum_{i \in P_k} \sum_{j \in C} x_{ij} \geq 1
+\end{equation}
+
+The minimization of the total number of colors used will ensure that no additional colors will be used, and a valid coloring can be extracted from the resulting solution by picking any color from any node on every partition, as no color conflicts will occur, since restriction \ref{eqn:adjscolorp} is still in place.
+
+\subsubsection*{Color conflicts}
+
+An alternative to restriction \ref{eqn:adjscolorp} for both preventing color conflicts and set $w_j$ variables upon usage of color $j$ is to decouple this two concepts into different restrictions. Therefore, instead of restricting $x_{ij} + x_{kj} \leq w_j$ for every edge, we may require:
+
+\begin{align}
+x_{ij} + x_{kj} \leq 1 \quad &\forall (i,k) \in E, \; \forall j \in C \label{eqn:adjscolorpone}\\
+x_{ij} \leq w_{j} \quad &\forall i \in V, \; \forall j \in C \label{eqn:nodelessthanwj}
+\end{align}
+
+This alternative, however, yields an even larger number of restrictions than the original \ref{eqn:adjscolorp}. Looking forward to reducing the number of equations in the model, we propose the following alternative:
+
+\begin{equation}
+\label{eqn:adjsperpart}
+\sum_{i \in P_k \cap N(i_0)} x_{ij} + x_{i_0j} \leq w_j \quad \forall j \in C, \; \forall P_k \in P, \; \forall i_0 \in V 
+\end{equation}
+
+This equation establishes that either node $i_0$ may use color $j$, or only one node among its neighbors on every partition may use it. This formulation considerably reduces the amount of restrictions when partition sizes are large; otherwise, it does not report any benefits over the original version.
+
+Yet another variant that further reduces the number of restrictions makes heavy use of the maximum number of nodes that may use the same color within a neighbourhood:
+
+\begin{equation}
+\label{eqn:adjsneighb}
+\sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j \quad \forall j \in C, \; \forall i_0 \in V 
+\end{equation}
+
+A simple value for $r$ could be the number of different partitions in the neighbourhood of node $i_0$. In that case, the restriction implies that either node $i_0$ uses color $j$, or at most $r$ nodes in its neighbourhood may use simultaneously.
+
+However, we may tighten the restriction by replacing $r$ by the number of components in an extended clique coverage of the node's neighbourhood, as this value provides an upper bound for the maximum number of colors that can be used for a set of nodes. We use a simple greedy heuristic to generate a standard clique cover of the partition graph induced by the neighbourhood of $i_0$ to obtain the value $r$. \TODO Check this is ok.
+
+This restriction generates a far lower number of equations in dense graphs, as it requires just $c$ restrictions per node instead of per edge.
+
+\subsection{Breaking symmetry}
+
+One of the main issues with the model presented, same as with the standard coloring model, is that it allows for multiple symmetric solutions. Since it does not matter which color labels are used in the coloring, any $\chi$ colors can be used, resulting in $P(c,\chi)$\footnote{Number of different ordered subsets of size $\chi$ from a set of size $c$, equals to $c! / (c - \chi)!$} different solutions for every equivalent coloring.
+
+Therefore, the introduction of additional constraints with the purpose of removing symmetric solutions is expected to produce an improvement in the overall algorithm.
+
+The easiest restriction to generate is to prevent color $j+1$ from being used unless color $j$ is used in the coloring. This ensures that only colors with labels $1 \ldots \chi$ are used, leaving always $\chi+1 \ldots c$ unused, and reducing the number of symmetric solutions to $\chi!$.
+
+\begin{equation}
+\label{eqn:lowerlabel}
+w_j \geq w_{j+1} \quad \forall 1 \leq j < c 
+\end{equation}
+
+A stricter requirement is that there cannot be more vertices colored with label $j+1$ than with label $j$. This removes all symmetric solutions in the case that every color class has a different vertex count, which is a vast improvement from the previous restriction.
+
+\begin{equation}
+\label{eqn:symnodecount}
+\sum_{i \in V} x_{ij} \geq \sum_{i \in V} x_{ij+1} \quad \forall 1 \leq j < c 
+\end{equation}
+
+Furthermore, to completely remove all symmetric solutions, an additional restriction may be added to ensure that among all symmetric solutions only the one that assigns the lowest possible color label to the node with the lowest index is used.
+
+\begin{equation}
+\label{eqn:minlabel}
+x_{ij} \leq sum_{k = j-1}^{i-1} x_{kj-1} \quad \forall 1 < i \leq n, \; \forall 1 < j < i
+\end{equation}
+
+\subsection{Strengthening the model}
+
+There are other inequalities, besides the already mentioned symmetry breaking ones, that are not necessary for the formulation of the model, yet strengthen the model relaxation helping in the branch and cut process. These inequalities are entirely optional in the formulation, their inclusion depends strictly in the tradeoff between building a more complex model that takes more time to solve and strengthening its relaxation so the algorithm's overall performance is increased.
+
+A simple restriction, which is implied by the objective function, consists in preventing a $w_j$ variable from being set unless there is a node painted with color $j$:
+
+\begin{equation}
+\label{eqn:wjleqsumcolor}
+w_j \leq \sum_{i \in V} x_{ij} \quad \forall j \in C
+\end{equation}
+
+Creates fractional break constraints $sum_j w_j \geq sum_j x_ij$ 
+
+Creates fractional break constraints $sum_j w_j \geq sum_i \in p sum_j j x_ij$

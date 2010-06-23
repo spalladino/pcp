@@ -396,7 +396,7 @@ public class ModelBuilder {
 	 */
 	protected void constrainAdjacencyNeighbourhood() throws IloException {
 		for (Node n : graph.getNodes()) {
-			
+			// TODO: Should we better try a clique cover of just the nodes involved instead of the G'?
 			final int r = useCliqueCover 
 				? new CliqueCover(new InducedGraph(graph, graph.getNeighbours(n)).getGPrime()).count()
 				: GraphUtils.groupByPartition(graph.getNeighbours(n)).size();

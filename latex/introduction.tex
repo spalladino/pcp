@@ -1,3 +1,5 @@
+%!TEX root = pcp.tex
+
 \section{Introduction}
 \label{sec:introduction}
 
@@ -139,3 +141,21 @@ Two-stage approaches for min-RWA were improved in \cite{Li00thepartition} by int
 In \cite{noronha2006routing} the one-step color-degree constructive heuristic is used in a tabu search approach, TS-PCP. Routes are generated in an initial stage using a $k$-EDR constructive procedure, based on the maximum edge disjoint path heuristic by \cite{kleinberg1996approximation}, and the resulting partitioned coloring problem is solved with TS-PCP.
 
 Due to the complexity of the problem, most of the work on PCP is composed by heuristic approaches. However, in \cite{frota2010branch}, a branch and cut algorithm is devised, using an integer linear programming model based on the asymmetric representatives formulation for the standard coloring problem, presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric}.
+
+\subsection{Definitions}
+
+In this section we will define all concepts and conventions to be used throughout this work: 
+
+\begin{itemize}
+	\defitem{Colors}{The set of valid color labels $C = \{1, \ldots, c\}$, where $c$ may be any upper bound to the chromatic number of the graph, such as the $n$.}
+	\defitem{Graph}{Defined as tuple $<V,E>$ where $V$ is the set containing the $n$ nodes and $E$ contains the $m$ undirected edges.}
+	\defitem{Partitioned Graph}{Defined as tuple $<V,E,P>$, being $V$ and $E$ the same sets as above, and $P$ the set of $P_1, \ldots, P_q$ partitions of $V$.}
+	\defitem{Neighbourhood}{$N(v)$ is the set of nodes in $V$ adjacent to node $v$.}
+	\defitem{Partition Neighbourhood}{$N_P(v)$ is the set of partitions that contain at least one node adjacent to $v$.}
+	\defitem{Degree}{$\delta(v)$ is the cardinal of the neighbourhood of $v$.}
+	\defitem{Partition Degree}{$\delta_P(v)$ is the cardinal of the partition neighbourhood of $v$.}
+	\defitem{Color Degree}{Number of different colors used in $N(v)$ for a node $v \in V$, also degree of saturation.}
+	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $u,v$, either $u$ is adjacent to $v$ or $u$ and $v$ are contained in the same partition; it is equivalent to consider a standard clique in a graph in which each node is adjacent to every node in its partition.}
+	\defitem{Component Independent Set}{Subset of $V$ such that for every pair of nodes $u,v$, $u$ is not adjacent to $v$ and they belong to different partitions; similarly to the extended clique, it is equivalent to consider a standard independent set in a graph in which each node is adjacent to every node in its partition.}
+	\defitem{Partitions Graph}{The partitions graph $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v' \in V'$ corresponds to a partition $P_v \in P$, and two nodes $u',v' \in V'$ are adjacent if and only if every node in $P_u$ in $G$ is adjacent to every node in $P_v$.}
+\end{itemize}

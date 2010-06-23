@@ -14,12 +14,23 @@
 \newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
 
 \newcommand{\PCP}{\textsc{pcp}}
+\newcommand{\TODO}{\textsc{TODO}}
+
+\newcommand{\defitem}[2]{\item{\textbf{#1:} #2}}
+
+\newcommand{\sumheight}{\ensuremath{\phantom{\sum_{j \in C}}}}
 
 \newtheorem{theorem}{Theorem}
 
-\includeonly{models,references}
+\numberwithin{equation}{section}
+
+%\includeonly{models}
 
 \begin{document}
+
+\tableofcontents
+
+\clearpage
 
 \include{introduction}
 
