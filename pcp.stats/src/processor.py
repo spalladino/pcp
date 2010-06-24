@@ -95,8 +95,11 @@ def concat(list):
     else: return str(list[0])
     
 def avg(list):
-    if len(list) == 0: return 0.0
-    return float(sum(map(tryfloat,list), 0.0)) / float(len(list))
+    try:
+        if len(list) == 0: return 0.0
+        return float(sum(map(float,list), 0.0)) / float(len(list))
+    except:
+        "ERR"
 
 def tryfloat(s):
     try: return float(s)
