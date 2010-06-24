@@ -1,0 +1,94 @@
+\section{Polyhedron}
+
+In this section we will analyze the PCP polyhedron and derive valid inequalities for it, that will be later used in the branch-and-cut algorithm in cutting planes. We will focus our analysis on the most basic formulation presented in section \ref{subsec:model:formulation}, except for some inequalities which will exploit symmetry breaking restrictions from \ref{subsec:model:symmetry}. 
+
+\begin{align}
+\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \nonumber \\
+\text{\textsc{subject to}} \quad & \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad \forall P_k \in P \nonumber \\
+& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \sumheight \nonumber \\
+& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
+\end{align}
+
+Note that any valid inequalities found for the basic formulation are still valid for any other strengthened models, so the derived inequalities can still be used as cuts regardless of the model implemented.
+
+\subsection{Extended clique inequalities}
+
+A classical inequality for the standard coloring problem is the clique inequality, which establishes that within a clique $K$, at most one node can be colored with a label $j$.
+
+\begin{equation}
+\nonumber
+\sum_{i \in K} x_{ij} \leq w_{j} \quad \forall j \in C
+\end{equation}
+
+Combining this inequality with the fact that in PCP at most one node per partition can be colored with a label $j$, we define the \textit{extended clique inequalities} for PCP. Recall from \ref{subsec:intro:definitions} that an extended clique is a maximal subset $K_P$ of $V$ such that every pair of nodes is either adjacent or belong to the same partition.
+
+\begin{equation}
+\label{ineq:extendedclique}
+\sum_{i \in K_P} x_{ij} \leq w_{j} \quad \forall j \in C
+\end{equation}
+
+Similar inequalities were developed by \cite{frota2010branch}, based on the asymmetric representatives formulation, but are generated only on component cliques\footnote{Clique in which every node belongs to a different partition.}. Extended cliques have the added benefit of covering a larger set of nodes, and maintain their effectiveness regardless of the partition size used.
+
+\subsection{Component independent set inequalities}
+
+As was defined in \ref{subsec:intro:definitions}, a component independent set $I_P$ is a standard independent set with the added restriction that every node must belong to a different partition. This allows to import the independent set inequality directly from the standard coloring problem.
+
+\begin{equation}
+\label{ineq:ciset}
+\sum _{i \in I_P} x_{ij} \leq \alpha(I_P) w_{j} \quad \forall j \in C
+\end{equation}
+
+
+
+%\begin{frame}
+%\frametitle{Block color inequalities}
+%
+%Given the symmetry breaking constraints, a partition being coloured with any label greater or equal than $j_0$ is subject to $w_{j_0}$ being set.
+%
+%This allows us to define the block color constraints as:
+%\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}
+%
+%All these constraints are simply handled by brute force.
+%
+%\end{frame} 
+%
+%\begin{frame}
+%\frametitle{Component independent set inequalities}
+%
+%Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v,w \in I$, $v$ and $w$ are not adjacent and belong to different partitions.
+%
+%This allows us to reuse the independent set inequality from the standard coloring problem.
+%\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
+%
+%\pause
+%
+%Which can be strengthened considering symmetry breaking.
+%\lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
+%{\forall j_0 \leq n - \alpha(G)}
+%
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Hole and path inequalities}
+%
+%Component independent set inequalities can be specialized as component hole and component path inequalities, using $\lfloor |H|/2 \rfloor$ and $\lceil |P|/2 \rceil$ respectively as their cardinals.
+%
+%We use a greedy heuristic constructing a path from each node for each colour. The criteria for choosing a node is based on its corresponding $x_{ij}$ value and whether it has been previously visited or not.
+%
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{G' independent set inequalities}
+%
+%Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V' = P$ and $E'$ such that $p_1,p_2 \in V'$ are adjacent iif every node in partition $p_1$ in $G$ is adjacent to every node in partition $p_2$ in $G$. More formally:
+%\[
+%E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
+%\]
+%
+%\pause
+%
+%This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
+%
+%\lpineq{\sum_{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
+%
+%\end{frame}
