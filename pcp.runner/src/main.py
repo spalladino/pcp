@@ -25,7 +25,7 @@ if __name__ == '__main__':
                     'strategy.adjacency': 'AdjacentsLeqOne',
                 },
                 {
-                    'strategy.adjacency': 'AdjacentsNeighbourhood',
+                    'model.adjacentsNeighbourhood.useCliqueCover': 'false'
                 },
                 {
                     'strategy.adjacency': 'AdjacentsPartitionLeqColor',
@@ -34,13 +34,10 @@ if __name__ == '__main__':
                     'strategy.symmetry': 'None',
                 },
                 {
-                    'strategy.symmetry': 'UseLowerLabelFirst',
+                    'strategy.symmetry': 'VerticesNumber',
                 },
                 {
                     'strategy.symmetry': 'MinimumNodeLabel',
-                },
-                {
-                    'strategy.colorBound': 'None',
                 },
                 {
                     'strategy.colorBound': 'UpperNodesSum',
@@ -53,6 +50,12 @@ if __name__ == '__main__':
                 },
                 {
                     'strategy.objective': 'Linear',
+                },
+                {
+                    'strategy.objective': 'LinearReverse',
+                },
+                {
+                    'strategy.objective': 'Geometric',
                 },
             ], 
             

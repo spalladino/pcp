@@ -108,7 +108,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		// Set lower bound as objective value of current relaxation
 		double lower = objectiveStrategy.equals(Objective.Equal) 
 			? super.getObjValue()
-			: DoubleUtils.sum(super.getValues(model.getWs()));
+			: super.getValue(model.getColorSum());
 		if (!Double.isNaN(lower) && lower != 0.0) {
 			coloring.setLowerBound(DoubleUtils.ceil(lower));
 		}

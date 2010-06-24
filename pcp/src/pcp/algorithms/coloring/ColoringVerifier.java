@@ -7,10 +7,14 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
+import pcp.model.BuilderStrategy;
+import pcp.model.strategy.Symmetry;
 
 
 public class ColoringVerifier {
 
+	final static BuilderStrategy strategy = BuilderStrategy.fromSettings();
+	
 	IPartitionedGraph graph;
 	
 	public ColoringVerifier(IPartitionedGraph graph) {
@@ -48,9 +52,32 @@ public class ColoringVerifier {
 			throw new AlgorithmException("Number of different colors is " + (max + 1) + " and returned chi is " + chi);
 		}
 		
+		if (strategy.getBreakSymmetry().equals(Symmetry.VerticesNumber) ||
+			strategy.getBreakSymmetry().equals(Symmetry.MinimumNodeLabelVerticesNumber)) {			
+			
+			int j0, j1;
+			j0 = getNodeCount(coloring, 0);
+			
+			for (int j = 1; j < coloring.getChi(); j++) {
+				j1 = getNodeCount(coloring, j);
+				if (j1 > j0) {
+					throw new AlgorithmException("Color " + j + " uses " + j1 + " nodes while color " + (j-1) + " uses " + j0);
+				} j0 = j1;
+			}
+		}
+		
 		return this;
 	}
 	
+	private int getNodeCount(ColoringAlgorithm coloring, int color) throws AlgorithmException {
+		int count = 0;
+		for (int i = 0; i < graph.N(); i++) {
+			if (coloring.getIntColor(i) == color) {
+				count++;
+			}
+		} return count;
+	}
+
 	public void print(ColoringAlgorithm coloring) throws AlgorithmException {
 		print(coloring, System.out);
 	}
