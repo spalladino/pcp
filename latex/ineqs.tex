@@ -35,10 +35,33 @@ As was defined in \ref{subsec:intro:definitions}, a component independent set $I
 
 \begin{equation}
 \label{ineq:ciset}
-\sum _{i \in I_P} x_{ij} \leq \alpha(I_P) w_{j} \quad \forall j \in C
+\sum _{i \in W} x_{ij} \leq \alpha_P(W) w_{j} \quad \forall j \in C
+\end{equation}
+
+The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, \alpha_P(W), is not easy to calculate, being as difficult as the coloring problem trying to solve, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to obtain.
+
+\subsubsection*{Component hole inequalities}
+
+A simple instantiation of the previous inequality is picking a subset $W$ that induces a component hole $H$\footnote{A component hole is a chordless cycle in which every node belongs to a different partition.} in the partitioned graph. As in a standard hole, it holds that $\alpha(H) = \floor{n / 2}$, where $n$ is the length of the hole, therefore the only effort required lies in finding a hole and not in calculating its $\alpha$.
+
+Therefore, given a component hole $H$ in the partitioned graph, the component hole inequality is:
+
+\begin{equation}
+\label{ineq:chole}
+\sum _{i \in H} x_{ij} \leq \floor{n / 2} w_{j} \quad \forall j \in C
 \end{equation}
 
 
+\subsubsection*{Component path inequalities}
+
+Similar to the previous case, the component independent set can be instantiated with a component path $P$, which is a standard path where every node belongs to a different partition. In this case, it holds that for every component path of length $n$, $\alpha(P) = \ceil{n / 2}$, and the inequality results:
+
+\begin{equation}
+\label{ineq:cpath}
+\sum _{i \in P} x_{ij} \leq \ceil{n / 2} w_{j} \quad \forall j \in C
+\end{equation}
+
+\TODO Add iset strengthened versions using symmetric breaking
 
 %\begin{frame}
 %\frametitle{Block color inequalities}
