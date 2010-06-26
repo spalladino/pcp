@@ -89,9 +89,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		bounder.end();
 		hasrun = true;
 		
-		if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.VerticesNumber) ||
-			BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.MinimumNodeLabelVerticesNumber)) {
-			sortSolution(new ColorCountCompleteComparator(this, true, true));
+		if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.VerticesNumber)) {
+			sortSolution(new ColorCountCompleteComparator(this, true, false));
 		} else if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {
 			sortSolution(new ColorMinLabelComparator(this, false));
 		}

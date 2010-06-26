@@ -52,9 +52,7 @@ public class ColoringVerifier {
 			throw new AlgorithmException("Number of different colors is " + (max + 1) + " and returned chi is " + chi);
 		}
 		
-		if (strategy.getBreakSymmetry().equals(Symmetry.VerticesNumber) ||
-			strategy.getBreakSymmetry().equals(Symmetry.MinimumNodeLabelVerticesNumber)) {			
-			
+		if (strategy.getBreakSymmetry().equals(Symmetry.VerticesNumber)) {			
 			int j0, j1;
 			j0 = getNodeCount(coloring, 0);
 			
@@ -63,6 +61,18 @@ public class ColoringVerifier {
 				if (j1 > j0) {
 					throw new AlgorithmException("Color " + j + " uses " + j1 + " nodes while color " + (j-1) + " uses " + j0);
 				} j0 = j1;
+			}
+		} else if (strategy.getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {			
+			int maxcolor = -1;
+			for (int i = 0; i < graph.N(); i++) {
+				Integer j = coloring.getColor(i);
+				if (j != null) {
+					if (j == maxcolor + 1) {
+						maxcolor++;
+					} else if (j > maxcolor + 1) {
+						throw new AlgorithmException("Skipped color " + (maxcolor +1) + " in minimum label assignment");
+					}
+				}
 			}
 		}
 		

@@ -116,11 +116,6 @@ public class ModelBuilder {
 		
 		// Breaking symmetry constraints
 		switch(strategy.getBreakSymmetry()) {
-			case MinimumNodeLabelVerticesNumber:
-				constrainSymmetryMinimumNodeLabel();
-				constrainSymmetryVerticesNumber();
-				constrainUseLowerLabelFirst();
-				break;	
 			case MinimumNodeLabel:
 				constrainSymmetryMinimumNodeLabel();
 				constrainUseLowerLabelFirst();
@@ -276,7 +271,8 @@ public class ModelBuilder {
 	 * @throws IloException 
 	 */
 	protected void constrainSymmetryMinimumNodeLabel() throws IloException {
-		// TODO: Check if are valid for PCP
+		// TODO: Strengthen with partition sum on right hand side
+		// Index i should be relative to partition indexes instead of nodes
 		for (int i = 1; i < graph.N(); i++) {
 			if (i >= colors-1) {
 				break;
@@ -288,11 +284,10 @@ public class ModelBuilder {
 				for (int k = j-1; k < colors; k++) {
 					expr.addTerm(xs[k][j-1], -1);
 				}
-				
 				modeler.addLe(expr, 0, name);
 			}
 		}
-		
+		// TODO Add xij = 0 forall j geq i+1
 	}
 
 	/**
