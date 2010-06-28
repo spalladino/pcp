@@ -38,7 +38,7 @@ As was defined in \ref{subsec:intro:definitions}, a component independent set $I
 \sum _{i \in W} x_{ij} \leq \alpha_P(W) w_{j} \quad \forall j \in C
 \end{equation}
 
-The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, \alpha_P(W), is not easy to calculate, being as difficult as the coloring problem trying to solve, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to obtain.
+The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, $\alpha_P(W)$, is not easy to calculate, being as difficult as the coloring problem trying to solve, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to obtain.
 
 \subsubsection*{Component hole inequalities}
 
@@ -60,6 +60,17 @@ Similar to the previous case, the component independent set can be instantiated 
 \label{ineq:cpath}
 \sum _{i \in P} x_{ij} \leq \ceil{n / 2} w_{j} \quad \forall j \in C
 \end{equation}
+
+\subsubsection*{Strengthening by breaking symmetry}
+
+Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. Should these restrictions be included in the model, then \ref{ineq:ciset} can be rewritten for an induced component independent set $W$ as the following:
+
+\begin{equation}
+\label{ineq:cisetbs}
+\sum_{i \in W} x_{ij_0} + \sum ^n _{j = j_r + 1} \sum _{i \in V} x_{ij} \leq \alpha_P(W) w_{j_0} + w_{j_r + 1} \quad \forall j_0 \leq j_r, \; j_r = n - \alpha_P(W)
+\end{equation}
+
+The presence of a component independent set of size $\alpha_P(W)$ implies that at least $\alpha_P(W)$ partitions in the graph can use the same color $j_0$. As such...
 
 \TODO Add iset strengthened versions using symmetric breaking
 \TODO Add remaining ineqs in impl of x zero in min label
