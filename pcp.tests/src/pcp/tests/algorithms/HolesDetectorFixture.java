@@ -187,7 +187,7 @@ public class HolesDetectorFixture {
 		detector = new HolesDetector(builder.getGraph());
 		detector.holes(handler, filter);
 		
-		Assert.assertEquals(expected, count.getData());
+		Assert.assertEquals(expected, count.getData().intValue());
 	}
 	
 	private void assertCount(int expected) throws AlgorithmException {
