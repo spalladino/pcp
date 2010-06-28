@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage[noend]{algorithmic}
+\usepackage{algorithm}
+
+\begin{document}
+
+Esta es la desigualdad de coloreo para romper simetria en el modelo $CP2$ del paper del algoritmo de cutting planes, que elimina soluciones simetricas quedandose solamente con las soluciones que asignan la menor label posible a la particion de menor indice:
+
+\[
+x_{ij} \leq \sum_{l = j-1}^{k-1} x_{lj-1} \quad \forall i \in V - \{1\}, \; \forall 1 < j < i
+\]
+
+Estas restricciones van acompañadas de otras que prohiben el uso de un color sobre un nodo de mayor indice:
+
+\[
+x_{ij} = 0 \quad \forall j > i + 1
+\]
+
+La generalice para $PCP$ para que use el indice de la particion en lugar del indice del nodo, siendo $p(i)$ la particion de $i$:
+
+\[
+x_{ij} = 0 \quad \forall j > p(i) + 1
+\]
+\[
+x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad \forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j < k 
+\]
+
+La duda viene en la ultima parte de todo: $\forall 1 < j < k$. No es valido tambien para $\forall 1 < j \leq k$? 
+
+Hice el desarrollo de algunos casos tomando como que cada particion tiene dos nodos, es decir, $P = \{ P_1, \ldots, P_q \}$ y $P_k = \{ x_{2k-1}, x_{2k} \}$, y me quedo:
+
+\begin{align*}
+k = 2, i = 3, j = 2 \qquad & x_{3,2} \leq \sum_{u \in P_1} x_{u,1} = x_{1,1} + x_{2,1} \\
+k = 2, i = 4, j = 2 \qquad & x_{4,2} \leq \sum_{u \in P_1} x_{u,1} = x_{1,1} + x_{2,1} \\
+&\\
+k = 3, i = 5, j = 2 \qquad & x_{5,2} \leq \sum_{u \in P_1} x_{u,1} + \sum_{u \in P_2} x_{u,1} = x_{1,1} + x_{2,1} + x_{3,1} + x_{4,1} \\
+k = 3, i = 6, j = 2 \qquad & x_{6,2} \leq \sum_{u \in P_1} x_{u,1} + \sum_{u \in P_2} x_{u,1} = x_{1,1} + x_{2,1} + x_{3,1} + x_{4,1} \\
+&\\
+k = 3, i = 5, j = 3 \qquad & x_{5,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x_{4,2} \\
+k = 3, i = 6, j = 3 \qquad & x_{6,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x_{4,2} \\
+\vdots \qquad & \vdots
+\end{align*}
+
+Las dos primeras se refieren a que no se puede usar el color 2 en la particion 2 salvo que se haya usado el 1ero en la 1era, lo cual es trivial.
+
+Las dos siguientes, al uso del color 2 en la particion 3, que requiere que se haya usado el 1 en alguna de las anteriores.
+
+Las dos ultimas, que quedarian excluidas si se restringe $j < k$ en lugar de $j \leq k$, indican que el color 3 no puede usarse para la particion 3 salvo que se haya usado el 2 en la segunda. Hay algun motivo que hace que esta restriccion sea trivial y no haga falta incluirla? Puede que tenga algo que ver con que ya se esta restringiendo el uso del color 2, y prohibido el de color 4 y mayores? Aunque sea trivial, no seria conveniente incluirlas?
+
+\end{document}
