@@ -1,4 +1,4 @@
-\section{Polyhedron}
+\section{Valid inequalities}
 
 In this section we will analyze the PCP polyhedron and derive valid inequalities for it, that will be later used in the branch-and-cut algorithm in cutting planes. We will focus our analysis on the most basic formulation presented in section \ref{subsec:model:formulation}, except for some inequalities which will exploit symmetry breaking restrictions from \ref{subsec:model:symmetry}. 
 
@@ -67,63 +67,53 @@ Component independent set inequalities can be strengthened by taking into consid
 
 \begin{equation}
 \label{ineq:cisetbs}
-\sum_{i \in W} x_{ij_0} + \sum ^n _{j = j_r + 1} \sum _{i \in V} x_{ij} \leq \alpha_P(W) w_{j_0} + w_{j_r + 1} \quad \forall j_0 \leq j_r, \; j_r = n - \alpha_P(W)
+\sum_{i \in W} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq \alpha_P(W) w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha_P(W)
 \end{equation}
 
-The presence of a component independent set of size $\alpha_P(W)$ implies that at least $\alpha_P(W)$ partitions in the graph can use the same color $j_0$. As such...
+Any $(j_t + r)$-coloring, for $r \geq 1$, there are $\alpha_P(W) - r$ partitions repeating color, therefore, the maximum number of partitions that can be colored using labels $j_0, j_t + 1, \ldots, j_t + r$ is $\alpha_P(W) + 1$. 
 
-\TODO Add iset strengthened versions using symmetric breaking
-\TODO Add remaining ineqs in impl of x zero in min label
+\TODO{Complete this explanation} 
 
-%\begin{frame}
-%\frametitle{Block color inequalities}
-%
-%Given the symmetry breaking constraints, a partition being coloured with any label greater or equal than $j_0$ is subject to $w_{j_0}$ being set.
-%
-%This allows us to define the block color constraints as:
-%\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}
-%
-%All these constraints are simply handled by brute force.
-%
-%\end{frame} 
-%
-%\begin{frame}
-%\frametitle{Component independent set inequalities}
-%
-%Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v,w \in I$, $v$ and $w$ are not adjacent and belong to different partitions.
-%
-%This allows us to reuse the independent set inequality from the standard coloring problem.
-%\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
-%
-%\pause
-%
-%Which can be strengthened considering symmetry breaking.
-%\lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
-%{\forall j_0 \leq n - \alpha(G)}
-%
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{Hole and path inequalities}
-%
-%Component independent set inequalities can be specialized as component hole and component path inequalities, using $\lfloor |H|/2 \rfloor$ and $\lceil |P|/2 \rceil$ respectively as their cardinals.
-%
-%We use a greedy heuristic constructing a path from each node for each colour. The criteria for choosing a node is based on its corresponding $x_{ij}$ value and whether it has been previously visited or not.
-%
-%\end{frame}
-%
-%\begin{frame}
-%\frametitle{G' independent set inequalities}
-%
-%Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V' = P$ and $E'$ such that $p_1,p_2 \in V'$ are adjacent iif every node in partition $p_1$ in $G$ is adjacent to every node in partition $p_2$ in $G$. More formally:
-%\[
-%E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
-%\]
-%
-%\pause
-%
-%This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
-%
-%\lpineq{\sum_{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
-%
-%\end{frame}
+Both component hole (\ref{ineq:chole}) and component path inequalities (\ref{ineq:cpath}) can be strengthened using this argument.
+
+\subsection{Partitions graph inequalities}
+
+Let $G' = <V',E'>$ be the partitions graph of $G$\footnote{The partitions graph $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v' \in V'$ corresponds to a partition $P_v \in P$, and two nodes $u',v' \in V'$ are adjacent if and only if every node in $P_u$ in $G$ is adjacent to every node in $P_v$.}. Most bounds found for coloring $G'$ can be ported to the original $G$ by extending the constraint over every node represented by each $p \in V'$.
+
+A clear example are independent set inequalities. Let $W' \subseteq V'$ a subset of nodes inducing a subgraph in $G'$, then the independent set inequality holds:
+
+\begin{equation}
+\label{ineq:gpiset}
+\sum _{i \in W'} x_{ij} \leq \alpha(W') w_{j} \quad \forall j \in C
+\end{equation}
+
+As before, in inequalities \ref{ineq:cisetbs}, this restriction can be strengthened considering symmetry breaking constraints:
+
+\begin{equation}
+\label{ineq:gpisetbs}
+\sum_{i \in W'} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V'} x_{ij} \leq \alpha(W') w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha(W')
+\end{equation}
+
+These constraints over $G'$ can be converted to constraints $G$ by replacing every node $p \in V'$ with the sum over the nodes $v \in P_p$. Let $W \subseteq P$ be the set of partitions represented by the nodes in $W' \in V'$ in $G'$, then:
+
+\begin{equation}
+\label{ineq:gpisetbsg}
+\sum_{P_k \in W} \sum_{i \in P_k} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq \alpha(W') w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha(W')
+\end{equation}
+
+Once again, since the size $\alpha$ of the maximum independent set of a graph is NP-hard to calculate, the subgraph induced by $W'$ is chosen in such a way that this number is trivial to obtain. These inequality is therefore specialized when $W'$ induces both a path and a hole in $G'$, having $\alpha(W)$ equal to $\ceil{|W| / 2}$ and $\floor{|W| / 2}$, yielding \textit{partitions graph path inequalities} and \textit{partitions graph hole inequalities}, respectively.
+
+Comparing partitions graph independent set inequalities with component independent set ones, the former are less frequent than the latter, since $G'$ tends to be less dense as partition sizes increase; however, the former are much stronger as they impose restrictions over all the nodes in the partitions covered, instead of over a single node per partition.
+
+\subsection{Block color inequalities}
+
+Block color inequalities arise from the symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. Given a partition $P_k$ and a color $j_0$, every coloring of partition $P_k$ using any color $j > j_0$, requires that color $j_0$ is already used, since \ref{eqn:lowerlabel} implies that color $j$ cannot be used unless all previous colors had ben used. 
+
+As only a single $x_{ij}$ is set in every partition, this is, only one node is painted with a single color, the following inequality holds:
+
+\begin{equation}
+\label{ineq:blockcp}
+\sum_{j \geq j_0} \sum_{i \in P_k} x_{ij} \leq w_{j_0} \quad \forall P_k \in P, j_0 \in C
+\end{equation}
+
+These $c \times q$ inequalities are extremely easy to generate and, as will be analyzed further in this work, have proven to greatly improve the cutting planes scheme.
