@@ -9,27 +9,42 @@
 \usepackage[noend]{algorithmic}
 \usepackage{algorithm}
 
+% Versioning
 \newenvironment{nuevo}{\marginpar{$<$nuevo$>$}}{\marginpar{$<$/nuevo$>$}}
 
+% LPs
 \newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
 \newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
 \newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
 
+% Acronyms
 \newcommand{\PCP}{\textsc{pcp}}
 \newcommand{\TODO}[1]{\textbf{\textsc{ToDo:} #1}}
 
+% Items
 \newcommand{\defitem}[2]{\item{\textbf{#1:} #2}}
 
+% Math
 \newcommand{\sumheight}{\ensuremath{\phantom{\sum_{j \in C}}}}
-
 \newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
 \newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
 
-\newtheorem{theorem}{Theorem}
+% Algorithmics
+\newcommand{\algorithmiccall}{\textbf{call}\ }
+\newcommand{\algorithmicprocedure}{\textbf{procedure}\ }
+\newcommand{\algorithmicendprocedure}{\algorithmicend\ \algorithmicprocedure}
+\newenvironment{ALC@proc}{\begin{ALC@g}}{\end{ALC@g}}
+\newcommand{\PROC}[1]{\algorithmicprocedure #1\ \begin{ALC@proc}}
+\newcommand{\CALL}[1]{\STATE \algorithmiccall #1}
+\ifthenelse{\boolean{ALC@noend}}
+	{\newcommand{\ENDPROC}{\end{ALC@proc}}}
+	{\newcommand{\ENDPROC}{\end{ALC@proc}\ALC@it\algorithmicendprocedure}}
 
+% Configs
+\newtheorem{theorem}{Theorem}
 \numberwithin{equation}{section}
 
-%\includeonly{ineqs}
+\includeonly{heur}
 
 \begin{document}
 
@@ -42,6 +57,8 @@
 \include{models}
 
 \include{ineqs}
+
+\include{heur}
 
 \include{algorithm}
 

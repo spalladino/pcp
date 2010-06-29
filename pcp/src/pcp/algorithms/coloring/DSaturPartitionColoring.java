@@ -250,6 +250,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		handleNode(next.index());
 
 		// Attempt using all colors from first to current max colors
+		// TODO: Use partition degree
 		for (j = 1; j <= IntUtils.min(currentColor, next.getDegree()); j++) {
 			if (canAssignColor(place, j)) {
 				if (log) log("Painting node " + (place + logNodeBase) + " with color " + (j));

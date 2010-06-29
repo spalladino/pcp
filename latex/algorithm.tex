@@ -1,0 +1,84 @@
+%!TEX root = pcp.tex
+
+\section{Branch and Cut}
+
+In this section we will present the implemented branch-and-cut algorithm, including initial heuristic, branching strategies, separation algorithms and primal heuristics.
+
+\subsection{Preprocessing}
+
+The first step in solving a \PCP instance consists in preprocessing the graph, applying all of the following rules until no more modifications are made to the graph:
+
+\begin{enumerate}
+	\item{As an initial step, every edge with both nodes within the same partition is removed. Since only one node is colored per partition, there can be no color conflicts between nodes of the same partition, and all edges connecting them can be removed, in order to greatly reduce the size of the graph and the number of adjacency restrictions generated.}
+	\item{Partitions containing isolated nodes can be completely removed from the graph, as any isolated node can be trivially colored using the lowest possible label, and coloring a single node within a partition marks the whole partition as colored, therefore allowing us to completely remove it.}
+	\item{Neighbourhood inclusion criteria is applied within a single partition in order to remove higher-order nodes. Let $u,v$ be two different nodes in a partition $P_k$, if $N(u) \subseteq N(v)$, then we can remove node $v$ from the graph. This criteria is valid as only one node per partition needs to be colored, and any valid coloring that assigns color $j_0$ to node $v$, can be modified to assign color $j_0$ to node $u$ instead, still satisfying all color constraints. Intuitively, we are removing \textit{difficult} nodes from a partition when we find an easier one to substitute it. \TODO{Include drawing}}
+	\item{A lower bound for the chromatic number of the graph is obtained by finding a maximal clique in the partitions graph $G'$. Finding a clique of size $\omega$ in $G'$ implies that at least $\omega$ different colors are needed for coloring the partitions graph, and the same lower bound clearly holds for $G$. All partitions in the clique will have their colors fixed to $1,\ldots,\omega$ in order to reduce the number of possible colorings, since each of them must be painted using a different color.}
+	\item{As in step 2, partitions that contain at least one node with degree less than the lower bound found in the previous step are removed. A node with strictly less than $\omega$ neighbours can be assigned a color among $1,\ldots,\omega$, knowing that no color conflicts will occur; and since there are already $\omega$ colors required, the chromatic number is not increased by that assignment, and therefore the node can be discarded. \TODO{Include drawing}}
+\end{enumerate}
+
+Last 3 steps are performed until no more changes are made to the graph. The resulting largest clique found is used to fix the colors of the partitions included in the clique. 
+
+Every step is processed by brute force, since their running time is polynomial in the size of the graph, except for step 4 for which we use the following algorithm.
+
+\subsubsection*{Partitions graph clique detection}
+
+To find the maximum clique in the partitions graph we use a simple backtracking algorithm. Since the running time of this algorithm can be excessive for a preprocessing step, we bound the running time of this algorithm to five seconds; however, the algorithm usually ends much sooner, as the partitions graph is not only smaller but also much less dense than the original graph. 
+
+In case the time bound is reached, the best solution found so far is returned. As the backtracking uses DFS to explore all possible solutions, a reasonably good solution is generated early in the algorithm, therefore interrupting its execution still yields a valid result.
+
+Starting with an initial node, the algorithm keeps a list of valid candidates for the clique, which is updated on each iteration by removing all nodes that are not adjacent to the current clique. Keeping both the candidates list and all adjacency lists sorted by degree allows both faster computing of the intersection between these lists and produces better initial solutions that can be used to prune other solutions later.
+
+\begin{algorithm}
+\caption{Finding a maximum clique in a simple graph $G=<V,E>$}
+\label{alg:gpclique}
+
+\begin{algorithmic}
+
+\STATE sort all nodes and adjacency lists descendingly by degree
+
+\FORALL{initial node $v$ in $V$}
+	\STATE initialize \textit{clique} with node $v$
+	\STATE initialize \textit{candidates} with $N(v)$
+	\CALL clique 
+\ENDFOR
+
+\PROC{clique}
+	\IF{\textit{candidates} is empty}
+		\STATE update \textit{best} solution if current \textit{clique} is better
+	\ELSIF{\textit{clique}.size + \textit{candidates}.size $\leq$ \textit{best}.size}
+		\STATE prune current tree
+	\ELSE
+		\STATE pop node $u$ from \textit{candidates} and add it to \textit{clique}
+		\STATE intersect \textit{candidates} with $N(u)$ and store \textit{removed} nodes
+		\CALL clique
+		\STATE remove node $u$ from \textit{clique}
+		\STATE add \textit{removed} nodes back to \textit{candidates} 
+		\CALL clique
+	\ENDIF
+\ENDPROC
+
+\end{algorithmic}
+\end{algorithm} 
+
+\subsection{Initial heuristic}
+
+A good initial heuristic solution gives an upper bound on the solution, eliminates a large number of variables and restrictions in the model, and can be used as an initial incumbent solution for the branch and cut algorithm. 
+
+In order to generate this solution, we use the modification of the \textsc{dsatur} algorithm for partitioned graphs presented in \ref{sec:heur}. Since the algorithm generates an implicit enumeration of all possible colorings, its running time is bounded to five seconds. The coloring of the partitions in the clique $K$ is fixed to labels $1, \ldots, \omega$ in order to reduce the solutions set.
+
+\subsection{Initialization}
+
+Using the initial solution as an upper bound $\hat{\chi}$ for the chromatic number, it is possible to eliminate all $x_{ij}$ and $w_j$ variables for which  $j > \hat{\chi}$, therefore greatly reducing the number of involved variables and restrictions in the model.
+
+Another optimization is to fix the colors for all partitions involved in the clique $K$ found during the preprocessing stage. Since it is not possible to determine which node within the partition is to be colored, we simply set to zero all $x_{ij}$ variables for nodes within the partitions that use a different color than the one assigned. Formally, let $K = \{ P_{K_1}, \ldots, P_{K_\omega} \}$ be the initial clique, then:
+\begin{align*}
+x_{ij} = 0 \quad &\forall i \in K[l],\ \forall 1 \leq l \leq \omega,\ \forall j \neq l \\
+w_j = 1 \quad &\forall 1 \leq j \leq \omega
+\end{align*}
+
+Also, in case the partition being fixed to a color $j_k$ has a single node in it, then variable $x_{ij_0}$, where $i$ is the single node in the partition, is fixed to $1$.
+
+A final bound based on nodes degree is imposed. A node $v$ of partition degree $\delta_P(v)$ can always be colored with a label $j_k$ such that $1 \leq j_k \leq \delta_P(v) + 1$, since it will be neighbour to at most $\delta_P(v)$ different colors, therefore any set of $\delta_P(v) + 1$ colors contains at least one valid label that does not generate color conflicts.  
+\begin{equation*}
+x_{ij} = 0 \quad \forall i \in V,\ \forall 1 \leq j \leq \delta_P(v) + 1 \\
+\end{equation*}

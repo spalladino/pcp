@@ -1,0 +1,75 @@
+%!TEX root = pcp.tex
+
+\section{Enumeration algorithms}
+\label{sec:heur}
+
+Implicit enumeration algorithms enumerate all possible colorings for the graph, restricting the solution set as much as possible and pruning non-optimal solutions using known bounds. 
+
+\subsection{Classical scheme}
+
+A classical scheme for enumeration algorithms is presented in \ref{alg:enumeration}.
+
+\begin{algorithm}
+\caption{Classical coloring implicit enumeration scheme for simple graphs $G = <V,E>$}
+\label{alg:enumeration}
+
+\begin{algorithmic}
+\CALL color(0,1)
+
+\PROC{color(painted, label)}
+	\IF{current coloring is greater than or equal best coloring}
+		\STATE prune current solutions subtree
+	\ELSIF{\textit{painted} equals to $|V|$}
+		\STATE update best coloring with current coloring
+	\ELSE
+		\STATE pick next uncolored \textit{node} to color		
+		\FOR{j = 1 to \textit{label}}
+			\IF{can paint \textit{node} with color $j$}
+				\STATE assign color $j$ to \textit{node}
+				\CALL color(painted+1, label)
+			\ENDIF
+		\ENDFOR
+		\COMMENT{try coloring \textit{node} with a new label}
+		\STATE assign color \textit{label} + 1 to \textit{node}
+		\CALL color(painted+1, label+1)
+	\ENDIF
+\ENDPROC
+
+\end{algorithmic}
+\end{algorithm}
+
+The algorithm picks a node to be colored in each recursive call, attempting to color it with one of the already used labels if possible, and also  assigning a fresh color to it, in order to explore all possible colorings for the graph, though without considering several symmetric solutions. At every iteration, the current branch is checked if it can be pruned; this can be done if the current coloring is using as many labels as the best coloring found by the algorithm, since it implies that the best solution cannot be improved using the current one.
+
+The strategy used for picking the node to be colored in each recursive call gives place to different algorithms. A very simple strategy is to use the degree of the node, coloring nodes with highest degree first, based on the assumption that difficult nodes should be handled first.
+
+Another algorithm, one of the most widely used for this problem, is \textsc{dsatur}\cite{brelaz1979new}. This algorithm always picks the node with the highest degree of saturation\footnote{Number of different colors used in $N(v)$ for a node $v \in V$.}, using different strategies for tie-breaking, such as picking the node with the largest number of uncolored neighbours\cite{sewell1996improved}, and has proved to be one of the best enumeration algorithms available for graph coloring.
+
+\subsection{Enumerating partitioned colorings}
+
+The previous scheme must be modified in order to be used for partitioned coloring, since it does not require to color every node in the graph but a single node per partition.
+
+A simple modification would be to simply re-use the previous scheme, picking a new partition instead of a new node on each recursive call, and iterate over all nodes in the partition as well as over every possible label; this modification is presented in algorithm \ref{alg:pcpenumerationwrong}. 
+
+\begin{algorithm}
+\caption{Modification of enumeration scheme for partitioned graphs $G = <V,E,P>$, picking partitions on every call}
+\label{alg:pcpenumerationwrong}
+
+\begin{algorithmic}
+		\STATE pick next uncolored \textit{partition} to color		
+		\FORALL{\textit{node} in \textit{partition}}
+			\FOR{j = 1 to \textit{label}}
+				\IF{can paint \textit{node} with color $j$}
+					\STATE assign color $j$ to \textit{node}
+					\CALL color(painted+1, label)
+				\ENDIF
+			\ENDFOR
+			\COMMENT{try coloring \textit{node} with a new label}
+			\STATE assign color \textit{label} + 1 to \textit{node}
+			\CALL color(painted+1, label+1)
+		\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+However, this modification forces to pick all the nodes within the same partition together, regardless of the criteria being used to pick nodes. For instance, if a largest-degree criteria is used, and remaining partitions (with their nodes' degrees) are $P_1 \{v_1(10),v_2(1)\}$ and $P_2 \{v_3(5)\}$, the proposed modification would pick nodes $v_1, v_2, v_3$ instead of $v_1, v_3, v_2$. This severely damages the validity of the strategy being used.
+
+Therefore, we propose another modification, presented in algorithm \ref{alg:pcpenumeration}. 

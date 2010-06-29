@@ -110,7 +110,7 @@ In order to completely remove all symmetric solutions, it is possible to enforce
 
 \begin{align}
 x_{ij} = 0 \quad &\forall j > p(i) + 1 \label{eqn:nodeszero} \\
-x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad &\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j < k \label{eqn:minlabel}
+x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad &\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j \leq k \label{eqn:minlabel}
 \end{align}
 
 Equation \ref{eqn:nodeszero} establishes that color with label $j$ may not be used for a partition with index greater than $j$; whereas equation \ref{eqn:minlabel} imposes that color $j$ cannot be used for a partition unless color $j-1$ was used in a previous partition.
@@ -128,8 +128,6 @@ k = 3, i = 5, j = 3 \qquad & x_{5,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x
 k = 3, i = 6, j = 3 \qquad & x_{6,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x_{4,2} \\
 \vdots \qquad & \vdots
 \end{align*}
-
-\TODO{} Pick $j < k$ or $j \leq k$
 
 \subsection{Strengthening the model}
 
