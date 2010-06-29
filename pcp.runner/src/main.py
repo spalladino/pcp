@@ -14,14 +14,55 @@ if __name__ == '__main__':
     Fixture().newrun(
             [
                 {
-                    'strategy.symmetry': 'MinimumNodeLabelVerticesNumber',
+                    'strategy.partition': 'PaintAtLeastOne',
                 },
-                
+                {
+                    'strategy.partition': 'PaintExactlyOne',
+                },
+                {
+                    'strategy.adjacency': 'AdjacentsLeqColor',
+                },
+                {
+                    'strategy.adjacency': 'AdjacentsLeqOne',
+                },
+                {
+                    'model.adjacentsNeighbourhood.useCliqueCover': 'false'
+                },
+                {
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                },
+                {
+                    'strategy.symmetry': 'None',
+                },
+                {
+                    'strategy.symmetry': 'VerticesNumber',
+                },
+                {
+                    'strategy.symmetry': 'MinimumNodeLabel',
+                },
+                {
+                    'strategy.colorBound': 'UpperNodesSum',
+                },
+                {
+                    'strategy.colorBound': 'UpperNodesSumLowerSum',
+                },
+                {
+                    'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                },
+                {
+                    'strategy.symmetry': 'MinimumNodeLabel',
+                    'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                },
+                {
+                    'strategy.objective': 'Linear',
+                },
+                {
+                    'strategy.objective': 'Geometric',
+                },
             ], 
             
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100623215001',
-                initial = 600
+                runid = '20100629MODELS',
             )
     

@@ -271,23 +271,34 @@ public class ModelBuilder {
 	 * @throws IloException 
 	 */
 	protected void constrainSymmetryMinimumNodeLabel() throws IloException {
-		// TODO: Strengthen with partition sum on right hand side
-		// Index i should be relative to partition indexes instead of nodes
-		for (int i = 1; i < graph.N(); i++) {
-			if (i >= colors-1) {
-				break;
-			}
-			for (int j = 1; j < i; j++) {
-				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("BSLAB[%1$d,%2$d]", i, j);
-				expr.addTerm(xs[i][j], 1);
-				for (int k = j-1; k < colors; k++) {
-					expr.addTerm(xs[k][j-1], -1);
+		for (int k = 0; k < graph.P(); k++) {
+			Partition partition = graph.getPartition(k);
+			
+			// Set xij = 0 for every color greater than partition index
+			for (int j = k+1; j < colors; j++) {
+				for (Node node : graph.getNodes(partition)) {
+					xs[node.index()][j].setUB(0.0);
 				}
-				modeler.addLe(expr, 0, name);
+			}
+			
+			// Set minimum label constraints
+			if (k == 0) continue;
+			for (int j = 1; j <= k && j < colors; j++) {
+				for (Node node : graph.getNodes(partition)) {
+					// Fixed k, i and j
+					int i = node.index();
+					IloLinearIntExpr expr = modeler.linearIntExpr();
+					String name = String.format("BSMINLBL[%1$d,%2$d]", i, j);
+					expr.addTerm(xs[i][j], 1);
+					for (int l = j-1; l < k; l++) {
+						for (Node u : graph.getNodes(graph.getPartition(l))) {
+							expr.addTerm(xs[u.index()][j-1], -1);
+						}
+					}			
+					modeler.le(expr, 0, name);
+				}
 			}
 		}
-		// TODO Add xij = 0 forall j geq i+1
 	}
 
 	/**
