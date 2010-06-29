@@ -5,6 +5,7 @@
 In this section we will present the BIP formulation for the PCP, as a generalization of the CP model used by M\'endez-D\'iaz and Zabala in \cite{mendez2008cutting}.
 
 \subsection{Formulation}
+\label{subsec:model:formulation}
 
 Let $G = <V,E,P>$ a partitioned graph, being $V$ the set of nodes numbered from $1$ to $n$, $E$ the set of $m$ edges, and $P$ the set of partitions numbered from $1$ to $q$; and let $C$ be the set of color labels numbered from $1$ to $n$.
 
@@ -78,11 +79,12 @@ Yet another variant that further reduces the number of restrictions makes heavy 
 
 A simple value for $r$ could be the number of different partitions in the neighbourhood of node $i_0$. In that case, the restriction implies that either node $i_0$ uses color $j$, or at most $r$ nodes in its neighbourhood may use simultaneously.
 
-However, we may tighten the restriction by replacing $r$ by the number of components in an extended clique coverage of the node's neighbourhood, as this value provides an upper bound for the maximum number of colors that can be used for a set of nodes. We use a simple greedy heuristic to generate a standard clique cover of the partition graph induced by the neighbourhood of $i_0$ to obtain the value $r$. \TODO Check this is ok.
+However, we may tighten the restriction by replacing $r$ by the number of components in an extended clique coverage of the node's neighbourhood, as this value provides an upper bound for the maximum number of colors that can be used for a set of nodes. We use a simple greedy heuristic to generate a standard clique cover of the partition graph induced by the neighbourhood of $i_0$ to obtain the value $r$.
 
 This restriction generates a far lower number of equations in dense graphs, as it requires just $c$ restrictions per node instead of per edge.
 
 \subsection{Breaking symmetry}
+\label{subsec:model:symmetry}
 
 One of the main issues with the model presented, same as with the standard coloring model, is that it allows for multiple symmetric solutions. Since it does not matter which color labels are used in the coloring, any $\chi$ colors can be used, resulting in $P(c,\chi)$\footnote{Number of different ordered subsets of size $\chi$ from a set of size $c$, equals to $c! / (c - \chi)!$} different solutions for every equivalent coloring.
 
@@ -102,12 +104,32 @@ A stricter requirement is that there cannot be more vertices colored with label 
 \sum_{i \in V} x_{ij} \geq \sum_{i \in V} x_{ij+1} \quad \forall 1 \leq j < c 
 \end{equation}
 
-Furthermore, to completely remove all symmetric solutions, an additional restriction may be added to ensure that among all symmetric solutions only the one that assigns the lowest possible color label to the node with the lowest index is used.
+However, this restriction allows symmetric solutions by exchanging labels between color classes with same cardinal, which is likely to occur in uniform graphs. 
 
-\begin{equation}
-\label{eqn:minlabel}
-x_{ij} \leq sum_{k = j-1}^{i-1} x_{kj-1} \quad \forall 1 < i \leq n, \; \forall 1 < j < i
-\end{equation}
+In order to completely remove all symmetric solutions, it is possible to enforce the following restriction, which implies that among all possible assignments, only the one that assigns the lowest possible color label to the partition with the lowest index is used. 
+
+\begin{align}
+x_{ij} = 0 \quad &\forall j > p(i) + 1 \label{eqn:nodeszero} \\
+x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad &\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j < k \label{eqn:minlabel}
+\end{align}
+
+Equation \ref{eqn:nodeszero} establishes that color with label $j$ may not be used for a partition with index greater than $j$; whereas equation \ref{eqn:minlabel} imposes that color $j$ cannot be used for a partition unless color $j-1$ was used in a previous partition.
+
+As an example, suppose a graph such that $P = \{ P_1, \ldots, P_q \}$ and $P_k = \{ x_{2k-1}, x_{2k} \}$, this is, every partition has two nodes. The first instantiations of restriction \ref{eqn:minlabel} would be:
+
+\begin{align*}
+k = 2, i = 3, j = 2 \qquad & x_{3,2} \leq \sum_{u \in P_1} x_{u,1} = x_{1,1} + x_{2,1} \\
+k = 2, i = 4, j = 2 \qquad & x_{4,2} \leq \sum_{u \in P_1} x_{u,1} = x_{1,1} + x_{2,1} \\
+&\\
+k = 3, i = 5, j = 2 \qquad & x_{5,2} \leq \sum_{u \in P_1} x_{u,1} + \sum_{u \in P_2} x_{u,1} = x_{1,1} + x_{2,1} + x_{3,1} + x_{4,1} \\
+k = 3, i = 6, j = 2 \qquad & x_{6,2} \leq \sum_{u \in P_1} x_{u,1} + \sum_{u \in P_2} x_{u,1} = x_{1,1} + x_{2,1} + x_{3,1} + x_{4,1} \\
+&\\
+k = 3, i = 5, j = 3 \qquad & x_{5,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x_{4,2} \\
+k = 3, i = 6, j = 3 \qquad & x_{6,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x_{4,2} \\
+\vdots \qquad & \vdots
+\end{align*}
+
+\TODO{} Pick $j < k$ or $j \leq k$
 
 \subsection{Strengthening the model}
 
@@ -120,6 +142,18 @@ A simple restriction, which is implied by the objective function, consists in pr
 w_j \leq \sum_{i \in V} x_{ij} \quad \forall j \in C
 \end{equation}
 
-Creates fractional break constraints $sum_j w_j \geq sum_j x_ij$ 
+The usage of this restriction will become clear when we present the branching strategies, in which we directly enforce bounds on the $w_j$ variables based on additional information on the coloring problem.
 
-Creates fractional break constraints $sum_j w_j \geq sum_i \in p sum_j j x_ij$
+Another equation, which improved the obtained results in \cite{mendez2006branch}, avoids the generation of fractional solutions such as $x_ij = 1/c$:
+\begin{equation}
+\label{eqn:wjgeqsumnode}
+\sum_{j \in C} w_j \geq \sum_{j \in C} j x_{ij} \quad \forall i \in V
+\end{equation}
+
+The rationale behind that restriction is that only one $x_{ij}$ may be set per node, therefore the right hand side of the inequality is the label of the color assigned to node $i$, which cannot be greater than the total of colors used.
+
+This restriction can be further strengthened by extending the sum of the $x_{ij}$ variables over partitions instead of nodes:
+\begin{equation}
+\label{eqn:wjgeqsumpart}
+\sum_{j \in C} w_j \geq \sum_{j \in C} \sum_{i \in P_k} j x_{ij} \quad \forall P_k \in P
+\end{equation}

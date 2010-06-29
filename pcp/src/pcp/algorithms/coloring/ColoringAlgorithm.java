@@ -15,6 +15,8 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	protected IPartitionedGraph graph;
 	protected IAlgorithmBounder bounder;
 	
+	protected List<pcp.entities.simple.Node> clique;
+	
 	public ColoringAlgorithm(IPartitionedGraph graph) {
 		this.graph = graph;
 	}
@@ -31,8 +33,36 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	public int getIntColor(int node) throws AlgorithmException {
 		Integer color = getColor(node);
-		if (color == null) return -1;
-		else return color;
+		return (color == null) ? -1 : color;
+	}
+	
+	public Integer getPartitionColor(int partition) throws AlgorithmException {
+		for (Node node : graph.getNodes(graph.getPartition(partition))) {
+			Integer color = getColor(node.index());
+			if (color != null) return color;
+		} return null;
+	}
+	
+	public Integer getPartitionIntColor(int partition) throws AlgorithmException {
+		Integer color = getPartitionColor(partition);
+		return (color == null) ? -1 : color;
+	}
+	
+	public int getNodeCount(int color) throws AlgorithmException {
+		int count = 0;
+		for (int i = 0; i < graph.N(); i++) {
+			if (getIntColor(i) == color) {
+				count++;
+			}
+		} return count;
+	}
+	
+	public int getMinIndex(Integer color) throws AlgorithmException {
+		for (int i = 0; i < graph.N(); i++) {
+			if (getIntColor(i) == color) {
+				return i;
+			}
+		} return -1;
 	}
 	
 	public void printColoring(PrintStream stream) throws AlgorithmException {
@@ -44,6 +74,7 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 
 	public void setInitialClique(List<pcp.entities.simple.Node> clique) throws AlgorithmException {
 		int index = 0;
+		this.clique = clique;
 		// Every partition in the clique is assigned a color in ascending order 
 		for(pcp.entities.simple.Node snode : clique) {
 			useColorPartition(snode.index(), index);
@@ -70,4 +101,5 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	public void setLowerBound(int bound) { }
 	
 	public boolean hasSolution() { return true; }
+
 }

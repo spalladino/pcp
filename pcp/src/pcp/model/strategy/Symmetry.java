@@ -6,8 +6,7 @@ public enum Symmetry {
 	None("sno"),
 	UseLowerLabelFirst("slow"),
 	VerticesNumber("snum"),
-	MinimumNodeLabel("slab"),
-	MinimumNodeLabelVerticesNumber("snumlbl");
+	MinimumNodeLabel("slab");
 	
 	String shortId;
 	

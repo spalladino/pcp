@@ -9,22 +9,27 @@
 \usepackage[noend]{algorithmic}
 \usepackage{algorithm}
 
+\newenvironment{nuevo}{\marginpar{$<$nuevo$>$}}{\marginpar{$<$/nuevo$>$}}
+
 \newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
 \newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
 \newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
 
 \newcommand{\PCP}{\textsc{pcp}}
-\newcommand{\TODO}{\textsc{TODO}}
+\newcommand{\TODO}[1]{\textbf{\textsc{ToDo:} #1}}
 
 \newcommand{\defitem}[2]{\item{\textbf{#1:} #2}}
 
 \newcommand{\sumheight}{\ensuremath{\phantom{\sum_{j \in C}}}}
 
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
+
 \newtheorem{theorem}{Theorem}
 
 \numberwithin{equation}{section}
 
-%\includeonly{models}
+%\includeonly{ineqs}
 
 \begin{document}
 
@@ -35,6 +40,8 @@
 \include{introduction}
 
 \include{models}
+
+\include{ineqs}
 
 \include{algorithm}
 

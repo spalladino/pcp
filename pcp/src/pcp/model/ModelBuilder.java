@@ -59,7 +59,7 @@ public class ModelBuilder {
 		
 		// Initialize variables and objective function
 		initializeVariables();
-		boundClique(maxgpclique);
+		boundClique(coloring, maxgpclique);
 		
 		// Objective function
 		createObjective(strategy.getObjective());
@@ -116,11 +116,6 @@ public class ModelBuilder {
 		
 		// Breaking symmetry constraints
 		switch(strategy.getBreakSymmetry()) {
-			case MinimumNodeLabelVerticesNumber:
-				constrainSymmetryMinimumNodeLabel();
-				constrainSymmetryVerticesNumber();
-				constrainUseLowerLabelFirst();
-				break;	
 			case MinimumNodeLabel:
 				constrainSymmetryMinimumNodeLabel();
 				constrainUseLowerLabelFirst();
@@ -149,12 +144,13 @@ public class ModelBuilder {
 	 * Every variable with color different than the assigned is set to zero.
 	 * @param maxgpclique max clique in g prime graph
 	 * @throws IloException 
+	 * @throws AlgorithmException 
 	 */
-	private void boundClique(List<pcp.entities.simple.Node> maxgpclique) throws IloException {
+	private void boundClique(ColoringAlgorithm coloring, List<pcp.entities.simple.Node> maxgpclique) throws IloException, AlgorithmException {
 		if (!fixClique || maxgpclique == null) return;
 		
-		int color = 0;
 		for (pcp.entities.simple.Node snode : maxgpclique) {
+			int color = coloring.getPartitionColor(snode.index());
 			
 			// Set all colors for the partition in the clique to zero, except assigned one
 			Node[] nodes = graph.getNodes(snode);
@@ -173,8 +169,6 @@ public class ModelBuilder {
 			// Fix color variable as well
 			IloIntVar var = this.ws[color];
 			var.setLB(1.0);
-			
-			color++;
 		}
 	}
 
@@ -277,6 +271,8 @@ public class ModelBuilder {
 	 * @throws IloException 
 	 */
 	protected void constrainSymmetryMinimumNodeLabel() throws IloException {
+		// TODO: Strengthen with partition sum on right hand side
+		// Index i should be relative to partition indexes instead of nodes
 		for (int i = 1; i < graph.N(); i++) {
 			if (i >= colors-1) {
 				break;
@@ -288,11 +284,10 @@ public class ModelBuilder {
 				for (int k = j-1; k < colors; k++) {
 					expr.addTerm(xs[k][j-1], -1);
 				}
-				
 				modeler.addLe(expr, 0, name);
 			}
 		}
-		
+		// TODO Add xij = 0 forall j geq i+1
 	}
 
 	/**
@@ -396,7 +391,6 @@ public class ModelBuilder {
 	 */
 	protected void constrainAdjacencyNeighbourhood() throws IloException {
 		for (Node n : graph.getNodes()) {
-			// TODO: Should we better try a clique cover of just the nodes involved instead of the G'?
 			final int r = useCliqueCover 
 				? new CliqueCover(new InducedGraph(graph, graph.getNeighbours(n)).getGPrime()).count()
 				: GraphUtils.groupByPartition(graph.getNeighbours(n)).size();

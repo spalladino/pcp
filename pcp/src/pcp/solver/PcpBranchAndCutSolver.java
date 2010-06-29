@@ -10,6 +10,7 @@ import props.Settings;
 
 public class PcpBranchAndCutSolver extends Solver {
 
+	private final static boolean useCplexCuttingPlanes = Settings.get().getBoolean("solver.useCplexCuttingPlanes");
 	private final static boolean useCplexPreprocess = Settings.get().getBoolean("solver.useCplexPreprocess");
 	private final static boolean useCutCallback = Settings.get().getBoolean("solver.useCutCallback");
 	
@@ -21,9 +22,12 @@ public class PcpBranchAndCutSolver extends Solver {
 	
 	protected PcpBranchAndCutSolver(boolean cutsOnRootOnly) throws IloException {
 		super();
-		
-		turnOffCplexCuts();
+
 		turnOffDynamicSearch();
+
+		if (!useCplexCuttingPlanes) {
+			turnOffCplexCuts();
+		}
 		
 		if (!useCplexPreprocess) {
 			turnOffPreprocess();

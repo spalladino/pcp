@@ -19,6 +19,8 @@ public class BuilderStrategy  {
 	Objective objective;
 	ColorBound colorBound;
 	
+	private static BuilderStrategy settings;
+	
 	public BuilderStrategy() {
 		
 	}
@@ -66,15 +68,17 @@ public class BuilderStrategy  {
 	}
 	
 	public static BuilderStrategy fromSettings() {
-		Settings s = Settings.get();
-		BuilderStrategy strategy = new BuilderStrategy();
-		strategy.coloring = s.getEnum("strategy.coloring", Coloring.class);
-		strategy.partition = s.getEnum("strategy.partition", Partition.class);
-		strategy.breakSymmetry = s.getEnum("strategy.symmetry", Symmetry.class);
-		strategy.adjacency = s.getEnum("strategy.adjacency", Adjacency.class);
-		strategy.objective = s.getEnum("strategy.objective", Objective.class);
-		strategy.colorBound = s.getEnum("strategy.colorBound", ColorBound.class);
-		return strategy;
+		if (settings == null) {
+			Settings s = Settings.get();
+			BuilderStrategy strategy = new BuilderStrategy();
+			strategy.coloring = s.getEnum("strategy.coloring", Coloring.class);
+			strategy.partition = s.getEnum("strategy.partition", Partition.class);
+			strategy.breakSymmetry = s.getEnum("strategy.symmetry", Symmetry.class);
+			strategy.adjacency = s.getEnum("strategy.adjacency", Adjacency.class);
+			strategy.objective = s.getEnum("strategy.objective", Objective.class);
+			strategy.colorBound = s.getEnum("strategy.colorBound", ColorBound.class);
+			settings = strategy;
+		} return settings;
 	}
 
 	public String shortId() {

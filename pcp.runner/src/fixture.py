@@ -15,8 +15,8 @@ cfgs_path = basedir + runsdir + 'current.cfgs'
 def resume():
     return Fixture().resume()
 
-def newrun(runs, files=[], dirs=[]):
-    return Fixture().newrun(runs, files=files,dirs=dirs)
+def newrun(runs, files=[], dirs=[], initial=0):
+    return Fixture().newrun(runs, files=files,dirs=dirs,initial=initial)
 
 class Fixture:
 
@@ -31,7 +31,7 @@ class Fixture:
         d[key] = value
         return d
         
-    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S"), files=[], dirs=[]):
+    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S"), files=[], dirs=[], initial=0):
         if len(files) == 0: fileruns = runs
         else: fileruns = [ self.withprop(runs, "run.filename", file) for (file, runs) in itertools.product(files, runs)  ] 
         
@@ -40,6 +40,7 @@ class Fixture:
         
         self.runid = runid
         self.successful = 0
+        self.initial = initial
         self.init_status()
         self.execute()
     
@@ -57,7 +58,7 @@ class Fixture:
         for run in self.runs:
             runner = Runner()
             print "Running id " + str(self.runid) + " iter " + str(self.successful + 1) + " of " + str(len(self.runs))
-            out, err = runner.run(self.runid, self.successful + 1, self.main, run)
+            out, err = runner.run(self.runid, self.initial + self.successful + 1, self.main, run)
             if printoutput: print out, err
             else: print err
             self.add_success_status()

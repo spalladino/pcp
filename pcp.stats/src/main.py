@@ -16,16 +16,16 @@ def simpletable(p):
 def latextable(p):    
         p.process(
                 ids=[metrics.FileName()],
-                datas=['solution.time', 'cuts.niters', 'solution.gap'], 
-                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                datas=['solution.lb'], 
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'model.adjacentsNeighbourhood.useCliqueCover'],
                 datafilter= None,
                 runfilter= None,
-                aggr= processor.avg
+                aggr= processor.concat
                     )
 
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100617215301')
+    p = LatexProcessor('20100623215001')
     #p.summary()
     latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")

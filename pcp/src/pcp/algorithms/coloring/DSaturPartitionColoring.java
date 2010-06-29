@@ -1,14 +1,19 @@
 package pcp.algorithms.coloring;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.bounding.IterationsBounder;
+import pcp.common.sorting.ColorCountCompleteComparator;
+import pcp.common.sorting.ColorMinLabelComparator;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
+import pcp.model.BuilderStrategy;
+import pcp.model.strategy.Symmetry;
 import pcp.solver.cuts.CutFamily;
 import pcp.utils.IntUtils;
 import pcp.utils.ListUtils;
@@ -84,6 +89,12 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		bounder.end();
 		hasrun = true;
 		
+		if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.VerticesNumber)) {
+			sortSolution(new ColorCountCompleteComparator(this, true, false));
+		} else if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {
+			sortSolution(new ColorMinLabelComparator(this, false));
+		}
+		
 		if (hasSolution() && verify) {
 			new ColoringVerifier(this.graph).verify(this);
 		}
@@ -150,6 +161,24 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	}
 	
 	protected abstract Node getNextNode() throws AlgorithmException;
+
+	private void sortSolution(Comparator<Integer> colorComparator) throws AlgorithmException {
+		if (!hasSolution()) return;
+		
+		Integer[] colors = new Integer[solution];
+		for (int j = 0; j < solution; j++) colors[j] = j;
+		Arrays.sort(colors, colorComparator);
+		
+		// Only bestColorClass must be modified
+		int[] sortedBestColorClass = new int[graph.N()];
+		for (int j = 0; j < solution; j++) {
+			for (int i = 0; i < graph.N(); i++) {
+				if (bestColorClass[i] == colors[j]+1) {
+					sortedBestColorClass[i] = j + 1;
+				}
+			}
+		} this.bestColorClass = sortedBestColorClass;
+	}
 
 	private int partitions(int painted, int currentColor) throws AlgorithmException {
 		indent();

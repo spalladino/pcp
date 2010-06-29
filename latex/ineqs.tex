@@ -1,0 +1,119 @@
+\section{Valid inequalities}
+
+In this section we will analyze the PCP polyhedron and derive valid inequalities for it, that will be later used in the branch-and-cut algorithm in cutting planes. We will focus our analysis on the most basic formulation presented in section \ref{subsec:model:formulation}, except for some inequalities which will exploit symmetry breaking restrictions from \ref{subsec:model:symmetry}. 
+
+\begin{align}
+\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \nonumber \\
+\text{\textsc{subject to}} \quad & \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad \forall P_k \in P \nonumber \\
+& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \sumheight \nonumber \\
+& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
+\end{align}
+
+Note that any valid inequalities found for the basic formulation are still valid for any other strengthened models, so the derived inequalities can still be used as cuts regardless of the model implemented.
+
+\subsection{Extended clique inequalities}
+
+A classical inequality for the standard coloring problem is the clique inequality, which establishes that within a clique $K$, at most one node can be colored with a label $j$.
+
+\begin{equation}
+\nonumber
+\sum_{i \in K} x_{ij} \leq w_{j} \quad \forall j \in C
+\end{equation}
+
+Combining this inequality with the fact that in PCP at most one node per partition can be colored with a label $j$, we define the \textit{extended clique inequalities} for PCP. Recall from \ref{subsec:intro:definitions} that an extended clique is a maximal subset $K_P$ of $V$ such that every pair of nodes is either adjacent or belong to the same partition.
+
+\begin{equation}
+\label{ineq:extendedclique}
+\sum_{i \in K_P} x_{ij} \leq w_{j} \quad \forall j \in C
+\end{equation}
+
+Similar inequalities were developed by \cite{frota2010branch}, based on the asymmetric representatives formulation, but are generated only on component cliques\footnote{Clique in which every node belongs to a different partition.}. Extended cliques have the added benefit of covering a larger set of nodes, and maintain their effectiveness regardless of the partition size used.
+
+\subsection{Component independent set inequalities}
+
+As was defined in \ref{subsec:intro:definitions}, a component independent set $I_P$ is a standard independent set with the added restriction that every node must belong to a different partition. This allows to import the independent set inequality directly from the standard coloring problem.
+
+\begin{equation}
+\label{ineq:ciset}
+\sum _{i \in W} x_{ij} \leq \alpha_P(W) w_{j} \quad \forall j \in C
+\end{equation}
+
+The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, $\alpha_P(W)$, is not easy to calculate, being as difficult as the coloring problem trying to solve, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to obtain.
+
+\subsubsection*{Component hole inequalities}
+
+A simple instantiation of the previous inequality is picking a subset $W$ that induces a component hole $H$\footnote{A component hole is a chordless cycle in which every node belongs to a different partition.} in the partitioned graph. As in a standard hole, it holds that $\alpha(H) = \floor{n / 2}$, where $n$ is the length of the hole, therefore the only effort required lies in finding a hole and not in calculating its $\alpha$.
+
+Therefore, given a component hole $H$ in the partitioned graph, the component hole inequality is:
+
+\begin{equation}
+\label{ineq:chole}
+\sum _{i \in H} x_{ij} \leq \floor{n / 2} w_{j} \quad \forall j \in C
+\end{equation}
+
+
+\subsubsection*{Component path inequalities}
+
+Similar to the previous case, the component independent set can be instantiated with a component path $P$, which is a standard path where every node belongs to a different partition. In this case, it holds that for every component path of length $n$, $\alpha(P) = \ceil{n / 2}$, and the inequality results:
+
+\begin{equation}
+\label{ineq:cpath}
+\sum _{i \in P} x_{ij} \leq \ceil{n / 2} w_{j} \quad \forall j \in C
+\end{equation}
+
+\subsubsection*{Strengthening by breaking symmetry}
+
+Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. Should these restrictions be included in the model, then \ref{ineq:ciset} can be rewritten for an induced component independent set $W$ as the following:
+
+\begin{equation}
+\label{ineq:cisetbs}
+\sum_{i \in W} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq \alpha_P(W) w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha_P(W)
+\end{equation}
+
+Any $(j_t + r)$-coloring, for $r \geq 1$, there are $\alpha_P(W) - r$ partitions repeating color, therefore, the maximum number of partitions that can be colored using labels $j_0, j_t + 1, \ldots, j_t + r$ is $\alpha_P(W) + 1$. 
+
+\TODO{Complete this explanation} 
+
+Both component hole (\ref{ineq:chole}) and component path inequalities (\ref{ineq:cpath}) can be strengthened using this argument.
+
+\subsection{Partitions graph inequalities}
+
+Let $G' = <V',E'>$ be the partitions graph of $G$\footnote{The partitions graph $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v' \in V'$ corresponds to a partition $P_v \in P$, and two nodes $u',v' \in V'$ are adjacent if and only if every node in $P_u$ in $G$ is adjacent to every node in $P_v$.}. Most bounds found for coloring $G'$ can be ported to the original $G$ by extending the constraint over every node represented by each $p \in V'$.
+
+A clear example are independent set inequalities. Let $W' \subseteq V'$ a subset of nodes inducing a subgraph in $G'$, then the independent set inequality holds:
+
+\begin{equation}
+\label{ineq:gpiset}
+\sum _{i \in W'} x_{ij} \leq \alpha(W') w_{j} \quad \forall j \in C
+\end{equation}
+
+As before, in inequalities \ref{ineq:cisetbs}, this restriction can be strengthened considering symmetry breaking constraints:
+
+\begin{equation}
+\label{ineq:gpisetbs}
+\sum_{i \in W'} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V'} x_{ij} \leq \alpha(W') w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha(W')
+\end{equation}
+
+These constraints over $G'$ can be converted to constraints $G$ by replacing every node $p \in V'$ with the sum over the nodes $v \in P_p$. Let $W \subseteq P$ be the set of partitions represented by the nodes in $W' \in V'$ in $G'$, then:
+
+\begin{equation}
+\label{ineq:gpisetbsg}
+\sum_{P_k \in W} \sum_{i \in P_k} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq \alpha(W') w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha(W')
+\end{equation}
+
+Once again, since the size $\alpha$ of the maximum independent set of a graph is NP-hard to calculate, the subgraph induced by $W'$ is chosen in such a way that this number is trivial to obtain. These inequality is therefore specialized when $W'$ induces both a path and a hole in $G'$, having $\alpha(W)$ equal to $\ceil{|W| / 2}$ and $\floor{|W| / 2}$, yielding \textit{partitions graph path inequalities} and \textit{partitions graph hole inequalities}, respectively.
+
+Comparing partitions graph independent set inequalities with component independent set ones, the former are less frequent than the latter, since $G'$ tends to be less dense as partition sizes increase; however, the former are much stronger as they impose restrictions over all the nodes in the partitions covered, instead of over a single node per partition.
+
+\subsection{Block color inequalities}
+
+Block color inequalities arise from the symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. Given a partition $P_k$ and a color $j_0$, every coloring of partition $P_k$ using any color $j > j_0$, requires that color $j_0$ is already used, since \ref{eqn:lowerlabel} implies that color $j$ cannot be used unless all previous colors had ben used. 
+
+As only a single $x_{ij}$ is set in every partition, this is, only one node is painted with a single color, the following inequality holds:
+
+\begin{equation}
+\label{ineq:blockcp}
+\sum_{j \geq j_0} \sum_{i \in P_k} x_{ij} \leq w_{j_0} \quad \forall P_k \in P, j_0 \in C
+\end{equation}
+
+These $c \times q$ inequalities are extremely easy to generate and, as will be analyzed further in this work, have proven to greatly improve the cutting planes scheme.

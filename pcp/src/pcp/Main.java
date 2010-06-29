@@ -3,6 +3,7 @@ package pcp;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex.IntParam;
 
+import java.util.Collections;
 import java.util.List;
 
 import pcp.algorithms.Preprocessor;
@@ -10,6 +11,7 @@ import pcp.algorithms.Verifier;
 import pcp.algorithms.bounding.IterationsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.connectivity.ConnectivityChecker;
+import pcp.common.sorting.SimpleNodeIndexComparator;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.entities.simple.Node;
@@ -126,10 +128,10 @@ public class Main {
 		
 		// Make initial coloring
 		coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
-		if (clique != null) coloring.setInitialClique(clique);
-		
-		//GraphUtils.print(graph, System.out);
-		//coloring.printColoring(System.out);
+		if (clique != null) {
+			Collections.sort(clique, new SimpleNodeIndexComparator());
+			coloring.setInitialClique(clique);
+		}
 		
 		// Build model
 		model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, clique); 
