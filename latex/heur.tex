@@ -27,11 +27,13 @@ A classical scheme for enumeration algorithms is presented in \ref{alg:enumerati
 			\IF{can paint \textit{node} with color $j$}
 				\STATE assign color $j$ to \textit{node}
 				\CALL color(painted+1, label)
+				\STATE uncolor \textit{node}
 			\ENDIF
 		\ENDFOR
 		\COMMENT{try coloring \textit{node} with a new label}
 		\STATE assign color \textit{label} + 1 to \textit{node}
 		\CALL color(painted+1, label+1)
+		\STATE uncolor \textit{node}
 	\ENDIF
 \ENDPROC
 
@@ -61,15 +63,73 @@ A simple modification would be to simply re-use the previous scheme, picking a n
 				\IF{can paint \textit{node} with color $j$}
 					\STATE assign color $j$ to \textit{node}
 					\CALL color(painted+1, label)
+					\STATE uncolor \textit{node}
 				\ENDIF
 			\ENDFOR
 			\COMMENT{try coloring \textit{node} with a new label}
 			\STATE assign color \textit{label} + 1 to \textit{node}
 			\CALL color(painted+1, label+1)
+			\STATE uncolor \textit{node}
 		\ENDFOR
 \end{algorithmic}
 \end{algorithm}
 
 However, this modification forces to pick all the nodes within the same partition together, regardless of the criteria being used to pick nodes. For instance, if a largest-degree criteria is used, and remaining partitions (with their nodes' degrees) are $P_1 \{v_1(10),v_2(1)\}$ and $P_2 \{v_3(5)\}$, the proposed modification would pick nodes $v_1, v_2, v_3$ instead of $v_1, v_3, v_2$. This severely damages the validity of the strategy being used.
 
-Therefore, we propose another modification, presented in algorithm \ref{alg:pcpenumeration}. 
+Therefore, we propose another modification, presented in algorithm \ref{alg:pcpenumeration}. In this case we use the original enumeration scheme, picking a node from an unpainted partition on every call, but before returning from the recursive call we create another branch in which we do not color the chosen node, so that the partition can be later colored using another node.
+
+\begin{algorithm}
+\caption{Partitioned coloring implicit enumeration scheme for partitioned graphs $G = <V,E,P>$}
+\label{alg:pcpenumeration}
+
+\begin{algorithmic}
+\CALL color(0,1)
+
+\PROC{color(painted, label)}
+	\IF{current coloring is greater than or equal best coloring}
+		\STATE prune current solutions subtree
+	\ELSIF{\textit{painted} equals to $|P|$}
+		\STATE update best coloring with current coloring
+	\ELSE
+		\STATE pick next uncolored \textit{node} to color	from all uncolored partitions	
+		\FOR{j = 1 to \textit{label}}
+			\IF{can paint \textit{node} with color $j$}
+				\STATE assign color $j$ to \textit{node}
+				\CALL color(painted+1, label)
+				\STATE uncolor \textit{node}
+			\ENDIF
+		\ENDFOR
+		
+		\COMMENT{try coloring \textit{node} with a new label}
+		\STATE assign color \textit{label} + 1 to \textit{node}
+		\CALL color(painted+1, label+1)
+		\STATE uncolor \textit{node}
+		
+		\COMMENT{leave node unpainted}
+		\IF{there are other nodes left in the partition}
+			\STATE mark \textit{node} as unavailable
+			\CALL color(painted, label)
+			\STATE mark \textit{node} as available again
+		\ENDIF
+		
+	\ENDIF
+\ENDPROC
+
+\end{algorithmic}
+\end{algorithm}
+
+It is within this scheme that we embedded our two different strategies based on degree of saturation for partition coloring.
+
+\subsection{Partitioned \textsc{dsatur}}
+
+Classical \textsc{dsatur} picks the node with the highest color degree on each iteration, based on the assumption that nodes difficult to color should be handled first, which usually works well for most heuristics. In the case of partition coloring, as suggested in \cite{Li00thepartition}, nodes with lower degree are easier to color and should be preferred within a partition; also, it is better to color larger partitions first in order to reduce the problem size as early as possible.
+
+Based on these assumptions, we generalized two different versions for partitioned \textsc{dsatur}: \textit{easiest node} and hardest partition.
+
+\subsubsection*{Easiest node}
+
+\TODO{onestepCD heuristic from li}
+
+\subsubsection*{Hardest partition}
+
+\TODO{different criteria used}
