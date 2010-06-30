@@ -1,6 +1,7 @@
 %!TEX root = pcp.tex
 
 \section{Branch and Cut}
+\label{sec:bnc}
 
 In this section we will present the implemented branch-and-cut algorithm, including initial heuristic, branching strategies, separation algorithms and primal heuristics.
 
@@ -11,7 +12,35 @@ The first step in solving a \PCP instance consists in preprocessing the graph, a
 \begin{enumerate}
 	\item{As an initial step, every edge with both nodes within the same partition is removed. Since only one node is colored per partition, there can be no color conflicts between nodes of the same partition, and all edges connecting them can be removed, in order to greatly reduce the size of the graph and the number of adjacency restrictions generated.}
 	\item{Partitions containing isolated nodes can be completely removed from the graph, as any isolated node can be trivially colored using the lowest possible label, and coloring a single node within a partition marks the whole partition as colored, therefore allowing us to completely remove it.}
-	\item{Neighbourhood inclusion criteria is applied within a single partition in order to remove higher-order nodes. Let $u,v$ be two different nodes in a partition $P_k$, if $N(u) \subseteq N(v)$, then we can remove node $v$ from the graph. This criteria is valid as only one node per partition needs to be colored, and any valid coloring that assigns color $j_0$ to node $v$, can be modified to assign color $j_0$ to node $u$ instead, still satisfying all color constraints. Intuitively, we are removing \textit{difficult} nodes from a partition when we find an easier one to substitute it. \TODO{Include drawing}}
+	\item{Neighbourhood inclusion criteria is applied within a single partition in order to remove higher-order nodes. Let $u,v$ be two different nodes in a partition $P_k$, if $N(u) \subseteq N(v)$, then we can remove node $v$ from the graph. This criteria is valid as only one node per partition needs to be colored, and any valid coloring that assigns color $j_0$ to node $v$, can be modified to assign color $j_0$ to node $u$ instead, still satisfying all color constraints. Intuitively, we are removing \textit{difficult} nodes from a partition when we find an easier one to substitute it. See figure \ref{fig:neighbourinclusion} for an example.}
+	
+\begin{figure}[h]
+	\label{fig:neighbourinclusion}
+	\centering
+	\begin{tikzpicture} 
+		[includer/.style= {minimum size=3mm,thick,circle,draw=red!75,fill=red!20}, 
+		included/.style= {minimum size=3mm,thick,circle,draw=green!75,fill=green!20}, 
+		other/.style= {minimum size=3mm,thick,circle,draw=black,fill=black}, 
+		transition/.style={thick,draw=black,fill=black!20}] 
+		
+		\node[includer] (n1) at ( 0,0) {$v_1$}; 
+		\node[included] (n2) at ( 2,0) {$v_2$}; 
+		
+		\node[other] (n3) at ( -1,3) {}; 
+		\node[other] (n4) at ( 0,3) {}; 
+		\node[other] (n5) at ( 1,3) {}; 
+		\node[other] (n6) at ( 2,3) {}; 
+		\node[other] (n7) at ( 3,3) {}; 
+	
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!10,fit=(n1) (n2),label=350:$P_1$] {}; 
+		\end{pgfonlayer} 
+		
+	
+	\end{tikzpicture} 
+\caption{Neighbourhood inclusion example}
+\end{figure}
+	
 	\item{A lower bound for the chromatic number of the graph is obtained by finding a maximal clique in the partitions graph $G'$. Finding a clique of size $\omega$ in $G'$ implies that at least $\omega$ different colors are needed for coloring the partitions graph, and the same lower bound clearly holds for $G$. All partitions in the clique will have their colors fixed to $1,\ldots,\omega$ in order to reduce the number of possible colorings, since each of them must be painted using a different color.}
 	\item{As in step 2, partitions that contain at least one node with degree less than the lower bound found in the previous step are removed. A node with strictly less than $\omega$ neighbours can be assigned a color among $1,\ldots,\omega$, knowing that no color conflicts will occur; and since there are already $\omega$ colors required, the chromatic number is not increased by that assignment, and therefore the node can be discarded. \TODO{Include drawing}}
 \end{enumerate}

@@ -193,6 +193,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			int color = t.getSecond();
 			
 			// Try using chosen color for every node in the partition
+			// TODO: Sort nodes on degree?
 			for (Node node : graph.getNodes(graph.getPartition(partition))) {
 				if (canAssignColor(node.index(), color)) {
 					if (log) log("Assigning color " + color + " to node " + (node.index() + logNodeBase) + " in partition " + (partition + logNodeBase));

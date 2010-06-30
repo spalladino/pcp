@@ -124,12 +124,34 @@ It is within this scheme that we embedded our two different strategies based on 
 
 Classical \textsc{dsatur} picks the node with the highest color degree on each iteration, based on the assumption that nodes difficult to color should be handled first, which usually works well for most heuristics. In the case of partition coloring, as suggested in \cite{Li00thepartition}, nodes with lower degree are easier to color and should be preferred within a partition; also, it is better to color larger partitions first in order to reduce the problem size as early as possible.
 
-Based on these assumptions, we generalized two different versions for partitioned \textsc{dsatur}: \textit{easiest node} and hardest partition.
+Based on these assumptions, we generalized two different versions for partitioned \textsc{dsatur}: \textit{easiest node} and \textit{hardest partition}.
 
 \subsubsection*{Easiest node}
 
-\TODO{onestepCD heuristic from li}
+The easiest node variant is based on the \textit{onestepCD} heuristic proposed in \cite{Li00thepartition}. In order to pick the node to color, first the easiest node is chosen from every uncolored partition, where \textit{easiest} is defined in terms of lowest color degree, with tie breaking on lowest number of uncolored neighbours. From the resulting set, the node with the highest color degree is chosen, as in classic \textsc{dsatur}. 
+
+In other words, this algorithm picks the hardest node from the set of the easiest nodes on each uncolored partition.
 
 \subsubsection*{Hardest partition}
 
-\TODO{different criteria used}
+Instead of choosing the easiest node from each partition and then picking the hardest one to color, this algorithm first chooses the hardest partition to handle, and then picks the easiest node from that partition. While the easiest node is picked using the usual color degree criteria, choosing the hardest partition requires a new strategy. 
+
+Therefore, in order to determine the hardest partition to color, we experimented with combinations of the following metrics:
+\begin{itemize}
+	\item{Color degree of the partition, defined as the number of different colors adjacent to all of the nodes in the partition; considering that a larger color degree implies a harder partition to color}
+	\item{Size of the partition, as a larger partition being colored earlier helps reducing the problem size, therefore the larger the partition the earlier it should be handled}
+	\item{Number of uncolored partitions adjacent to the partition, equivalent to the tie breaking criteria used for classic \textsc{dsatur}} 
+\end{itemize}
+
+Different combinations of these criteria, as well as the different variants of the algorithm, will be compared in section \ref{subsec:resultspdsatur}.
+
+\subsection{Ad-hoc modifications}
+
+As will be presented in section \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
+
+Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. The algorithm colors these partitions first, trying with all different node combinations within the partitions before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
+
+Also, since the algorithm is used as a primal heuristic within the branch and cut tree, it supports forcing the coloring of certain nodes, fixing those values in the colorings enumeration. In case certain node-color combinations are forbidden due to the restrictions imposed during in the branch and bound tree, solutions assigning those combinations are not explored in the algorithm.
+
+In case symmetry breaking constraints \ref{eqn:symnodecount} or \ref{eqn:minlabel} are used, the color classes obtained by the algorithm are sorted based on node count or minimum node index respectively, so the obtained solution can be successfully injected in the branch and cut scheme.
+
