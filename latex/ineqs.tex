@@ -65,7 +65,33 @@ Similar to the previous case, the component independent set can be instantiated 
 
 \subsubsection*{Strengthening by breaking symmetry}
 
-Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. Should these restrictions be included in the model, then \ref{ineq:ciset} can be rewritten for an induced component independent set $W$ as the following:
+Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest label will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
+
+Therefore, in the worst case, in which all nodes in $V \setminus W$ use different colors, then an assignment as the one shown in table \ref{table:cisetcoloring} will occur. This coloring...
+
+\begin{table}
+\centering	
+\begin{tabular}{cc}
+\hline
+\textbf{color label} & \textbf{partitions count} \\
+\hline
+$j_0$ & $1$\\
+$j_1$ & $1$\\
+\vdots & \vdots \\
+$j^*$ & $\alpha_P$ \\
+\vdots & \vdots \\
+$j_{q - \alpha_P}$ & $1$\\
+$j_{q - \alpha_P + 1}$ & $1$\\
+$j_{q - \alpha_P + 2}$ & $0$\\
+\vdots & \vdots \\
+$j_{q}$ & $0$\\
+\hline
+\end{tabular}
+\caption{Worst-case color assignment when a component independent set of size $\alpha_P$ is found in the partitioned graph.}
+	\label{table:cisetcoloring}
+\end{table}
+
+Should these restrictions be included in the model, then \ref{ineq:ciset} can be rewritten for an induced component independent set $W$ as the following:
 
 \begin{equation}
 \label{ineq:cisetbs}
