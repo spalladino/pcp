@@ -132,6 +132,8 @@ The easiest node variant is based on the \textit{onestepCD} heuristic proposed i
 
 In other words, this algorithm picks the hardest node from the set of the easiest nodes on each uncolored partition.
 
+Also, in an attempt to explore different solutions earlier to obtain better upper bounds, we also implemented a randomized version of the algorithm. From the set of the easiest nodes in every partition, only half of the time is the hardest node picked, the other half another candidate is chosen with probability decreasing as its color degree decreases.
+
 \subsubsection*{Hardest partition}
 
 Instead of choosing the easiest node from each partition and then picking the hardest one to color, this algorithm first chooses the hardest partition to handle, and then picks the easiest node from that partition. While the easiest node is picked using the usual color degree criteria, choosing the hardest partition requires a new strategy. 
