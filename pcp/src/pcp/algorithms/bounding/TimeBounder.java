@@ -59,12 +59,12 @@ public class TimeBounder implements IAlgorithmBounder {
 
 	@Override
 	public boolean improved() {
+		lastImproved = System.currentTimeMillis();
 		return check();
 	}
 
 	@Override
 	public boolean iter() {
-		lastImproved = System.currentTimeMillis();
 		return check();
 	}
 	
