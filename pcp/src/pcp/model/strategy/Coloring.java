@@ -10,7 +10,8 @@ public enum Coloring {
 	Partitions("cp"),
 	Configuration("cc"),
 	DSaturEasyNode("dsn"),
-	DSaturHardPartition("dsp");
+	DSaturHardPartition("dsp"), 
+	DSaturEasyNodeRandomized("dsnr");
 	
 	String shortId;
 	
