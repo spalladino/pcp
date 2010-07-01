@@ -63,6 +63,6 @@ if __name__ == '__main__':
             
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100629MODELS',
+                runid = '20100630CPLEXMODELS',
             )
     

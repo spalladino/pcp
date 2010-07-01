@@ -9,7 +9,6 @@ import pcp.algorithms.Preprocessor;
 import pcp.algorithms.coloring.BruteForcePartitionColoring;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ColoringVerifier;
-import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
 import pcp.algorithms.connectivity.ConnectivityChecker;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
@@ -19,7 +18,7 @@ import pcp.generator.random.DimacsRandomPartitionedGraph;
 import props.Settings;
 import exceptions.AlgorithmException;
 
-public class DSaturRandomPartitionedGraphFixture {
+public abstract class DSaturRandomPartitionedGraphFixture {
 
 	PartitionedGraphBuilder builder;
 	PartitionedGraph graph;
@@ -38,17 +37,22 @@ public class DSaturRandomPartitionedGraphFixture {
 	
 	@Test
 	public void testVerySmalls() throws AlgorithmException, IOException {
-		testMultiple(1000, 7, 2, 3, 0.5);
+		testMultiple(5000, 7, 2, 3, 0.5);
 	}
 	
 	@Test
 	public void testSmalls() throws AlgorithmException, IOException {
-		testMultiple(100, 10, 2, 3, 0.5);
+		testMultiple(2500, 10, 2, 3, 0.5);
 	}
 	
 	@Test
 	public void testMediums() throws AlgorithmException, IOException {
-		testMultiple(100, 20, 2, 3, 0.5);
+		testMultiple(1000, 15, 2, 3, 0.5);
+	}
+	
+	@Test
+	public void testLarges() throws AlgorithmException, IOException {
+		testMultiple(10, 20, 2, 3, 0.5);
 	}
 
 	
@@ -88,7 +92,7 @@ public class DSaturRandomPartitionedGraphFixture {
 			.verify(dsatur)
 			.verify(exact);
 		
-		System.out.println("\n" + exact.getColorClassString());
+		System.out.println("\nExact " + exact.getColorClassString());
 		Assert.assertEquals(exact.getChi(), dsatur.getChi());
 	}
 	
@@ -96,9 +100,7 @@ public class DSaturRandomPartitionedGraphFixture {
 		return new BruteForcePartitionColoring(graph);
 	}
 
-	protected ColoringAlgorithm createDSatur() {
-		 return new DSaturPartitionColoringEasiestNodes(graph);
-	}
+	protected abstract ColoringAlgorithm createDSatur();
 
 	
 }

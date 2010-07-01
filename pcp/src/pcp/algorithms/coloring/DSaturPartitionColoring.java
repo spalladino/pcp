@@ -249,9 +249,10 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		Node next = getNextNode();
 		place = next.index(); 
 		handleNode(next.index());
+		if (log) log("Picked node " + (place + logNodeBase));
 
 		// Attempt using all colors from first to current max colors or partition degree
-		for (j = 1; j <= IntUtils.min(currentColor, graph.getNeighbourPartitions(next).length); j++) {
+		for (j = 1; j <= IntUtils.min(currentColor, graph.getNeighbourPartitions(next).length + 1); j++) {
 			if (canAssignColor(place, j)) {
 				if (log) log("Painting node " + (place + logNodeBase) + " with color " + (j));
 				assignColor(place, j);
@@ -284,11 +285,16 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			
 			if (log) log("Uncoloring " + (place + logNodeBase) + " which had " + (currentColor + 1));
 			removeColor(place, currentColor + 1);
+		} else if (!(currentColor + 1 < bestColoring)) {
+			if (log) log("Not painting node " + (place + logNodeBase) + " with color " + (currentColor+1) + " as it exceeds best coloring");
+		} else {
+			if (log) log("Cannot apply new color " + (currentColor + 1) + " to node " + (place + logNodeBase));
 		}
 		
 		// Try leaving this node unpainted if this partition can still be somehow colored
 		int partition = next.getPartition().index();
 		if (usablePartitionNodes[partition] > 0) {
+			if (log) log("Unhandling partition " + (partition + 1) + " of node " + (place + logNodeBase) + " for trying with another node");
 			unhandlePartition(partition);
 			newVal = color(painted, currentColor);
 			tryUpdateBestColoring(newVal);
@@ -296,6 +302,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		
 		// Mark as unused and return
 		unhandleNode(place);
+		if (log) log("Unhandling node " + (place + logNodeBase));
 		unindent();
 		return (bestColoring);
 	}
