@@ -1,21 +1,27 @@
 package pcp.algorithms.coloring;
 
-import exceptions.AlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import pcp.common.sorting.NodeDSaturComparator;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
+import pcp.utils.IntUtils;
+import pcp.utils.RandomUtils;
+import exceptions.AlgorithmException;
 
 
-public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring {
+public class DSaturPartitionColoringRandomizedEasiestNodes extends DSaturPartitionColoring {
 	
-	public DSaturPartitionColoringEasiestNodes(IPartitionedGraph graph) {
+	public DSaturPartitionColoringRandomizedEasiestNodes(IPartitionedGraph graph) {
 		super(graph);
 	}
 
 	@Override
 	protected Node getNextNode() throws AlgorithmException {
-		int max = -1;
-		Node maxNode = null;
+		List<Node> candidates = new ArrayList<Node>();
 		
 		for (Partition p : graph.getPartitions()) {
 			if (partitionsHandled[p.index()]) {
@@ -37,21 +43,20 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 				}
 			}
 			
-			// If there is no valid node selected continue with next partition
+			// If there is no valid node selected throw
 			if (minNode == null) {
 				throw new AlgorithmException("No available nodes in partition");
 			}
 			
-			// Check if it is the hardest one among the others
-			if ((colorCount[minNode.index()] > max) 
-				|| ((colorCount[minNode.index()] == max) 
-					&& (colorAdj[minNode.index()][0] > colorAdj[maxNode.index()][0]))) {
-				max = colorCount[minNode.index()];
-				maxNode = minNode;
-			}
+			// Add to candidates
+			candidates.add(minNode);
 		}
 		
-		return maxNode;
+		// Sort by color degree desc and pick randomly
+		Collections.sort(candidates, new NodeDSaturComparator(colorAdj, colorCount, true));
+		int index = RandomUtils.pickGeometrical(IntUtils.min(5, candidates.size()));
+		
+		return candidates.get(index);
 	}
 	
 	

@@ -66,7 +66,7 @@ public class DSaturPartitionColoringHardestPartition extends
 	protected void initFields() {
 		super.initFields();
 		partitionColorCount = new int[graph.P()];
-		partitionColorAdj = new int[graph.P()][graph.P()];
+		partitionColorAdj = new int[graph.P()][graph.P()+1];
 
 		if (colorAdjPartitions) {
 			for (Partition p : graph.getPartitions()) {
