@@ -38,6 +38,7 @@ public class IterationsBounder extends TimeBounder implements IAlgorithmBounder 
 	}
 	
 	public boolean improved() {
+		super.improved();
 		itersWithoutImprovement = 0;
 		return check();
 	}
