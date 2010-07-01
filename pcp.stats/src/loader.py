@@ -29,6 +29,7 @@ class Loader(object):
         for file in files:
             root, ext = os.path.splitext(file)
             if os.path.isfile(file) and ext == '.run':
+                print '.',
                 with open(file, 'r') as f:
                     runs.append(yaml.load(f))
                     

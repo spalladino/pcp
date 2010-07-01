@@ -50,6 +50,20 @@ class PlainMetric:
     
     def type(self):
         return "string"
+    
+class GapMetric:
+    
+    def __init__(self):
+        pass
+    
+    def __call__(self, dict):
+        return format_output( float(dict.get('solution.lb')) / float(dict.get('coloring.initial.chi')) ) or '-'
+    
+    def __str__(self):
+        return 'gap.computed'
+    
+    def type(self):
+        return "real"
 
 class TypedMetric:
     def __init__(self, prop):

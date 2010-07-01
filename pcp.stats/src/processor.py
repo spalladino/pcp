@@ -93,6 +93,9 @@ def flatten(xss):
 def concat(list):
     if len(list) > 0: return str(list)
     else: return str(list[0])
+   
+def first(list):
+    return str(list[0])
     
 def avg(list):
     try:
