@@ -1,5 +1,5 @@
 \documentclass[landscape, 12pt]{report}
-\usepackage[a0paper,landscape]{geometry}
+\usepackage[a2paper,landscape]{geometry}
 \usepackage[ansinew]{inputenc}
 \usepackage{amsmath}
 \usepackage{enumerate}
@@ -21,6 +21,81 @@
 
 \begin{document}
 	
+	\section{DSATUR}
+	
+	Data:
+\begin{itemize}
+\item solution.chi
+\item solution.time
+\item solution.found
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.coloring: DSaturEasyNode, dsatur.partition.weight.size: 1, dsatur.partition.weight.colorCount: 10000, dsatur.partition.weight.uncolored: 100
+\item S2: strategy.coloring: DSaturEasyNodeRandomized, dsatur.partition.weight.size: 1, dsatur.partition.weight.colorCount: 10000, dsatur.partition.weight.uncolored: 100
+\item S3: strategy.coloring: DSaturHardPartition, dsatur.partition.weight.size: 1, dsatur.partition.weight.colorCount: 100, dsatur.partition.weight.uncolored: 10000
+\item S4: strategy.coloring: DSaturHardPartition, dsatur.partition.weight.size: 1, dsatur.partition.weight.colorCount: 10000, dsatur.partition.weight.uncolored: 100
+\item S5: strategy.coloring: DSaturHardPartition, dsatur.partition.weight.size: 100, dsatur.partition.weight.colorCount: 1, dsatur.partition.weight.uncolored: 10000
+\item S6: strategy.coloring: DSaturHardPartition, dsatur.partition.weight.size: 100, dsatur.partition.weight.colorCount: 10000, dsatur.partition.weight.uncolored: 1
+\item S7: strategy.coloring: DSaturHardPartition, dsatur.partition.weight.size: 10000, dsatur.partition.weight.colorCount: 1, dsatur.partition.weight.uncolored: 100
+\item S8: strategy.coloring: DSaturHardPartition, dsatur.partition.weight.size: 10000, dsatur.partition.weight.colorCount: 100, dsatur.partition.weight.uncolored: 1
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8}
+\\
+\hline
+benchdense02n140 &  5.0 & 60.0 & 0.004 &  5.0 & 60.0 & 0.016 &  6.0 & 60.0 & 0.192 &  5.8 & 60.0 & 1.514 &  6.0 & 60.0 & 0.196 &  5.8 & 60.0 & 1.504 &  6.0 & 60.0 & 0.184 &  5.8 & 60.0 &  1.5
+\\
+benchdense04n140 &  8.0 & 60.0 & 4.174 &  8.2 & 60.0 & 27.334 & 10.0 & 60.0 & 6.374 &  9.6 & 60.0 & 16.878 & 10.0 & 60.0 & 6.386 &  9.6 & 60.0 & 16.874 & 10.0 & 60.0 & 6.382 &  9.6 & 60.0 & 16.886
+\\
+benchdense06n140 & 12.4 & 60.0 & 10.064 & 12.4 & 60.0 & 4.656 & 14.2 & 60.0 & 27.692 & 14.4 & 60.0 & 16.208 & 14.2 & 60.0 & 27.76 & 14.4 & 60.0 & 16.156 & 14.2 & 60.0 & 27.79 & 14.4 & 60.0 & 16.184
+\\
+benchdense08n140 & 18.6 & 60.0 & 25.524 & 18.4 & 60.0 & 10.77 & 21.8 & 60.0 & 8.29 & 21.8 & 60.0 & 8.138 & 21.8 & 60.0 & 8.314 & 21.8 & 60.0 & 8.14 & 21.8 & 60.0 & 8.294 & 21.8 & 60.0 & 8.148
+\\
+benchnodesn100 &  7.2 & 21.426 & 1.648 &  7.2 & 60.0 & 15.728 &  8.2 & 60.0 & 19.474 &  8.0 & 60.0 & 10.012 &  8.2 & 60.004 & 19.506 &  8.0 & 60.0 & 10.012 &  8.2 & 60.0 & 19.528 &  8.0 & 60.0 & 10.016
+\\
+benchnodesn120 &  9.0 & 60.0 & 0.042 &  9.0 & 60.0 & 1.618 & 10.0 & 60.0 & 12.04 & 10.0 & 60.0 & 1.578 & 10.0 & 60.0 & 12.066 & 10.0 & 60.0 & 1.588 & 10.0 & 60.0 & 12.058 & 10.0 & 60.0 & 1.586
+\\
+benchnodesn140 & 10.2 & 60.0 & 1.59 & 10.0 & 60.0 & 33.264 & 11.6 & 60.0 & 8.88 & 11.8 & 60.0 & 3.832 & 11.6 & 60.0 & 8.892 & 11.8 & 60.0 & 3.81 & 11.6 & 60.0 & 8.904 & 11.8 & 60.0 & 3.826
+\\
+benchnodesn160 & 11.2 & 60.0 & 5.134 & 11.8 & 60.0 & 2.576 & 13.4 & 60.0 & 6.066 & 13.4 & 60.0 & 6.352 & 13.4 & 60.0 & 6.07 & 13.4 & 60.0 & 6.344 & 13.4 & 60.0 & 6.068 & 13.4 & 60.0 & 6.35
+\\
+benchnodesn180 & 12.6 & 60.0 & 10.242 & 13.0 & 60.0 & 4.822 & 14.0 & 60.0 & 1.376 & 14.0 & 60.0 & 6.962 & 14.0 & 60.0 & 1.382 & 14.0 & 60.0 & 6.97 & 14.0 & 60.0 & 1.382 & 14.0 & 60.0 & 6.92
+\\
+benchnodesn200 & 13.6 & 60.0 & 14.638 & 14.0 & 60.0 & 0.968 & 16.2 & 60.0 & 0.57 & 15.4 & 60.0 & 0.766 & 16.2 & 60.0 & 0.574 & 15.4 & 60.0 & 0.776 & 16.2 & 60.0 & 0.572 & 15.4 & 60.0 & 0.774
+\\
+benchnodesn60 &  5.0 & 0.03 & 0.02 &  5.0 & 0.136 & 0.098 &  5.4 & 28.796 & 0.136 &  5.0 & 3.936 & 2.974 &  5.4 & 28.774 & 0.136 &  5.0 & 3.912 & 2.952 &  5.4 & 28.792 & 0.132 &  5.0 & 3.914 & 2.954
+\\
+benchnodesn80 &  6.0 & 2.636 & 2.584 &  6.4 & 25.62 & 0.778 &  7.0 & 60.0 & 2.252 &  7.0 & 60.0 & 0.658 &  7.0 & 60.0 & 2.254 &  7.0 & 60.0 & 0.648 &  7.0 & 60.0 & 2.254 &  7.0 & 60.0 & 0.656
+\\
+benchpartp1t2e05n140 & 13.6 & 60.0 & 4.356 & 13.8 & 60.0 & 2.346 & 16.2 & 60.0 & 1.414 & 16.0 & 60.0 & 5.232 & 16.2 & 60.0 & 1.414 & 15.6 & 60.0 & 0.428 & 18.0 & 60.0 & 19.652 & 15.6 & 60.0 & 0.612
+\\
+benchpartp1t3e05n140 &  9.6 & 60.0 & 31.634 &  9.8 & 60.0 & 8.31 & 10.4 & 60.0 & 6.61 & 11.4 & 60.0 & 11.576 & 10.4 & 60.0 & 6.648 & 12.4 & 60.0 &  9.7 & 13.0 & 60.0 & 1.17 & 12.6 & 60.0 & 0.068
+\\
+benchpartp1t4e05n140 &  8.0 & 39.784 & 6.464 &  8.8 & 60.0 & 9.796 &  9.2 & 60.0 & 6.788 &  9.4 & 60.0 & 10.542 &  9.2 & 60.0 & 6.794 & 10.8 & 60.0 & 5.37 & 11.0 & 60.0 & 30.262 & 10.8 & 60.0 & 14.544
+\\
+benchpartp2t3e05n140 &  7.4 & 60.0 & 11.172 &  8.0 & 60.0 & 0.046 &  8.8 & 60.0 & 3.366 &  8.8 & 60.0 & 0.486 &  8.8 & 60.0 & 3.35 &  9.8 & 60.0 & 0.37 &  9.6 & 60.0 & 6.964 &  9.8 & 60.0 & 0.382
+\\
+benchpartp2t4e05n140 &  6.8 & 49.516 & 0.702 &  7.0 & 60.0 & 1.224 &  7.2 & 60.0 & 0.366 &  7.2 & 60.0 & 16.604 &  7.2 & 60.0 & 0.36 &  8.2 & 60.0 & 20.728 &  8.8 & 60.0 & 0.15 &  8.2 & 60.0 & 25.316
+\\
+benchpartp3t4e05n140 &  5.8 & 50.328 & 1.496 &  6.0 & 60.0 & 0.652 &  6.6 & 60.0 & 1.504 &  6.6 & 60.0 & 4.122 &  6.6 & 60.0 & 1.506 &  6.6 & 60.0 & 0.232 &  6.6 & 60.0 & 0.246 &  6.6 & 60.0 & 0.232
+\\
+holmen140d01 &  4.0 & 0.016 & 0.016 &  4.0 & 0.056 & 0.046 &  6.4 & 60.0 & 0.106 &  6.4 & 60.0 & 0.02 &  6.4 & 60.0 & 0.106 &  6.4 & 60.0 & 0.02 &  6.4 & 60.0 & 0.114 &  6.4 & 60.0 & 0.02
+\\
+holmen140d02 &  6.0 & 0.016 & 0.016 &  6.0 & 0.208 & 0.168 &  9.4 & 60.0 & 0.116 &  9.0 & 60.0 & 9.804 &  9.4 & 60.0 & 0.114 &  9.0 & 60.0 & 9.824 &  9.4 & 60.0 & 0.11 &  9.0 & 60.0 & 9.846
+\\
+holmen140d03 &  8.0 & 0.018 & 0.008 &  8.0 & 0.282 & 0.118 & 12.4 & 60.0 & 3.066 & 11.8 & 60.0 & 20.746 & 12.4 & 60.0 & 3.066 & 11.8 & 60.0 & 20.758 & 12.4 & 60.0 & 3.066 & 11.8 & 60.0 & 20.818
+\\
+holmen140d04 &  9.8 & 0.02 & 0.002 &  9.8 & 0.212 & 0.008 & 14.8 & 60.0 & 21.552 & 14.2 & 60.0 &  6.8 & 14.8 & 60.0 & 21.576 & 14.2 & 60.0 & 6.798 & 14.8 & 60.0 & 21.588 & 14.2 & 60.0 & 6.794
+\\
+\hline 
+ \end{tabular}
+
+	
+	\clearpage
+
+\section{Models}	
 	
 	\begin{itemize}
 	\item solution.gap
