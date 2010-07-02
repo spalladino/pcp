@@ -30,10 +30,13 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String filename, runId;
 		Settings.load("run");
+		
 		Kind solver = Settings.get().getEnum("solver.kind", Kind.class);
+		filename = Settings.get().getPath("run.folder", "run.filename");
+		runId = Settings.get().getString("run.id");
 		
 		if (solver.equals(Kind.Heuristic)) {
-			Heuristic.main(args);
+			Heuristic.solve(filename, runId);
 			System.exit(0);
 			return;
 		} else if (solver.equals(Kind.Preprocessor)) {
@@ -42,8 +45,7 @@ public class Main {
 			return;
 		}
 		
-		filename = Settings.get().getPath("run.folder", "run.filename");
-		runId = Settings.get().getString("run.id");
+		
 		
 		solve(filename, runId);
 		System.exit(0);

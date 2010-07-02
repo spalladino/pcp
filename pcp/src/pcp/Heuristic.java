@@ -29,7 +29,7 @@ public class Heuristic {
 		System.exit(0);
 	}
 	
-	private static void solve(String filename, String runId) throws Exception {
+	public static void solve(String filename, String runId) throws Exception {
 		IFactory factory = Factory.get();
 		BuilderStrategy strategy = BuilderStrategy.fromSettings();
 
@@ -55,6 +55,7 @@ public class Heuristic {
 			
 			data.getData().put("solution.time", (double)solver.getBounder().getMillis() / 1000.0);
 			data.getData().put("solution.chi", solver.getChi());
+			data.getData().put("solution.found", (double)solver.getBounder().getLastImproved() / 1000.0);
 			data.dump();
 		}
 	}

@@ -14,4 +14,6 @@ public interface IAlgorithmBounder extends IAlgorithmData {
 	void end();
 	
 	void stop();
+	
+	long getLastImproved();
 }

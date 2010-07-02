@@ -9,6 +9,7 @@ import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.coloring.ConfigurationColoring;
 import pcp.algorithms.coloring.DSaturPartitionColoringEasiestNodes;
 import pcp.algorithms.coloring.DSaturPartitionColoringHardestPartition;
+import pcp.algorithms.coloring.DSaturPartitionColoringRandomizedEasiestNodes;
 import pcp.algorithms.coloring.NodesColoring;
 import pcp.algorithms.coloring.PartitionsColoring;
 import pcp.entities.IPartitionedGraph;
@@ -43,6 +44,8 @@ public class Factory implements IFactory {
 				return new PartitionsColoring(graph);
 			case DSaturEasyNode:
 				return new DSaturPartitionColoringEasiestNodes(graph);
+			case DSaturEasyNodeRandomized:
+				return new DSaturPartitionColoringRandomizedEasiestNodes(graph);
 			case DSaturHardPartition:
 				return new DSaturPartitionColoringHardestPartition(graph);
 		}

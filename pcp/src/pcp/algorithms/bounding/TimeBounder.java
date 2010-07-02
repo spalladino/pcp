@@ -8,6 +8,7 @@ public class TimeBounder implements IAlgorithmBounder {
 	private boolean stopped = false;
 	private long init = 0;
 	private long end = 0;
+	private long lastImproved = 0;
 	
 	private long maxTime = Long.MAX_VALUE;
 	
@@ -58,6 +59,7 @@ public class TimeBounder implements IAlgorithmBounder {
 
 	@Override
 	public boolean improved() {
+		lastImproved = System.currentTimeMillis();
 		return check();
 	}
 
@@ -66,6 +68,12 @@ public class TimeBounder implements IAlgorithmBounder {
 		return check();
 	}
 	
+	@Override
+	public long getLastImproved() {
+		if (lastImproved == 0) return 0;
+		return lastImproved - init;
+	}
+
 	
 	
 }
