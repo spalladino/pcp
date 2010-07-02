@@ -67,7 +67,7 @@ Similar to the previous case, the component independent set can be instantiated 
 
 Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest label will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
 
-Therefore, in the worst case, in which all nodes in $V \setminus W$ use different colors, then an assignment as the one shown in table \ref{table:cisetcoloring} will occur. This coloring...
+Therefore, in the worst case, in which all nodes in $V \setminus W$ use different colors, then an assignment as the one shown in table \ref{table:cisetcoloring} will occur. This coloring uses only the first $q - \alpha_P + 1$ colors, and leaves all colors with a greater label unused. 
 
 \begin{table}
 \centering	
@@ -91,16 +91,19 @@ $j_{q}$ & $0$\\
 	\label{table:cisetcoloring}
 \end{table}
 
-Should these restrictions be included in the model, then \ref{ineq:ciset} can be rewritten for an induced component independent set $W$ as the following:
+This assignment may happen only if every node outside the $W$ uses a different color, if there is any node repeating color then label $q - \alpha_P + 1$ is unused as well. Therefore, at most one node may be colored using $q - \alpha_P + 1$, while colors with a greater label will never be used, so the following inequality holds:
+
+\begin{equation}
+\label{ineq:cisetbshigh}
+\sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq w_{j_t + 1} \quad j_t = q - \alpha_P(W)
+\end{equation}
+
+Combining this inequality with \ref{ineq:ciset}, results in the following component independent set inequality, strengthened via symmetry breaking:
 
 \begin{equation}
 \label{ineq:cisetbs}
 \sum_{i \in W} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq \alpha_P(W) w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha_P(W)
 \end{equation}
-
-Any $(j_t + r)$-coloring, for $r \geq 1$, there are $\alpha_P(W) - r$ partitions repeating color, therefore, the maximum number of partitions that can be colored using labels $j_0, j_t + 1, \ldots, j_t + r$ is $\alpha_P(W) + 1$. 
-
-\TODO{Complete this explanation} 
 
 Both component hole (\ref{ineq:chole}) and component path inequalities (\ref{ineq:cpath}) can be strengthened using this argument.
 

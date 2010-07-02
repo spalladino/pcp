@@ -3,7 +3,7 @@ def format_output(str):
         return '-'
     try:
         f = float(str) 
-        return "{0:.3f}".format(f) if int(f) != f else str
+        return "{0:.2f}".format(f) if int(f) != f else str
     except: 
         return str
 

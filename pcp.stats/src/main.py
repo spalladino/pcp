@@ -15,9 +15,9 @@ def simpletable(p):
 def latextable(p):    
         p.process(
                 ids=[metrics.FileName()],
-                datas=['solution.lb','solution.gap','solution.time'], 
+                datas=['solution.gap','solution.time'], 
                 series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'model.adjacentsNeighbourhood.useCliqueCover'],
-                datafilter= None,
+                datafilter= {'strategy.symmetry': 'UseLowerLabelFirst', 'strategy.objective': 'Equal'},
                 runfilter= None,
                 aggr= processor.avg
                     )

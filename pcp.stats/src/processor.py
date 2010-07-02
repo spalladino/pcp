@@ -100,7 +100,7 @@ def first(list):
 def avg(list):
     try:
         if len(list) == 0: return 0.0
-        return float(sum(map(float,list), 0.0)) / float(len(list))
+        return float(sum(map(tryfloat,list), 0.0)) / float(len(list))
     except:
         "ERR"
 
