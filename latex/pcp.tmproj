@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>algorithm.tex</string>
+	<string>ineqs.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>pcp.tex</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T18:18:36Z</date>
+			<date>2010-07-01T19:19:40Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -26,7 +26,9 @@
 			<key>filename</key>
 			<string>ineqs.tex</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T17:33:31Z</date>
+			<date>2010-07-01T19:19:40Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -44,15 +46,13 @@
 			<key>filename</key>
 			<string>heur.tex</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T18:18:37Z</date>
+			<date>2010-07-01T15:52:19Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>algorithm.tex</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T18:18:37Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-07-01T17:46:44Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -108,11 +108,31 @@
 			<key>lastUsed</key>
 			<date>2010-06-30T14:21:15Z</date>
 		</dict>
+		<dict>
+			<key>filename</key>
+			<string>../drafts/Test.tex</string>
+			<key>lastUsed</key>
+			<date>2010-07-01T17:46:08Z</date>
+		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
+		<key>../drafts/Test.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>15</integer>
+				<key>line</key>
+				<integer>67</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>../pcp/run.properties</key>
 		<dict>
 			<key>caret</key>
@@ -216,58 +236,42 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>35</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>142</integer>
+			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>13</integer>
+			<integer>63</integer>
 		</dict>
 		<key>heur.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>15</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>141</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>149</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>20</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
+			<integer>134</integer>
 		</dict>
 		<key>ineqs.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>20</integer>
+				<integer>189</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>69</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>60</integer>
 		</dict>
 		<key>introduction.tex</key>
 		<dict>
@@ -334,14 +338,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>11</integer>
+				<integer>49</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>4</integer>
+			<integer>23</integer>
 		</dict>
 		<key>results.tex</key>
 		<dict>
@@ -363,6 +367,7 @@
 		<string>pcp.tex</string>
 		<string>algorithm.tex</string>
 		<string>heur.tex</string>
+		<string>../drafts/Test.tex</string>
 		<string>results.tex</string>
 		<string>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringHardestPartition.java</string>
 		<string>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringEasiestNodes.java</string>
@@ -378,6 +383,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{263, 119}, {1129, 741}}</string>
+	<string>{{260, 105}, {1129, 741}}</string>
 </dict>
 </plist>
