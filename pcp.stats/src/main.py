@@ -15,9 +15,9 @@ def simpletable(p):
 def model_latextable(p):    
         p.process(
                 ids=[metrics.FileName()],
-                datas=['solution.gap','solution.time'], 
-                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'model.adjacentsNeighbourhood.useCliqueCover'],
-                datafilter= {'strategy.symmetry': 'UseLowerLabelFirst', 'strategy.objective': 'Equal'},
+                datas=['solution.gap','cuts.niters','solution.time'], 
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                datafilter= {'strategy.adjacency': 'AdjacentsNeighbourhood', 'strategy.colorBound': 'UpperNodesSum', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
                 runfilter= None,
                 aggr= processor.avg
                     )
@@ -34,8 +34,8 @@ def dsatur_latextable(p):
 
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100701DSATURS1M')
-    dsatur_latextable(p)
+    p = LatexProcessor('20100629MODELS')
+    model_latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

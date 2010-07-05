@@ -1,3 +1,5 @@
+import re
+
 def format_output(str):
     if not str: 
         return '-'
@@ -12,12 +14,39 @@ class FileName:
         pass
     
     def __call__(self, dict):
-        try: return dict["run.filename"].split(".")[0]
-        except: return 'FILENAME_ERROR'
-    
+        return self.format_filename(dict["run.filename"].split(".")[0])
+        
     def __str__(self):
         return "filename"
     
+    def type(self):
+        return "string"
+    
+    def format_filename(self, fname):
+        dens = re.match('benchdens\\\\e([\\d]+)n([\\d]+)', fname)
+        if dens: return "EW {0}\\% N={1}".format(int(dens.group(1)) * 10, int(dens.group(2)))
+        
+        holme = re.match('holme\\\\n([\\d]+)d([\\d]+)', fname)
+        if holme: return "HK {0}\\% N={1}".format(int(holme.group(2)) * 10, int(holme.group(1)))
+        
+        return fname
+
+class BoundFound:
+    
+    def __init__(self):
+        pass
+    
+    def __call__(self, dict):
+        list = eval(dict['root.gaps'].replace('null', 'None'))
+        val,pos = 0,0
+        for i,x in enumerate(list):
+            if x and x != val:
+                val,pos = x,i
+        return "{0}/{1}".format(pos, dict['cuts.niters'])
+    
+    def __str__(self):
+        return "iter"
+
     def type(self):
         return "string"
 

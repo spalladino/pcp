@@ -221,9 +221,9 @@ public class ModelBuilder {
 		for (int j = 0; j < colors; j++) {
 			int multiplier = 1;
 			switch (strategy) {
-				case Linear: multiplier = colors - j; break;
-				case LinearReverse: multiplier = j + 1; break;
-				case Geometric: multiplier = (colors - j) * colors; break;
+				case LinearReverse: multiplier = colors - j; break;
+				case Linear: multiplier = j + 1; break;
+				case Geometric: multiplier = (j + 1) * colors; break;
 				default: multiplier = 1; break;
 			}
 			

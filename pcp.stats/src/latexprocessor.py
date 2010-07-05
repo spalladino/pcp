@@ -34,6 +34,10 @@ class LatexProcessor(Processor):
         print '\hline'
         print '\\multicolumn{%s}{|c|}{Id} & ' % len(ids) + ' & '.join(['\\multicolumn{%s}{|c|}{S%s}' % (len(datas), i+1) for i in range(count)])
         print '\\\\'
+        
+        print ' & ' + ' & '.join(datas * count)
+        print '\\\\'
+        
         print '\hline'
         
         for key, runset in runsets:

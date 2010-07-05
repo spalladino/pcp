@@ -1,4 +1,5 @@
 \documentclass[12pt]{article}
+
 \usepackage[ansinew]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -14,6 +15,8 @@
 
 \usetikzlibrary{backgrounds,fit} 
 
+% Page size
+\addtolength{\textheight}{2cm}
 
 % Versioning
 \newenvironment{nuevo}{\marginpar{$<$nuevo$>$}}{\marginpar{$<$/nuevo$>$}}
@@ -49,8 +52,9 @@
 % Configs
 \newtheorem{theorem}{Theorem}
 \numberwithin{equation}{section}
+\numberwithin{table}{section}
 
-\includeonly{results}
+%\includeonly{models,results}
 
 \begin{document}
 

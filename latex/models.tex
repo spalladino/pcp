@@ -1,6 +1,7 @@
 %!TEX root = pcp.tex
 
 \section{Model}
+\label{sec:model}
 
 In this section we will present the BIP formulation for the PCP, as a generalization of the CP model used by M\'endez-D\'iaz and Zabala in \cite{mendez2008cutting}.
 
@@ -29,7 +30,7 @@ Equation \ref{eqn:adjscolor} implies that two adjacent vertices may not use the 
 Restriction \ref{eqn:vertexsum} requires that every node is assigned exactly one color. Since the difference between standard coloring and partition coloring relies solely in the fact that only a node per partition must be colored, instead of every node, adjusting this last restriction provides a simple model for PCP.
 
 \begin{align}
-\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \nonumber \\
+\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \label{eqn:obj} \\
 \text{\textsc{subject to}} \quad & \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad \forall P_k \in P \label{eqn:partsum} \\
 & x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \sumheight \label{eqn:adjscolorp}\\
 & x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
@@ -128,6 +129,25 @@ k = 3, i = 5, j = 3 \qquad & x_{5,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x
 k = 3, i = 6, j = 3 \qquad & x_{6,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x_{4,2} \\
 \vdots \qquad & \vdots
 \end{align*}
+
+\subsection{Objective function}
+\label{subsec:model:obj}
+
+Another way of reducing the number of symmetric solutions is to prefer lower-label colors in the objective function, therefore choosing the lowest labels possible in each coloring. To achieve this we simply add higher coefficients to lower $w_j$ variables in the objective:
+
+\begin{equation}
+\label{eqn:objlinear}
+\text{\textsc{minimize}} \quad \sum_{j \in C} j \times w_j 
+\end{equation}
+
+We also tried a different progression in the variables' coefficients to later compare computational results, giving more weight to lower labels:
+
+\begin{equation}
+\label{eqn:objgeo}
+\text{\textsc{minimize}} \quad \sum_{j \in C} c \times j \times w_j 
+\end{equation}
+
+However, early tests showed that these functions offer poor computational results, so they were early discarded during the experimentation process.
 
 \subsection{Strengthening the model}
 
