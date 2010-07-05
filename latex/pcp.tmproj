@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ineqs.tex</string>
+	<string>results.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>pcp.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-01T19:19:40Z</date>
+			<date>2010-07-02T17:44:19Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -20,15 +20,15 @@
 			<key>filename</key>
 			<string>results.tex</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T17:46:31Z</date>
+			<date>2010-07-02T17:44:21Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>ineqs.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-01T19:19:40Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-07-02T15:09:34Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -46,13 +46,13 @@
 			<key>filename</key>
 			<string>heur.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-01T15:52:19Z</date>
+			<date>2010-07-02T17:44:21Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>algorithm.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-01T17:46:44Z</date>
+			<date>2010-07-02T17:44:19Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -112,7 +112,7 @@
 			<key>filename</key>
 			<string>../drafts/Test.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-01T17:46:08Z</date>
+			<date>2010-07-02T17:44:21Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -126,12 +126,28 @@
 				<key>column</key>
 				<integer>15</integer>
 				<key>line</key>
-				<integer>67</integer>
+				<integer>62</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>131</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>33</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>40</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>15</integer>
+				<key>line</key>
+				<integer>62</integer>
+			</dict>
 		</dict>
 		<key>../pcp/run.properties</key>
 		<dict>
@@ -238,12 +254,12 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>124</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>63</integer>
+			<integer>98</integer>
 		</dict>
 		<key>heur.tex</key>
 		<dict>
@@ -264,14 +280,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>189</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>69</integer>
+				<integer>106</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>60</integer>
+			<integer>86</integer>
 		</dict>
 		<key>introduction.tex</key>
 		<dict>
@@ -338,28 +354,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>49</integer>
+				<integer>13</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>23</integer>
+			<integer>0</integer>
 		</dict>
 		<key>results.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>29</integer>
+				<integer>19</integer>
 				<key>line</key>
-				<integer>5</integer>
+				<integer>33</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -383,6 +399,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{260, 105}, {1129, 741}}</string>
+	<string>{{313, 123}, {1129, 741}}</string>
 </dict>
 </plist>
