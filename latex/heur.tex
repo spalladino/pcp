@@ -121,6 +121,7 @@ Therefore, we propose another modification, presented in algorithm \ref{alg:pcpe
 It is within this scheme that we embedded our two different strategies based on degree of saturation for partition coloring.
 
 \subsection{Partitioned \textsc{dsatur}}
+\label{subsec:heur:pdsatur}
 
 Classical \textsc{dsatur} picks the node with the highest color degree on each iteration, based on the assumption that nodes difficult to color should be handled first, which usually works well for most heuristics. In the case of partition coloring, as suggested in \cite{Li00thepartition}, nodes with lower degree are easier to color and should be preferred within a partition; also, it is better to color larger partitions first in order to reduce the problem size as early as possible.
 

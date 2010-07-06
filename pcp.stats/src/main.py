@@ -25,17 +25,17 @@ def model_latextable(p):
 def dsatur_latextable(p):    
         p.process(
                 ids=[metrics.FileName()],
-                datas=['solution.chi','solution.time','solution.found'], 
+                datas=['solution.chi','solution.found'], 
                 series=['strategy.coloring', 'dsatur.partition.weight.size', 'dsatur.partition.weight.colorCount', 'dsatur.partition.weight.uncolored'],
-                datafilter= None,
+                datafilter= {'dsatur.partition.weight.size':'1', 'dsatur.partition.weight.colorCount':'10000', 'dsatur.partition.weight.uncolored':'100'},
                 runfilter= None,
                 aggr= processor.avg
                 )
 
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100629MODELS')
-    model_latextable(p)
+    p = LatexProcessor('20100701DSATURS1M')
+    dsatur_latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

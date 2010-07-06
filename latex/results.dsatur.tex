@@ -1,0 +1,166 @@
+%!TEX root = pcp.tex
+
+\subsection{Partitioned \textsc{dsatur}}
+\label{subsec:resultspdsatur}
+
+Considering we had three different partitioned \textsc{dsatur} implementations (see section \ref{subsec:heur:pdsatur}), we ran quick tests on multiple graphs to determine how they performed when executed for short periods of time. For each instance, we executed the different algorithms for one minute, and report the lowest bound for the chromatic number obtained, as well as how fast was this bound obtained. Since we will be using \textsc{dsatur} mostly as an heuristic, it is of our interest that good solutions are found as quickly as possible.
+
+\subsubsection{Hardest partition parametrization}
+
+Before comparing the three different algorithms, we had to fix the criteria used to pick the \textit{hardest partition} on each call in this variant of the algorithm\footnote{Recall that this strategy picked the hardest partition on each call, and then the easiest node from it.}. As we had already mentioned, the criteria used is a combination of:
+
+\begin{itemize}
+	\item{Color degree of the partition, defined as the number of different colors adjacent to all of the nodes in the partition; considering that a larger color degree implies a harder partition to color}
+	\item{Size of the partition, as a larger partition being colored earlier helps reducing the problem size, therefore the larger the partition the earlier it should be handled}
+	\item{Number of uncolored partitions adjacent to the partition, equivalent to the tie breaking criteria used for classic \textsc{dsatur}} 
+\end{itemize}
+
+We generated six different configurations, based on all different possible orderings of these items. For example, for the first configuration, we first compared by the number of adjacent uncolored partitions, then by the degree of saturation, and finally by the size of the partition. The following are the configurations we established:
+
+\begin{itemize}
+\defitem{C1}{Uncolored, saturation, size}
+\defitem{C2}{Saturation, uncolored, size}
+\defitem{C3}{Uncolored, size, saturation}
+\defitem{C4}{Saturation, size, uncolored}
+\defitem{C5}{Size, uncolored, saturation}
+\defitem{C6}{Size, saturation, uncolored}
+\end{itemize}
+
+Results in table \ref{table:pdsatur:hardp} show little difference for most instances in which partition size is constant (fixed to two nodes). Whereas in some cases, mostly those with lower density, configurations C1, C3 and C5 (those who choose the hardest partition by number of uncolored neighbour partitions before by saturation degree) find the solution earlier, in other cases configurations C2, C4 and C6 report better times. All of them find always nearly the same values for the chromatic number.
+
+Differences arise, however, when we have different partition sizes. Configurations C1 and C3, those who pick the partition on uncolored neighbours, obtain better bounds in less time than the others. Surprisingly, configurations based on partition sizes offer the worst results for these cases.
+
+Since we will be working mostly with partitioned graphs with equal partition sizes, we will not take into consideration configurations that use this as a criteria; and as graphs with higher density have been taking the longest time to process, we will prefer a configuration that best deals with this cases, such as C2.
+
+\begin{sidewaystable}
+\label{table:pdsatur:hardp}
+\centering
+
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graphs} & \multicolumn{2}{|c|}{C1} & \multicolumn{2}{|c|}{C2} & \multicolumn{2}{|c|}{C3} & \multicolumn{2}{|c|}{C4} & \multicolumn{2}{|c|}{C5} & \multicolumn{2}{|c|}{C6}
+\\
+ & chi & found & chi & found & chi & found & chi & found & chi & found & chi & found
+\\
+\hline
+EW 20\% N=140 &  6.0 & 0.192 &  5.8 & 1.514 &  6.0 & 0.196 &  5.8 & 1.504 &  6.0 & 0.184 &  5.8 &  1.5
+\\
+EW 40\% N=140 & 10.0 & 6.372 &  9.6 & 16.878 & 10.0 & 6.384 &  9.6 & 16.874 & 10.0 & 6.382 &  9.6 & 16.886
+\\
+EW 60\% N=140 & 14.2 & 27.692 & 14.4 & 16.208 & 14.2 & 27.758 & 14.4 & 16.154 & 14.2 & 27.79 & 14.4 & 16.184
+\\
+EW 80\% N=140 & 21.8 & 8.29 & 21.8 & 8.138 & 21.8 & 8.314 & 21.8 & 8.14 & 21.8 & 8.294 & 21.8 & 8.148
+\\
+\hline
+EW 50\% N=140 P=(1..2) & 16.2 & 1.414 & 16.0 & 5.232 & 16.2 & 1.414 & 15.6 & 0.428 & 18.0 & 19.652 & 15.6 & 0.612
+\\
+EW 50\% N=140 P=(1..3) & 10.4 & 6.61 & 11.4 & 11.576 & 10.4 & 6.648 & 12.4 &  9.7 & 13.0 & 1.17 & 12.6 & 0.068
+\\
+EW 50\% N=140 P=(1..4) &  9.2 & 6.788 &  9.4 & 10.542 &  9.2 & 6.794 & 10.8 & 5.37 & 11.0 & 30.262 & 10.8 & 14.542
+\\
+EW 50\% N=140 P=(2..3) &  8.8 & 3.366 &  8.8 & 0.486 &  8.8 & 3.35 &  9.8 & 0.37 &  9.6 & 6.964 &  9.8 & 0.382
+\\
+EW 50\% N=140 P=(2..4) &  7.2 & 0.366 &  7.2 & 16.604 &  7.2 & 0.36 &  8.2 & 20.728 &  8.8 & 0.15 &  8.2 & 25.316
+\\
+EW 50\% N=140 P=(3..4) &  6.6 & 1.504 &  6.6 & 4.122 &  6.6 & 1.506 &  6.6 & 0.23 &  6.6 & 0.246 &  6.6 & 0.23
+\\
+\hline
+EW 50\% N=080 &  7.0 & 2.248 &  7.0 & 0.658 &  7.0 & 2.252 &  7.0 & 0.648 &  7.0 & 2.25 &  7.0 & 0.656
+\\
+EW 50\% N=100 &  8.2 & 19.472 &  8.0 & 10.01 &  8.2 & 19.504 &  8.0 & 10.008 &  8.2 & 19.526 &  8.0 & 10.014
+\\
+EW 50\% N=120 & 10.0 & 12.04 & 10.0 & 1.578 & 10.0 & 12.066 & 10.0 & 1.588 & 10.0 & 12.058 & 10.0 & 1.586
+\\
+EW 50\% N=140 & 11.6 & 8.88 & 11.8 & 3.832 & 11.6 & 8.892 & 11.8 & 3.81 & 11.6 & 8.904 & 11.8 & 3.826
+\\
+EW 50\% N=160 & 13.4 & 6.066 & 13.4 & 6.352 & 13.4 & 6.07 & 13.4 & 6.344 & 13.4 & 6.068 & 13.4 & 6.35
+\\
+EW 50\% N=180 & 14.0 & 1.376 & 14.0 & 6.962 & 14.0 & 1.382 & 14.0 & 6.97 & 14.0 & 1.382 & 14.0 & 6.92
+\\
+EW 50\% N=200 & 16.2 & 0.57 & 15.4 & 0.766 & 16.2 & 0.574 & 15.4 & 0.776 & 16.2 & 0.572 & 15.4 & 0.774
+\\
+\hline
+HK 10\% N=140 &  6.4 & 0.106 &  6.4 & 0.02 &  6.4 & 0.106 &  6.4 & 0.02 &  6.4 & 0.114 &  6.4 & 0.02
+\\
+HK 20\% N=140 &  9.4 & 0.114 &  9.0 & 9.804 &  9.4 & 0.112 &  9.0 & 9.824 &  9.4 & 0.11 &  9.0 & 9.846
+\\
+HK 30\% N=140 & 12.4 & 3.066 & 11.8 & 20.746 & 12.4 & 3.066 & 11.8 & 20.758 & 12.4 & 3.066 & 11.8 & 20.818
+\\
+HK 40\% N=140 & 14.8 & 21.552 & 14.2 &  6.8 & 14.8 & 21.576 & 14.2 & 6.798 & 14.8 & 21.588 & 14.2 & 6.792
+\\
+\hline 
+ \end{tabular}
+\caption{Best value obtained for the chromatic number and time at which this value was obtained in one-minute runs of the \textit{hardest partition} version of \textsc{dsatur}, using different combinations of strategies to pick the hardest partition at each call.}
+
+\end{sidewaystable}
+
+\subsubsection{Strategies comparison}
+
+After fixing the \textit{hardest partition} strategy to C2, we will compare its performance with both the \textit{easiest node} and the \textit{randomized easiest node} variants. We ran the same tests as before, and present the results on table \ref{table:pdsatur:comp}.
+
+Regardless of the configuration chosen for the \textit{hardest partition} variant, both \textit{easiest node} strategies find much better bounds within the one-minute running time. From those, the deterministic one offers slightly better results, and is therefore the algorithm that we will be using for the following experimentations. 
+
+The randomized version might perform better in larger graphs on lengthier running periods, since it has a chance to find a different solution than the deterministic and obtain a sudden improvement on the bound, whereas the deterministic may spend several iterations trying similar assignments. However, in very short runs as these ones, the deterministic version is clearly preferred.  
+
+\begin{table}
+\label{table:pdsatur:comp}
+\centering
+
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graphs} & \multicolumn{2}{|c|}{\textit{easiest node}} & \multicolumn{2}{|c|}{\textit{randomized node}} & \multicolumn{2}{|c|}{\textit{hardest partition}}
+\\
+ & chi & found & chi & found & chi & found
+\\
+\hline
+EW 20\% N=140 &  5.0 & 0.004 &  5.0 & 0.016 &  5.8 & 1.514
+\\
+EW 40\% N=140 &  8.0 & 4.172 &  8.2 & 27.334 &  9.6 & 16.878
+\\
+EW 60\% N=140 & 12.4 & 10.062 & 12.4 & 4.656 & 14.4 & 16.208
+\\
+EW 80\% N=140 & 18.6 & 25.522 & 18.4 & 10.77 & 21.8 & 8.138
+\\
+\hline
+EW 50\% N=140 P=(1..2) & 13.6 & 4.356 & 13.8 & 2.346 & 16.0 & 5.232
+\\
+EW 50\% N=140 P=(1..3) &  9.6 & 31.634 &  9.8 & 8.31 & 11.4 & 11.576
+\\
+EW 50\% N=140 P=(1..4) &  8.0 & 6.464 &  8.8 & 9.796 &  9.4 & 10.542
+\\
+EW 50\% N=140 P=(2..3) &  7.4 & 11.172 &  8.0 & 0.046 &  8.8 & 0.486
+\\
+EW 50\% N=140 P=(2..4) &  6.8 & 0.702 &  7.0 & 1.224 &  7.2 & 16.604
+\\
+EW 50\% N=140 P=(3..4) &  5.8 & 1.494 &  6.0 & 0.652 &  6.6 & 4.122
+\\
+\hline
+EW 50\% N=080 &  6.0 & 2.584 &  6.4 & 0.778 &  7.0 & 0.658
+\\
+EW 50\% N=100 &  7.2 & 1.646 &  7.2 & 15.728 &  8.0 & 10.01
+\\
+EW 50\% N=120 &  9.0 & 0.042 &  9.0 & 1.618 & 10.0 & 1.578
+\\
+EW 50\% N=140 & 10.2 & 1.59 & 10.0 & 33.264 & 11.8 & 3.832
+\\
+EW 50\% N=160 & 11.2 & 5.134 & 11.8 & 2.576 & 13.4 & 6.352
+\\
+EW 50\% N=180 & 12.6 & 10.242 & 13.0 & 4.818 & 14.0 & 6.962
+\\
+EW 50\% N=200 & 13.6 & 14.636 & 14.0 & 0.966 & 15.4 & 0.766
+\\
+\hline
+HK 10\% N=140 &  4.0 & 0.016 &  4.0 & 0.044 &  6.4 & 0.02
+\\
+HK 20\% N=140 &  6.0 & 0.016 &  6.0 & 0.168 &  9.0 & 9.804
+\\
+HK 30\% N=140 &  8.0 & 0.008 &  8.0 & 0.118 & 11.8 & 20.746
+\\
+HK 40\% N=140 &  9.8 & 0.002 &  9.8 & 0.008 & 14.2 &  6.8
+\\
+\hline 
+ \end{tabular}
+
+\caption{Best value obtained for the chromatic number and time at which this value was obtained in one-minute runs for the \textit{hardest partition}, \textit{easiest node} and \textit{randomized easiest node} versions of \textsc{dsatur}.}
+
+\end{table}

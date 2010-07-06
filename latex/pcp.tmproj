@@ -10,7 +10,7 @@
 			<key>filename</key>
 			<string>pcp.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-02T17:44:19Z</date>
+			<date>2010-07-05T20:07:12Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -20,7 +20,7 @@
 			<key>filename</key>
 			<string>results.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-02T17:44:21Z</date>
+			<date>2010-07-05T20:08:16Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -28,13 +28,13 @@
 			<key>filename</key>
 			<string>ineqs.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-02T15:09:34Z</date>
+			<date>2010-07-05T20:08:16Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>models.tex</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T15:06:44Z</date>
+			<date>2010-07-05T20:05:45Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -46,13 +46,13 @@
 			<key>filename</key>
 			<string>heur.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-02T17:44:21Z</date>
+			<date>2010-07-05T13:52:59Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>algorithm.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-02T17:44:19Z</date>
+			<date>2010-07-05T14:58:08Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -64,7 +64,7 @@
 			<key>filename</key>
 			<string>../pcp/src/pcp/model/ModelBuilder.java</string>
 			<key>lastUsed</key>
-			<date>2010-06-29T19:28:42Z</date>
+			<date>2010-07-05T19:40:44Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -100,7 +100,7 @@
 			<key>filename</key>
 			<string>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringEasiestNodes.java</string>
 			<key>lastUsed</key>
-			<date>2010-06-30T14:35:30Z</date>
+			<date>2010-07-05T13:46:39Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -112,7 +112,7 @@
 			<key>filename</key>
 			<string>../drafts/Test.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-02T17:44:21Z</date>
+			<date>2010-07-05T13:52:56Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -124,30 +124,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>195</integer>
 				<key>line</key>
-				<integer>62</integer>
+				<integer>174</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
-			<integer>131</integer>
+			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>33</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>40</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>15</integer>
-				<key>line</key>
-				<integer>62</integer>
-			</dict>
+			<integer>99</integer>
 		</dict>
 		<key>../pcp/run.properties</key>
 		<dict>
@@ -205,20 +189,6 @@
 			<key>firstVisibleLine</key>
 			<integer>180</integer>
 		</dict>
-		<key>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringEasiestNodes.java</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>52</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>18</integer>
-		</dict>
 		<key>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringHardestPartition.java</key>
 		<dict>
 			<key>caret</key>
@@ -238,14 +208,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>39</integer>
 				<key>line</key>
-				<integer>206</integer>
+				<integer>224</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>30</integer>
+			<integer>92</integer>
 		</dict>
 		<key>algorithm.tex</key>
 		<dict>
@@ -259,7 +229,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>98</integer>
+			<integer>0</integer>
 		</dict>
 		<key>heur.tex</key>
 		<dict>
@@ -271,23 +241,39 @@
 				<integer>141</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>149</integer>
+			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>134</integer>
+			<integer>0</integer>
 		</dict>
 		<key>ineqs.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>106</integer>
+				<integer>27</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>86</integer>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>26</integer>
+				<key>line</key>
+				<integer>27</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>7</integer>
+				<key>line</key>
+				<integer>27</integer>
+			</dict>
 		</dict>
 		<key>introduction.tex</key>
 		<dict>
@@ -326,27 +312,27 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>102</integer>
+				<integer>158</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>91</integer>
+			<integer>143</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>52</integer>
 				<key>line</key>
-				<integer>102</integer>
+				<integer>159</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>102</integer>
+				<integer>158</integer>
 			</dict>
 		</dict>
 		<key>pcp.tex</key>
@@ -354,51 +340,47 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>56</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>42</integer>
 		</dict>
 		<key>results.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>19</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>pcp.tex</string>
+		<string>models.tex</string>
+		<string>results.tex</string>
 		<string>algorithm.tex</string>
 		<string>heur.tex</string>
 		<string>../drafts/Test.tex</string>
-		<string>results.tex</string>
-		<string>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringHardestPartition.java</string>
-		<string>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoringEasiestNodes.java</string>
-		<string>../pcp/src/pcp/algorithms/coloring/DSaturPartitionColoring.java</string>
-		<string>../pcp/src/pcp/algorithms/coloring/DSaturColoring.java</string>
 		<string>../pcp/src/pcp/model/ModelBuilder.java</string>
 		<string>../pcp/run.properties</string>
 		<string>../pcp/src/pcp/algorithms/clique/MaxCliqueFinder.java</string>
-		<string>models.tex</string>
 		<string>ineqs.tex</string>
 		<string>introduction.tex</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{313, 123}, {1129, 741}}</string>
+	<string>{{294, 124}, {1129, 741}}</string>
 </dict>
 </plist>

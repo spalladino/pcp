@@ -12,6 +12,104 @@ def fetch_model_files():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n100\\.00[\\d]\\.in') + \
         fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00[\\d]\\.in')
 
+def fetch_branch_files():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n60\\.00(0|1|2)\\.in')
+
+branchdynruns = [ {
+                 'solver.useCutCallback': 'false', 
+                 'solver.kind': 'PcpBranchAndCut',
+                 'solver.useHeuristicCallback': 'false',
+                 'solver.useCplexPrimalHeuristic': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'solver.maxTime': '900',
+                 
+                 'branch.prios.enabled': 'true',
+                 'branch.selection': '1', # TODO: CHECK CPLEX DEFAULTS,
+                 
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '1',
+                 'branch.dynamic.dsatur.nodelb': '0.7',
+                 
+               }.copy().update(d) for d in [
+
+                {
+                    'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.dsatur': 'false',
+                    'branch.direction': '0',
+                },
+                
+                {
+                    'branch.dynamic.fractional': 'false',
+                    'branch.dynamic.dsatur': 'true',
+                    'branch.direction': '0',
+                },
+                
+                {
+                    'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.dsatur': 'false',
+                    'branch.direction': '1',
+                },
+                
+                {
+                    'branch.dynamic.fractional': 'false',
+                    'branch.dynamic.dsatur': 'true',
+                    'branch.direction': '1',
+                },
+                
+                {
+                    'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.dsatur': 'false',
+                    'branch.direction': '-1',
+                },
+                
+                {
+                    'branch.dynamic.fractional': 'false',
+                    'branch.dynamic.dsatur': 'true',
+                    'branch.direction': '-1',
+                },
+                
+                ]   
+            ]
+
+branchstaticruns = [ {
+                 'solver.useCutCallback': 'false', 
+                 'solver.kind': 'PcpBranchAndCut',
+                 'solver.useHeuristicCallback': 'false',
+                 'solver.useCplexPrimalHeuristic': 'true',
+                 'solver.useBranchingCallback': 'false',
+                 'solver.maxTime': '900',
+                 
+                 'branch.prios.enabled': 'true',                 
+                 'branch.direction': '0',
+                 'branch.selection': '1', # TODO: CHECK CPLEX DEFAULTS
+               }.copy().update(d) for d in [
+                { 'branch.prios.enabled': 'false'},       
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '1',
+                },
+                
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '-10',
+                 'branch.prios.colorindex': '-1',
+                },
+                
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '-10',
+                 'branch.prios.colorindex': '1',
+                },
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                },
+                ]   
+            ]
+
 dsaturruns = [
               {
                 'strategy.coloring': 'DSaturHardPartition',
