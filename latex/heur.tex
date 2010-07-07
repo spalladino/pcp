@@ -46,6 +46,8 @@ The strategy used for picking the node to be colored in each recursive call give
 
 Another algorithm, one of the most widely used for this problem, is \textsc{dsatur}\cite{brelaz1979new}. This algorithm always picks the node with the highest degree of saturation\footnote{Number of different colors used in $N(v)$ for a node $v \in V$.}, using different strategies for tie-breaking, such as picking the node with the largest number of uncolored neighbours\cite{sewell1996improved}, and has proved to be one of the best enumeration algorithms available for graph coloring.
 
+For an implementation of the \textsc{dsatur} algorithm, we used the code provided by Trick in \cite{trickdsatur}, which we ported to Java and later adapted into partitioned coloring as described in the following section.
+
 \subsection{Enumerating partitioned colorings}
 
 The previous scheme must be modified in order to be used for partitioned coloring, since it does not require to color every node in the graph but a single node per partition.

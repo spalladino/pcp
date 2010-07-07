@@ -5,7 +5,7 @@
 
 Considering we had three different partitioned \textsc{dsatur} implementations (see section \ref{subsec:heur:pdsatur}), we ran quick tests on multiple graphs to determine how they performed when executed for short periods of time. For each instance, we executed the different algorithms for one minute, and report the lowest bound for the chromatic number obtained, as well as how fast was this bound obtained. Since we will be using \textsc{dsatur} mostly as an heuristic, it is of our interest that good solutions are found as quickly as possible.
 
-\subsubsection{Hardest partition parametrization}
+\subsubsection*{Hardest partition parametrization}
 
 Before comparing the three different algorithms, we had to fix the criteria used to pick the \textit{hardest partition} on each call in this variant of the algorithm\footnote{Recall that this strategy picked the hardest partition on each call, and then the easiest node from it.}. As we had already mentioned, the criteria used is a combination of:
 
@@ -94,7 +94,7 @@ HK 40\% N=140 & 14.8 & 21.552 & 14.2 &  6.8 & 14.8 & 21.576 & 14.2 & 6.798 & 14.
 
 \end{sidewaystable}
 
-\subsubsection{Strategies comparison}
+\subsubsection*{Strategies comparison}
 
 After fixing the \textit{hardest partition} strategy to C2, we will compare its performance with both the \textit{easiest node} and the \textit{randomized easiest node} variants. We ran the same tests as before, and present the results on table \ref{table:pdsatur:comp}.
 

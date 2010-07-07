@@ -1,3 +1,26 @@
 %!TEX root = pcp.tex
 
 \section{Computational results}
+\label{sec:results}
+
+This section contains all the results obtained from the computational experiments executed. We devised a test suite for each algorithm or strategy to parametrize, and picked the configuration with the best results for each subsequent test. Tested components include the model formulation, \textsc{dsatur} strategy, branch criteria, primal heuristic, separation algorithms, etc.
+
+\subsubsection*{Testing environment}
+
+We executed all tests on a \TODO{computer, JVM and OS description}.
+
+\subsubsection*{Graphs instances}
+
+We used different types of instances on each test depending on the focus of the test itself. Overall, we used mainly random graphs, as well as certain \textsc{dimacs} challenge instances\cite{dimacs} for our final tests. In the case of random graphs, we used multiple instances (between three and five, depending on running times) for each parameterization and reported the average results for each of them.  
+
+Random graphs were built according to two different schemes:
+\begin{itemize}
+	\defitem{Erdos-R\'enyi}{Also known as binomial graphs\cite{erdosrenyi}, each of the possible edges between the set of $n$ nodes is chosen to be included with probability $p$; this parameter determines the density of the graph. This procedure generates graphs with an equal distribution of degrees among its nodes.}
+	\defitem{Holme-Kim}{Also known as powerlaw cluster graphs\cite{holme2002growing}, the graph is constructed iteratively by attaching each new node to a number $t$ of already existing nodes using preferential attachment based on the degree of existing nodes. Also, after the addition of each edge, there is a probability $p$ that a triangle will be created by adding an additional edge. This graphs are controlled by two parameters: node count $n$ and probability $p$; value $t$ is inferred as the product between $p$ and $n$.} 
+\end{itemize}
+
+\TODO{Add drawings for both graph types using matplotlib}
+
+Since both of the previous procedures generate unpartitioned graphs, they are partitioned after their generation by grouping nodes with consecutive indices in partitions of a certain size. For most instances we used a fixed partition size of $2$, although in some cases we used random sizes varying from $1$ to $4$.
+
+These random graphs were generated using the \textit{NetworkX} python package\cite{networkx}, version $1.1$.

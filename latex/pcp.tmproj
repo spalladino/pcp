@@ -3,38 +3,56 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>results.tex</string>
+	<string>algorithm.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>pcp.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T20:07:12Z</date>
+			<date>2010-07-07T18:01:24Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>references.bib</string>
+			<key>lastUsed</key>
+			<date>2010-07-07T17:47:52Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>results.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T20:08:16Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-07-07T16:26:35Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>results.branching.tex</string>
+			<key>lastUsed</key>
+			<date>2010-07-07T18:47:08Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>results.models.tex</string>
+			<key>lastUsed</key>
+			<date>2010-07-07T18:37:40Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>results.dsatur.tex</string>
+			<key>lastUsed</key>
+			<date>2010-07-07T18:37:46Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>ineqs.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T20:08:16Z</date>
+			<date>2010-07-07T17:45:32Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>models.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T20:05:45Z</date>
+			<date>2010-07-07T15:19:19Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -46,19 +64,27 @@
 			<key>filename</key>
 			<string>heur.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T13:52:59Z</date>
+			<date>2010-07-07T17:43:39Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>algorithm.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T14:58:08Z</date>
+			<date>2010-07-07T18:47:08Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>introduction.tex</string>
 			<key>lastUsed</key>
 			<date>2010-06-29T19:28:56Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conclusions.tex</string>
+			<key>lastUsed</key>
+			<date>2010-07-06T13:49:17Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -88,7 +114,7 @@
 			<key>filename</key>
 			<string>../pcp/run.properties</string>
 			<key>lastUsed</key>
-			<date>2010-06-29T16:45:19Z</date>
+			<date>2010-07-07T18:28:40Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -112,7 +138,13 @@
 			<key>filename</key>
 			<string>../drafts/Test.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-05T13:52:56Z</date>
+			<date>2010-07-06T15:14:24Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>alio/AlioInforms.tex</string>
+			<key>lastUsed</key>
+			<date>2010-07-07T18:29:25Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -124,14 +156,30 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>195</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>174</integer>
+				<integer>33</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>99</integer>
+			<integer>19</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>15</integer>
+				<key>line</key>
+				<integer>86</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>33</integer>
+			</dict>
 		</dict>
 		<key>../pcp/run.properties</key>
 		<dict>
@@ -145,7 +193,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>65</integer>
+			<integer>106</integer>
 		</dict>
 		<key>../pcp/src/pcp/algorithms/clique/MaxCliqueFinder.java</key>
 		<dict>
@@ -224,55 +272,85 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>124</integer>
+				<integer>273</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>150</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>245</integer>
 		</dict>
-		<key>heur.tex</key>
+		<key>alio/AlioInforms.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>141</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>ineqs.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>7</integer>
-				<key>line</key>
-				<integer>27</integer>
+				<integer>284</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>270</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
+				<integer>13</integer>
 				<key>line</key>
-				<integer>27</integer>
+				<integer>288</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>7</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>27</integer>
+				<integer>284</integer>
+			</dict>
+		</dict>
+		<key>heur.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>220</integer>
+				<key>line</key>
+				<integer>48</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>89</integer>
+		</dict>
+		<key>ineqs.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>146</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>124</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>20</integer>
+				<key>line</key>
+				<integer>146</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>146</integer>
 			</dict>
 		</dict>
 		<key>introduction.tex</key>
@@ -310,77 +388,154 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>54</integer>
 				<key>line</key>
-				<integer>158</integer>
+				<integer>153</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>143</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>52</integer>
-				<key>line</key>
-				<integer>159</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>158</integer>
-			</dict>
+			<integer>145</integer>
 		</dict>
 		<key>pcp.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>56</integer>
+				<integer>58</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>42</integer>
+			<integer>22</integer>
+		</dict>
+		<key>references.bib</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>27</integer>
+				<key>line</key>
+				<integer>193</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>166</integer>
+		</dict>
+		<key>results.branching.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>31</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>results.dsatur.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>15</integer>
+				<key>line</key>
+				<integer>7</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>results.models.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>72</integer>
+				<key>line</key>
+				<integer>205</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>205</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>206</integer>
+			</dict>
 		</dict>
 		<key>results.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>3</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>pcp.tex</string>
-		<string>models.tex</string>
 		<string>results.tex</string>
+		<string>references.bib</string>
+		<string>results.dsatur.tex</string>
+		<string>results.models.tex</string>
 		<string>algorithm.tex</string>
+		<string>results.branching.tex</string>
+		<string>alio/AlioInforms.tex</string>
+		<string>ineqs.tex</string>
 		<string>heur.tex</string>
 		<string>../drafts/Test.tex</string>
 		<string>../pcp/src/pcp/model/ModelBuilder.java</string>
 		<string>../pcp/run.properties</string>
 		<string>../pcp/src/pcp/algorithms/clique/MaxCliqueFinder.java</string>
-		<string>ineqs.tex</string>
+		<string>models.tex</string>
 		<string>introduction.tex</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{294, 124}, {1129, 741}}</string>
+	<string>{{284, 118}, {1129, 741}}</string>
 </dict>
 </plist>

@@ -12,6 +12,7 @@
 \usepackage{tikz} 
 \usepackage{rotating}
 \usepackage{hyperref}
+\usepackage{color}
 
 \usetikzlibrary{backgrounds,fit} 
 
@@ -28,7 +29,7 @@
 
 % Acronyms
 \newcommand{\PCP}{\textsc{pcp}}
-\newcommand{\TODO}[1]{\textbf{\textsc{ToDo:} #1}}
+\newcommand{\TODO}[1]{\textcolor{red}{[\textbf{\textsc{ToDo:} #1}]}}
 
 % Items
 \newcommand{\defitem}[2]{\item{\textbf{#1:} #2}}
@@ -53,8 +54,9 @@
 \newtheorem{theorem}{Theorem}
 \numberwithin{equation}{section}
 \numberwithin{table}{section}
+\numberwithin{algorithm}{section}
 
-%\includeonly{results,results.dsatur}
+\includeonly{algorithm}
 
 % Document start
 \begin{document}
