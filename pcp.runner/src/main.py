@@ -7,14 +7,14 @@ import files
 import os
 
 if __name__ == '__main__':
-    files = runs.fetch_heur_files()   
+    files = runs.fetch_branch_files()   
     print 'Processing: ', files
    
     Fixture().newrun(
-                runs.dsaturruns, 
+                runs.branchstaticruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100701DSATURS1M',
+                runid = '20100707BRANCHSTATIC2',
             )
     
     

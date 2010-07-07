@@ -2,6 +2,11 @@ from config import *
 
 import fetcher
 
+def update_copy(d1, d2):
+    d = d1.copy()
+    d.update(d2)
+    return d
+
 def fetch_heur_files():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n140\\.00[\\d]\\.in') + \
         fetcher.Fetcher(datadir).fetch_files('benchnodes', 'n((60)|(80)|(100)|(120)|(140)|(160)|(180)|(200))\\.00[\\d]\\.in') + \
@@ -13,25 +18,26 @@ def fetch_model_files():
         fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00[\\d]\\.in')
 
 def fetch_branch_files():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n60\\.00(0|1|2)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(4|8)n100\\.00(0|1|2)\\.in')
 
-branchdynruns = [ {
+branchdynruns = [ update_copy({
                  'solver.useCutCallback': 'false', 
                  'solver.kind': 'PcpBranchAndCut',
-                 'solver.useHeuristicCallback': 'false',
-                 'solver.useCplexPrimalHeuristic': 'true',
+                 'solver.useHeuristicCallback': 'true',
                  'solver.useBranchingCallback': 'true',
+                 'callback.heuristic.enabled': 'false',
+                 'callback.branching.enabled': 'false',
                  'solver.maxTime': '900',
                  
                  'branch.prios.enabled': 'true',
-                 'branch.selection': '1', # TODO: CHECK CPLEX DEFAULTS,
+                 'branch.selection': '1',
                  
                  'branch.prios.psize': '0',
                  'branch.prios.psadjacent': '10',
                  'branch.prios.colorindex': '1',
                  'branch.dynamic.dsatur.nodelb': '0.7',
                  
-               }.copy().update(d) for d in [
+               },d) for d in [
 
                 {
                     'branch.dynamic.fractional': 'true',
@@ -67,23 +73,26 @@ branchdynruns = [ {
                     'branch.dynamic.fractional': 'false',
                     'branch.dynamic.dsatur': 'true',
                     'branch.direction': '-1',
-                },
+                }
                 
                 ]   
             ]
 
-branchstaticruns = [ {
+branchstaticruns = list([ update_copy({
                  'solver.useCutCallback': 'false', 
                  'solver.kind': 'PcpBranchAndCut',
-                 'solver.useHeuristicCallback': 'false',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'callback.heuristic.enabled': 'false',
+                 'callback.branching.enabled': 'false',
+                 
                  'solver.useCplexPrimalHeuristic': 'true',
-                 'solver.useBranchingCallback': 'false',
                  'solver.maxTime': '900',
                  
                  'branch.prios.enabled': 'true',                 
                  'branch.direction': '0',
-                 'branch.selection': '1', # TODO: CHECK CPLEX DEFAULTS
-               }.copy().update(d) for d in [
+                 'branch.selection': '1', 
+               },d) for d in [
                 { 'branch.prios.enabled': 'false'},       
                 {
                  'branch.prios.psize': '0',
@@ -108,7 +117,7 @@ branchstaticruns = [ {
                  'branch.prios.colorindex': '-1',
                 },
                 ]   
-            ]
+            ])
 
 dsaturruns = [
               {

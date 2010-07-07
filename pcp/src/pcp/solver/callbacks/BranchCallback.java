@@ -24,19 +24,22 @@ import exceptions.AlgorithmException;
 
 public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 
-	final static Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
+	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
-	static final boolean log = Settings.get().getBoolean("logging.callback.branching");
-	static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
-	static final boolean dynamicFractionalStrategy = Settings.get().getBoolean("branch.dynamic.fractional");
-	static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
+	private static final boolean log = Settings.get().getBoolean("logging.callback.branching");
+	private static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
+
+	private static final boolean dynamicFractionalStrategy = Settings.get().getBoolean("branch.dynamic.fractional");
+	private static final boolean mostFrac = Settings.get().getBoolean("branch.dynamic.fractional.most");
+	private static final double fracTol = 0.05;
 	
-	static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
-	static final boolean boundWs = Settings.get().getBoolean("branch.boundws");
+	private static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
+	private static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
 	
-	static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
+	private static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
+	private static final boolean boundWs = Settings.get().getBoolean("branch.boundws");
 	
-	static final boolean manual = true;
+	private static final boolean manual = true;
 	
 	Model model;
 	IPartitionedGraph graph;
@@ -334,12 +337,9 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 					double frac = DoubleUtils.fractionality(values[k]);
 					int prio = getPriority(vars[k]);
 					
-					// Branch on most fractional?
-					if (branched == null 
-						|| frac > mostFrac + 0.1 
-						|| (frac > mostFrac - 0.1 && prio > bestPrio)
-						|| (frac > mostFrac && bestPrio == 0)) {
-						
+					// Keep most or less frac based on cfg
+					if (branchMostFrac(branched, bestPrio, mostFrac, frac, prio) ||
+						branchLessFrac(branched, bestPrio, mostFrac, frac, prio)) {
 						bestColor = j;
 						bestNode = i;
 						branched = vars[k];
@@ -354,6 +354,20 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		this.branchedNode = bestNode;
 		this.branched = branched;
 		return branched;
+	}
+
+	private boolean branchMostFrac(IloNumVar branched, int bestPrio, double mostFrac, double frac, int prio) {
+		return BranchCallback.mostFrac && (branched == null 
+			|| frac > mostFrac + fracTol 
+			|| (frac > mostFrac - fracTol && prio > bestPrio)
+			|| (frac > mostFrac && bestPrio == 0));
+	}
+	
+	private boolean branchLessFrac(IloNumVar branched, int bestPrio, double mostFrac, double frac, int prio) {
+		return !BranchCallback.mostFrac && (branched == null 
+			|| frac < mostFrac - fracTol 
+			|| (frac < mostFrac + fracTol && prio > bestPrio)
+			|| (frac < mostFrac && bestPrio == 0));
 	}
 	
 	private int countNodesEqualOne() throws IloException {

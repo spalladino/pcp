@@ -21,6 +21,44 @@
 
 \begin{document}
 	
+	\section{Branching}
+	
+	\subsection{Statics}
+	
+	Processing Runid 20100706BRANCHSTATIC
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: branch.prios.enabled: false, branch.prios.psadjacent: 1, branch.prios.colorindex: -1
+\item S2: branch.prios.enabled: true, branch.prios.psadjacent: -10, branch.prios.colorindex: -1
+\item S3: branch.prios.enabled: true, branch.prios.psadjacent: -10, branch.prios.colorindex: 1
+\item S4: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
+\item S5: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: 1
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20\% N=90 & 570.72 & 0.00 & 900.02 & 0.46 & 900.03 & 0.47 & 232.57 & 0.00 & 523.10 & 0.00
+\\
+EW 40\% N=90 & 0.07 & 0.00 & 0.07 & 0.00 & 0.07 & 0.00 & 0.08 & 0.00 & 0.08 & 0.00
+\\
+EW 60\% N=90 & 900.05 & 0.18 & 900.04 & 0.18 & 900.04 & 0.18 & 900.03 & 0.18 & 900.04 & 0.18
+\\
+EW 80\% N=90 & 0.25 & 0.00 & 0.24 & 0.00 & 0.23 & 0.00 & 0.24 & 0.00 & 0.24 & 0.00
+\\
+\hline 
+ \end{tabular}
+		
+		\clearpage
+		
 	\section{DSATUR}
 	
 	\subsection{Dsatur Algorithms}

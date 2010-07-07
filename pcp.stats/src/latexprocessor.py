@@ -1,6 +1,7 @@
 import metrics
 import itertools
 import data
+import aggregate
 
 from processor import *
 
@@ -9,7 +10,7 @@ class LatexProcessor(Processor):
     def __init__(self, runid=None):
         Processor.__init__(self, runid)
         
-    def process(self, ids=[], datas=[], series=[], runfilter=None, datafilter=None, aggr=concat):
+    def process(self, ids=[], datas=[], series=[], runfilter=None, datafilter=None, aggr=aggregate.concat):
         fs = [metrics.metric(data) for data in datas]
         runkey = lambda run: map(lambda m: metrics.evalmetric(m, run), series)
         

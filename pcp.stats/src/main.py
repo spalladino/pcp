@@ -1,5 +1,6 @@
 import processor
 import metrics
+import aggregate
 
 from latexprocessor import LatexProcessor
 
@@ -19,7 +20,7 @@ def model_latextable(p):
                 series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
                 datafilter= {'strategy.adjacency': 'AdjacentsNeighbourhood', 'strategy.colorBound': 'UpperNodesSum', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
                 runfilter= None,
-                aggr= processor.avg
+                aggr= aggregate.avg
                     )
 
 def dsatur_latextable(p):    
@@ -29,13 +30,23 @@ def dsatur_latextable(p):
                 series=['strategy.coloring', 'dsatur.partition.weight.size', 'dsatur.partition.weight.colorCount', 'dsatur.partition.weight.uncolored'],
                 datafilter= {'dsatur.partition.weight.size':'1', 'dsatur.partition.weight.colorCount':'10000', 'dsatur.partition.weight.uncolored':'100'},
                 runfilter= None,
-                aggr= processor.avg
+                aggr= aggregate.avg
+                )
+        
+def branch_latextable(p):    
+        p.process(
+                ids=[metrics.FileName()],
+                datas=['solution.time','solution.gap'], 
+                series=['branch.prios.enabled', 'branch.prios.psadjacent', 'branch.prios.colorindex'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
                 )
 
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100701DSATURS1M')
-    dsatur_latextable(p)
+    p = LatexProcessor('20100706BRANCHSTATIC')
+    branch_latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
