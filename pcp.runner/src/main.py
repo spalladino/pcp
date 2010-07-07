@@ -7,7 +7,7 @@ import files
 import os
 
 if __name__ == '__main__':
-    files = runs.fetch_branch_files()   
+    files = list(runs.fetch_branch_files())
     print 'Processing: ', files
    
     Fixture().newrun(
@@ -15,6 +15,16 @@ if __name__ == '__main__':
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20100707BRANCHSTATIC2',
+            )
+    
+    files = list(runs.fetch_branch_files())
+    print 'Processing: ', files
+   
+    Fixture().newrun(
+                runs.branchdynruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100707BRANCHDYN',
             )
     
     

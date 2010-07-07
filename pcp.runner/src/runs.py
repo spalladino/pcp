@@ -18,62 +18,56 @@ def fetch_model_files():
         fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00[\\d]\\.in')
 
 def fetch_branch_files():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(4|8)n100\\.00(0|1|2)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', '((e06n80)|(e02n90)|(e0(4|8)n100))\\.00(0|1|2)\\.in')
 
 branchdynruns = [ update_copy({
-                 'solver.useCutCallback': 'false', 
                  'solver.kind': 'PcpBranchAndCut',
+                 
+                 'solver.useCutCallback': 'false',
                  'solver.useHeuristicCallback': 'true',
                  'solver.useBranchingCallback': 'true',
                  'callback.heuristic.enabled': 'false',
-                 'callback.branching.enabled': 'false',
+                 'callback.branching.enabled': 'true',
+                  
+                 'solver.useCplexPrimalHeuristic': 'true',
                  'solver.maxTime': '900',
                  
-                 'branch.prios.enabled': 'true',
                  'branch.selection': '1',
-                 
+                 'branch.direction': '0',
+
+                 'branch.prios.enabled': 'true',
                  'branch.prios.psize': '0',
                  'branch.prios.psadjacent': '10',
-                 'branch.prios.colorindex': '1',
+                 'branch.prios.colorindex': '-1',
                  'branch.dynamic.dsatur.nodelb': '0.7',
                  
                },d) for d in [
 
                 {
                     'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.fractional.most': 'true',
                     'branch.dynamic.dsatur': 'false',
-                    'branch.direction': '0',
                 },
-                
+                {
+                    'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.fractional.most': 'false',
+                    'branch.dynamic.dsatur': 'false',
+                },
                 {
                     'branch.dynamic.fractional': 'false',
                     'branch.dynamic.dsatur': 'true',
                     'branch.direction': '0',
                 },
-                
-                {
-                    'branch.dynamic.fractional': 'true',
-                    'branch.dynamic.dsatur': 'false',
-                    'branch.direction': '1',
-                },
-                
                 {
                     'branch.dynamic.fractional': 'false',
                     'branch.dynamic.dsatur': 'true',
                     'branch.direction': '1',
                 },
-                
-                {
-                    'branch.dynamic.fractional': 'true',
-                    'branch.dynamic.dsatur': 'false',
-                    'branch.direction': '-1',
-                },
-                
                 {
                     'branch.dynamic.fractional': 'false',
                     'branch.dynamic.dsatur': 'true',
                     'branch.direction': '-1',
-                }
+                },
                 
                 ]   
             ]
@@ -115,6 +109,11 @@ branchstaticruns = list([ update_copy({
                  'branch.prios.psize': '0',
                  'branch.prios.psadjacent': '10',
                  'branch.prios.colorindex': '-1',
+                },
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '1',
+                 'branch.prios.colorindex': '-10',
                 },
                 ]   
             ])
