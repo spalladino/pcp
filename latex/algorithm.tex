@@ -5,6 +5,8 @@
 
 In this section we will present the implemented branch-and-cut algorithm, including initial heuristic, branching strategies, separation algorithms and primal heuristics.
 
+\TODO{Short explanation of the structure of a branch and cut algorithm}
+
 \subsection{Preprocessing}
 
 The first step in solving a \PCP instance consists in preprocessing the graph, applying all of the following rules until no more modifications are made to the graph:
@@ -123,5 +125,149 @@ x_{ij} = 0 \quad \forall i \in V,\ \forall 1 \leq j \leq \delta_P(v) + 1 \\
 
 \subsection{Cuts separation}
 
-\subsubsection*{Clique cuts}
+For each family of valid inequalities listed in \ref{sec:ineqs}, an heuristic is implemented to find a set of valid inequalities being violated in a given linear relaxation of the model. Note that in most cases, finding all violated inequalities in a solution is NP, so heuristic procedures must be applied. 
 
+Since these algorithms are applied frequently during the branch and cut tree, it is imperative that their running time is as fast as possible, in order to add a low overhead to the whole algorithm.
+
+\subsubsection*{Extended clique cuts}
+
+Separation of extended clique cuts (\ref{ineq:extendedclique}) is done using a very similar algorithm to \ref{alg:gpclique}, adapted to partitioned graphs and without backtracking to improve running time. The algorithm is executed once for each color, and nodes are sorted based not on their degree but on their $x_{ij}$ value in the current solution.
+
+For each initial node, a clique is constructed until the corresponding inequality is broken, and extended to up to $\kappa$ maximal cliques using backtracking, making use of the \textit{candidates} collection (note that in this case, \textit{candidates} is initialized with not only the initial node's neighbours, but also with all the nodes in its partition). In case no clique breaking the inequality is found, the next initial node is picked.
+
+In order to avoid exploring the same solution space multiple times for different initial nodes, restrictions on how many times a node or an edge can be visited are applied. The resulting algorithm is presented in \ref{alg:sep:extclique}.
+
+\begin{algorithm}
+\label{alg:sep:extclique}
+
+\begin{algorithmic}
+
+\FORALL{color $j$ such that $w_j \geq \mu$}
+\STATE sort all nodes and adjacency lists descendingly by $x_{ij}$ value
+ 
+\FORALL{initial node $v$ in $V$}
+	\STATE initialize \textit{clique} with node $v$
+	\STATE initialize \textit{candidates} with $N(v) \cup P(v)$
+
+	\WHILE{\textit{candidates} is not empty}
+		\IF{current clique breaks inequality}
+			\FORALL{maximal cliques $K$ containing \textit{clique} up to $\kappa$}
+				\STATE add extended clique cut using $K$ and color $j$ 
+			\ENDFOR
+			\STATE continue with next initial node
+		\ELSIF{next candidate $u$ can be used}
+			\STATE add $u$ to \textit{clique} and remove it from \textit{candidates} 
+			\STATE remove nodes not adjacent to $u$ from \textit{candidates} 
+		\ELSE
+			\STATE remove $u$ from \textit{candidates}
+		\ENDIF
+	\ENDWHILE
+		
+\ENDFOR
+\ENDFOR
+
+\caption{Separation algorithm for extended clique cuts}
+
+\end{algorithmic}
+\end{algorithm} 
+
+\subsubsection*{Component independent set inequalities}
+
+Inequalities component hole \ref{ineq:chole} and component path \ref{ineq:cpath} are separated within the same procedure using a greedy heuristic. In a similar fashion to algorithm \ref{alg:sep:extclique}, for every color the graph is sorted according to $x_{ij}$ values, and for each initial node a component path or hole is greedily constructed. Once again, bounds for a maximum number of visits on each node are imposed, thus rejecting nodes with a certain number of visits or belonging to a partition already in the path, since this would violate the \textit{component} property.
+
+On every iteration the most promising node is added to the path being built. In case this node is adjacent to a node already in the path (thus generating a hole), it is added only if it violates the corresponding inequality, otherwise, the next candidate is picked, and so forth. Algorithm \ref{alg:sep:ciset} resumes this process.
+
+\begin{algorithm}
+\label{alg:sep:ciset}
+
+\begin{algorithmic}
+
+\FORALL{color $j$ such that $w_j \geq \mu$}
+\STATE sort all nodes and adjacency lists descendingly by $x_{ij}$ value
+ 
+\FORALL{initial node $v$ in $V$}
+	\STATE initialize \textit{path} with node $v$
+
+	\LOOP
+		\FORALL{valid node $u$ adjacent to last node in the path}
+			\IF{$u$ is adjacent to a previous node $w$ in the path}
+				\IF{hole $H=[u,\ldots,w]$ violates inequality \ref{ineq:chole}}
+					\STATE add component hole inequality with hole $H$ and color $j$
+					\STATE continue with next initial node
+				\ENDIF
+			\ELSE
+				\STATE add node $u$ to \textit{path}	
+				\IF{current \textit{path} breaks inequality \ref{ineq:cpath}}
+					\STATE add component path inequality with \textit{path} and color $j$
+					\STATE continue with next initial node
+				\ENDIF
+			\ENDIF
+		\ENDFOR
+	\ENDLOOP
+\ENDFOR
+
+\ENDFOR
+
+\caption{Separation algorithm for component independent set cuts}
+
+\end{algorithmic}
+\end{algorithm}
+
+As an alternative to the previous algorithm, we also implemented the hole detection algorithm presented in \cite{nikolopoulos2004hole}. We adapted the algorithm presented in the paper to reject a node if it belongs to a partition already in the path, therefore exploring only component holes; and tested this implementation against the previous one in section \ref{sec:results}.
+
+\subsubsection*{Partitions graph independent set inequalities}
+
+For both path and hole inequalities (\ref{ineq:gpiset}) over the partitions graph $G'$, algorithms equivalent to the ones used for component independent sets are applied as separation heuristics, without the checks for ensuring that every node is on a different partition.
+
+Graph $G'$ is constructed once at the beginning of the branch and cut and is then used as the input for these heuristics. Since there are no $x_{ij}$ variables to use for sorting the nodes of the graph, the value $\sum_{i \in P_k} x_{ij}$ is used for each partition $P_k$, this is, the sum of the partition's nodes' values.
+
+\subsubsection*{Block color inequalities}
+
+Block color inequalities (\ref{ineq:blockcp}) are explored using brute force, since there are no more than $c \times q$ of them, and checking whether they are violated or not can be performed fast enough.
+
+Alternatively, they can be added initially to the cut pool provided by the branch and cut framework, instead of manually checking them at each cuts iteration.
+
+\subsection{Branching strategies}
+
+After each node is processed in the branch and cut tree is processed, two new child nodes are created by subdividing the problem in two easier subproblems; this is usually done by \textit{branching} on a certain variable. Usually, in the case of binary variables, a variable $x$ with a fractional value in the relaxation is chosen, and the two subproblems are created by fixing $x = 0$ and $x = 1$ and re-processing. Alternatively, bounds on expressions, instead of on variables, can be set.
+
+Choosing which variable to branch on, and what bounds are implied within each branch, is part of what is called the branching strategy. 
+
+\subsubsection*{Static priorities}
+
+The simplest way to choose which variable to branch on is to set at the beginning of the execution which variables should be preferred, this is, assign a priority to each $x_{ij}$ which will be used to pick the branching variable when necessary. We experimented in section \ref{subsec:resultsbranching} with combinations of the following criteria for selecting variable $x_{ij}$:
+
+\begin{itemize}
+\item{The number of partitions adjacent to node $i$}
+\item{The size of the partition containing node $i$}
+\item{The label of color $j$}
+\end{itemize}
+
+Using this criteria has the huge drawback that no information regarding the actual value of the $x_{ij}$ variable is used, so these priorities are to be used in combination with another strategy as a tie-breaker.
+
+\subsubsection*{Fractional values}
+
+A common practice is to pick the most fractional variable to branch on. We determine such variable as:
+\[
+\min_{x_{ij}} \{ |x_{ij} - 0.5| \}
+\]
+
+In case of a tie, we use the static priority set for the variables to determine which one use to branch on. We also tested in section \ref{subsec:resultsbranching} using the opposite criteria, this is, branching on the less fractional value, excluding those variables with already integral values.
+
+This is a common branching technique, but does not exploit any particular feature of the problem being studied.
+
+\subsubsection*{Degree of saturation}
+
+A branching strategy specifically related to the partitioned coloring problem is to branch on a node with the highest degree of saturation. Since these nodes are usually the most difficult ones to handle, it makes sense to fix their values as early as possible in the branch and cut tree.
+
+This criteria for picking the branching variable requires first to compute an approximate degree of saturation of every node and choosing the one with the largest value, $i^*$, in order to obtain a set of candidate variables $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$ (once again, ties are broken using the already defined priorities).
+
+Since the only available values are those of the fractional solution, we color one node in each partition using the largest value within the partition and neighbours: this is, for every node $i$ and color $j$ combination, if the value $x_{ij}$ is larger than all of its neighbours and nodes in the same partition, as well as larger than an arbitrary lower bound (we set $0.7$), we assign color $j$ to node $i$. Note that some partitions might be left uncolored, in this case they will not contribute to the degree of saturation of their neighbours.
+
+\[
+v_i \leftarrow j \text{ if } x_{ij} > 0.7 \wedge x_{ij} > x_{kj} \forall k \in N(i) \cup P(i)
+\]
+
+From the mentioned set of candidates $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$, the variable with the highest value is chosen to branch on. Overall, we are branching on the node with the highest degree of saturation, fixing it to the most probable color it has assigned in the fractional solution.
+
+\subsubsection*{Implied bounds}
