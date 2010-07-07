@@ -118,9 +118,14 @@ w_j = 1 \quad &\forall 1 \leq j \leq \omega
 
 Also, in case the partition being fixed to a color $j_k$ has a single node in it, then variable $x_{ij_0}$, where $i$ is the single node in the partition, is fixed to $1$.
 
-A final bound based on nodes degree is imposed. A node $v$ of partition degree $\delta_P(v)$ can always be colored with a label $j_k$ such that $1 \leq j_k \leq \delta_P(v) + 1$, since it will be neighbour to at most $\delta_P(v)$ different colors, therefore any set of $\delta_P(v) + 1$ colors contains at least one valid label that does not generate color conflicts.  
+Another bound based on nodes degree is imposed. A node $v$ of partition degree $\delta_P(v)$ can always be colored with a label $j_k$ such that $1 \leq j_k \leq \delta_P(v) + 1$, since it will be neighbour to at most $\delta_P(v)$ different colors, therefore any set of $\delta_P(v) + 1$ colors contains at least one valid label that does not generate color conflicts.  
 \begin{equation*}
 x_{ij} = 0 \quad \forall i \in V,\ \forall 1 \leq j \leq \delta_P(v) + 1 \\
+\end{equation*}
+
+Finally, in case minimum partition index breaking symmetry restrictions (\ref{eqn:minlabel}) are being used, this is, the color with the lowest label is assigned to the color class containing the partition with the lowest index, another bound can be imposed on $x_ij$ variables. Since in the worst case all partitions will have a different color, then a partition with index $i$ will never be colored with label greater than $i$. Therefore, the following bound is imposed:
+\begin{equation*}
+x_{ij} = 0 \quad \forall P_k \in P,\ \forall i \in P_k,\ \forall j > k \\
 \end{equation*}
 
 \subsection{Cuts separation}
@@ -271,3 +276,23 @@ v_i \leftarrow j \text{ if } x_{ij} > 0.7 \wedge x_{ij} > x_{kj} \forall k \in N
 From the mentioned set of candidates $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$, the variable with the highest value is chosen to branch on. Overall, we are branching on the node with the highest degree of saturation, fixing it to the most probable color it has assigned in the fractional solution.
 
 \subsubsection*{Implied bounds}
+
+When manually specifying the branch variable and creating the two child nodes by fixing that variable to either zero or one, it is also possible to fix more variables that would be affected by the value assigned to the first one.
+
+Regardless of the branching variable, it is possible to fix all color variables $w_j$ to $1$ for $j = 1,\ldots,\ceil{z}$, where $z$ is the value of the objective function of the current node's relaxation. For example, if the sum of all $w_j$ variables is $5.3$, which is a lower bound on the chromatic number, we can be sure that at least $6$ different colors are needed to color the graph, and therefore all $w_1,\ldots,w_6$ can be set to $1$.
+
+When branching down on the selected variable\footnote{Fixing the branch variable's value to 0.}, there are no more logical implications than the previous one that can be used to bound more variables. This is easy to see since setting an $x_{ij}$ variable to zero implies that a certain color will not be used for a certain node, but does not grant any information on which node on the partition \textit{will} be colored and with \textit{which} color.
+
+Branching up, on the other hand, provides much more information. Whenever a variable $x_{i^*j^*}$ is set to $1$, this is, node $i^*$ in partition $P(i^*)$ is assigned color $j^*$, allows us to specify for that branch the following conditions:
+
+\begin{itemize}
+\item Every color-node combination in partition $P(i^*)$ can be set to zero, as only one node must be assigned only one color in the partition.
+\[
+x_{ij} = 0 \quad \forall i \in P(i^*),\ \forall j \in C,\ i \neq i^* \vee j \neq j^*
+\]
+
+\item Every node adjacent to $i^*$ cannot use color $j^*$ in order to avoid color conflicts.
+\[
+x_{ij^*} = 0 \quad \forall i \in N(i^*)
+\]
+\end{itemize}

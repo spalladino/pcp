@@ -18,6 +18,7 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.model.strategy.Objective;
+import pcp.model.strategy.Symmetry;
 import pcp.utils.GraphUtils;
 import props.Settings;
 import exceptions.AlgorithmException;
@@ -26,6 +27,7 @@ public class ModelBuilder {
 	
 	static final boolean useCliqueCover = Settings.get().getBoolean("model.adjacentsNeighbourhood.useCliqueCover");
 	static final boolean boundVariablesOnDegree = Settings.get().getBoolean("model.variables.boundOnDegree");
+	static final boolean boundVariablesOnPartitionIndex = Settings.get().getBoolean("model.variables.boundOnPartitionIndex");
 	static final boolean fixClique = Settings.get().getBoolean("model.variables.fixClique");
 	
 	IloIntVar[] allxs;
@@ -58,7 +60,7 @@ public class ModelBuilder {
 		this.colors = model.colors = coloring.getChi();
 		
 		// Initialize variables and objective function
-		initializeVariables();
+		initializeVariables(strategy);
 		boundClique(coloring, maxgpclique);
 		
 		// Objective function
@@ -184,7 +186,7 @@ public class ModelBuilder {
 	 * Initializes all variables using the current color count.
 	 * @throws IloException
 	 */
-	protected void initializeVariables() throws IloException {
+	protected void initializeVariables(BuilderStrategy strategy) throws IloException {
 		// Initialize objects
 		Integer nodes = graph.getNodes().length;
 		this.allxs = new IloIntVar[nodes*colors];
@@ -195,10 +197,13 @@ public class ModelBuilder {
 		for (int i = 0; i < nodes; i++) {
 			for (int j = 0; j < colors; j++) {
 				IloIntVar var = modeler.boolVar(String.format("x[%1$d,%2$d]", i, j));
-				// TODO: Check bound
-				if (boundVariablesOnDegree && j > graph.getNeighbourPartitions(graph.getNode(i)).length) {
+				Node node = graph.getNode(i);
+				if (boundVariablesOnDegree && j > graph.getNeighbourPartitions(node).length) {
+					var.setUB(0.0);
+				} else if (boundVariablesOnPartitionIndex && strategy.breakSymmetry.equals(Symmetry.MinimumNodeLabel) && j > graph.getPartition(node).index()) {
 					var.setUB(0.0);
 				}
+				
 				this.xs[i][j] = var;
 				this.allxs[i * colors + j] = var; 
 			}
