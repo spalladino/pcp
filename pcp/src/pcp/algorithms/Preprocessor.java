@@ -16,6 +16,7 @@ import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
 import pcp.interfaces.IExecutionDataProvider;
+import pcp.utils.GraphUtils;
 import props.Settings;
 
 /**
@@ -56,8 +57,17 @@ public class Preprocessor implements IExecutionDataProvider {
 		// Make sure another check for redundant nodes is made every time
 		while (cliqueEnabled && recreateGraph() && createGPrimeClique() && removeRedundantNodes());
 		
+		// Rename the graph's nodes and partitions to ensure that the first nodes are the one in the clique
+		renameClique();
+		
 		bounder.stop();
 		return builder;
+	}
+
+	private void renameClique() {
+		if (clique != null) {
+			builder.recreateGraph(GraphUtils.simpleNodesToPartitions(builder, clique));
+		}
 	}
 
 	private boolean recreateGraph() {
@@ -112,6 +122,7 @@ public class Preprocessor implements IExecutionDataProvider {
 	}
 
 	private boolean shouldRemoveNodeOnDegree(Node node) {
+		// TODO: Size or size-1? Think of a node in the clique only adjacent to the clique
 		return builder.getDegree(node) == 0
 			|| (clique != null && builder.getNeighbourPartitions(node).length < clique.size());
 	}

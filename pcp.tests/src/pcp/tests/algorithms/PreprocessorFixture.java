@@ -27,6 +27,26 @@ public class PreprocessorFixture {
 	}
 	
 	@Test
+	public void testGraphRenaming() {
+		builder
+			.addNodesInPartition(0, 0,1)
+			.addNodesInPartition(1, 2,3)
+			.addNodesInPartition(2, 4,5)
+			.addNodesInPartition(3, 6)
+			.addNodesInPartition(4, 7,8)
+			.addEdges(0, 4)
+			.addEdges(1, 2,5)
+			.addEdges(2, 7)
+			.addEdges(3, 6,8)
+			.addEdges(4, 6,7,8)
+			.addEdges(5, 6,7,8)
+			.addEdges(6, 7,8);
+		
+		graph = preprocessor.preprocess().getGraph();
+		assertCounts(10, 12, 5);
+	}
+	
+	@Test
 	public void testVoidGraph() {
 		
 		builder.addNode(0, 0);

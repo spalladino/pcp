@@ -107,6 +107,10 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	}
 	
 	public void recreateGraph() {
+		recreateGraph(new ArrayList<Partition>(0));
+	}
+	
+	public void recreateGraph(List<Partition> firstPartitions) {
 		Map<Integer,Integer> oldToNewNode = new HashMap<Integer, Integer>();
 		Map<Integer,Integer> oldToNewPartition = new HashMap<Integer, Integer>();
 		
@@ -117,9 +121,18 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		}
 	
 		Partition[] freshPartitions = this.getPartitions().clone();
-		for (int i = 0; i < freshPartitions.length; i++) {
-			Partition partition = freshPartitions[i];
-			oldToNewPartition.put(partition.name, i);
+		int partitionNewIndex = 0;
+		
+		for (Partition partition : firstPartitions) {
+			oldToNewPartition.put(partition.name, partitionNewIndex);
+			partitionNewIndex++;
+		}
+		
+		for (Partition partition : freshPartitions) {
+			if (!firstPartitions.contains(partition)) {
+				oldToNewPartition.put(partition.name, partitionNewIndex);
+				partitionNewIndex++;
+			}
 		}
 		
 		Map<Node, Partition> nodePartition = this.nodePartition;

@@ -9,7 +9,7 @@ In this section we will present the implemented branch-and-cut algorithm, includ
 
 \subsection{Preprocessing}
 
-The first step in solving a \PCP instance consists in preprocessing the graph, applying all of the following rules until no more modifications are made to the graph:
+The first step in solving a \PCP{} instance consists in preprocessing the graph, applying all of the following rules until no more modifications are made to the graph:
 
 \begin{enumerate}
 	\item{As an initial step, every edge with both nodes within the same partition is removed. Since only one node is colored per partition, there can be no color conflicts between nodes of the same partition, and all edges connecting them can be removed, in order to greatly reduce the size of the graph and the number of adjacency restrictions generated.}
@@ -236,6 +236,24 @@ Alternatively, they can be added initially to the cut pool provided by the branc
 
 After each node is processed in the branch and cut tree is processed, two new child nodes are created by subdividing the problem in two easier subproblems; this is usually done by \textit{branching} on a certain variable. Usually, in the case of binary variables, a variable $x$ with a fractional value in the relaxation is chosen, and the two subproblems are created by fixing $x = 0$ and $x = 1$ and re-processing. Alternatively, bounds on expressions, instead of on variables, can be set.
 
+\begin{figure}[h]
+	\label{fig:branching}
+	\centering
+	\begin{tikzpicture} 
+		[black/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 branch/.style= {->}] 
+		
+		\node[black] (n1) at ( 0,0) {};
+		\node[black] (n2) at ( 2,0) {};
+		
+		\node[black] (n3) at ( 1,2) {}
+			edge[branch] node[swap,auto] {$x_{ij} = 0$} (n1)
+			edge[branch] node[auto] {$x_{ij} = 1$} (n2)	
+		;
+		
+	\end{tikzpicture} 
+\end{figure}
+
 Choosing which variable to branch on, and what bounds are implied within each branch, is part of what is called the branching strategy. 
 
 \subsubsection*{Static priorities}
@@ -262,16 +280,18 @@ In case of a tie, we use the static priority set for the variables to determine 
 This is a common branching technique, but does not exploit any particular feature of the problem being studied.
 
 \subsubsection*{Degree of saturation}
+\label{subsubsec:alg:branch:dsatur}
 
 A branching strategy specifically related to the partitioned coloring problem is to branch on a node with the highest degree of saturation. Since these nodes are usually the most difficult ones to handle, it makes sense to fix their values as early as possible in the branch and cut tree.
 
 This criteria for picking the branching variable requires first to compute an approximate degree of saturation of every node and choosing the one with the largest value, $i^*$, in order to obtain a set of candidate variables $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$ (once again, ties are broken using the already defined priorities).
 
-Since the only available values are those of the fractional solution, we color one node in each partition using the largest value within the partition and neighbours: this is, for every node $i$ and color $j$ combination, if the value $x_{ij}$ is larger than all of its neighbours and nodes in the same partition, as well as larger than an arbitrary lower bound (we set $0.7$), we assign color $j$ to node $i$. Note that some partitions might be left uncolored, in this case they will not contribute to the degree of saturation of their neighbours.
+Since the only available values are those of the fractional solution, we color one node in each partition using the largest value within the partition and neighbours: this is, for every node $i$ and color $j$ combination, if the value $x_{ij}$ is larger than all of its neighbours and nodes in the same partition, as well as larger than an arbitrary lower bound ($0.7$)\footnote{Note that if the classic constraints are being used, \ref{eqn:partsum} and \ref{eqn:adjcolorsp}, by specifying a lower bound higher than $0.5$ it is not necessary to verify that the node has the highest value among its neighbours or within the partition, as it will be assured by the restrictions; the check is required in case alternative restrictions are used, such as allowing more than one node to be colored or grouping multiple color conflicts into single constraints.}, we assign color $j$ to node $i$. Note that some partitions might be left uncolored, in this case they will not contribute to the degree of saturation of their neighbours.
 
-\[
-v_i \leftarrow j \text{ if } x_{ij} > 0.7 \wedge x_{ij} > x_{kj} \forall k \in N(i) \cup P(i)
-\]
+\begin{equation}
+\label{eqn:fixcriteria}
+v_i \leftarrow j \text{ if } x_{ij} > 0.7 \wedge x_{ij} > x_{kj}\ \forall k \in N(i) \cup P(i)
+\end{equation}
 
 From the mentioned set of candidates $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$, the variable with the highest value is chosen to branch on. Overall, we are branching on the node with the highest degree of saturation, fixing it to the most probable color it has assigned in the fractional solution.
 
@@ -296,3 +316,17 @@ x_{ij} = 0 \quad \forall i \in P(i^*),\ \forall j \in C,\ i \neq i^* \vee j \neq
 x_{ij^*} = 0 \quad \forall i \in N(i^*)
 \]
 \end{itemize}
+
+\subsection{Primal heuristic}
+
+The algorithm used to create an integer feasible solution from the relaxation's solution is called the \textit{primal heuristic}. A typical primal heuristic consists in rounding the values of every fractional variable to the nearest integer value, as long as this process satisfies all the restrictions imposed by the model.
+
+For \PCP{} we implemented a primal heuristic based on the \textsc{dsatur} algorithm. Given a fractional solution $x^*$, for every variable $x_{ij}$ with a large enough value, we fix that node-color combination. The criteria used for determining when a variable is fixed is the same as the one depicted in \ref{eqn:fixcriteria}.
+
+Also, for every variable $x_{ij}$ with an upper bound set to $0$ as a product of the branching in the branch and cut tree, we forbid that node-color combination.
+
+Having all these values fixed, an extremely short run of \textsc{dsatur} is executed, bounded to 200 milliseconds. The algorithm works reasonably fast as more and more variables are fixed, and bounds for the optimal coloring can be inferred, further improving the exploration of the possible solutions. Note that the value $\ceil{\sum_C w_j}$ of the node's relaxation is a lower bound to the integer solution, so in case \textsc{dsatur} finds a solution using that number of colors, it is can be assured that it is the local optimum.
+
+The best coloring obtained by the algorithm is then used as an incumbent solution for the node. In case certain symmetry breaking restrictions are in place, a reordering of the labels assigned to each color class might have to be performed.
+
+\subsection{Pruning}

@@ -14,6 +14,7 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
 import pcp.model.strategy.Objective;
 import pcp.solver.helpers.PruneEvaluator;
@@ -25,6 +26,7 @@ import exceptions.AlgorithmException;
 
 public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
+	static final Adjacency adjacencyStrategy = BuilderStrategy.fromSettings().getAdjacencyConstraints();
 	static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
 	static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
@@ -114,6 +116,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		}
 	}
 
+	// TODO: Do not set upper bound? Use bounded wj information!
 	private void setUpperBound(ColoringAlgorithm coloring) throws IloException {
 		// Set upper bound as objective value of global incumbent
 		double upper = objectiveStrategy.equals(Objective.Equal) 

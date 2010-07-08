@@ -27,6 +27,13 @@ public class GraphUtils {
 		} return map;
 	}
 	
+	public static List<Partition> simpleNodesToPartitions(IPartitionedGraph graph, List<pcp.entities.simple.Node> snodes) {
+		List<Partition> partitions = new ArrayList<Partition>(snodes.size());
+		for (pcp.entities.simple.Node snode : snodes) {
+			partitions.add(graph.getPartition(snode.index()));
+		} return partitions;
+	}
+	
 	public static boolean checkComponentHole(IPartitionedGraph graph, List<Node> nodes) {
 		return checkHole(graph, nodes) && checkComponent(graph, nodes);
 	}
