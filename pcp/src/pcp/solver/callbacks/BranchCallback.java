@@ -6,10 +6,14 @@ import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex.BranchDirection;
 import ilog.cplex.IloCplex.BranchType;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
+
+import java.util.Map;
+
 import pcp.Logger;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.interfaces.IColorAssigner;
+import pcp.interfaces.IExecutionDataProvider;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
 import pcp.model.strategy.Objective;
@@ -22,7 +26,7 @@ import entities.TupleInt;
 import exceptions.AlgorithmException;
 
 
-public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
+public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implements IExecutionDataProvider {
 
 	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
@@ -50,13 +54,26 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 	
 	int lastColorFixed = 0;
 	
+	double lastGap = Double.MAX_VALUE;
+	int lastGapNode = 0;
+	
 	public BranchCallback(Model model) {
 		this.model = model;
 		this.graph = model.getGraph();
 	}
 
 	@Override
+	public void fillData(Map<String, Object> data) {
+		data.put("solution.gapfound", lastGapNode);
+	}
+
+	@Override
 	protected void main() throws IloException {
+		if (super.getMIPRelativeGap() < lastGap) {
+			lastGap = super.getMIPRelativeGap();
+			lastGapNode = super.getNnodes();
+		}
+		
 		if (!enabled) return;
 		int nodesSet = countNodesEqualOne(); 
 		
@@ -376,5 +393,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback {
 		return ModelUtils.countNodesFixedToOne(feasibilities, lbs);
 
 	}
+	
+	
 	
 }

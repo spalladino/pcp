@@ -128,12 +128,17 @@ public class Main {
 		List<Node> clique = preprocessor.getClique();
 		preprocessor.fillData(execution.getData());
 		
+		// TODO: Store max initial clique size and compare against dsatur value
+		
 		// Make initial coloring
 		coloring = Factory.get().coloring(strategy.getColoring(), graph).withBounder(new IterationsBounder("coloring.initial"));
 		if (clique != null) {
 			Collections.sort(clique, new SimpleNodeIndexComparator());
 			coloring.setInitialClique(clique);
 		}
+		
+		//System.out.println(SimpleGraphUtils.listNodes(clique));
+		//coloring.printColoring(System.out);
 		
 		// Build model
 		model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, clique); 

@@ -65,6 +65,15 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 		} return -1;
 	}
 	
+	public int getMinPartitionIndex(Integer color) throws AlgorithmException {
+		for (int i = 0; i < graph.P(); i++) {
+			if (getPartitionIntColor(i) == color) {
+				return i;
+			}
+		} return -1;
+	}
+
+	
 	public void printColoring(PrintStream stream) throws AlgorithmException {
 		StringBuilder sb = new StringBuilder("Coloring: ");
 		for (Node node : graph.getNodes()) {

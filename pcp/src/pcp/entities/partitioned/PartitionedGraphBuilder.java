@@ -106,11 +106,11 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		} return partitions.get(partition);
 	}
 	
-	public void recreateGraph() {
-		recreateGraph(new ArrayList<Partition>(0));
+	public PartitionedGraphTranslator recreateGraph() {
+		return recreateGraph(new ArrayList<Partition>(0));
 	}
 	
-	public void recreateGraph(List<Partition> firstPartitions) {
+	public PartitionedGraphTranslator recreateGraph(List<Partition> firstPartitions) {
 		Map<Integer,Integer> oldToNewNode = new HashMap<Integer, Integer>();
 		Map<Integer,Integer> oldToNewPartition = new HashMap<Integer, Integer>();
 		
@@ -153,6 +153,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		}
 		
 		mustRecreate = false;
+		
+		return new PartitionedGraphTranslator(oldToNewNode, oldToNewPartition);
 	}
 
 	public void removePartition(Partition partition) {

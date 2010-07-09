@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
 import pcp.algorithms.bounding.IterationsBounder;
 import pcp.common.sorting.ColorCountCompleteComparator;
-import pcp.common.sorting.ColorMinLabelComparator;
+import pcp.common.sorting.ColorMinPartitionLabelComparator;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
@@ -92,7 +92,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.VerticesNumber)) {
 			sortSolution(new ColorCountCompleteComparator(this, true, false));
 		} else if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {
-			sortSolution(new ColorMinLabelComparator(this, false));
+			sortSolution(new ColorMinPartitionLabelComparator(this, false));
 		}
 		
 		if (hasSolution() && verify) {
@@ -193,7 +193,6 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			int color = t.getSecond();
 			
 			// Try using chosen color for every node in the partition
-			// TODO: Sort nodes on degree?
 			for (Node node : graph.getNodes(graph.getPartition(partition))) {
 				if (canAssignColor(node.index(), color)) {
 					if (log) log("Assigning color " + color + " to node " + (node.index() + logNodeBase) + " in partition " + (partition + logNodeBase));

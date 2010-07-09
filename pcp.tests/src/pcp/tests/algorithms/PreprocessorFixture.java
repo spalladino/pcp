@@ -34,16 +34,17 @@ public class PreprocessorFixture {
 			.addNodesInPartition(2, 4,5)
 			.addNodesInPartition(3, 6)
 			.addNodesInPartition(4, 7,8)
-			.addEdges(0, 4)
-			.addEdges(1, 2,5)
-			.addEdges(2, 7)
-			.addEdges(3, 6,8)
+			.addEdges(0, 4,6,7)
+			.addEdges(1, 2,5,8)
+			.addEdges(2, 5,7)
+			.addEdges(3, 4,6,8)
 			.addEdges(4, 6,7,8)
 			.addEdges(5, 6,7,8)
 			.addEdges(6, 7,8);
 		
 		graph = preprocessor.preprocess().getGraph();
-		assertCounts(10, 12, 5);
+		assertCounts(9, 19, 5);
+		//graph.print(System.out);
 	}
 	
 	@Test

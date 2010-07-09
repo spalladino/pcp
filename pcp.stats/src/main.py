@@ -45,7 +45,7 @@ def branch_latextable(p):
 
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100706BRANCHSTATIC')
+    p = LatexProcessor('20100707BRANCHSTATIC2')
     branch_latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")

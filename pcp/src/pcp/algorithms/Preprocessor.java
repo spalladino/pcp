@@ -15,6 +15,7 @@ import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraphBuilder;
+import pcp.entities.partitioned.PartitionedGraphTranslator;
 import pcp.interfaces.IExecutionDataProvider;
 import pcp.utils.GraphUtils;
 import props.Settings;
@@ -66,7 +67,12 @@ public class Preprocessor implements IExecutionDataProvider {
 
 	private void renameClique() {
 		if (clique != null) {
-			builder.recreateGraph(GraphUtils.simpleNodesToPartitions(builder, clique));
+			PartitionedGraphTranslator translator = builder.recreateGraph(GraphUtils.simpleNodesToPartitions(builder, clique));
+			List<pcp.entities.simple.Node> newclique = new ArrayList<pcp.entities.simple.Node>(clique.size());
+			for (pcp.entities.simple.Node old : clique) {
+				Integer newindex = translator.translatePartition(old.index());
+				newclique.add(builder.getGPrime().getNode(newindex));
+			} this.clique = newclique;
 		}
 	}
 
@@ -122,7 +128,6 @@ public class Preprocessor implements IExecutionDataProvider {
 	}
 
 	private boolean shouldRemoveNodeOnDegree(Node node) {
-		// TODO: Size or size-1? Think of a node in the clique only adjacent to the clique
 		return builder.getDegree(node) == 0
 			|| (clique != null && builder.getNeighbourPartitions(node).length < clique.size());
 	}

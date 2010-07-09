@@ -216,9 +216,8 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 			Logger.error("Error filling solver data", ex);
 		}
 		
-		if (heurCallback != null) {
-			heurCallback.getMetrics().fillData(data);
-		}
+		if (heurCallback != null) heurCallback.getMetrics().fillData(data);
+		if (branchCallback != null) branchCallback.fillData(data);
 	}
 
 	protected void setBranchingSettings() throws IloException {

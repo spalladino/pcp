@@ -64,8 +64,8 @@ public class ColoringVerifier {
 			}
 		} else if (strategy.getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {			
 			int maxcolor = -1;
-			for (int i = 0; i < graph.N(); i++) {
-				Integer j = coloring.getColor(i);
+			for (int i = 0; i < graph.P(); i++) {
+				Integer j = coloring.getPartitionColor(i);
 				if (j != null) {
 					if (j == maxcolor + 1) {
 						maxcolor++;

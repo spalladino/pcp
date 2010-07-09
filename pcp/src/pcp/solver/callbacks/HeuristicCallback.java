@@ -34,6 +34,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
 	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	static final int everynodes = Settings.get().getInteger("primal.everynodes");
+	static final boolean useUB = Settings.get().getBoolean("primal.useub");
 		
 	static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
 	static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
@@ -116,9 +117,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		}
 	}
 
-	// TODO: Do not set upper bound? Use bounded wj information!
 	private void setUpperBound(ColoringAlgorithm coloring) throws IloException {
-		// Set upper bound as objective value of global incumbent
+		// Set upper bound as objective value of incumbent
+		if (!useUB) return;
 		double upper = objectiveStrategy.equals(Objective.Equal) 
 			? super.getIncumbentObjValue()
 			: DoubleUtils.sum(super.getIncumbentValues(model.getWs()));
