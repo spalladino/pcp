@@ -7,7 +7,7 @@ In this section we will define the problem and compare it to the standard colori
 
 \subsection{Graph coloring problem}
 
-Needless to say, graphs are widely used for modelling different scenarios in multiple areas of expertise, as well as for modelling and solving problems on those scenarios by translating them into well-known graphs problems. 
+Needless to say, graphs are widely used for modeling different scenarios in multiple areas of expertise, as well as for modeling and solving problems on those scenarios by translating them into well-known graphs problems. 
 
 One of those problems is the graph coloring problem, which consists in assigning a color to each of the nodes of a graph, with the constraint that two adjacent nodes may not have the same color. The objective is to generate a coloring using the minimum possible number of colors.
 
@@ -39,7 +39,7 @@ The decision version of PCP is NP-Complete
 We will prove NP-Completeness by proving both belonging to NP and NP-Hard classes.
 
 \begin{itemize}
-\item{\textit{NP:} Given an input partitiones graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
+\item{\textit{NP:} Given an input partitions graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
 \item{\textit{NP-Hard:} Any instance of standard graph $k-coloring$ can be converted to an instance of PCP by partitioning the initial graph $G$ in such a way that every partition contains a single node. The solution to the original $k-coloring$ problem is the same as the solution to the constructed PCP. Since coloring is NP-Hard, this implies that PCP is NP-Hard as well.}
 \end{itemize}
 
@@ -77,7 +77,7 @@ A Wavelength Division Multiplexed (WDM) optical network consists in a network in
 
 Every route is composed by a set of consecutive lightpath. A lightpath is defined as a point to point connection between two adjacent nodes in the network using a certain wavelength. Although there are networks in which the nodes are capable of transforming wavelengths within the same route, we will assume that every route uses the same wavelength across all of its lightpaths; this restriction is known as the \textit{wavelength continuity constraint}.
 
-The second restriction to be satisfied is the \textit{wavelength clash constraint} which requires that different lightpaths sharing a physical link must have differente wavelengths. Toghether with the previous constraint, it is implied that two different routes that share at least one physical link must use different wavelengths.
+The second restriction to be satisfied is the \textit{wavelength clash constraint} which requires that different lightpaths sharing a physical link must have different wavelengths. Together with the previous constraint, it is implied that two different routes that share at least one physical link must use different wavelengths.
 
 In the offline or static version of the RWA problem, all connections are known beforehand. The counterpart of this version is the \textit{dynamic} RWA in which connections must be satisfied as they are requested in an online fashion. In this work we will take only the former into consideration.
 

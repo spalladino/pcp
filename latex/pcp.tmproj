@@ -10,7 +10,7 @@
 			<key>filename</key>
 			<string>pcp.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-07T18:01:24Z</date>
+			<date>2010-07-08T18:10:11Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -52,7 +52,7 @@
 			<key>filename</key>
 			<string>models.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-07T15:19:19Z</date>
+			<date>2010-07-08T15:32:19Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -70,7 +70,7 @@
 			<key>filename</key>
 			<string>algorithm.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-07T18:47:08Z</date>
+			<date>2010-07-08T18:10:11Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -270,14 +270,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>273</integer>
+				<integer>331</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>150</integer>
+			<integer>429</integer>
 			<key>firstVisibleLine</key>
-			<integer>245</integer>
+			<integer>303</integer>
 		</dict>
 		<key>alio/AlioInforms.tex</key>
 		<dict>
@@ -388,28 +388,44 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>54</integer>
+				<integer>121</integer>
 				<key>line</key>
-				<integer>153</integer>
+				<integer>33</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>145</integer>
+			<integer>10</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>102</integer>
+				<key>line</key>
+				<integer>33</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>121</integer>
+				<key>line</key>
+				<integer>33</integer>
+			</dict>
 		</dict>
 		<key>pcp.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>line</key>
 				<integer>58</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>22</integer>
+			<integer>28</integer>
 		</dict>
 		<key>references.bib</key>
 		<dict>

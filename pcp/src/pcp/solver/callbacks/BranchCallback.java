@@ -17,6 +17,7 @@ import pcp.interfaces.IExecutionDataProvider;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
 import pcp.model.strategy.Objective;
+import pcp.solver.data.NodeData;
 import pcp.solver.helpers.NodeSaturations;
 import pcp.solver.helpers.PruneEvaluator;
 import pcp.utils.DoubleUtils;
@@ -87,8 +88,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		branchedNode = branchedColor = 0;
 		
 		// Calculate depth
-		Integer depth = (Integer) super.getNodeData();
-		depth = depth == null ? 1 : depth + 1;
+		int depth = NodeData.getDepth(super.getNodeData()) + 1;
 		
 		// Calculate branching variable
 		if (super.getNbranches() > 0 && getBranchType().equals(BranchType.BranchOnVariable)) {
@@ -101,11 +101,12 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		
 		// If a variable was found, branch on it
 		if (branched != null) { 
+			NodeData data = new NodeData(depth, branchedNode, branchedColor, 0);
 			if (branchSingle) {
-				branchSingle(depth);
+				branchSingle(data);
 			} else {
-				branchUp(depth);
-				branchDown(depth);
+				branchUp(data);
+				branchDown(data);
 	        } return;
 		}
 		
@@ -116,19 +117,19 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
 			double[] branches = super.getBranches(varss, bounds, dirs);
 			for (int i = 0; i < super.getNbranches(); i++) {
-				super.makeBranch(varss[i], bounds[i], dirs[i], branches[i], depth);
+				super.makeBranch(varss[i], bounds[i], dirs[i], branches[i], new NodeData(depth));
 			}
 		}
 		
 	}
 
-	private void branchSingle(Integer depth) throws IloException {
+	private void branchSingle(NodeData data) throws IloException {
 		if (log) System.out.println("Branching on single variable " + branched);
-		super.makeBranch(branched, 1.0, BranchDirection.Up, getObjValue(), depth);
-		super.makeBranch(branched, 0.0, BranchDirection.Down, getObjValue(), depth);
+		super.makeBranch(branched, 1.0, BranchDirection.Up, getObjValue(), data.cloneWithDirection(1));
+		super.makeBranch(branched, 0.0, BranchDirection.Down, getObjValue(), data.cloneWithDirection(-1));
 	}
 
-	private void branchUp(Integer depth) throws IloException {
+	private void branchUp(NodeData data) throws IloException {
 		Node node = graph.getNode(branchedNode);
 		Node[] partition = graph.getNodes(node.getPartition());
 		Node[] adjs = graph.getNeighbours(node);
@@ -175,10 +176,10 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		}
 		
 		if (log) System.out.println("Branching up on variable " + branched + " for a total of " + length + " bounds set");
-		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
+		super.makeBranch(vars, bounds, dirs, getObjValue(), data.cloneWithDirection(1));
 	}
 	
-	private void branchDown(Integer depth) throws IloException {
+	private void branchDown(NodeData data) throws IloException {
 		// Initialize branch arrays to pass on to cplex
 		TupleInt colorsToFix = colorCountToFix();
 		int length = colorsToFix.getSecond() - colorsToFix.getFirst() + 1;
@@ -202,7 +203,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		dirs[length-1] = BranchDirection.Down;
 		
 		if (log) System.out.println("Branching down on variable " + branched + " for a total of " + length + " bounds set");
-		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
+		super.makeBranch(vars, bounds, dirs, getObjValue(), data.cloneWithDirection(-1));
 	}
 	
 	private TupleInt colorCountToFix() throws IloException {
