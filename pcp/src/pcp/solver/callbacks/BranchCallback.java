@@ -7,6 +7,7 @@ import ilog.cplex.IloCplex.BranchDirection;
 import ilog.cplex.IloCplex.BranchType;
 import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import pcp.Logger;
@@ -36,6 +37,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	private static final boolean dynamicFractionalStrategy = Settings.get().getBoolean("branch.dynamic.fractional");
 	private static final boolean mostFrac = Settings.get().getBoolean("branch.dynamic.fractional.most");
 	private static final double fracTol = 0.05;
+	private static final double branchLB = 0.1;
 	
 	private static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
 	private static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
@@ -116,6 +118,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			BranchDirection[][] dirs = new BranchDirection[super.getNbranches()][];
 			double[] branches = super.getBranches(varss, bounds, dirs);
 			for (int i = 0; i < super.getNbranches(); i++) {
+				if (log) System.out.println("Manually branching on " + Arrays.toString(varss[i]));
 				super.makeBranch(varss[i], bounds[i], dirs[i], branches[i], depth);
 			}
 		}
@@ -174,7 +177,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			index++;
 		}
 		
-		if (log) System.out.println("Branching up on variable " + branched + " for a total of " + length + " bounds set");
+		if (log) System.out.println("(" + depth + ") Branching up on variable " + branched + " for a total of " + length + " bounds set");
 		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
 	}
 	
@@ -201,7 +204,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		bounds[length-1] = 0.0;
 		dirs[length-1] = BranchDirection.Down;
 		
-		if (log) System.out.println("Branching down on variable " + branched + " for a total of " + length + " bounds set");
+		if (log) System.out.println("(" + depth + ") Branching down on variable " + branched + " for a total of " + length + " bounds set");
 		super.makeBranch(vars, bounds, dirs, getObjValue(), depth);
 	}
 	
@@ -284,33 +287,54 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		NodeSaturations saturs = new NodeSaturations(graph);
 	
 		try {
-			assignColorsFromSolution(saturs);
+			int count = assignColorsFromSolution(saturs);
+			if (log) System.out.println("Making dsatur branch having fixed " + count + " colors");
 		} catch (Exception ex) {
 			Logger.error("Error assigning coloring from solution in dsatur branching", ex);
 			return null;
 		}
 		
-		int bestNode = 0;
+		int bestNode = -1;
 		int bestSatur = 0;
 		int bestUncolored = 0;
 		int bestPrio = 0;
 		
 		//Pick most saturated, highest prio node
 		for (int i = 0; i < graph.N(); i++) {
-			IloIntVar var = model.x(i, 0);
-			if (getFeasibility(var).equals(IntegerFeasibilityStatus.Infeasible)) {
-				int satur = saturs.getSaturation(i);
-				int uncolored = saturs.getUncoloredNeighbours(i);
-				int prio = super.getPriority(var);
-				if ((bestSatur < satur) 
-					|| (bestSatur == satur && bestUncolored < uncolored)
-					|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
-					bestNode = i;
-					bestSatur = satur;
-					bestPrio = prio;
-					bestUncolored = uncolored;
+			
+			// Check if there is an integer infeasible value for some j
+			IloIntVar var = null;
+			for (int j = 0; j < model.getColorCount(); j++) {
+				IloIntVar nodevar = model.x(i, j);
+				if (getFeasibility(nodevar).equals(IntegerFeasibilityStatus.Infeasible)
+					&& getValue(nodevar) >= branchLB) {
+					var = nodevar;
+					break;
 				}
 			}
+			
+			// If there isnt, this node is not considered for branching
+			if (var == null) {
+				continue;
+			}
+			
+			int satur = saturs.getSaturation(i);
+			int uncolored = saturs.getUncoloredNeighbours(i);
+			int prio = super.getPriority(var);
+			System.out.println(" Checking node " + i + " with satur " + satur + " and uncolored " + uncolored + " and prio " + prio + " and values " + Arrays.toString(super.getValues(model.getXs()[i])));
+			if ((bestSatur < satur)  
+				|| (bestSatur == satur && bestUncolored < uncolored)
+				|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
+				bestNode = i;
+				bestSatur = satur;
+				bestPrio = prio;
+				bestUncolored = uncolored;
+			}
+		}
+		
+		// If no node was found, dont branch on dsatur criteria
+		if (bestNode == -1) {
+			return null;
 		}
 		
 		// Branch on highest value color

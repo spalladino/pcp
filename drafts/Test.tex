@@ -21,6 +21,43 @@
 
 \begin{document}
 	
+	\section{Branching dynamic}
+	
+	Processing Runid 20100708BRANCHDYN
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+
+Series:
+\begin{itemize}
+\item S1: branch.dynamic.fractional: false, branch.dynamic.dsatur: true, branch.direction: -1, branch.dynamic.fractional.most: true
+\item S2: branch.dynamic.fractional: false, branch.dynamic.dsatur: true, branch.direction: 0, branch.dynamic.fractional.most: true
+\item S3: branch.dynamic.fractional: false, branch.dynamic.dsatur: true, branch.direction: 1, branch.dynamic.fractional.most: true
+\item S4: branch.dynamic.fractional: true, branch.dynamic.dsatur: false, branch.direction: 0, branch.dynamic.fractional.most: false
+\item S5: branch.dynamic.fractional: true, branch.dynamic.dsatur: false, branch.direction: 0, branch.dynamic.fractional.most: true
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20\% N=90 & 900.02 & 0.25 & 900.02 & 0.25
+\\
+EW 40\% N=100 & 900.05 & 0.50 & 900.05 & 0.50 & 900.02 & 0.48 & 900.02 & 0.33
+\\
+EW 60\% N=80 & 900.02 & 0.37 & 900.02 & 0.37
+\\
+EW 80\% N=100 & 900.12 & 0.47 & 900.11 & 0.44 & 900.08 & 0.47 & 900.06 & 0.44 & 900.05 & 0.42
+\\
+\hline 
+ \end{tabular}
+	\clearpage
+	
 	\section{Branching}
 	
 	\subsection{Statics}

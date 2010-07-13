@@ -15,6 +15,7 @@ if __name__ == '__main__':
                 runs.branchdynruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100708BRANCHDYN',
+                runid = 'TESTMEM',
+                iterstorun = [3]
             )
     

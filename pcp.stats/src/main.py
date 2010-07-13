@@ -43,10 +43,19 @@ def branch_latextable(p):
                 aggr= aggregate.avg
                 )
 
+def branch_dyn_latextable(p):    
+        p.process(
+                ids=[metrics.FileName()],
+                datas=['solution.time','solution.gap'], 
+                series=['branch.dynamic.fractional', 'branch.dynamic.dsatur', 'branch.direction', 'branch.dynamic.fractional.most'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100707BRANCHSTATIC2')
-    branch_latextable(p)
+    p = LatexProcessor('20100708BRANCHDYN')
+    branch_dyn_latextable(p)
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

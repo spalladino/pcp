@@ -31,13 +31,14 @@ class Fixture:
         d[key] = value
         return d
         
-    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S"), files=[], dirs=[], initial=0):
+    def newrun(self, runs, runid=datetime.now().strftime("%Y%m%d%H%M%S"), files=[], dirs=[], initial=0, iterstorun=None):
         if len(files) == 0: fileruns = runs
         else: fileruns = [ self.withprop(runs, "run.filename", file) for (file, runs) in itertools.product(files, runs)  ] 
         
         if len(dirs) == 0: self.runs = fileruns
         else: self.runs = [ self.withprop(runs, "run.folder", folder) for (folder, runs) in itertools.product(dirs, fileruns)  ]
         
+        self.iterstorun = iterstorun
         self.runid = runid
         self.successful = 0
         self.initial = initial
@@ -56,14 +57,17 @@ class Fixture:
             os.mkdir(basedir + runsdir + self.runid.strip())
             
         for run in self.runs:
-            runner = Runner()
-            print "Running id " + str(self.runid) + " iter " + str(self.successful + 1) + " of " + str(len(self.runs))
-            out, err = runner.run(self.runid, self.initial + self.successful + 1, self.main, run)
-            if printoutput: print out, err
-            else: print err
-            self.add_success_status()
-            time.sleep(sleeptime)
-            gc.collect()
+            if not self.iterstorun or (self.successful+1) in self.iterstorun:
+                runner = Runner()
+                print "Running id " + str(self.runid) + " iter " + str(self.successful + 1) + " of " + str(len(self.runs))
+                out, err = runner.run(self.runid, self.initial + self.successful + 1, self.main, run)
+                if printoutput: print out, err
+                else: print err
+                self.add_success_status()
+                time.sleep(sleeptime)
+                gc.collect()
+            else:
+                self.add_success_status()
         
         self.clear_status()
         return True
