@@ -3,27 +3,27 @@
 \section{Introduction}
 \label{sec:introduction}
 
-In this section we will define the problem and compare it to the standard coloring problem, analyzing the motivations for this variant and previous work dedicated towards its resolution.
+In this section we will define the partitioned coloring problem and compare it to the standard coloring problem, analyzing the motivations for this variant, and review previous work dedicated towards its resolution.
 
 \subsection{Graph coloring problem}
 
-Needless to say, graphs are widely used for modelling different scenarios in multiple areas of expertise, as well as for modelling and solving problems on those scenarios by translating them into well-known graphs problems. 
+Needless to say, graphs are widely used for modeling different scenarios in multiple areas of expertise, as well as for solving problems on those scenarios by translating them into well-known problems. 
 
-One of those problems is the graph coloring problem, which consists in assigning a color to each of the nodes of a graph, with the constraint that two adjacent nodes may not have the same color. The objective is to generate a coloring using the minimum possible number of colors.
+One of those problems is the graph coloring problem, which consists in assigning a color to each node in a graph, with the constraint that two adjacent nodes may not have the same color. The objective is to generate a valid coloring using the minimum number of colors.
 
-One of the most famous real life problems which led to the generalization of the graph coloring problem was the \textit{4 colors problem}. In 1852, the question of whether any planar map could be coloured using only four colors in such a way that no two neighouring regions had the same color was posed. This led the community towards the coloring problem on a planar graph, which was eventually generalized into coloring a generic graph.
+One of the most famous real life problems which led to the generalization of the graph coloring problem was the \textit{4 colors problem}. In 1852, the question of whether any planar map could be colored using only four colors, in such a way that no two regions sharing a border had the same color, was posed. Modeling neighbour regions as adjacent nodes in a planar graph led to the planar graph coloring problem, which was eventually generalized into coloring a generic graph.
 
 Graph coloring is widely used in multiple applications, such as schedule assignment to solve time incompatibilities, assignment of radio frequencies to prevent interference between neighboring radios, or even assigning variables to registers during the flow of a program.
 
-The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns each node $v \in V$ to a natural number which represents a color. A \textit{k-coloring} is an assignment which uses $k$ different colors.
+The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns each node $v \in V$ to a natural number which represents a color. A \textit{k-coloring} is an assignment which uses exactly $k$ different colors.
 
-This problem has been proved to be \textit{NP-Complete}, and has been widely studied in the literature, being tackled both by heuristic approaches and exact methods for its resolution.
+This problem has been proved to be \textit{NP-Complete}, and has been widely studied in the literature, being approached both by heuristic and exact methods for its resolution.
 
-In this work we study a generalization of this problem, which is the \textit{partitioned coloring problem} or \PCP.
+In this work we study a generalization of this problem, which is the \textit{partitioned coloring problem} or \PCP{}.
 
 \subsection{Partitioned graph coloring problem}
 
-A \textit{partitioned graph} is defined as a tuple $G = <V,E,P>$ of $n$ vertices, $m$ edges and $q$ partitions respectively. The set $P$ contains $P_1, \ldots ,P_q$ sets of nodes which constitute a partition of $V$. Therefore, for every node $v \in V$, there is exactly one $P_k \in P$ such that $v \in P_k$, and every $P_i$ is nonempty.
+A \textit{partitioned graph} is defined as a tuple $G = <V,E,P>$ of $n$ vertices, $m$ edges and $q$ partitions respectively. The set $P$ contains $P_1, \ldots ,P_q$ sets of nodes which constitute a partition of $V$. Therefore, for every node $v \in V$, there is exactly one $P_k \in P$ such that $v \in P_k$, and every $P_i \in P$ is nonempty.
 
 The partitioned coloring problem is defined as an assignment of colors to the nodes of the graph $G$, with the restriction that no two adjacent nodes may have the same color, but requiring only one node per partition to be colored. Once again, the goal is to minimize the number of colors required.
 
@@ -32,15 +32,15 @@ The partitioned coloring problem is defined as an assignment of colors to the no
 It is easy to see that when $|P_i| = 1\ \forall P_i \in P$, this is, there is a single node per partition, the partitioned coloring problem is equivalent to the standard graph coloring problem previously mentioned. In terms of complexity classes, PCP belongs to the same class as the standard coloring problem.
 
 \begin{theorem}
-The decision version of PCP is NP-Complete
+The decision version of PCP is NP-Complete.
 \end{theorem}
 
 \begin{proof}
 We will prove NP-Completeness by proving both belonging to NP and NP-Hard classes.
 
 \begin{itemize}
-\item{\textit{NP:} Given an input partitiones graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
-\item{\textit{NP-Hard:} Any instance of standard graph $k-coloring$ can be converted to an instance of PCP by partitioning the initial graph $G$ in such a way that every partition contains a single node. The solution to the original $k-coloring$ problem is the same as the solution to the constructed PCP. Since coloring is NP-Hard, this implies that PCP is NP-Hard as well.}
+\item{\textit{NP:} Given an input partitions graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
+\item{\textit{NP-Hard:} Any instance of standard graph $k-coloring$ can be converted to an instance of PCP by partitioning the initial graph $G$ in such a way that every partition contains a single node. The solution to the original $k-coloring$ problem is the same as the solution to the constructed \PCP{}. Since standard coloring is NP-Hard, this implies that PCP is NP-Hard as well.}
 \end{itemize}
 
 \end{proof}
@@ -51,7 +51,7 @@ We will prove NP-Completeness by proving both belonging to NP and NP-Hard classe
 \begin{algorithmic}
 
 \FORALL{partition $p$ in $P$}
-	\FORALL{node $v$ in $P$}
+	\FORALL{node $v$ in $p$}
 		\IF {$v$ has a color $j$ assigned}
 			\STATE mark $p$ as colored
 			\FORALL {neighbour $u$ to $v$}
@@ -75,26 +75,26 @@ This problem was first proposed by Li and Sinha \cite{Li00thepartition} as part 
 
 A Wavelength Division Multiplexed (WDM) optical network consists in a network in which links are optical fibers capable of transmitting a specified number of different wavelengths. The Routing and Wavelength Assignment (RWA) problem consists in, given a desired set of connections between pairs of nodes, establish routes between those nodes using the network's links.
 
-Every route is composed by a set of consecutive lightpath. A lightpath is defined as a point to point connection between two adjacent nodes in the network using a certain wavelength. Although there are networks in which the nodes are capable of transforming wavelengths within the same route, we will assume that every route uses the same wavelength across all of its lightpaths; this restriction is known as the \textit{wavelength continuity constraint}.
+Every route is composed by a set of consecutive lightpaths. A lightpath is defined as a point to point connection between two adjacent nodes in the network using a certain wavelength. Although there are networks in which the nodes are capable of transforming wavelengths within the same route, we will assume that every route uses the same wavelength across all of its lightpaths; this restriction is known as the \textit{wavelength continuity constraint}.
 
-The second restriction to be satisfied is the \textit{wavelength clash constraint} which requires that different lightpaths sharing a physical link must have differente wavelengths. Toghether with the previous constraint, it is implied that two different routes that share at least one physical link must use different wavelengths.
+The second restriction to be satisfied is the \textit{wavelength clash constraint} which imposes that different lightpaths in the same physical link must have different wavelengths. Together with the previous constraint, it is implied that two different routes that share at least one physical link must use different wavelengths.
 
-In the offline or static version of the RWA problem, all connections are known beforehand. The counterpart of this version is the \textit{dynamic} RWA in which connections must be satisfied as they are requested in an online fashion. In this work we will take only the former into consideration.
+In the offline or static version of the RWA problem, the set of connections to be established is known beforehand. The counterpart of this version is the \textit{dynamic} RWA in which connections must be satisfied as they are requested in an online fashion. In this work we will take only the former version into consideration.
 
-The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria that can be used to evaluate the quality of a set of routes, such as the number of lightpaths used for each route or generating certain traffic patterns. Again, in this work, we will be focusing only in the min-RWA version.
+The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria that can be used to evaluate the quality of a set of routes, such as the number of lightpaths used for each route, or generating particular traffic patterns. In this work we will be focusing only in optimizing the number of wavelengths, which will eventually lead to the \PCP{}.
 
 \subsubsection*{Two-phase resolution}
 
-There are multiple methods, both heuristic and exact, for dealing with the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{Li00thepartition}, use a two-phase approach: a routing phase and an assignment phase.
+There are multiple methods, both heuristic and exact, for solving the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{Li00thepartition}, use a two-phase approach: a routing phase and an assignment phase.
 
 In the routing phase, a set of potential routes is generated for every pair of nodes to be connected, mostly using shortest-path criteria.
 
-The assignment phase then requires to pick a route from the set of candidates for every connection. The route chosen is assigned a wavelength, in such a way that no pair of routes that share a physical link have the same wavelength. This phase can be solved by an instance of PCP.
+The assignment phase then requires to pick a route from the set of candidates for every connection. The route chosen is assigned a wavelength, in such a way that no pair of routes that share a physical link have the same wavelength. This phase can be transformed into an instance of \PCP{}.
 
 A partitioned graph $G$ can be constructed in the following way:
 \begin{itemize}
 \item{Every potential route generated in the routing phase is represented by a node $v \in V$.}
-\item{Nodes belong to the same partition if the routes they represent satisfy the same connection request.}
+\item{Nodes belong to the same partition iff the routes they represent satisfy the same connection request.}
 \item{An edge between two nodes $u,v$ is created if the routes share any physical link.}
 \end{itemize}
 
@@ -109,35 +109,35 @@ In this work we will focus on finding an exact solution for the partitioned colo
 
 The graph coloring problem has been studied extensively in literature, attempting to find both exact and approximate solutions.
 
-Simplest heuristic approaches consist in greedy algorithms, using different criteria such as \textit{largest-first} \cite{welsh1967upper}, \textit{smallest-last} \cite{matula1972graph} or \textit{degree of saturation} \cite{brelaz1979new}. While the first two rely on a static ordering based on the degree of each node, the last one uses a dynamic ordering based on the number of different colors are found in the neighbourhood of every vertex.
+Simplest heuristic approaches consist in greedy algorithms, using different criteria such as \textit{largest-first} \cite{welsh1967upper}, \textit{smallest-last} \cite{matula1972graph} or \textit{degree of saturation} \cite{brelaz1979new}. While the first two rely on a static ordering based on the degree of each node, the last one uses a dynamic ordering based on the number of different colors being used in the neighbourhood of each vertex.
 
-These criteria may also be used in implicit enumeration techniques, which enumerate the possible colorings in an order determined by the chosen criteria. Using a good criteria is vital for finding good solutions as early as possible, therefore pruning a great number of solutions. The implicit solution tree may be traversed in a BFS, DFS or best bound fashion. All these algorithms eventually find the optimal solution for the problem.
+These criteria may also be used in implicit enumeration techniques, which enumerate the possible colorings in the order determined by the chosen criteria. Using a good strategy is vital for finding good solutions as early as possible, therefore pruning a great number of colorings. The implicit solution tree may be traversed in a BFS, DFS or best bound fashion. All these algorithms eventually find the optimal solution for the problem.
 
-The DSATUR enumeration algorithm proposed in \cite{brelaz1979new} has proven to be one of the most efficient implicit enumeration methods for the coloring problem, having several improvements such as \cite{sewell1996improved}.
+The \textsc{dsatur} enumeration algorithm proposed in \cite{brelaz1979new} has proven to be one of the most efficient implicit enumeration methods for the coloring problem, having several improvements such as \cite{sewell1996improved}.
 
 More complex heuristic algorithms, using different metaheuristics, have also been used for the coloring problem.
 
 There is also extensive work using integer linear programming formulations for the coloring problem by using different models:
 \begin{itemize}
-\item{In \cite{mehrotra1996column} a column generation approach is used based on an independent set formulation of the problem, in which a binary variable $x_S$ defines whether the independent set $S$ is given a color label or not.}
+\item{In \cite{mehrotra1996column} a column generation approach is used based on an independent set formulation of the problem, in which a binary variable $x_S$ defines whether the independent set $S$ is given a color label or not; this formulation requires a variable for each possible color class in the graph.}
 \item{An ILP model for acyclic orientations with path constraints is presented in \cite{figueiredo2005acyclic} and then applied to solve the vertex coloring problem.}
 \item{The representatives model presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric} uses $x_{uv}$ variables which determine whether vertex $v$ \textit{represents} color $u$; having exactly one node represent each color class allows easy symmetry breaking.}
-\item{M\'endez-D\'iaz and Zabala \cite{mendez2006branch,mendez2008cutting} developed both branch-and-cut and cutting planes algorithms for a standard formulation of the problem, using $x_{ij}$ variables to specify whether node $i$ used color $j$, and $w_j$ variables as witnesses to whether color $j$ was in use. Several symmetry breaking constraints were added to the model to ensure a fast resolution of the model.}
+\item{M\'endez-D\'iaz and Zabala \cite{mendez2006branch,mendez2008cutting} developed both branch-and-cut and cutting planes algorithms for a standard formulation of the problem, using $x_{ij}$ variables to specify whether node $i$ used color $j$, and $w_j$ variables as witnesses to whether color $j$ was in use. Several symmetry breaking constraints were added to the model to ensure a fast resolution.}
 \end{itemize}
 
-Our goal will be to generalize this last ILP formulation to solve the partitioned coloring problem.
+Our goal in this work will be to generalize this last ILP formulation to solve the partitioned coloring problem.
 
 \subsubsection*{min-RWA}
 
 Initial techniques to solve the min-RWA problem as a two-stage problem, such as \cite{hyytia14wavelength}, pick a single route for every connection using shortest-path algorithms and then use different heuristics to solve a standard coloring problem in the assignment stage. In \cite{manohar2002routing} the shortest-path routing solution is replaced by a maximum edge disjoint path solution in order to reduce conflicts between routes.
 
-Other approaches to the problem tackle the routing and wavelength assignment as a single problem, without decomposing it in two separate phases. In \cite{skorin2007routing}, for example, bin packing algorithms are used to handle the problem, whereas \cite{noronha2007random} embeds this heuristic into a genetic evolutionary framework.
+Other approaches to the problem tackle the routing and wavelength assignment as a single problem, without decomposing it in two separate phases. In \cite{skorin2007routing}, for example, bin packing heuristic algorithms are used to handle the problem, whereas \cite{noronha2007random} embeds this heuristic into a genetic evolutionary framework.
 
-An exact approach using an integer programming formulation with column generation is used in \cite{lee2002optimization}, which solves with both the routing and the wavelength assignment problems in the same model.
+An exact approach using an integer programming formulation with column generation is used in \cite{lee2002optimization}, which solves both the routing and the wavelength assignment problems in the same formulation.
 
 \subsubsection*{PCP}
 
-Two-stage approaches for min-RWA were improved in \cite{Li00thepartition} by introducing the Partitioned Coloring Problem, which allowed multiple routes to be picked for each connection in the initial phase. In that work, two groups of heuristics were developed: one-step and two-step. The former consists in picking the easiest node to color in every partition, and then picking the hardest one from that set using different criteria (largest-first, smallest-last, color-degree); the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
+Two-stage approaches for min-RWA were improved in \cite{Li00thepartition} by introducing the partitioned coloring problem, which allowed multiple routes to be picked for each connection in the initial phase. In that work, two groups of heuristics were developed: one-step and two-step. The former consists in picking the easiest node to color in every partition, and then picking the hardest one from that set using different criteria (largest-first, smallest-last, color-degree); the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
 
 In \cite{noronha2006routing} the one-step color-degree constructive heuristic is used in a tabu search approach, TS-PCP. Routes are generated in an initial stage using a $k$-EDR constructive procedure, based on the maximum edge disjoint path heuristic by \cite{kleinberg1996approximation}, and the resulting partitioned coloring problem is solved with TS-PCP.
 
@@ -149,7 +149,7 @@ Due to the complexity of the problem, most of the work on PCP is composed by heu
 In this section we will define all concepts and conventions to be used throughout this work: 
 
 \begin{itemize}
-	\defitem{Colors}{The set of valid color labels $C = \{1, \ldots, c\}$, where $c$ may be any upper bound to the chromatic number of the graph, such as the $n$.}
+	\defitem{Colors}{The set of valid color labels $C = \{1, \ldots, c\}$, where $c$ may be any upper bound to the chromatic number of the graph, such as $n$.}
 	\defitem{Graph}{Defined as tuple $<V,E>$ where $V$ is the set containing the $n$ nodes and $E$ contains the $m$ undirected edges.}
 	\defitem{Partitioned Graph}{Defined as tuple $<V,E,P>$, being $V$ and $E$ the same sets as above, and $P$ the set of $P_1, \ldots, P_q$ partitions of $V$.}
 	\defitem{Partition function}{For every node $v$ in a partitioned graph, $p(v)$ returns the partition that contains that node.}
@@ -157,8 +157,8 @@ In this section we will define all concepts and conventions to be used throughou
 	\defitem{Partition Neighbourhood}{$N_P(v)$ is the set of partitions that contain at least one node adjacent to $v$.}
 	\defitem{Degree}{$\delta(v)$ is the cardinal of the neighbourhood of $v$.}
 	\defitem{Partition Degree}{$\delta_P(v)$ is the cardinal of the partition neighbourhood of $v$.}
-	\defitem{Color Degree}{Number of different colors used in $N(v)$ for a node $v \in V$, also degree of saturation.}
-	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $u,v$, either $u$ is adjacent to $v$ or $u$ and $v$ are contained in the same partition; it is equivalent to consider a standard clique in a graph in which each node is adjacent to every node in its partition.}
-	\defitem{Component Independent Set}{Subset of $V$ such that for every pair of nodes $u,v$, $u$ is not adjacent to $v$ and they belong to different partitions; similarly to the extended clique, it is equivalent to consider a standard independent set in a graph in which each node is adjacent to every node in its partition.}
+	\defitem{Color Degree}{Number of different colors used in $N(v)$ for a node $v \in V$; also degree of saturation.}
+	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $u,v$, either $u$ is adjacent to $v$ or $u$ and $v$ are contained in the same partition.}
+	\defitem{Component Independent Set}{Subset of $V$ such that for every pair of nodes $u,v$, $u$ is not adjacent to $v$ and they belong to different partitions.}
 	\defitem{Partitions Graph}{The partitions graph $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v' \in V'$ corresponds to a partition $P_v \in P$, and two nodes $u',v' \in V'$ are adjacent if and only if every node in $P_u$ in $G$ is adjacent to every node in $P_v$.}
 \end{itemize}

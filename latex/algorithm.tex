@@ -3,9 +3,91 @@
 \section{Branch and Cut}
 \label{sec:bnc}
 
-In this section we will present the implemented branch-and-cut algorithm, including initial heuristic, branching strategies, separation algorithms and primal heuristics.
+In this section we will present the implemented branch-and-cut algorithm, including all the components that compose the branch and cut structure: initial heuristic, branching strategies, separation algorithms, primal heuristics, etc.
 
-\TODO{Short explanation of the structure of a branch and cut algorithm}
+\subsection{Algorithm structure}
+
+The structure of a branch and cut algorithm can be considered as a combination of cutting planes and branch and bound schemes.
+
+\subsubsection*{Cutting planes}
+
+Cutting planes algorithms rely solely on valid inequalities for the problem. Given a solution for the linear relaxation of the problem\footnote{The linear relaxation of an integer linear programming problem is the same problem without integrality constraints on the variables.}, a number of cutting planes are added in order to remove the fractional solution obtained. The relaxation, along with the added cuts, is then re-solved and the process repeated until an integer-feasible solution is obtained.
+
+\begin{algorithm}
+\caption{General scheme for a cutting planes algorithm}
+\label{alg:cuttingplanes}
+
+\begin{algorithmic}
+
+\LOOP
+	\STATE calculate solution of the linear relaxation
+	\IF{solution is integral}
+		\STATE return obtained solution
+	\ENDIF
+	\STATE generate a set of cutting planes to cut off the fractional solution
+	\STATE add the cutting planes to the model
+\ENDLOOP
+
+\end{algorithmic}
+\end{algorithm}
+
+The algorithm depends on having an adequate set of cutting planes families, along with good separation heuristics, in order to find at least one valid inequality that cuts off the fractional solution on every iteration. Excessive generation of cutting planes may have the drawback that the relaxation becomes larger and larger on every iteration, require more computational effort to solve.
+
+Note that besides the valid inequalities specific to each problem, such as the ones we have presented for \PCP{} in section \ref{sec:ineqs}, there are generic families of cutting planes that can be applied to any problem. However, problem-specific cuts usually have better performance.
+
+\subsubsection*{Branch and bound}
+
+The branch and bound scheme explores different solutions by setting bounds on fractional variables on every solution. The algorithm starts by solving the fractional solution, like cutting planes, but instead of trying to remove the fractional solution by adding a valid inequality, it creates two subproblems, usually by fixing a particular variable with a fractional value to either one or zero (in 0-1 integer programming models). 
+
+Each subproblem is then resolved using the same strategy until the relaxation's solution is integer feasible, in which case that branch is closed. The algorithm runs until all nodes are explored.
+
+Besides the \textit{branching} behaviour of the algorithm, both upper and lower \textit{bounds} for each node are considered. A global upper bound for a minimization problem is updated whenever a new integer feasible solution is found, using the solution with the lowest objective value. This bound is compared with each node's lower bound provided by the relaxation's solution, as the integer solution will always be greater than the relaxation's. Should the lower bound of the node be larger than the global upper bound, then the branch can be pruned, reducing the tree's size.
+
+\begin{algorithm}
+\caption{General scheme for a branch and bound algorithm}
+\label{alg:branchnbound}
+
+\begin{algorithmic}
+
+\STATE initialize \textit{tree} with the problem's formulation
+\STATE 
+\WHILE{there are open nodes in the \textit{tree}}
+	\STATE pick an open \textit{node} from the tree
+	\STATE calculate solution $x^*$ of the linear relaxation of the \textit{node}
+	\IF{the linear relaxation is infeasible}
+		\STATE close the node as the branch is infeasible
+	\ELSIF{solution $x^*$ is integer feasible}
+		\STATE update best integer solution $x_M$ with $x^*$ if $f(x^*) < f(x_M)$
+		\STATE close the node as an integer solution was found
+	\ELSIF{$f(x^*) > f(x_M)$} 
+		\STATE close the node as best solution cannot be improved
+	\ELSE
+		\STATE generate new subproblems by \textit{branching}
+	\ENDIF
+\ENDWHILE
+
+\end{algorithmic}
+\end{algorithm}
+
+The branch and bound scheme does not specify which node to select on each iteration, or how to generate the subproblems on each node. The selection strategy and the branching strategy are chosen depending on the problem to solve.
+
+\subsubsection*{Cut and branch}
+
+The cut and branch scheme is simply an execution of the cutting planes algorithm until a certain threshold is reached (expressed in running time, number of cuts iterations or mip gap), when the generation of cutting planes is stopped and a branch and bound algorithm is executed, using the initial formulation along with all the generated cutting planes.
+
+This algorithm usually yields better results than the previous ones, as cutting planes usually have difficulties closing the final gap, and a pure branch and bound scheme usually takes too long to solve. However, the cutting planes may cause that the relaxations in the branch and bound take too long to solve; a good balance between the two phases is extremely important for a good overall performance.
+
+\subsubsection*{Branch and cut}
+
+While the cut and branch algorithm applies cutting planes only at the beginning, this is, at the root of the branch and bound tree, the branch and cut version uses cutting planes throughout the whole tree. Although cuts are applied more aggressively at the root, on certain nodes in the tree more iterations of cuts are executed. 
+
+Note that these generated cuts can use local information, exploiting the variables fixed in the node due to the branching process. In this case, cuts generated on the node are only valid on the node's subtree; otherwise, cuts generated on a node can be reused globally.
+
+An improvement to this scheme consists in deriving integral solutions from node relaxations, therefore obtaining global upper bounds earlier during the tree traversal; the generation of these solutions is done via \textit{primal heuristics}.
+
+As with all previously mentioned algorithms, branch and cut schemes have a number of parameters and strategies to determine. To begin with, all the separation heuristics for cutting planes iterations must be chosen adequately to quickly find a reasonable number of cuts; on the branch and bound side, node selection and branching strategies must also be determined. Also, the number of cut iterations to perform on the root and on internal nodes must be set, as well as when to apply cuts within the tree.
+
+Throughout this section we will go over all these missing pieces in the branch and cut structure, and how we filled them in order to solve the \PCP{}.
 
 \subsection{Preprocessing}
 
@@ -232,7 +314,20 @@ Block color inequalities (\ref{ineq:blockcp}) are explored using brute force, si
 
 Alternatively, they can be added initially to the cut pool provided by the branch and cut framework, instead of manually checking them at each cuts iteration.
 
+\subsection{Node selection strategies}
+
+On each iteration of the branch and cut algorithm, an unprocessed node must be chosen to be solved. Determining which node will be handled next is known as the \textit{node selection} strategy.
+
+There are three standard node selection strategies, all of them implemented by the ILP framework we used. In section \ref{sec:results} we experiment with the behaviour of the algorithm under different strategies:
+\begin{itemize}
+	\defitem{DFS}{Depth-first search, picks the last node opened, attempting to generate an integral solution by diving to the bottom of the tree as fast as possible. This strategy has low memory consumption as relatively few nodes are left unprocessed on every iteration.}
+	\defitem{BFS}{Breadth-first search, picks the first node opened; this strategy solves every open node with at the same depth before proceeding to the following depth level. It usually has memory issues, as a large number of nodes tend to be left open, thus making this a poor choice in most cases.}
+	\defitem{BestB}{Best-bound, picks the node with... \TODO{Complete}}
+\end{itemize}
+
+
 \subsection{Branching strategies}
+\label{subsec:alg:branching}
 
 After each node is processed in the branch and cut tree is processed, two new child nodes are created by subdividing the problem in two easier subproblems; this is usually done by \textit{branching} on a certain variable. Usually, in the case of binary variables, a variable $x$ with a fractional value in the relaxation is chosen, and the two subproblems are created by fixing $x = 0$ and $x = 1$ and re-processing. Alternatively, bounds on expressions, instead of on variables, can be set.
 
@@ -318,6 +413,7 @@ x_{ij^*} = 0 \quad \forall i \in N(i^*)
 \end{itemize}
 
 \subsection{Primal heuristic}
+\label{subsec:alg:primal}
 
 The algorithm used to create an integer feasible solution from the relaxation's solution is called the \textit{primal heuristic}. A typical primal heuristic consists in rounding the values of every fractional variable to the nearest integer value, as long as this process satisfies all the restrictions imposed by the model.
 
@@ -329,4 +425,24 @@ Having all these values fixed, an extremely short run of \textsc{dsatur} is exec
 
 The best coloring obtained by the algorithm is then used as an incumbent solution for the node. In case certain symmetry breaking restrictions are in place, a reordering of the labels assigned to each color class might have to be performed.
 
-\subsection{Pruning}
+\subsection{Implicit enumeration}
+\label{subsec:alg:implicit}
+
+Early experimentation with the branch and cut algorithm and with the \textsc{dsatur} algorithm has shown that for relatively small instances the latter explores all possible solutions much faster than the former, since it lacks all the overhead imposed by the different artifacts present in a full branch and cut.
+
+Therefore, when we have reduced the problem size to a relatively small one by fixing node-color assignments during the branching process, instead of proceeding with the traditional branch and cut algorithm, we execute a full run of \textsc{dsatur}. Since most partitions are already colored, the number of possible solutions is reasonably small to be fully explored.
+
+In section \ref{sec:results} we experiment with different values for the number of uncolored partitions in the branch and cut tree to be used as the threshold for stopping the branch and cut and starting an unbounded execution of \textsc{dsatur}.
+
+\subsection{Implementation details}
+
+The branch and cut algorithm was implemented in Java 1.6 using CPLEX version 12.1 both as a MIP framework and a linear programming solver for relaxations. 
+
+We made use of branch, heuristic and cut callbacks provided by the CPLEX API to manage the branching strategy, inject primal solutions and apply custom cuts on both the root and internal nodes.
+\begin{itemize}
+\item{The branch callback is invoked once the processing of a certain node has been completed in order to determine how to create the child subproblems in case the node could not be closed; inside this callback we implement the different dynamic branching strategies described in \ref{subsec:alg:branching}, as static priorities are fixed during the initialization of the problem. This callback is also used to prune the branch and cut tree once a certain number of partitions have been fixed in order to proceed with the implicit enumeration from \ref{subsec:alg:implicit}.}
+\item{The heuristic callback is invoked after the linear relaxation of a node has been solved, and provides the fractional values from the relaxation's solution to derive an integral feasible solution, using the color degree strategy explained in \ref{subsec:alg:primal}. We make use of this callback to inject the integral solution derived from implicit enumeration (\ref{subsec:alg:implicit}).}
+\item{The cut callback is invoked after the linear relaxation is solved; every certain number of nodes the separation heuristics are invoked in an attempt to add planes to cut off the current linear solution. After the cuts are added, the relaxation is solved again, and more iterations of cutting planes may be optionally executed; while few iterations are performed in the internal nodes, a larger number is executed in the root.}
+\end{itemize} 
+
+The framework was configured to use standard branch and cut search, instead of dynamic search, to correctly determine the performance of the algorithm. Multi-core processing was also disabled.

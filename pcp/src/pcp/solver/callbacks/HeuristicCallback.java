@@ -17,6 +17,7 @@ import pcp.model.Model;
 import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
 import pcp.model.strategy.Objective;
+import pcp.solver.data.NodeData;
 import pcp.solver.helpers.PruneEvaluator;
 import pcp.solver.heur.HeuristicMetrics;
 import pcp.utils.DoubleUtils;
@@ -32,6 +33,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	
 	static final boolean enabled = Settings.get().getBoolean("callback.heuristic.enabled");
 	static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
+	static final boolean onlyOnUp = Settings.get().getBoolean("primal.onlyonup");
 	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	static final int everynodes = Settings.get().getInteger("primal.everynodes");
 	static final boolean useUB = Settings.get().getBoolean("primal.useub");
@@ -68,7 +70,8 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		int nodesSet = countNodesEqualOne();
 		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			setSolution(nodesSet);
-		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)) {
+		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)
+				&& (!onlyOnUp || NodeData.getDirection(super.getNnodes()) == 1)) {
 			setPrimal(nodesSet);
 		}
 	}
