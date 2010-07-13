@@ -3,7 +3,7 @@
 \section{Enumeration algorithms}
 \label{sec:heur}
 
-Implicit enumeration algorithms enumerate all possible colorings for the graph, restricting the solution set as much as possible and pruning non-optimal solutions using known bounds. 
+Implicit enumeration algorithms walk through all possible colorings for the graph, restricting the solution set as much as possible and pruning non-optimal solutions using known bounds. In this section we will review implicit enumeration techniques for the classical coloring problem and discuss different generalizations for \PCP{}.
 
 \subsection{Classical scheme}
 
@@ -17,7 +17,7 @@ A classical scheme for enumeration algorithms is presented in \ref{alg:enumerati
 \CALL color(0,1)
 
 \PROC{color(painted, label)}
-	\IF{current coloring is greater than or equal best coloring}
+	\IF{current coloring is no better than best coloring}
 		\STATE prune current solutions subtree
 	\ELSIF{\textit{painted} equals to $|V|$}
 		\STATE update best coloring with current coloring
@@ -40,19 +40,20 @@ A classical scheme for enumeration algorithms is presented in \ref{alg:enumerati
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm picks a node to be colored in each recursive call, attempting to color it with one of the already used labels if possible, and also  assigning a fresh color to it, in order to explore all possible colorings for the graph, though without considering several symmetric solutions. At every iteration, the current branch is checked if it can be pruned; this can be done if the current coloring is using as many labels as the best coloring found by the algorithm, since it implies that the best solution cannot be improved using the current one.
+The algorithm picks a node to be colored in each recursive call, attempting to color it with one of the already used labels if possible; it also assigns a fresh color to the node, in order to explore all possible colorings for the graph. Note that several symmetric colorings are left out of the exploration. 
 
-The strategy used for picking the node to be colored in each recursive call gives place to different algorithms. A very simple strategy is to use the degree of the node, coloring nodes with highest degree first, based on the assumption that difficult nodes should be handled first.
+At every iteration, the partial solution is pruned if the coloring is using as many labels as the best coloring found by the algorithm, as this implies that the best solution cannot be improved using the current one.
 
-Another algorithm, one of the most widely used for this problem, is \textsc{dsatur}\cite{brelaz1979new}. This algorithm always picks the node with the highest degree of saturation\footnote{Number of different colors used in $N(v)$ for a node $v \in V$.}, using different strategies for tie-breaking, such as picking the node with the largest number of uncolored neighbours\cite{sewell1996improved}, and has proved to be one of the best enumeration algorithms available for graph coloring.
+The strategy used for picking the node to be colored in each recursive call gives place to different algorithms. A very simple strategy is to use the degree of the node, coloring nodes with highest degree first, based on the assumption that difficult nodes should be handled early.
 
-For an implementation of the \textsc{dsatur} algorithm, we used the code provided by Trick in \cite{trickdsatur}, which we ported to Java and later adapted into partitioned coloring as described in the following section.
+Another algorithm, which is one of the most widely used for the coloring problem, is \textsc{dsatur}\cite{brelaz1979new}. This algorithm always picks the node with the highest degree of saturation\footnote{Number of different colors used in $N(v)$ for a node $v \in V$.}, using different strategies for tie-breaking, such as picking the node with the largest number of uncolored neighbours\cite{sewell1996improved}. It has proved to be one of the best enumeration algorithms available.
+
+For an implementation of the \textsc{dsatur} algorithm, we used the code provided by Trick in \cite{trickdsatur}, which we ported to Java and adapted for partitioned coloring as described in \ref{subsec:heur:enumpcp}.
 
 \subsection{Enumerating partitioned colorings}
+\label{subsec:heur:enumpcp}
 
-The previous scheme must be modified in order to be used for partitioned coloring, since it does not require to color every node in the graph but a single node per partition.
-
-A simple modification would be to simply re-use the previous scheme, picking a new partition instead of a new node on each recursive call, and iterate over all nodes in the partition as well as over every possible label; this modification is presented in algorithm \ref{alg:pcpenumerationwrong}. 
+The previous scheme must be modified in order to generate valid partitioned colorings. A simple modification would be to simply pick a new partition instead of a new node on each recursive call, and iterate over all nodes in the partition using all candidate labels. This modification is presented in algorithm \ref{alg:pcpenumerationwrong}. 
 
 \begin{algorithm}
 \caption{Modification of enumeration scheme for partitioned graphs $G = <V,E,P>$, picking partitions on every call}
@@ -76,9 +77,9 @@ A simple modification would be to simply re-use the previous scheme, picking a n
 \end{algorithmic}
 \end{algorithm}
 
-However, this modification forces to pick all the nodes within the same partition together, regardless of the criteria being used to pick nodes. For instance, if a largest-degree criteria is used, and remaining partitions (with their nodes' degrees) are $P_1 \{v_1(10),v_2(1)\}$ and $P_2 \{v_3(5)\}$, the proposed modification would pick nodes $v_1, v_2, v_3$ instead of $v_1, v_3, v_2$. This severely damages the validity of the strategy being used.
+However, this modification imposes that all the nodes within the same partition are explored together in the enumeration, regardless of the criteria being used to choose each candidate. For example, if a largest-degree criteria is used, and the remaining partitions (with their nodes' degrees) are $P_1 \{v_1(10),v_2(1)\}$ and $P_2 \{v_3(5)\}$, algorithm \ref{alg:pcpenumerationwrong} would enumerate nodes $v_1, v_2, v_3$ instead of $v_1, v_3, v_2$. This severely hurts the efectiveness of the strategy being used.
 
-Therefore, we propose another modification, presented in algorithm \ref{alg:pcpenumeration}. In this case we use the original enumeration scheme, picking a node from an unpainted partition on every call, but before returning from the recursive call we create another branch in which we do not color the chosen node, so that the partition can be later colored using another node.
+Therefore, we propose another modification, presented in algorithm \ref{alg:pcpenumeration}. In this case we use the original enumeration scheme, picking a node from an unpainted partition on every call, but before returning from the procedure we create another branch in which we do not color the chosen node, so that the partition can be later colored using another node.
 
 \begin{algorithm}
 \caption{Partitioned coloring implicit enumeration scheme for partitioned graphs $G = <V,E,P>$}
@@ -131,11 +132,11 @@ Based on these assumptions, we generalized two different versions for partitione
 
 \subsubsection*{Easiest node}
 
-The easiest node variant is based on the \textit{onestepCD} heuristic proposed in \cite{Li00thepartition}. In order to pick the node to color, first the easiest node is chosen from every uncolored partition, where \textit{easiest} is defined in terms of lowest color degree, with tie breaking on lowest number of uncolored neighbours. From the resulting set, the node with the highest color degree is chosen, as in classic \textsc{dsatur}. 
+The easiest node variant is based on the \textit{onestepCD} heuristic proposed in \cite{Li00thepartition}. In order to pick the node to color, the easiest node is chosen from every uncolored partition, where \textit{easiest} is defined in terms of lowest color degree, with tie breaking on lowest number of uncolored neighbours. From the resulting set, the node with the highest color degree is chosen, as in classic \textsc{dsatur}. 
 
 In other words, this algorithm picks the hardest node from the set of the easiest nodes on each uncolored partition.
 
-Also, in an attempt to explore different solutions earlier to obtain better upper bounds, we also implemented a randomized version of the algorithm. From the set of the easiest nodes in every partition, only half of the time is the hardest node picked, the other half another candidate is chosen with probability decreasing as its color degree decreases.
+Also, in an attempt to explore different solutions earlier to obtain better upper bounds, we also implemented a randomized version of the algorithm. From the set of the easiest nodes in every partition, only half of the time the hardest node is chosen, the other half another candidate is chosen with probability decreasing as its color degree decreases.
 
 \subsubsection*{Hardest partition}
 
@@ -144,7 +145,7 @@ Instead of choosing the easiest node from each partition and then picking the ha
 Therefore, in order to determine the hardest partition to color, we experimented with combinations of the following metrics:
 \begin{itemize}
 	\item{Color degree of the partition, defined as the number of different colors adjacent to all of the nodes in the partition; considering that a larger color degree implies a harder partition to color}
-	\item{Size of the partition, as a larger partition being colored earlier helps reducing the problem size, therefore the larger the partition the earlier it should be handled}
+	\item{Size of the partition, as a larger partition being colored earlier helps reducing the problem size, therefore, the larger the partition the earlier it should be handled}
 	\item{Number of uncolored partitions adjacent to the partition, equivalent to the tie breaking criteria used for classic \textsc{dsatur}} 
 \end{itemize}
 
@@ -154,9 +155,9 @@ Different combinations of these criteria, as well as the different variants of t
 
 As will be presented in section \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
 
-Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. The algorithm colors these partitions first, trying with all different node combinations within the partitions before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
+Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. The algorithm colors these partitions first, trying all different node combinations within the partitions before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
 
-Also, since the algorithm is used as a primal heuristic within the branch and cut tree, it supports forcing the coloring of certain nodes, fixing those values in the colorings enumeration. In case certain node-color combinations are forbidden due to the restrictions imposed during in the branch and bound tree, solutions assigning those combinations are not explored in the algorithm.
+Also, since the algorithm is used as a primal heuristic within the branch and cut tree (see \ref{subsec:alg:primal}), it supports forcing the coloring of certain nodes, keeping those assignments fixed during the enumeration process. In case certain node-color combinations are forbidden due to the restrictions imposed during branching, solutions assigning those combinations are not explored in the algorithm.
 
-In case symmetry breaking constraints \ref{eqn:symnodecount} or \ref{eqn:minlabel} are used, the color classes obtained by the algorithm are sorted based on node count or minimum node index respectively, so the obtained solution can be successfully injected in the branch and cut scheme.
+In case symmetry breaking constraints \ref{eqn:symnodecount} or \ref{eqn:minlabel} are used, the color classes obtained by the algorithm are sorted based on node count or minimum partition index respectively, so the obtained solution can be successfully injected into the branch and cut scheme.
 
