@@ -52,13 +52,15 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	final static boolean logIneqs = Settings.get().getBoolean("logging.ineqs");
 	final static boolean logCallback = Settings.get().getBoolean("logging.callback.cuts");
 	
-	final static int maxItersRoot = Settings.get().getInteger("iterations.root.max");
-	final static int maxItersNodes = Settings.get().getInteger("iterations.nodes.max");
+	final static int maxItersRoot = Settings.get().getInteger("cuts.iterations.root.max");
+	final static int maxItersNodes = Settings.get().getInteger("cuts.iterations.nodes.max");
 	
 	final static int minCliques = Settings.get().getInteger("cuts.minCliques");
 	final static int cutEvery = Settings.get().getInteger("cuts.everynodes");
 	final static int maxCutsDepth = Settings.get().getInteger("cuts.maxdepth");
 	final static boolean onlyOnUp = Settings.get().getBoolean("cuts.onlyonup");
+	
+	final static boolean enabled = Settings.get().getBoolean("cuts.enabled");
 	
 	Iteration iteration;
 	Model model;
@@ -93,7 +95,8 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	
 	@Override
 	protected void main() throws IloException {
-		if (logCallback) System.out.println(("Node " + super.getNnodes()));
+		if (!enabled) return;
+		if (logCallback) System.out.println("Cut callback on node " + super.getNnodes());
 		
 		// Skip first iteration of all as it takes place even before first relaxation is solved
 		if (!doneFirst) {

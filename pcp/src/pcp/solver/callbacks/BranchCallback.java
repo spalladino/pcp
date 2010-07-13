@@ -33,7 +33,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
 	private static final boolean log = Settings.get().getBoolean("logging.callback.branching");
-	private static final boolean enabled = Settings.get().getBoolean("callback.branching.enabled");
+	private static final boolean enabled = Settings.get().getBoolean("branch.enabled");
 
 	private static final boolean dynamicFractionalStrategy = Settings.get().getBoolean("branch.dynamic.fractional");
 	private static final boolean mostFrac = Settings.get().getBoolean("branch.dynamic.fractional.most");
@@ -77,13 +77,13 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			lastGapNode = super.getNnodes();
 		}
 		
-		if (!enabled) return;
 		int nodesSet = countNodesEqualOne(); 
-		
 		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			if (log) System.out.println("Pruning at " + nodesSet + " nodes set");
 			prune(); return;
 		}
+		
+		if (!enabled) return;
 
 		// Clean up before starting
 		branched = null;

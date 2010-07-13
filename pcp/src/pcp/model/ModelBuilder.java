@@ -5,6 +5,7 @@ import ilog.concert.IloIntExpr;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
+import ilog.concert.IloNumVar;
 import ilog.concert.IloObjective;
 
 import java.util.List;
@@ -12,11 +13,13 @@ import java.util.Map;
 
 import pcp.algorithms.clique.CliqueCover;
 import pcp.algorithms.coloring.ColoringAlgorithm;
+import pcp.common.sorting.NodeDegreeCompleteComparator;
 import pcp.entities.partitioned.Edge;
 import pcp.entities.partitioned.InducedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
+import pcp.entities.partitioned.SortedPartitionedGraph;
 import pcp.model.strategy.Objective;
 import pcp.model.strategy.Symmetry;
 import pcp.utils.GraphUtils;
@@ -29,6 +32,7 @@ public class ModelBuilder {
 	static final boolean boundVariablesOnDegree = Settings.get().getBoolean("model.variables.boundOnDegree");
 	static final boolean boundVariablesOnPartitionIndex = Settings.get().getBoolean("model.variables.boundOnPartitionIndex");
 	static final boolean fixClique = Settings.get().getBoolean("model.variables.fixClique");
+	static final boolean useSOS = Settings.get().getBoolean("model.useSOS");
 	
 	IloIntVar[] allxs;
 	IloIntVar[][] xs;
@@ -76,6 +80,9 @@ public class ModelBuilder {
 				break;
 			default:
 				throw new UnsupportedOperationException("Unhandled model builder strategy: " + strategy.getPartitionConstraints());
+		}
+		if (useSOS) {
+			createSOS();
 		}
 		
 		// Adjacency constraints
@@ -492,6 +499,33 @@ public class ModelBuilder {
 			}
 			modeler.addGe(expr, 1, name);
 		}
+	}
+
+	/**
+	 * Creates a special order set for each partition
+	 * @throws IloException 
+	 */
+	protected void createSOS() throws IloException {
+		SortedPartitionedGraph sg = new SortedPartitionedGraph(graph, new NodeDegreeCompleteComparator(true), null, null);
+		
+		for (Partition p : sg.getPartitions()) {
+			String name = String.format("SOS[%1$d]", p.index());
+			int index = 0;
+			int size = graph.getNodes(p).length * colors;
+			IloNumVar[] vars = new IloNumVar[size];
+			double[] vals = new double[size];
+			
+			for (Node n : sg.getNodes(p)) {
+				for (int j = 0; j < colors; j++) {
+					vars[index] = xs[n.index()][j];
+					vals[index] = index;
+					index++;
+				}
+			}
+
+			modeler.addSOS1(vars, vals, name);
+		}
+		
 	}
 	
 }

@@ -23,11 +23,13 @@ def fetch_branch_files():
 branchdynruns = [ update_copy({
                  'solver.kind': 'PcpBranchAndCut',
                  
-                 'solver.useCutCallback': 'false',
+                 'solver.useCutCallback': 'true',
                  'solver.useHeuristicCallback': 'true',
                  'solver.useBranchingCallback': 'true',
-                 'callback.heuristic.enabled': 'false',
-                 'callback.branching.enabled': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'false',
+                 'branch.enabled': 'true',
+                 'cuts.enabled': 'false',
                   
                  'solver.useCplexPrimalHeuristic': 'true',
                  'solver.maxTime': '900',
@@ -77,8 +79,10 @@ branchstaticruns = list([ update_copy({
                  'solver.kind': 'PcpBranchAndCut',
                  'solver.useHeuristicCallback': 'true',
                  'solver.useBranchingCallback': 'true',
-                 'callback.heuristic.enabled': 'false',
-                 'callback.branching.enabled': 'false',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'false',
+                 'branch.enabled': 'false',
+                 'cuts.enabled': 'false',
                  
                  'solver.useCplexPrimalHeuristic': 'true',
                  'solver.maxTime': '900',

@@ -31,7 +31,6 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
 	static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
-	static final boolean enabled = Settings.get().getBoolean("callback.heuristic.enabled");
 	static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
 	static final boolean onlyOnUp = Settings.get().getBoolean("primal.onlyonup");
 	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
@@ -63,7 +62,6 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
 	@Override
 	protected void main() throws IloException {
-		if (!enabled) return;
 		if (logBounds) logBounds();
 
 		// Full run using current information if enough depth, or primal if frequency
