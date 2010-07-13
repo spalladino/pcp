@@ -122,6 +122,38 @@ branchstaticruns = list([ update_copy({
                 ]   
             ])
 
+branchsosruns = list([ update_copy({
+                 'solver.useCutCallback': 'false', 
+                 'solver.kind': 'PcpBranchAndCut',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'false',
+                 'branch.enabled': 'false',
+                 'cuts.enabled': 'false',
+                 
+                 'solver.useCplexPrimalHeuristic': 'true',
+                 'solver.maxTime': '900',
+                 
+                 'branch.prios.enabled': 'true',                 
+                 'branch.direction': '0',
+                 'branch.selection': '1', 
+               },d) for d in [
+                { 
+                    'branch.prios.enabled': 'false'
+                },       
+                { 
+                    'branch.prios.enabled': 'false',
+                    'model.useSOS': 'true',
+                },
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                },
+                ]   
+            ])
+
 dsaturruns = [
               {
                 'strategy.coloring': 'DSaturHardPartition',

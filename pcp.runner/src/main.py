@@ -15,7 +15,13 @@ if __name__ == '__main__':
                 runs.branchdynruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = 'TESTMEM',
-                iterstorun = [3]
+                runid = '20100713BRANCHDYN2'
             )
     
+    Fixture().newrun(
+                runs.branchsosruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100713BRANCHSOS'
+            )
+
