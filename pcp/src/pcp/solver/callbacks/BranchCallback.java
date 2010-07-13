@@ -178,7 +178,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			index++;
 		}
 		
-		if (log) System.out.println("(" + depth + ") Branching up on variable " + branched + " for a total of " + length + " bounds set");
+		if (log) System.out.println("(" + NodeData.nodeDataToString(super.getNodeData()) + ") Branching up on variable " + branched + " for a total of " + length + " bounds set");
 		super.makeBranch(vars, bounds, dirs, getObjValue(), data.cloneWithDirection(1));
 	}
 	
@@ -205,7 +205,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		bounds[length-1] = 0.0;
 		dirs[length-1] = BranchDirection.Down;
 		
-		if (log) System.out.println("(" + depth + ") Branching down on variable " + branched + " for a total of " + length + " bounds set");
+		if (log) System.out.println("(" + NodeData.nodeDataToString(super.getNodeData()) + ") Branching down on variable " + branched + " for a total of " + length + " bounds set");
 		super.makeBranch(vars, bounds, dirs, getObjValue(), data.cloneWithDirection(-1));
 	}
 	
@@ -322,7 +322,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			int satur = saturs.getSaturation(i);
 			int uncolored = saturs.getUncoloredNeighbours(i);
 			int prio = super.getPriority(var);
-			System.out.println(" Checking node " + i + " with satur " + satur + " and uncolored " + uncolored + " and prio " + prio + " and values " + Arrays.toString(super.getValues(model.getXs()[i])));
+			//System.out.println(" Checking node " + i + " with satur " + satur + " and uncolored " + uncolored + " and prio " + prio + " and values " + Arrays.toString(super.getValues(model.getXs()[i])));
 			if ((bestSatur < satur)  
 				|| (bestSatur == satur && bestUncolored < uncolored)
 				|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
@@ -347,7 +347,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			IloNumVar var = model.x(bestNode, j);
 			double val = getValue(var);
 			if (val > bestVal) {
-				val = bestVal;
+				bestVal = val;
 				branched = var;
 				bestColor = j;
 			}

@@ -64,4 +64,21 @@ public class NodeData {
 			return ndata.branchDirection;
 		} return 0;
 	}
+	
+	@Override
+	public String toString() {
+		if (!branchDataSet) {
+			return String.format("D%1$d", depth);
+		} else {
+			String dir = "X";
+			if (branchDirection == 1) dir = "U";
+			else if (branchDirection == -1) dir = "D";
+			return String.format("D%1$d X[%2$d,%3$d] %4$s", depth, branchedNode, branchedColor, dir);
+		}
+	}
+	
+	public static String nodeDataToString(Object obj) {
+		if (obj == null) return "X";
+		else return obj.toString();
+	}
 }
