@@ -19,7 +19,7 @@ We first tested the four different adjacency (or color conflict) constraints we 
 &\sum_{i \in P_k \cap N(i_0)} x_{ij} + x_{i_0j} \leq w_j &\quad \forall j \in C, \; \forall P_k \in P, \; \forall i_0 \in V \tag{\ref{eqn:adjsperpart}} 
 \end{align*}
 
-Results are displayed on table \ref{table:models:adj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the latter uses $n \times c$ additional constraints \ref{eqn:nodelessthanwj}.
+Results are displayed on table \ref{table:models:adj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n \times c$ additional constraints \ref{eqn:nodelessthanwj}.
 
 \begin{sidewaystable}
 \label{table:models:adj}
@@ -27,7 +27,7 @@ Results are displayed on table \ref{table:models:adj}. Differences between gaps 
 
 	\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
 	\hline
-	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{\ref{eqn:adjscolorp}} & \multicolumn{3}{|c|}{\ref{eqn:adjscolorpone}} & \multicolumn{3}{|c|}{\ref{eqn:adjsneighb}} & \multicolumn{3}{|c|}{\ref{eqn:adjsperpart}} 
+	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjscolorp}} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjscolorpone}} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjsneighb}} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjsperpart}} 
 	\\
 	& gap & rounds & time & gap & rounds & time & gap & rounds & time & gap & rounds & time 
 	\\
@@ -59,7 +59,7 @@ Results are displayed on table \ref{table:models:adj}. Differences between gaps 
 
 A quick test we also ran in parallel was to determine whether to paint exactly one node per partition (\ref{eqn:partsum}), or to relax this constraint and allow for painting more than a single node (\ref{eqn:partsumgeq}). 
 
-Results on table \ref{table:models:partsum} confirm our expectations: while the former has a slightly larger running time, it also reports a slightly lower gap than the latter in some cases. The simplicity provided by \ref{eqn:partsum} when extracting solutions from the model (when constructing the final solution, partial solutions to be processed during the primal heuristic, or during the branching process) makes us choose this option in our formulation.
+Results on table \ref{table:models:partsum} confirm our expectations: while the former has a slightly larger running time, it also reports a slightly lower gap than the latter in some cases. The simplicity provided by \ref{eqn:partsum} when extracting solutions from the model (when constructing the the partial solutions to be processed during the primal heuristic, or during the branching process) makes us choose this option in our formulation.
 
 \begin{table}
 \label{table:models:partsum}
@@ -154,9 +154,9 @@ Results obtained from comparing no symmetry breaking constraints whatsoever with
 & x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad &\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j \leq k \tag{\ref{eqn:minlabel}}
 \end{align*}
 
-It is in these constraints that significative changes in solution gaps are found. While there is little difference between applying or not the simplest restrictions \ref{eqn:lowerlabel} (although they are required for the validity of other inequalities and bounds), stricter restrictions that further eliminate symmetrical solutions report much lower gaps, in some cases even reaching optimality at this stage. 
+It is with these constraints that significative changes in solution gaps are found. While there is little difference between applying or not the simplest restrictions \ref{eqn:lowerlabel} (although they are required for the validity of other inequalities and bounds), stricter restrictions that further eliminate symmetrical solutions report much lower gaps, in some cases even reaching optimality at this stage. 
 
-Minimum node index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) have the best gaps, require fewer cutting planes iterations, and run within acceptable times (in some cases even faster than its counterparts).
+Minimum partition index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) have the best gaps, require fewer cutting planes iterations, and run within acceptable times (in some cases even faster than its counterparts).
 
 \begin{sidewaystable}
 \label{table:models:sym}
@@ -164,7 +164,7 @@ Minimum node index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) have the
 
 \begin{tabular}{|c|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{min node label} & \multicolumn{3}{|c|}{none} & \multicolumn{3}{|c|}{label ordering} & \multicolumn{3}{|c|}{node count}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{min partition label} & \multicolumn{3}{|c|}{none} & \multicolumn{3}{|c|}{label ordering} & \multicolumn{3}{|c|}{node count}
 \\
  & gap & niters & time & gap & niters & time & gap & niters & time & gap & niters & time
 \\

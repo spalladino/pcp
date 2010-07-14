@@ -98,9 +98,9 @@ HK 40\% N=140 & 14.8 & 21.552 & 14.2 &  6.8 & 14.8 & 21.576 & 14.2 & 6.798 & 14.
 
 After fixing the \textit{hardest partition} strategy to C2, we will compare its performance with both the \textit{easiest node} and the \textit{randomized easiest node} variants. We ran the same tests as before, and present the results on table \ref{table:pdsatur:comp}.
 
-Regardless of the configuration chosen for the \textit{hardest partition} variant, both \textit{easiest node} strategies find much better bounds within the one-minute running time. From those, the deterministic one offers slightly better results, and is therefore the algorithm that we will be using for the following experimentations. 
+Regardless of the configuration chosen for the \textit{hardest partition} variant, both \textit{easiest node} strategies find much better bounds within the one-minute running time. Within those two, the deterministic one offers slightly better results, so it is chosen as the algorithm that we will be using for the following experimentations.
 
-The randomized version might perform better in larger graphs on lengthier running periods, since it has a chance to find a different solution than the deterministic and obtain a sudden improvement on the bound, whereas the deterministic may spend several iterations trying similar assignments. However, in very short runs as these ones, the deterministic version is clearly preferred.  
+As for the randomized version, we speculate that it might perform better in larger graphs for lengthier running periods, since it has a chance to find a different solution than the deterministic and obtain a sudden improvement on the bound, whereas the deterministic may spend several iterations trying similar assignments. However, in very short runs, like these ones, the deterministic version is clearly preferred.  
 
 \begin{table}
 \label{table:pdsatur:comp}
