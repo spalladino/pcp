@@ -41,11 +41,13 @@
 
 % Algorithmics
 \newcommand{\algorithmiccall}{\textbf{call}\ }
+\newcommand{\algorithmiccontinue}{\textbf{continue}\ }
 \newcommand{\algorithmicprocedure}{\textbf{procedure}\ }
 \newcommand{\algorithmicendprocedure}{\algorithmicend\ \algorithmicprocedure}
 \newenvironment{ALC@proc}{\begin{ALC@g}}{\end{ALC@g}}
 \newcommand{\PROC}[1]{\algorithmicprocedure #1\ \begin{ALC@proc}}
 \newcommand{\CALL}[1]{\STATE \algorithmiccall #1}
+\newcommand{\CONTINUE}[1]{\STATE \algorithmiccontinue #1}
 \ifthenelse{\boolean{ALC@noend}}
 	{\newcommand{\ENDPROC}{\end{ALC@proc}}}
 	{\newcommand{\ENDPROC}{\end{ALC@proc}\ALC@it\algorithmicendprocedure}}
@@ -56,7 +58,7 @@
 \numberwithin{table}{section}
 \numberwithin{algorithm}{section}
 
-%\includeonly{heur}
+%\includeonly{algorithm}
 
 % Document start
 \begin{document}
@@ -72,14 +74,14 @@
 
 \include{heur}
 
-%\include{algorithm}
-%
-%\include{results}
-%\include{results.models}
-%\include{results.dsatur}
-%\include{results.branching}
+\include{algorithm}
 
-%\include{conclusions}
+\include{results}
+\include{results.models}
+\include{results.dsatur}
+\include{results.branching}
+
+\include{conclusions}
 
 \include{references}
 
