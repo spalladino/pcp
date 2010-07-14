@@ -24,16 +24,16 @@ class FileName:
     
     def format_filename(self, fname):
         dens = re.match('benchdens\\\\e([\\d]+)n([\\d]+)', fname)
-        if dens: return "EW {0}\\% N={1}".format(int(dens.group(1)) * 10, int(dens.group(2)))
+        if dens: return "EW {0} N={1}".format(int(dens.group(1)) * 10, int(dens.group(2)))
         
         nodes = re.match('benchnodes\\\\n([\\d]+)', fname)
-        if nodes: return "EW 50\\% N={0}".format(int(nodes.group(1)))
+        if nodes: return "EW 50 N={0}".format(int(nodes.group(1)))
 
         parts = re.match('benchpart\\\\p([\\d]+)t([\\d]+)e([\\d]+)n([\\d]+)', fname)
-        if parts: return "EW {0}\\% N={1} P=({2}..{3})".format(int(parts.group(3))*10, int(parts.group(4)), int(parts.group(1)), int(parts.group(2)))
+        if parts: return "EW {0} N={1} P=({2}..{3})".format(int(parts.group(3))*10, int(parts.group(4)), int(parts.group(1)), int(parts.group(2)))
         
         holme = re.match('holme\\\\n([\\d]+)d([\\d]+)', fname)
-        if holme: return "HK {0}\\% N={1}".format(int(holme.group(2)) * 10, int(holme.group(1)))
+        if holme: return "HK {0} N={1}".format(int(holme.group(2)) * 10, int(holme.group(1)))
         
         return fname
 

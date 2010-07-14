@@ -33,20 +33,20 @@ def dsatur_latextable(p):
                 aggr= aggregate.avg
                 )
         
-def branch_latextable(p):    
-        p.process(
+def branch_latextable():    
+        LatexProcessor('20100707BRANCHSTATIC2').process(
                 ids=[metrics.FileName()],
-                datas=['solution.time','solution.gap'], 
+                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
                 series=['branch.prios.enabled', 'branch.prios.psadjacent', 'branch.prios.colorindex'],
                 datafilter= None,
                 runfilter= None,
                 aggr= aggregate.avg
                 )
 
-def branch_dyn_latextable(p):    
-        p.process(
+def branch_dyn_latextable():    
+        LatexProcessor('20100713BRANCHDYN2').process(
                 ids=[metrics.FileName()],
-                datas=['solution.time','solution.gap'], 
+                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
                 series=['branch.dynamic.fractional', 'branch.dynamic.dsatur', 'branch.direction', 'branch.dynamic.fractional.most'],
                 datafilter= None,
                 runfilter= None,
@@ -54,8 +54,7 @@ def branch_dyn_latextable(p):
                 )
 
 if __name__ == '__main__':
-    p = LatexProcessor('20100708BRANCHDYN')
-    branch_dyn_latextable(p)
+    branch_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

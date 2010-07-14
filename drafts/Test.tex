@@ -23,14 +23,14 @@
 	
 	\section{Branching dynamic}
 	
-	Processing Runid 20100708BRANCHDYN
+	Processing Runid 20100713BRANCHDYN2
 
 Data:
 \begin{itemize}
-\item solution.time
 \item solution.gap
+\item solution.gapfound
+\item solution.nnodes
 \end{itemize}
-
 Series:
 \begin{itemize}
 \item S1: branch.dynamic.fractional: false, branch.dynamic.dsatur: true, branch.direction: -1, branch.dynamic.fractional.most: true
@@ -39,35 +39,37 @@ Series:
 \item S4: branch.dynamic.fractional: true, branch.dynamic.dsatur: false, branch.direction: 0, branch.dynamic.fractional.most: false
 \item S5: branch.dynamic.fractional: true, branch.dynamic.dsatur: false, branch.direction: 0, branch.dynamic.fractional.most: true
 \end{itemize}
-\begin{tabular}{|c|cc|cc|cc|cc|cc|}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
 \\
- & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+ & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
 \\
 \hline
-EW 20\% N=90 & 900.02 & 0.25 & 900.02 & 0.25
+EW 20 N=90 & 0.17 & 83599.33 & 88623.67 & 0.17 & 83817.33 & 88641.33 & 0.17 & 83599.33 & 88633.00 & 0.25 & 118629.67 & 275766.00 & 0.25 & 118457.33 & 182449.00
 \\
-EW 40\% N=100 & 900.05 & 0.50 & 900.05 & 0.50 & 900.02 & 0.48 & 900.02 & 0.33
+EW 40 N=100 & 0.33 & 20161.00 & 26650.67 & 0.33 & 16798.67 & 24950.33 & 0.33 & 20161.00 & 26656.67 & 0.48 & 32234.00 & 32460.33 & 0.33 & 32798.33 & 44653.67
 \\
-EW 60\% N=80 & 900.02 & 0.37 & 900.02 & 0.37
+EW 60 N=80 & 0.37 & 20027.33 & 21269.67 & 0.37 & 15522.33 & 18448.33 & 0.37 & 20027.33 & 21265.00 & 0.37 & 25601.33 & 31036.67 & 0.37 & 22502.33 & 26194.00
 \\
-EW 80\% N=100 & 900.12 & 0.47 & 900.11 & 0.44 & 900.08 & 0.47 & 900.06 & 0.44 & 900.05 & 0.42
+EW 80 N=100 & 0.42 & 2352.00 & 3732.67 & 0.42 & 2169.33 & 3037.00 & 0.42 & 2352.00 & 3731.33 & 0.44 & 2503.00 & 4069.67 & 0.42 & 3135.33 & 4436.67
 \\
 \hline 
  \end{tabular}
+	
 	\clearpage
 	
 	\section{Branching}
 	
 	\subsection{Statics}
 	
-	Processing Runid 20100706BRANCHSTATIC2
+	Processing Runid 20100707BRANCHSTATIC2
 	
 	Data:
 \begin{itemize}
-\item solution.time
 \item solution.gap
+\item solution.gapfound
+\item solution.nnodes
 \end{itemize}
 Series:
 \begin{itemize}
@@ -78,23 +80,24 @@ Series:
 \item S5: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
 \item S6: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: 1
 \end{itemize}
-\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6}
 \\
- & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+ & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
 \\
 \hline
-EW 20\% N=90 & 564.21 & 0.00 & 900.02 & 0.46 & 900.02 & 0.47 & 900.03 & 0.34 & 229.74 & 0.00 & 520.55 & 0.00
+EW 20 N=90 & 0.00 & 0.00 & 625952.33 & 0.46 & 0.00 & 156918.33 & 0.47 & 0.00 & 139215.00 & 0.34 & 0.00 & 316850.33 & 0.00 & 0.00 & 59685.67 & 0.00 & 0.00 & 85959.00
 \\
-EW 40\% N=100 & 900.02 & 0.28 & 900.02 & 0.28 & 900.02 & 0.28 & 900.02 & 0.28 & 900.03 & 0.28 & 900.03 & 0.28
+EW 40 N=100 & 0.28 & 0.00 & 170850.33 & 0.28 & 0.00 & 223085.67 & 0.28 & 0.00 & 230472.33 & 0.28 & 0.00 & 142564.00 & 0.28 & 0.00 & 259968.00 & 0.28 & 0.00 & 213711.33
 \\
-EW 60\% N=80 & 900.03 & 0.21 & 900.02 & 0.21 & 900.03 & 0.21 & 900.03 & 0.21 & 900.03 & 0.21 & 900.03 & 0.21
+EW 60 N=80 & 0.21 & 0.00 & 194718.00 & 0.21 & 0.00 & 145773.33 & 0.21 & 0.00 & 133616.00 & 0.21 & 0.00 & 143346.00 & 0.21 & 0.00 & 216266.00 & 0.21 & 0.00 & 222095.33
 \\
-EW 80\% N=100 & 900.03 & 0.12 & 900.03 & 0.12 & 900.03 & 0.12 & 900.03 & 0.12 & 900.02 & 0.12 & 900.02 & 0.12
+EW 80 N=100 & 0.12 & 0.00 & 45729.67 & 0.12 & 0.00 & 51798.67 & 0.12 & 0.00 & 43826.33 & 0.12 & 0.00 & 30259.67 & 0.12 & 0.00 & 56896.33 & 0.12 & 0.00 & 55320.33
 \\
 \hline 
  \end{tabular}
+
 
 	
 	\clearpage

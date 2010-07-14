@@ -6,18 +6,22 @@ import fetcher
 import files
 import os
 
-if __name__ == '__main__':
+def main():
+    Fixture().resume()
     
     files = list(runs.fetch_branch_files())
     print 'Processing: ', files
-   
+
     Fixture().newrun(
-                runs.branchdynruns, 
+                runs.branchboundingruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100713BRANCHDYN2'
+                runid = '20100714BRANCHDSATURBOUNDS'
             )
     
+    return
+    
+   
     Fixture().newrun(
                 runs.branchsosruns, 
                 files = files,
@@ -25,3 +29,9 @@ if __name__ == '__main__':
                 runid = '20100713BRANCHSOS'
             )
 
+
+if __name__ == '__main__':
+    main()
+    
+    
+    
