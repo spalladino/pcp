@@ -42,6 +42,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	
 	private static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
 	private static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
+	private static final boolean consecColors = Settings.get().getBoolean("branch.dynamic.dsatur.conseccolors");
 	
 	private static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
 	private static final boolean boundWs = Settings.get().getBoolean("branch.boundws");
@@ -95,7 +96,9 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		// Calculate branching variable
 		if (super.getNbranches() > 0 && getBranchType().equals(BranchType.BranchOnVariable)) {
 			if (dynamicFractionalStrategy) {
-				makeFractionalBranch();
+				if (!continueConsecutiveColoring()) {
+					makeFractionalBranch();
+				}
 			} else if (dynamicDSaturStrategy) {
 				makeDsaturBranch();
 			}
@@ -124,6 +127,34 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			}
 		}
 		
+	}
+
+	/**
+	 * Checks which was the last node-color combination used for branching and goes with the next color if previous branch was down
+	 * @return true if a variable was chosen, false otherwise
+	 * @throws IloException
+	 */
+	private boolean continueConsecutiveColoring() throws IloException {
+		if (!consecColors) return false;
+		
+		NodeData nodeData = (NodeData) super.getNodeData();
+		if (nodeData == null || !nodeData.isBranchDataSet() || nodeData.getBranchDirection() != -1) return false;
+		
+		int node = nodeData.getBranchedNode();
+		int color = nodeData.getBranchedColor();
+		
+		for (int j = color+1; j < model.getColorCount(); j++) {
+			IloIntVar nodevar = model.x(node, j);
+			if (getFeasibility(nodevar).equals(IntegerFeasibilityStatus.Infeasible)
+				&& getValue(nodevar) >= branchLB) {
+				this.branchedColor = j;
+				this.branchedNode = node;
+				this.branched = nodevar;
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	private void branchSingle(NodeData data) throws IloException {
@@ -284,6 +315,11 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	}
 
 
+	/**
+	 * Picks a variable to branch using degree of saturation criteria
+	 * @return variable to branch on
+	 * @throws IloException
+	 */
 	private IloNumVar makeDsaturBranch() throws IloException {
 		NodeSaturations saturs = new NodeSaturations(graph);
 	
@@ -322,7 +358,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			int satur = saturs.getSaturation(i);
 			int uncolored = saturs.getUncoloredNeighbours(i);
 			int prio = super.getPriority(var);
-			//System.out.println(" Checking node " + i + " with satur " + satur + " and uncolored " + uncolored + " and prio " + prio + " and values " + Arrays.toString(super.getValues(model.getXs()[i])));
+
 			if ((bestSatur < satur)  
 				|| (bestSatur == satur && bestUncolored < uncolored)
 				|| (bestSatur == satur && bestUncolored == uncolored && bestPrio < prio)) {
@@ -338,7 +374,32 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			return null;
 		}
 		
-		// Branch on highest value color
+		// Branch on highest value color or first color, depending if consecutive color branching is enabled
+		if (consecColors) {
+			return pickFirstColor(bestNode);
+		} else {
+			return pickHighestColorValue(bestNode);
+		}
+	}
+	
+	private IloNumVar pickFirstColor(int bestNode) throws IloException {
+		for (int j = 0; j < model.getColorCount(); j++) {
+			IloIntVar nodevar = model.x(bestNode, j);
+			if (getFeasibility(nodevar).equals(IntegerFeasibilityStatus.Infeasible)
+				&& getValue(nodevar) >= branchLB) {
+				
+				this.branched = nodevar;
+				this.branchedColor = j;
+				this.branchedNode = bestNode;
+				return branched;
+			}
+		}
+		
+		return null;
+	}
+
+
+	private IloNumVar pickHighestColorValue(int bestNode) throws IloException {
 		double bestVal = 0.0;
 		int bestColor = 0;
 		IloNumVar branched = null;
@@ -353,11 +414,9 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			}
 		}
 		
-		// Set branch choice
 		this.branched = branched;
 		this.branchedColor = bestColor;
 		this.branchedNode = bestNode;
-		
 		return branched;
 	}
 
