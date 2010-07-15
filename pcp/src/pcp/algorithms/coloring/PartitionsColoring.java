@@ -70,10 +70,10 @@ public class PartitionsColoring extends ColoringAlgorithm {
 	}
 
 	private int getFirstNode(int partition) {
-		return graph.getNodes(graph.getPartition(partition))[0].index();
+		return graph.getNodes(graph.getPartition(partition))[0].index;
 	}
 	
 	private int getFirstNode(Partition partition) {
-		return graph.getNodes(partition)[0].index();
+		return graph.getNodes(partition)[0].index;
 	}
 }

@@ -59,15 +59,15 @@ public class PointsGenerator implements IPointsGenerator {
 				for (int j = 0; j < cardinals.colorCount; j++) {
 					boolean canColor = true;
 					for (Node neighbour : graph.getNeighbours(node)) {
-						if (current[neighbour.index()] == j) {
+						if (current[neighbour.index] == j) {
 							canColor = false;
 							break;
 						}
 					}
 					if (canColor) {
-						current[node.index()] = j;
+						current[node.index] = j;
 						paint(partitionIndex + 1);
-						current[node.index()] = -1;
+						current[node.index] = -1;
 					}
 				}
 			}

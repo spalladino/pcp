@@ -213,20 +213,20 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			for (int j = 0; j < model.getColorCount(); j++) {
 				
 				// Forbid color if it must
-				if (super.getUB(model.x(node.index(), j)) == 0.0) {
-					coloring.forbidColor(node.index(), j);
+				if (super.getUB(model.x(node.index, j)) == 0.0) {
+					coloring.forbidColor(node.index, j);
 					continue;
 				}
 				
 				// Check if value is high enough to pass the lower bound
-				double val = super.getValue(model.x(node.index(), j));
+				double val = super.getValue(model.x(node.index, j));
 				if (val < nodeLB) continue;
 				boolean isCandidate = true;
 				
 				// Check if it has the highest value among neighbours
 				for (Node adj : graph.getNeighbours(node)) {
-					if (val <= super.getValue(model.x(adj.index(), j))
-					|| (val == super.getValue(model.x(adj.index(), j)) && node.index() > adj.index())) {
+					if (val <= super.getValue(model.x(adj.index, j))
+					|| (val == super.getValue(model.x(adj.index, j)) && node.index > adj.index)) {
 						isCandidate = false;
 						break;
 					}
@@ -238,9 +238,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				
 				// Same for copartition
 				for (Node adj : graph.getNodes(node.getPartition())) {
-					if (adj.index() != node.index() && 
-						((val <= super.getValue(model.x(adj.index(), j)))
-						|| (val == super.getValue(model.x(adj.index(), j)) && node.index() > adj.index()))) {
+					if (adj.index != node.index && 
+						((val <= super.getValue(model.x(adj.index, j)))
+						|| (val == super.getValue(model.x(adj.index, j)) && node.index > adj.index))) {
 						isCandidate = false;
 						break;
 					}
@@ -251,7 +251,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				}
 				
 				// Use that color for the node
-				coloring.useColor(node.index(), j);
+				coloring.useColor(node.index, j);
 				colored[node.getPartition().index()] = true;
 				fixedCount++;
 				break;

@@ -31,7 +31,7 @@ public class InducedGraph implements IPartitionedGraph {
 		this.partitionsMap= new HashMap<Integer, Partition>(nodes.length/2);
 		
 		for (Node node : nodes) {
-			this.nodesMap.put(node.name, new Node(this, node.name));
+			this.nodesMap.put(node.index, new Node(this, node.index));
 			int index = node.getPartition().index();
 			if (!this.partitionsMap.containsKey(index)) {
 				this.partitionsMap.put(index, new Partition(this, index));
@@ -59,16 +59,16 @@ public class InducedGraph implements IPartitionedGraph {
 
 	@Override
 	public Node[] getNeighbours(Node node) {
-		if (!this.nodesAdjacencies.containsKey(node.index())) {
-			this.nodesAdjacencies.put(node.name, calculateNeighbours(node));
-		} return this.nodesAdjacencies.get(node.index());
+		if (!this.nodesAdjacencies.containsKey(node.index)) {
+			this.nodesAdjacencies.put(node.index, calculateNeighbours(node));
+		} return this.nodesAdjacencies.get(node.index);
 	}
 	
 	private Node[] calculateNeighbours(Node node) {
 		List<Node> neighbours = new ArrayList<Node>();
 		for (Node n : graph.getNeighbours(node)) {
-			if (nodesMap.containsKey(n.name)) {
-				neighbours.add(nodesMap.get(n.name));
+			if (nodesMap.containsKey(n.index)) {
+				neighbours.add(nodesMap.get(n.index));
 			}
 		} return (Node[]) neighbours.toArray(new Node[neighbours.size()]);
 	}
@@ -146,8 +146,8 @@ public class InducedGraph implements IPartitionedGraph {
 	private Node[] calculatePartition(Partition partition) {
 		List<Node> nodes = new ArrayList<Node>();
 		for (Node n : graph.getNodes(partition)) {
-			if (nodesMap.containsKey(n.name)) {
-				nodes.add(nodesMap.get(n.name));
+			if (nodesMap.containsKey(n.index)) {
+				nodes.add(nodesMap.get(n.index));
 			}
 		} return (Node[]) nodes.toArray(new Node[nodes.size()]);
 	}

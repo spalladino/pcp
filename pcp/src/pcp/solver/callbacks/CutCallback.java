@@ -230,7 +230,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("CLIQUE[%1$d]", color);
 			for (Node n : nodes) {
-				expr.addTerm(model.x(n.index(),color), 1);
+				expr.addTerm(model.x(n.index,color), 1);
 			}
 			
 			expr.addTerm(model.w(color), -1);
@@ -249,7 +249,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			
 			for (int j = color + 1; j < model.getColorCount(); j++) {
 				for (Node node : graph.getNodes(partition)) {
-					expr.addTerm(model.x(node.index(), j), 1);
+					expr.addTerm(model.x(node.index, j), 1);
 				}  
 			} expr.addTerm(model.w(color), -1);
 			
@@ -265,7 +265,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = cut.toString().toUpperCase() + String.format("[%1$d]", color);
 			for (Node n : nodes) {
-				expr.addTerm(model.x(n.index(),color), 1);
+				expr.addTerm(model.x(n.index,color), 1);
 			} expr.addTerm(model.w(color), -alpha);
 			
 			int basej = graph.P() - alpha;
@@ -273,7 +273,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			if (useBreakingSymmetry && color < basej && basej < model.getColorCount()) {
 				for (Node n : graph.getNodes()) {
 					for (int j = basej; j < model.getColorCount(); j++) {
-						expr.addTerm(model.x(n.index(),j), 1);
+						expr.addTerm(model.x(n.index,j), 1);
 					}
 				} expr.addTerm(model.w(basej), -1);
 			}

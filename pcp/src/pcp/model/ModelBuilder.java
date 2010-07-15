@@ -165,13 +165,13 @@ public class ModelBuilder {
 			Node[] nodes = graph.getNodes(snode);
 			for (Node node : nodes) {
 				for (int j = 0; j < colors; j++) {
-					IloIntVar var = this.xs[node.index()][j];
+					IloIntVar var = this.xs[node.index][j];
 					if (j != color) var.setUB(0.0);
 				}
 			}
 			// If there is a single node, fix it
 			if (nodes.length == 1) {
-				IloIntVar var = this.xs[nodes[0].index()][color];
+				IloIntVar var = this.xs[nodes[0].index][color];
 				var.setLB(1.0);
 			}
 			
@@ -270,8 +270,8 @@ public class ModelBuilder {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("BSVNUM[%1$d]", j);
 			for (Node n : graph.getNodes()) {
-				expr.addTerm(xs[n.index()][j], 1);
-				expr.addTerm(xs[n.index()][j+1], -1);
+				expr.addTerm(xs[n.index][j], 1);
+				expr.addTerm(xs[n.index][j+1], -1);
 			}
 			
 			modeler.addGe(expr, 0, name);
@@ -289,7 +289,7 @@ public class ModelBuilder {
 			// Set xij = 0 for every color greater than partition index
 			for (int j = k+1; j < colors; j++) {
 				for (Node node : graph.getNodes(partition)) {
-					xs[node.index()][j].setUB(0.0);
+					xs[node.index][j].setUB(0.0);
 				}
 			}
 			
@@ -298,13 +298,13 @@ public class ModelBuilder {
 			for (int j = 1; j <= k && j < colors; j++) {
 				for (Node node : graph.getNodes(partition)) {
 					// Fixed k, i and j
-					int i = node.index();
+					int i = node.index;
 					IloLinearIntExpr expr = modeler.linearIntExpr();
 					String name = String.format("BSMINLBL[%1$d,%2$d]", i, j);
 					expr.addTerm(xs[i][j], 1);
 					for (int l = j-1; l < k; l++) {
 						for (Node u : graph.getNodes(graph.getPartition(l))) {
-							expr.addTerm(xs[u.index()][j-1], -1);
+							expr.addTerm(xs[u.index][j-1], -1);
 						}
 					}			
 					modeler.le(expr, 0, name);
@@ -320,10 +320,10 @@ public class ModelBuilder {
 	protected void constrainColorSumStrengthened() throws IloException {
 		for (Node n : graph.getNodes()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("BSSTR[%1$d]", n.index());
+			String name = String.format("BSSTR[%1$d]", n.index);
 			for (int j = 0; j < colors; j++) {
 				expr.addTerm(ws[j], 1);
-				expr.addTerm(xs[n.index()][j], -j);
+				expr.addTerm(xs[n.index][j], -j);
 			}
 			
 			modeler.addGe(expr, 0, name);
@@ -341,7 +341,7 @@ public class ModelBuilder {
 			for (Node n : graph.getNodes()) {
 				for (int j = 0; j < colors; j++) {
 					expr.addTerm(ws[j], 1);
-					expr.addTerm(xs[n.index()][j], -j);
+					expr.addTerm(xs[n.index][j], -j);
 				}
 			} modeler.addGe(expr, 0, name);
 		}
@@ -356,7 +356,7 @@ public class ModelBuilder {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("FC[%1$d]", j);
 			for (Node n : graph.getNodes()) {
-				expr.addTerm(xs[n.index()][j], 1);
+				expr.addTerm(xs[n.index][j], 1);
 			}
 			
 			expr.addTerm(ws[j], -1);
@@ -372,8 +372,8 @@ public class ModelBuilder {
 		for (Node n : graph.getNodes()) {
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("X[%1$d,%2$d]", n.index(), j);
-				expr.addTerm(xs[n.index()][j], 1);
+				String name = String.format("X[%1$d,%2$d]", n.index, j);
+				expr.addTerm(xs[n.index][j], 1);
 				expr.addTerm(ws[j], -1);
 				modeler.addLe(expr, 0, name);
 			}
@@ -393,12 +393,12 @@ public class ModelBuilder {
 				// Iterate on colors
 				for (int j = 0; j < colors; j++) {
 					IloLinearIntExpr expr = modeler.linearIntExpr();
-					String name = String.format("ADJP[%1$d,%2$d]", n.index(), j);
+					String name = String.format("ADJP[%1$d,%2$d]", n.index, j);
 					// x_i0j0
-					expr.addTerm(xs[n.index()][j], 1);
+					expr.addTerm(xs[n.index][j], 1);
 					// sum i \in p x_ij0
 					for (Node adj : adjs) {
-						expr.addTerm(xs[adj.index()][j], 1);
+						expr.addTerm(xs[adj.index][j], 1);
 					}
 					// w_j0
 					expr.addTerm(ws[j], -1);
@@ -420,12 +420,12 @@ public class ModelBuilder {
 			
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("ADJN[%1$d,%2$d]", n.index(), j);
+				String name = String.format("ADJN[%1$d,%2$d]", n.index, j);
 				// r * x_i0j0
-				expr.addTerm(xs[n.index()][j], r);
+				expr.addTerm(xs[n.index][j], r);
 				// sum i \in N(i0) x_ij0
 				for (Node adj : graph.getNeighbours(n)) {
-					expr.addTerm(xs[adj.index()][j], 1);
+					expr.addTerm(xs[adj.index][j], 1);
 				}
 				// r * w_j0
 				expr.addTerm(ws[j], -r);
@@ -442,9 +442,9 @@ public class ModelBuilder {
 		for (Edge e : graph.getEdges()) {
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("E[%1$d,%2$d]", e.getNode1().index(), e.getNode2().index());
-				expr.addTerm(xs[e.getNode1().index()][j], 1);
-				expr.addTerm(xs[e.getNode2().index()][j], 1);
+				String name = String.format("E[%1$d,%2$d]", e.getNode1().index, e.getNode2().index);
+				expr.addTerm(xs[e.getNode1().index][j], 1);
+				expr.addTerm(xs[e.getNode2().index][j], 1);
 				modeler.addLe(expr, 1, name);
 			}	
 		}
@@ -458,9 +458,9 @@ public class ModelBuilder {
 		for (Edge e : graph.getEdges()) {
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("E[%1$d,%2$d]", e.getNode1().index(), e.getNode2().index());
-				expr.addTerm(xs[e.getNode1().index()][j], 1);
-				expr.addTerm(xs[e.getNode2().index()][j], 1);
+				String name = String.format("E[%1$d,%2$d]", e.getNode1().index, e.getNode2().index);
+				expr.addTerm(xs[e.getNode1().index][j], 1);
+				expr.addTerm(xs[e.getNode2().index][j], 1);
 				expr.addTerm(ws[j], -1);
 				modeler.addLe(expr, 0, name);
 			}	
@@ -477,7 +477,7 @@ public class ModelBuilder {
 			String name = String.format("P[%1$d]", p.index());
 			for (int j = 0; j < colors; j++) {
 				for (Node n : graph.getNodes(p)) {
-					expr.addTerm(xs[n.index()][j], 1);
+					expr.addTerm(xs[n.index][j], 1);
 				}
 			}
 			modeler.addEq(expr, 1, name);
@@ -494,7 +494,7 @@ public class ModelBuilder {
 			String name = String.format("P[%1$d]", p.index());
 			for (int j = 0; j < colors; j++) {
 				for (Node n : graph.getNodes(p)) {
-					expr.addTerm(xs[n.index()][j], 1);
+					expr.addTerm(xs[n.index][j], 1);
 				}
 			}
 			modeler.addGe(expr, 1, name);
@@ -517,7 +517,7 @@ public class ModelBuilder {
 			
 			for (Node n : sg.getNodes(p)) {
 				for (int j = 0; j < colors; j++) {
-					vars[index] = xs[n.index()][j];
+					vars[index] = xs[n.index][j];
 					vals[index] = index;
 					index++;
 				}

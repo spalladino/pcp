@@ -34,13 +34,17 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	// G' graph corresponding to this partitioned graph
 	Graph gprime;
 	
-	Node[] nodes;
-	Partition[] partitions;
-	Edge[] edges;
+	final Node[] nodes;
+	final Partition[] partitions;
+	final Edge[] edges;
 	
 	String name;
 	
-	PartitionedGraph() { }
+	PartitionedGraph(Node[] nodes, Edge[] edges, Partition[] partitions) {
+		this.nodes = nodes;
+		this.partitions = partitions;
+		this.edges = edges;
+	}
 	
 	PartitionedGraph(int nodescount, int edgecount, int partitionscount) {
 		this.edges = new Edge[edgecount];
@@ -68,7 +72,7 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	}
 	
 	public boolean areAdjacent(Node n1, Node n2) {
-		return matrix[n1.name][n2.name];
+		return matrix[n1.index][n2.index];
 	}
 
 	public String getName() {
@@ -80,15 +84,15 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	}
 
 	public Node[] getNeighbours(Node node) {
-		return this.adjacencies[node.name];
+		return this.adjacencies[node.index];
 	}
 
 	public Partition getPartition(Node node) {
-		return this.nodePartition[node.name];
+		return this.nodePartition[node.index];
 	}
 
 	public int getDegree(Node node) {
-		return this.adjacencies[node.name].length;
+		return this.adjacencies[node.index].length;
 	}
 
 	@Override
@@ -113,12 +117,12 @@ public class PartitionedGraph implements IPartitionedGraph  {
 
 	@Override
 	public boolean areInSamePartition(Node n1, Node n2) {
-		return this.nodePartition[n1.name].name == this.nodePartition[n2.name].name;
+		return this.nodePartition[n1.index].name == this.nodePartition[n2.index].name;
 	}
 
 	@Override
 	public Partition[] getNeighbourPartitions(Node n) {
-		return this.nodePartitionAdjacencies[n.index()];
+		return this.nodePartitionAdjacencies[n.index];
 	}
 
 	@Override

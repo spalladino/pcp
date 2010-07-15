@@ -43,19 +43,19 @@ public class ExtendedCliqueCutter extends ExtendedCliqueDetector {
 
 	@Override
 	protected boolean onInitialNode(Node initial) {
-		if ((data.x(initial.index(), color) < minInitialNodeValue)) return false;
-		valueSumXij = data.x(initial.index(), color);
+		if ((data.x(initial.index, color) < minInitialNodeValue)) return false;
+		valueSumXij = data.x(initial.index, color);
 		return true;
 	}
 
 	@Override
 	protected void onAddedCandidate(Node y) {
-		valueSumXij += data.x(y.index(), color);
+		valueSumXij += data.x(y.index, color);
 	}
 
 	@Override
 	protected void onRemovedCandidate(Node y) {
-		valueSumXij -= data.x(y.index(), color);
+		valueSumXij -= data.x(y.index, color);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class ExtendedCliqueCutter extends ExtendedCliqueDetector {
 	
 	@Override
 	protected boolean isInvalidInitialCandidate(Node node) {
-		return data.x(node.index(), color) < minCandidateNodeValue;
+		return data.x(node.index, color) < minCandidateNodeValue;
 	}
 
 }

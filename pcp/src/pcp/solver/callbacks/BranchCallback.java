@@ -96,11 +96,11 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		// Calculate branching variable
 		if (super.getNbranches() > 0 && getBranchType().equals(BranchType.BranchOnVariable)) {
 			if (dynamicFractionalStrategy) {
-				if (!continueConsecutiveColoring()) {
-					makeFractionalBranch();
-				}
+				makeFractionalBranch();
 			} else if (dynamicDSaturStrategy) {
-				makeDsaturBranch();
+				if (!continueConsecutiveColoring()) {
+					makeDsaturBranch();
+				}
 			}
 		}
 		
@@ -190,8 +190,8 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		// Set all nodes in the partition, except the chosen node with the chosen color, to zero
 		for (Node n : partition) {
 			for (int j = 0; j < model.getColorCount(); j++) {
-				vars[index] = model.x(n.index(), j);
-				if (n.index() == node.index() && j == branchedColor) {
+				vars[index] = model.x(n.index, j);
+				if (n.index == node.index && j == branchedColor) {
 					bounds[index] = 1.0;
 					dirs[index] = BranchDirection.Up;
 				} else {
@@ -203,7 +203,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		
 		// For every neighbour, forbid usage of chosen color
 		for (Node n : adjs) {
-			vars[index] = model.x(n.index(), branchedColor);
+			vars[index] = model.x(n.index, branchedColor);
 			bounds[index] = 0.0;
 			dirs[index] = BranchDirection.Down;
 			index++;
@@ -272,14 +272,14 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 			for (int j = 0; j < model.getColorCount(); j++) {
 				
 				// Check if value is high enough to pass the lower bound
-				double val = super.getValue(model.x(node.index(), j));
+				double val = super.getValue(model.x(node.index, j));
 				if (val < nodeLB) continue;
 				boolean isCandidate = true;
 				
 				// Check if it has the highest value among neighbours
 				for (Node adj : graph.getNeighbours(node)) {
-					if (val <= super.getValue(model.x(adj.index(), j))
-					|| (val == super.getValue(model.x(adj.index(), j)) && node.index() > adj.index())) {
+					if (val <= super.getValue(model.x(adj.index, j))
+					|| (val == super.getValue(model.x(adj.index, j)) && node.index > adj.index)) {
 						isCandidate = false;
 						break;
 					}
@@ -291,9 +291,9 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 				
 				// Same for copartition
 				for (Node adj : graph.getNodes(node.getPartition())) {
-					if (adj.index() != node.index() && 
-						((val <= super.getValue(model.x(adj.index(), j)))
-						|| (val == super.getValue(model.x(adj.index(), j)) && node.index() > adj.index()))) {
+					if (adj.index != node.index && 
+						((val <= super.getValue(model.x(adj.index, j)))
+						|| (val == super.getValue(model.x(adj.index, j)) && node.index > adj.index))) {
 						isCandidate = false;
 						break;
 					}
@@ -304,7 +304,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 				}
 				
 				// Use that color for the node
-				coloring.useColor(node.index(), j);
+				coloring.useColor(node.index, j);
 				colored[node.getPartition().index()] = true;
 				fixedCount++;
 				break;
@@ -431,16 +431,19 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		int bestNode = 0;
 		double mostFrac = 0.0;
 		
-		for (int i = 0; i < model.getNodeCount(); i++) {
-			for (int j = 0; j < model.getColorCount(); j++) {
-				int k = i * model.getColorCount() + j;
+		int nodeCount = model.getNodeCount();
+		int colorCount = model.getColorCount();
+		
+		for (int i = 0; i < nodeCount; i++) {
+			for (int j = 0; j < colorCount; j++) {
+				int k = i * colorCount + j;
 				if (feasibilities[k].equals(IntegerFeasibilityStatus.Infeasible)) {
 					double frac = DoubleUtils.fractionality(values[k]);
 					int prio = getPriority(vars[k]);
 					
 					// Keep most or less frac based on cfg
-					if (branchMostFrac(branched, bestPrio, mostFrac, frac, prio) ||
-						branchLessFrac(branched, bestPrio, mostFrac, frac, prio)) {
+					if ((BranchCallback.mostFrac && branchMostFrac(branched, bestPrio, mostFrac, frac, prio)) ||
+						(!BranchCallback.mostFrac && branchLessFrac(branched, bestPrio, mostFrac, frac, prio))) {
 						bestColor = j;
 						bestNode = i;
 						branched = vars[k];
@@ -458,14 +461,14 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	}
 
 	private boolean branchMostFrac(IloNumVar branched, int bestPrio, double mostFrac, double frac, int prio) {
-		return BranchCallback.mostFrac && (branched == null 
+		return (branched == null 
 			|| frac > mostFrac + fracTol 
 			|| (frac > mostFrac - fracTol && prio > bestPrio)
 			|| (frac > mostFrac && bestPrio == 0));
 	}
 	
 	private boolean branchLessFrac(IloNumVar branched, int bestPrio, double mostFrac, double frac, int prio) {
-		return !BranchCallback.mostFrac && (branched == null 
+		return (branched == null 
 			|| frac < mostFrac - fracTol 
 			|| (frac < mostFrac + fracTol && prio > bestPrio)
 			|| (frac < mostFrac && bestPrio == 0));

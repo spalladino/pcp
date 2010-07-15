@@ -238,7 +238,7 @@ public class Preprocessor implements IExecutionDataProvider {
 	private boolean removePartitionsWithIsolatedNodes() {
 		boolean changes = false;
 		for (Node node : builder.getNodes()) {
-			if (builder.hasNode(node.index())) {
+			if (builder.hasNode(node.index)) {
 				if (builder.getNeighbours(node).length == 0) {
 					removePartition(node.getPartition());
 					changes = true;

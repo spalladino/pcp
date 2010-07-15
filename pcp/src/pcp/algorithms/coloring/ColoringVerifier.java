@@ -27,7 +27,7 @@ public class ColoringVerifier {
 		for (Partition p : graph.getPartitions()) {
 			int colored = 0;
 			for (Node n : graph.getNodes(p)) {
-				if (coloring.getColor(n.index()) != null) {
+				if (coloring.getColor(n.index) != null) {
 					colored++;
 				}
 			}
@@ -44,7 +44,7 @@ public class ColoringVerifier {
 		
 		int max = 0;
 		for (Node node : graph.getNodes()) {
-			Integer c = coloring.getColor(node.index());
+			Integer c = coloring.getColor(node.index);
 			if (c != null && max < c) max = c;
 		}
 		
@@ -95,7 +95,7 @@ public class ColoringVerifier {
 	private void print(ColoringAlgorithm coloring, PrintStream out) throws AlgorithmException {
 		out.println("Chi = " + coloring.getChi());
 		for (Node node : graph.getNodes()) {
-			Integer color = coloring.getColor(node.index());
+			Integer color = coloring.getColor(node.index);
 			if (color != null) {
 				out.println(" " + node.getPartition().toString() + " " + node.toString() + ": " + color);
 			}

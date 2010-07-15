@@ -31,15 +31,15 @@ public class ConnectivityChecker {
 		while(!this.pending.isEmpty()) {
 			Node current = this.pending.poll();
 			for (Node n : graph.getNeighbours(current)) {
-				if (!this.visited[n.index()]) {
+				if (!this.visited[n.index]) {
 					this.pending.add(n);
-					this.visited[n.index()] = true;
+					this.visited[n.index] = true;
 				}
 			}
 			for (Node n : graph.getNodes(current.getPartition())) {
-				if (!this.visited[n.index()]) {
+				if (!this.visited[n.index]) {
 					this.pending.add(n);
-					this.visited[n.index()] = true;
+					this.visited[n.index] = true;
 				}
 			}
 		}

@@ -25,14 +25,14 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 			// Pick the easiest node in the partition
 			Node minNode = null;
 			for (Node n : graph.getNodes(p)) {
-				if (nodesHandled[n.index()]) {
+				if (nodesHandled[n.index]) {
 					continue;
 				}
 				
 				if (minNode == null 
-					|| colorCount[n.index()] < colorCount[minNode.index()] 
-                    || (colorCount[n.index()] == colorCount[minNode.index()] 
-                        && (colorAdj[n.index()][0] < colorAdj[minNode.index()][0]))) {
+					|| colorCount[n.index] < colorCount[minNode.index] 
+                    || (colorCount[n.index] == colorCount[minNode.index] 
+                        && (colorAdj[n.index][0] < colorAdj[minNode.index][0]))) {
 					minNode = n;
 				}
 			}
@@ -43,10 +43,10 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 			}
 			
 			// Check if it is the hardest one among the others
-			if ((colorCount[minNode.index()] > max) 
-				|| ((colorCount[minNode.index()] == max) 
-					&& (colorAdj[minNode.index()][0] > colorAdj[maxNode.index()][0]))) {
-				max = colorCount[minNode.index()];
+			if ((colorCount[minNode.index] > max) 
+				|| ((colorCount[minNode.index] == max) 
+					&& (colorAdj[minNode.index][0] > colorAdj[maxNode.index][0]))) {
+				max = colorCount[minNode.index];
 				maxNode = minNode;
 			}
 		}

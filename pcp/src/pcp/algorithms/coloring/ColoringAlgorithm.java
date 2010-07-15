@@ -38,7 +38,7 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	public Integer getPartitionColor(int partition) throws AlgorithmException {
 		for (Node node : graph.getNodes(graph.getPartition(partition))) {
-			Integer color = getColor(node.index());
+			Integer color = getColor(node.index);
 			if (color != null) return color;
 		} return null;
 	}
@@ -77,7 +77,7 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	public void printColoring(PrintStream stream) throws AlgorithmException {
 		StringBuilder sb = new StringBuilder("Coloring: ");
 		for (Node node : graph.getNodes()) {
-			sb.append(node).append(":").append(getColor(node.index())).append(", ");
+			sb.append(node).append(":").append(getColor(node.index)).append(", ");
 		} stream.println(sb.toString());
 	}
 

@@ -42,7 +42,7 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
         visited = new HashSet<List<Node>>();
       
         for (Node node : graph.getNodes()) {
-            int u = node.index();
+            int u = node.index;
         	if (returned[u]) continue;
 
             for(Edge e : graph.getEdges()) {
@@ -62,14 +62,14 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
 		if (node != ev1 && node != ev2
 		    && graph.areAdjacent(node, ev1)
 		    && !graph.areAdjacent(node, ev2)
-		    && !notInHole[node.index()][ev1.index()][ev2.index()]
+		    && !notInHole[node.index][ev1.index][ev2.index]
             && node.getPartition() != ev1.getPartition()
             && node.getPartition() != ev2.getPartition()
             && ev1.getPartition() != ev2.getPartition())
 		{
 			inPath = new int[graph.getNodes().length];
 		    inPath[u] = 1;
-		    inPath[ev1.index()] = 2;
+		    inPath[ev1.index] = 2;
 
 		    pathPartitions = new boolean[graph.getPartitions().length];
 		    pathPartitions[node.getPartition().index()] = true;
@@ -85,7 +85,7 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
 		    
 		    if (result.success)
 		    {
-		        List<Node> hole = getHole(inPath[result.nodeE.index()], result.k);
+		        List<Node> hole = getHole(inPath[result.nodeE.index], result.k);
 
 		        if (check && !checkHole(hole)) {
         			return false;
@@ -106,27 +106,27 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
 		        }
 		            
 		        for (Node x : hole) {
-	                returned[x.index()] = true;
+	                returned[x.index] = true;
 	            }
 		    
 		        for (Node x : pathVertex) {
-		            inPath[x.index()] = 0;
+		            inPath[x.index] = 0;
 		        }
 
 		    }
 
-		    inPath[ev1.index()] = 0;
+		    inPath[ev1.index] = 0;
 		}
 		
 		return true;
 	}
 
     private ProcessResult process(Node aa, Node bb, Node cc, int i) {
-    	int a = aa.index(), b = bb.index(), c = cc.index();
+    	int a = aa.index, b = bb.index, c = cc.index;
     	
     	inPath[c] = i;
         for(Node dd : graph.getNeighbours(cc)) {
-            int d = dd.index();
+            int d = dd.index;
         	
             if (d != a 
     			&& d != b 
@@ -170,7 +170,7 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
             uu = pathVertex.get(i-1);
         	h = imax + 1;
             for (Node xx : graph.getNeighbours(uu)) {
-            	int x = xx.index();
+            	int x = xx.index;
                 if (inPath[x] >= i + 4 && inPath[x] < h) {
                     h = inPath[x];
                 }
@@ -188,7 +188,7 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
     private String listHole(List<Node> hole) {
         StringBuilder builder = new StringBuilder("[");
         for (Node h : hole) {
-            builder.append(h.index()).append(',');
+            builder.append(h.index).append(',');
         } builder.append("]");
         return builder.toString();
     }
