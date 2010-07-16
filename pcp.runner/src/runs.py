@@ -100,16 +100,6 @@ branchdynruns = [ update_copy({
                     'branch.dynamic.dsatur': 'true',
                     'branch.direction': '0',
                 },
-                {
-                    'branch.dynamic.fractional': 'false',
-                    'branch.dynamic.dsatur': 'true',
-                    'branch.direction': '1',
-                },
-                {
-                    'branch.dynamic.fractional': 'false',
-                    'branch.dynamic.dsatur': 'true',
-                    'branch.direction': '-1',
-                },
                 
                 ]   
             ]

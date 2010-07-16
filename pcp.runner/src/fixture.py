@@ -48,6 +48,8 @@ class Fixture:
     
     def resume(self):
         if self.load_status():
+            self.iterstorun = None
+            self.initial = 0
             return self.execute() 
         return False
     

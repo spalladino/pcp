@@ -13,21 +13,12 @@ def main():
     print 'Processing: ', files
 
     Fixture().newrun(
-                runs.branchboundingruns, 
+                runs.branchdynruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100714BRANCHDSATURBOUNDS'
+                runid = '20100715BRANCHDYN3'
             )
-    
     return
-    
-   
-    Fixture().newrun(
-                runs.branchsosruns, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100713BRANCHSOS'
-            )
 
 
 if __name__ == '__main__':
