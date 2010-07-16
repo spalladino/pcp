@@ -31,14 +31,14 @@ public class DSaturPartitionColoringRandomizedEasiestNodes extends DSaturPartiti
 			// Pick the easiest node in the partition
 			Node minNode = null;
 			for (Node n : graph.getNodes(p)) {
-				if (nodesHandled[n.index()]) {
+				if (nodesHandled[n.index]) {
 					continue;
 				}
 				
 				if (minNode == null 
-					|| colorCount[n.index()] < colorCount[minNode.index()] 
-                    || (colorCount[n.index()] == colorCount[minNode.index()] 
-                        && (colorAdj[n.index()][0] < colorAdj[minNode.index()][0]))) {
+					|| colorCount[n.index] < colorCount[minNode.index] 
+                    || (colorCount[n.index] == colorCount[minNode.index] 
+                        && (colorAdj[n.index][0] < colorAdj[minNode.index][0]))) {
 					minNode = n;
 				}
 			}

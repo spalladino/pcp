@@ -30,10 +30,10 @@ public class Verifier {
 	private void colorVariablesAreSet() throws IloException, AlgorithmException {
 		double[] colorValues = solver.ws();
 		for (Node n : graph.getNodes()) {
-			double[] nodeColors = solver.xs(n.index());
+			double[] nodeColors = solver.xs(n.index);
 			for (int c = 0; c < nodeColors.length; c++) {
 				if (isTrue(nodeColors[c]) && !isTrue(colorValues[c])) {
-					throw new AlgorithmException("Node " + n.index() + " uses color " + c + " whose variable is unset.");
+					throw new AlgorithmException("Node " + n.index + " uses color " + c + " whose variable is unset.");
 				}
 			}
 		}
@@ -41,11 +41,11 @@ public class Verifier {
 
 	private void adjacentsHaveDifferentColors() throws IloException, AlgorithmException {
 		for (Edge e : graph.getEdges()) {
-			int c1 = solver.getNodeColor(e.getNode1().index());
-			int c2 = solver.getNodeColor(e.getNode2().index());
+			int c1 = solver.getNodeColor(e.getNode1().index);
+			int c2 = solver.getNodeColor(e.getNode2().index);
 			
 			if (c1 > -1 && c2 > -1 && c1 == c2) {
-				throw new AlgorithmException(String.format("Adjacent nodes %1$d and %2$d have the same color %3$d.", e.getNode1().index(), e.getNode2().index(), c1));
+				throw new AlgorithmException(String.format("Adjacent nodes %1$d and %2$d have the same color %3$d.", e.getNode1().index, e.getNode2().index, c1));
 			}
 		}
 	}
@@ -54,7 +54,7 @@ public class Verifier {
 		for (Partition p : graph.getPartitions()) {
 			int coloredCount = 0;
 			for (Node n : graph.getNodes(p)) {
-				double[] nodeColors = solver.xs(n.index());
+				double[] nodeColors = solver.xs(n.index);
 				int nodeColorsCount = 0;
 				for (int c = 0; c < nodeColors.length; c++) {
 					if (doubleEquals(nodeColors[c], 1.0)) {

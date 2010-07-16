@@ -13,14 +13,14 @@ public class DataUtils {
 	public static double sumXi(Node[] nodes, int color, IModelData data) {
 		double sum = 0.0;
 		for (Node node : nodes) {
-			sum += data.x(node.index(), color);
+			sum += data.x(node.index, color);
 		} return sum;
 	}
 	
 	public static double sumXi(List<Node> nodes, int color, IModelData data) {
 		double sum = 0.0;
 		for (Node node : nodes) {
-			sum += data.x(node.index(), color);
+			sum += data.x(node.index, color);
 		} return sum;
 	}
 	
@@ -28,7 +28,7 @@ public class DataUtils {
 		double sum = 0.0;
 		for (Partition p : partitions) {
 			for (Node n : graph.getNodes(p)) {
-				sum += data.x(n.index(), color);
+				sum += data.x(n.index, color);
 			}
 		} return sum;
 	}

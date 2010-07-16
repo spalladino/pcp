@@ -38,7 +38,7 @@ public class BlockColorCuts extends Algorithm implements Constants {
 				for (int j = j0 + 1; j < provider.getModel().getColorCount(); j++) {
 					// Add all nodes in the partition for that color
 					for (Node node : graph.getNodes(partition)) {
-						sum += provider.getData().x(node.index(), j);
+						sum += provider.getData().x(node.index, j);
 					}  
 				}
 				// If broken, add it

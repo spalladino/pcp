@@ -32,7 +32,7 @@ public class InitialCutBuilder implements ICutBuilder {
 			
 			for (int j = color + 1; j < model.getColorCount(); j++) {
 				for (Node node : model.getGraph().getNodes(partition)) {
-					expr.addTerm(model.x(node.index(), j), 1);
+					expr.addTerm(model.x(node.index, j), 1);
 				}  
 			}
 			

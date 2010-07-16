@@ -78,8 +78,8 @@ public class ComponentPathDetector extends Algorithm {
 			this.edgeVisits = new int[model.getNodeCount()][model.getNodeCount()];
 			
 			for (Node node : graph.getNodes()) {
-				if ((data.x(node.index(), color) < minInitialNodeValue) ||
-					(nodeVisits[node.index()] >= maxInitialNodeVisits)) {
+				if ((data.x(node.index, color) < minInitialNodeValue) ||
+					(nodeVisits[node.index] >= maxInitialNodeVisits)) {
 					break;
 				} 
 				
@@ -139,8 +139,8 @@ public class ComponentPathDetector extends Algorithm {
 	private void addToPath(Node n, Node endpoint, boolean isEnd) {
 		if (n == null) return;
 		
-		inPath[n.index()] = true;
-		double nval = data.x(n.index(), color);
+		inPath[n.index] = true;
+		double nval = data.x(n.index, color);
 		sumX += nval;
 		
 		if (isEnd) {
@@ -160,10 +160,10 @@ public class ComponentPathDetector extends Algorithm {
 	private void markNodesAsVisited() {
 		Node previous = null;
 		for (Node n : this.path) {
-			nodeVisits[n.index()]++;
+			nodeVisits[n.index]++;
 			if (previous != null) {
-				edgeVisits[n.index()][previous.index()]++;
-				edgeVisits[previous.index()][n.index()]++;
+				edgeVisits[n.index][previous.index]++;
+				edgeVisits[previous.index][n.index]++;
 			} previous = n;
 		}
 		
@@ -189,8 +189,8 @@ public class ComponentPathDetector extends Algorithm {
 		// Iterate over all neighbours but excluded and those enough visited
 		for (Node n : graph.getNeighbours(current)) {
 			// if (excluded == null || !excluded.equals(n)){
-			if (!inPath[n.index()]) {
-				if ((nodeVisits[n.index()] < maxNodeVisits) && (edgeVisits[current.index()][n.index()] < maxEdgeVisits)) {
+			if (!inPath[n.index]) {
+				if ((nodeVisits[n.index] < maxNodeVisits) && (edgeVisits[current.index][n.index] < maxEdgeVisits)) {
 					boolean valid = true;
 					
 					// Iterate backwards so a chord can generate a valid hole
@@ -241,7 +241,7 @@ public class ComponentPathDetector extends Algorithm {
 	 * it has in the path is "p" at index "index". 
 	 */
 	private boolean holeWouldBeBroken(Node n, Node p, int index) {
-		double sum = sumToEnd.get(index) + data.x(n.index(), color);
+		double sum = sumToEnd.get(index) + data.x(n.index, color);
 		int holeLength = path.size() - index + 1;
 		double alpha = IntUtils.floorhalf(holeLength);
 		

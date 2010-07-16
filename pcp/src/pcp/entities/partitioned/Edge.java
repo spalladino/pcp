@@ -14,11 +14,11 @@ public class Edge {
 	}
 	
 	public int index1() {
-		return node1.name;
+		return node1.index;
 	}
 	
 	public int index2() {
-		return node2.name;
+		return node2.index;
 	}
 
 	Edge(Node node1, Node node2) {
@@ -42,13 +42,13 @@ public class Edge {
 		if (getClass() != obj.getClass()) return false;
 		Edge other = (Edge) obj;
 		
-		return (this.node1.equals(other.node1) && this.node2.equals(other.node2))
-			|| (this.node2.equals(other.node1) && this.node1.equals(other.node2));
+		return (this.node1.index == other.node1.index && this.node2.index == other.node2.index)
+			|| (this.node2.index == other.node1.index && this.node1.index == other.node2.index);
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("E(%1$s,%2$s)", node1.index(), node2.index());
+		return String.format("E(%1$s,%2$s)", node1.index, node2.index);
 	}
 	
 	

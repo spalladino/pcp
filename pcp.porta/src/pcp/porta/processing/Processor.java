@@ -78,14 +78,14 @@ public class Processor implements IProcessor {
 			int i = 0;
 			Integer minMult = null;
 			while ((minMult == null || minMult != 0) && i < nodes.length) {
-				minMult = hasEveryNodeColor(constraint, nodes[i].index(), true, minMult); 
+				minMult = hasEveryNodeColor(constraint, nodes[i].index, true, minMult); 
 				i++;
 			}
 			
 			if (minMult != 0) {
 				for (i = 0; i < nodes.length; i++) {
 					for (int j = 0; j < constraint.getColorCount(); j++) {
-						constraint.addX(nodes[i].index(), j, -minMult);
+						constraint.addX(nodes[i].index, j, -minMult);
 					}
 				}
 				constraint.addBound(-minMult);

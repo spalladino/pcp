@@ -39,7 +39,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 
 	public PartitionedGraph getGraph() {
 		if (mustRecreate) recreateGraph();
-		PartitionedGraph graph = new PartitionedGraph();
+		PartitionedGraph graph = new PartitionedGraph(getNodes(), getEdges(), getPartitions());
 		graph.name = this.name;
 		
 		int nn = nodes.size();
@@ -53,15 +53,11 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		graph.partitionPartitionAdjacencies = new Partition[pp][];
 		graph.partitionNodeAdjacencies = new Node[pp][];
 		
-		graph.nodes = this.getNodes();
-		graph.edges = this.getEdges();
-		graph.partitions = this.getPartitions();
-		
 		for (Node node : graph.nodes) {
 			node.graph = graph;
-			graph.nodePartition[node.name] = this.getPartition(node);
-			graph.adjacencies[node.name] = this.getNeighbours(node);
-			graph.nodePartitionAdjacencies[node.name] = this.getNeighbourPartitions(node);
+			graph.nodePartition[node.index] = this.getPartition(node);
+			graph.adjacencies[node.index] = this.getNeighbours(node);
+			graph.nodePartitionAdjacencies[node.index] = this.getNeighbourPartitions(node);
 		}
 		
 		for (Partition partition : graph.partitions) {
@@ -72,8 +68,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		}
 		
 		for (Edge edge : graph.edges) {
-			graph.matrix[edge.node1.index()][edge.node2.index()] = true;
-			graph.matrix[edge.node2.index()][edge.node1.index()] = true;
+			graph.matrix[edge.node1.index][edge.node2.index] = true;
+			graph.matrix[edge.node2.index][edge.node1.index] = true;
 		}
 		
 		graph.gprime = (Graph)getGPrime();
@@ -117,7 +113,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		Node[] freshNodes = this.getNodes().clone();
 		for (int i = 0; i < freshNodes.length; i++) {
 			Node node = freshNodes[i];
-			oldToNewNode.put(node.name, i);
+			oldToNewNode.put(node.index, i);
 		}
 	
 		Partition[] freshPartitions = this.getPartitions().clone();
@@ -141,7 +137,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		initialize();
 	
 		for (Node node : nodePartition.keySet()) {
-			int newkey = oldToNewNode.get(node.index());
+			int newkey = oldToNewNode.get(node.index);
 			int newpart = oldToNewPartition.get(nodePartition.get(node).index());
 			this.addNode(newkey, newpart);
 		}
@@ -191,7 +187,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		// Remove from node indexed collections
 		nodePartition.remove(node);
 		nodeAdjacencies.remove(node);
-		nodes.remove(node.name);
+		nodes.remove(node.index);
 		
 		mustRecreate = true;
 	}

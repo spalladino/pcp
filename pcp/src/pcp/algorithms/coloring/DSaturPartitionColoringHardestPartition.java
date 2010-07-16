@@ -41,14 +41,14 @@ public class DSaturPartitionColoringHardestPartition extends
 		// Once chosen, pick the easiest node
 		Node minNode = null;
 		for (Node n : graph.getNodes(graph.getPartitions()[hardest.index()])) {
-			if (nodesHandled[n.index()]) {
+			if (nodesHandled[n.index]) {
 				continue;
 			}
 			
 			if (minNode == null 
-				|| colorCount[n.index()] < colorCount[minNode.index()] 
-                || (colorCount[n.index()] == colorCount[minNode.index()] 
-                    && (colorAdj[n.index()][0] < colorAdj[minNode.index()][0]))) {
+				|| colorCount[n.index] < colorCount[minNode.index] 
+                || (colorCount[n.index] == colorCount[minNode.index] 
+                    && (colorAdj[n.index][0] < colorAdj[minNode.index][0]))) {
 				minNode = n;
 			}
 		}

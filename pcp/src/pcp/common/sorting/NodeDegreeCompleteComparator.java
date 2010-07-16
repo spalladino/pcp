@@ -17,7 +17,7 @@ public class NodeDegreeCompleteComparator implements Comparator<Node> {
 	
 	public int compare(Node n1, Node n2) {
 		int val = n1.getDegree() - n2.getDegree();
-		if (val == 0) val = n1.index() - n2.index();
+		if (val == 0) val = n1.index - n2.index;
 		return reverse ? -val : val;
 	}
 }

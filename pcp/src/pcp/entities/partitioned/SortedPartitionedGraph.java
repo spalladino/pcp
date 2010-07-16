@@ -107,15 +107,15 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	@Override
 	public Node[] getNeighbours(Node node) {
-		if (this.adjacencies[node.name] == null) {
-			this.adjacencies[node.name] = graph.adjacencies[node.name].clone();
-			Arrays.sort(this.adjacencies[node.name], this.nodeComparer);
+		if (this.adjacencies[node.index] == null) {
+			this.adjacencies[node.index] = graph.adjacencies[node.index].clone();
+			Arrays.sort(this.adjacencies[node.index], this.nodeComparer);
 		}
-		return this.adjacencies[node.name];
+		return this.adjacencies[node.index];
 	}
 
 	public Node[] getNeighboursPlusCopartition(Node node) {
-		if (this.adjacenciesCopartitionNodes[node.name] == null) {
+		if (this.adjacenciesCopartitionNodes[node.index] == null) {
 			final Node[] n = getNeighbours(node);
 			final Node[] p = getNodes(getPartition(node));
 			final Node[] target = new Node[n.length + p.length - 1];
@@ -126,20 +126,20 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 			
 			while (i < n.length || j < p.length) {
 				if ((j >= p.length) || (i < n.length && nodeComparer.compare(n[i], p[j]) <= 0 )) {
-					if (n[i].index() != node.index()) {
+					if (n[i].index != node.index) {
 						target[t] = n[i]; t++;
 					} i++;
 				} else {
-					if (p[j].index() != node.index()) {
+					if (p[j].index != node.index) {
 						target[t] = p[j]; t++;
 					} j++;
 				} 
 			}
 			
-			this.adjacenciesCopartitionNodes[node.name] = target;
+			this.adjacenciesCopartitionNodes[node.index] = target;
 		}
 		
-		return this.adjacenciesCopartitionNodes[node.name];
+		return this.adjacenciesCopartitionNodes[node.index];
 	}
 	
 	@Override

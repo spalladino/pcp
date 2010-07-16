@@ -66,7 +66,7 @@ public class HolesCuts extends Algorithm implements Constants {
 					double sum = 0.0;
 					for (Node simplenode : hole) {
 						for (pcp.entities.partitioned.Node n : original.getNodes(simplenode)) {
-							sum += data.x(n.index(), color);
+							sum += data.x(n.index, color);
 						}
 					} return sum;
 				}

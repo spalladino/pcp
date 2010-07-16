@@ -15,9 +15,9 @@ public class NodeColorValueComparator extends BaseValueComparator<Node> {
 	@Override
 	public int compare(Node o1, Node o2) {
 		try {
-			int cmp = Double.compare(data.x(o1.index(),color), data.x(o2.index(),color));
+			int cmp = Double.compare(data.x(o1.index,color), data.x(o2.index,color));
 			if (cmp == 0) {
-				return new Integer(o1.index()).compareTo(o2.index()); 
+				return new Integer(o1.index).compareTo(o2.index); 
 			} else {
 				return cmp;
 			}

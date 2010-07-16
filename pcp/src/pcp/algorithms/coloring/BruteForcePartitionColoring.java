@@ -52,7 +52,7 @@ public class BruteForcePartitionColoring extends ColoringAlgorithm {
 				// Check if color j can be assigned to node
 				boolean valid = true;
 				for (Node neighbour : graph.getNeighbours(node)) {
-					if (colors[neighbour.index()] == j) {
+					if (colors[neighbour.index] == j) {
 						valid = false;
 						break;
 					}
@@ -71,13 +71,13 @@ public class BruteForcePartitionColoring extends ColoringAlgorithm {
 	}
 	
 	private void assignColor(Node node, int j) {
-		colors[node.index()] = j;
+		colors[node.index] = j;
 		if (counts[j] == 0) count++;
 		counts[j]++;
 	}
 	
 	private void unassignColor(Node node, int j) {
-		colors[node.index()] = 0;
+		colors[node.index] = 0;
 		counts[j]--;
 		if (counts[j] == 0) count--;
 	}

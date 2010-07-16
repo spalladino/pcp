@@ -187,9 +187,9 @@ public class GraphParseFixture {
 		Edge e0 = graph.getEdges()[0];
 		Edge e1 = graph.getEdges()[1];
 		
-		assertEquals(0, n0.index());
-		assertEquals(1, n1.index());
-		assertEquals(2, n2.index());
+		assertEquals(0, n0.index);
+		assertEquals(1, n1.index);
+		assertEquals(2, n2.index);
 		
 		assertEquals(2, n0.getDegree());
 		assertEquals(n1, graph.getNeighbours(n0)[0]);

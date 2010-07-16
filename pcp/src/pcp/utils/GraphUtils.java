@@ -74,7 +74,7 @@ public class GraphUtils {
 		Node first = nodes.get(0);
 		Node last = nodes.get(nodes.size() - 1);
 		
-		if (!graph.areAdjacent(first.index(), last.index())) {
+		if (!graph.areAdjacent(first.index, last.index)) {
 			System.err.println("Hole first and last nodes are not adjacent");
 			return false;
 		} return true;
@@ -135,7 +135,7 @@ public class GraphUtils {
 	public static String listNodes(List<Node> nodes) {
         StringBuilder builder = new StringBuilder("[");
         for (Node h : nodes) {
-            builder.append(h.index()).append(',');
+            builder.append(h.index).append(',');
         } builder.append("]");
         return builder.toString();
     }

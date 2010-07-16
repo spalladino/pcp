@@ -146,8 +146,8 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	private void colorClique() throws AlgorithmException {
 		int place = 0;
 		for (Node node : this.clique) {
-			order[place] = node.index();
-			handled[node.index()] = true;
+			order[place] = node.index;
+			handled[node.index] = true;
 			place++;
 			assignColor(node, place);
 		}
@@ -158,10 +158,10 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	}
 	
 	private void assignColor(Node node, int color) throws AlgorithmException {
-		colorClass[node.index()] = color;
+		colorClass[node.index] = color;
 		
 		for (Node n1 : graph.getNeighbours(node)) {
-			int node1 = n1.index();
+			int node1 = n1.index;
 			
 			if (colorAdj[node1][color] == 0) {
 				colorCount[node1]++;
@@ -181,10 +181,10 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	}
 	
 	private void removeColor(Node node, int color) throws AlgorithmException {
-		colorClass[node.index()] = 0;
+		colorClass[node.index] = 0;
 		
 		for (Node n1 : graph.getNeighbours(node)) {
-			int node1 = n1.index();
+			int node1 = n1.index;
 			
 			colorAdj[node1][color]--;
 			

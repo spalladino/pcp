@@ -5,12 +5,8 @@ import pcp.entities.IPartitionedGraph;
 
 public class Node implements Comparable<Node> {
 	
-	int name;
+	public final int index;
 	IPartitionedGraph graph;
-	
-	public int index() {
-		return name;
-	}
 	
 	public int getDegree() {
 		return graph.getDegree(this);
@@ -29,13 +25,13 @@ public class Node implements Comparable<Node> {
 	}
 	
 	Node(IPartitionedGraph graph, int name) {
-		this.name = name;
+		this.index = name;
 		this.graph = graph;
 	}
 
 	@Override
 	public int hashCode() {
-		return name;
+		return index;
 	}
 
 	@Override
@@ -46,17 +42,17 @@ public class Node implements Comparable<Node> {
 			return false;
 		} 
 		Node other = (Node) obj;
-		return (name == other.name);
+		return (index == other.index);
 	}
 
 	@Override
 	public int compareTo(Node o) {
-		return ((Integer)name).compareTo(o.name);
+		return ((Integer)index).compareTo(o.index);
 	}
 	
 	@Override
 	public String toString() {
-		return "X" + this.index() + "(" + this.getPartition().index() + ")";
+		return "X" + this.index + "(" + this.getPartition().index() + ")";
 	}
 	
 	

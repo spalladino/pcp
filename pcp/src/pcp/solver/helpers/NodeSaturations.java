@@ -24,7 +24,7 @@ public class NodeSaturations implements IColorAssigner {
 		
 		if (colorAdjPartitions) {
 			for (Node n : graph.getNodes()) {
-				colorAdj[n.index()][0] = graph.getNeighbourPartitions(n).length; 
+				colorAdj[n.index][0] = graph.getNeighbourPartitions(n).length; 
 			}
 		} else {
 			for (Edge e : graph.getEdges()) {
@@ -36,7 +36,7 @@ public class NodeSaturations implements IColorAssigner {
 	
 	public void useColor(int node, int color) throws AlgorithmException {
 		for (Node n1 : graph.getNeighbours(graph.getNode(node))) {
-			increaseColorCount(n1.index(), color);
+			increaseColorCount(n1.index, color);
 		}
 	}
 	

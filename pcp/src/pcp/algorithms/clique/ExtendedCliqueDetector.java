@@ -108,7 +108,7 @@ public abstract class ExtendedCliqueDetector extends Algorithm implements Consta
 			while((retainCurrent == null || c.compare(retainCurrent, node) < 0) && itRetain.hasNext()) {
 				retainCurrent = itRetain.next();
 	}
-			if (retainCurrent == null || retainCurrent.index() != node.index() 
+			if (retainCurrent == null || retainCurrent.index != node.index 
 				|| !markEdgeVisited(currentNode, node)) {
 				removed.add(node);
 				it.remove();
@@ -132,7 +132,7 @@ public abstract class ExtendedCliqueDetector extends Algorithm implements Consta
 		// Initialize clique with initial node
 		clique = new ArrayList<Node>(nodes.length/2);
 		clique.add(initial);
-		visited[initial.index()]++;
+		visited[initial.index]++;
 		
 		// Candidates to be in the clique will be neighbour/copartitioned nodes to initial
 		LinkedList<Node> candidates = getInitialCandidates(initial);
@@ -171,7 +171,7 @@ public abstract class ExtendedCliqueDetector extends Algorithm implements Consta
 		for (Node node : graph.getNeighboursPlusCopartition(initial)) {
 			if (isInvalidInitialCandidate(node)) {
 				break;
-			} else if ((++visited[node.index()]) < maxInitialNodeVisits 
+			} else if ((++visited[node.index]) < maxInitialNodeVisits 
 				&& markEdgeVisited(initial, node)) {
 				ret.add(node);
 			}
@@ -179,10 +179,10 @@ public abstract class ExtendedCliqueDetector extends Algorithm implements Consta
 	}
 
 	private boolean markEdgeVisited(Node initial, Node node) {
-		edgesVisited[initial.index()][node.index()]++;
-		edgesVisited[node.index()][initial.index()]++;
+		edgesVisited[initial.index][node.index]++;
+		edgesVisited[node.index][initial.index]++;
 		
-		if (edgesVisited[node.index()][initial.index()] > maxEdgeVisits) {
+		if (edgesVisited[node.index][initial.index] > maxEdgeVisits) {
 			return false;
 		} return true;
 	}
