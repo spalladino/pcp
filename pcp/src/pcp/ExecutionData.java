@@ -19,7 +19,7 @@ public class ExecutionData {
 		this.data = new TreeMap<String, Object>();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ExecutionData withSettings() {
 		this.data.putAll((Map)(Settings.get().getProps()));
 		return this;

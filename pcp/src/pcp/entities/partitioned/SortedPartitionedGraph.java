@@ -89,7 +89,7 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	@Override
 	public Node[] getNodes(Partition partition) {
-		return getPartitionNodes(partition.name);
+		return getPartitionNodes(partition.index);
 	}
 
 	private Node[] getPartitionNodes(int index) {

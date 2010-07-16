@@ -24,7 +24,7 @@ public class DSaturPartitionColoringRandomizedEasiestNodes extends DSaturPartiti
 		List<Node> candidates = new ArrayList<Node>();
 		
 		for (Partition p : graph.getPartitions()) {
-			if (partitionsHandled[p.index()]) {
+			if (partitionsHandled[p.index]) {
 				continue;
 			}
 			

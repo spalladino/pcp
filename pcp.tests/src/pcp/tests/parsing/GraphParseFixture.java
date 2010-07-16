@@ -208,8 +208,8 @@ public class GraphParseFixture {
 		assertEquals(false, graph.areAdjacent(n1, n2));
 		assertEquals(false, graph.areAdjacent(n2, n1));
 		
-		assertEquals(0, p0.index());
-		assertEquals(1, p1.index());
+		assertEquals(0, p0.index);
+		assertEquals(1, p1.index);
 	
 		assertEquals(2, graph.getNodes(p0).length);
 		assertEquals(1, graph.getNodes(p1).length);

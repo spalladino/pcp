@@ -18,7 +18,7 @@ public class DSaturPartitionColoringEasiestNodes extends DSaturPartitionColoring
 		Node maxNode = null;
 		
 		for (Partition p : graph.getPartitions()) {
-			if (partitionsHandled[p.index()]) {
+			if (partitionsHandled[p.index]) {
 				continue;
 			}
 			

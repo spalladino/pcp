@@ -60,8 +60,8 @@ public class PartitionsColoring extends ColoringAlgorithm {
 	private int assignColors() {
 		int color = 0;
 		for (Partition p : graph.getPartitions()) {
-			if (!coloredPartitions[p.index()]) {
-				coloredPartitions[p.index()] = true;
+			if (!coloredPartitions[p.index]) {
+				coloredPartitions[p.index] = true;
 				while (usedColors[color]) color++;
 				nodeColors[getFirstNode(p)] = color;
 				usedColors[color] = true;

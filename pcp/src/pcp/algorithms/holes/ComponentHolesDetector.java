@@ -72,9 +72,9 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
 		    inPath[ev1.index] = 2;
 
 		    pathPartitions = new boolean[graph.getPartitions().length];
-		    pathPartitions[node.getPartition().index()] = true;
-		    pathPartitions[ev1.getPartition().index()] = true;
-		    pathPartitions[ev2.getPartition().index()] = true;
+		    pathPartitions[node.getPartition().index] = true;
+		    pathPartitions[ev1.getPartition().index] = true;
+		    pathPartitions[ev2.getPartition().index] = true;
 		                   
 		    pathVertex.clear();
 		    pathVertex.add(node);
@@ -133,10 +133,10 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
     			&& d != c 
     			&& !graph.areAdjacent(aa, dd) 
     			&& !graph.areAdjacent(bb, dd)
-    			&& (!pathPartitions[dd.getPartition().index()] || inPath[d] != 0)) 
+    			&& (!pathPartitions[dd.getPartition().index] || inPath[d] != 0)) 
         	{
                 pathVertex.add(dd);
-                pathPartitions[dd.getPartition().index()] = true;
+                pathPartitions[dd.getPartition().index] = true;
                 
                 if (inPath[d] != 0) {
                 	return new ProcessResult(true, dd, i);
@@ -148,7 +148,7 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
                 }
                 
                 pathVertex.remove(pathVertex.size() - 1);
-                pathPartitions[dd.getPartition().index()] = false;
+                pathPartitions[dd.getPartition().index] = false;
             }
         }
 

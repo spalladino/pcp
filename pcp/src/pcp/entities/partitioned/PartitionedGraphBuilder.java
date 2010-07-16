@@ -62,9 +62,9 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		
 		for (Partition partition : graph.partitions) {
 			partition.graph = graph;
-			graph.partitionNodes[partition.name] = this.getNodes(partition);
-			graph.partitionNodeAdjacencies[partition.name] = this.getNeighbours(partition);
-			graph.partitionPartitionAdjacencies[partition.name] = this.getNeighbourPartitions(partition);
+			graph.partitionNodes[partition.index] = this.getNodes(partition);
+			graph.partitionNodeAdjacencies[partition.index] = this.getNeighbours(partition);
+			graph.partitionPartitionAdjacencies[partition.index] = this.getNeighbourPartitions(partition);
 		}
 		
 		for (Edge edge : graph.edges) {
@@ -120,13 +120,13 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		int partitionNewIndex = 0;
 		
 		for (Partition partition : firstPartitions) {
-			oldToNewPartition.put(partition.name, partitionNewIndex);
+			oldToNewPartition.put(partition.index, partitionNewIndex);
 			partitionNewIndex++;
 		}
 		
 		for (Partition partition : freshPartitions) {
 			if (!firstPartitions.contains(partition)) {
-				oldToNewPartition.put(partition.name, partitionNewIndex);
+				oldToNewPartition.put(partition.index, partitionNewIndex);
 				partitionNewIndex++;
 			}
 		}
@@ -138,7 +138,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	
 		for (Node node : nodePartition.keySet()) {
 			int newkey = oldToNewNode.get(node.index);
-			int newpart = oldToNewPartition.get(nodePartition.get(node).index());
+			int newpart = oldToNewPartition.get(nodePartition.get(node).index);
 			this.addNode(newkey, newpart);
 		}
 		
@@ -160,7 +160,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 			removeNode(node);
 		}
 		partitionNodes.remove(partition);
-		partitions.remove(partition.name);
+		partitions.remove(partition.index);
 		mustRecreate = true;
 	}
 	
@@ -284,7 +284,7 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 
 	@Override
 	public boolean areInSamePartition(Node n1, Node n2) {
-		return nodePartition.get(n1).name == nodePartition.get(n2).name;
+		return nodePartition.get(n1).index == nodePartition.get(n2).index;
 	}
 
 	@Override

@@ -176,14 +176,14 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			
 			Node node = graph.getNode(i);
 			
-			if (colored[node.getPartition().index()]) {
+			if (colored[node.getPartition().index]) {
 				continue;
 			}
 			
 			for (int j = 0; j < model.getColorCount(); j++) {
 				IloIntVar x = model.x(i, j);
 				if (super.getFeasibility(x) != IntegerFeasibilityStatus.Infeasible && super.getLB(x) > 0.99) {
-					colored[node.getPartition().index()] = true;
+					colored[node.getPartition().index] = true;
 					coloring.useColor(i, j);
 					break;
 				}  else if (super.getUB(x) == 0.0) {
@@ -206,7 +206,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		for (Node node : graph.getNodes()) {
 			
 			// Paint each partition only once regardless of the model
-			if (colored[node.getPartition().index()]) {
+			if (colored[node.getPartition().index]) {
 				continue;
 			}
 			
@@ -252,7 +252,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				
 				// Use that color for the node
 				coloring.useColor(node.index, j);
-				colored[node.getPartition().index()] = true;
+				colored[node.getPartition().index] = true;
 				fixedCount++;
 				break;
 			}

@@ -329,7 +329,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		for (Node node : graph.getNodes()) {
 			
 			// Paint each partition only once regardless of the model
-			if (colored[node.getPartition().index()]) {
+			if (colored[node.getPartition().index]) {
 				continue;
 			}
 			
@@ -369,7 +369,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 				
 				// Use that color for the node
 				coloring.useColor(node.index, j);
-				colored[node.getPartition().index()] = true;
+				colored[node.getPartition().index] = true;
 				fixedCount++;
 				break;
 			}

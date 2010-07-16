@@ -80,7 +80,7 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	}
 
 	public Node[] getNodes(Partition partition) {
-		return partitionNodes[partition.name];
+		return partitionNodes[partition.index];
 	}
 
 	public Node[] getNeighbours(Node node) {
@@ -117,7 +117,7 @@ public class PartitionedGraph implements IPartitionedGraph  {
 
 	@Override
 	public boolean areInSamePartition(Node n1, Node n2) {
-		return this.nodePartition[n1.index].name == this.nodePartition[n2.index].name;
+		return this.nodePartition[n1.index].index == this.nodePartition[n2.index].index;
 	}
 
 	@Override
@@ -127,12 +127,12 @@ public class PartitionedGraph implements IPartitionedGraph  {
 
 	@Override
 	public Partition[] getNeighbourPartitions(Partition p) {
-		return this.partitionPartitionAdjacencies[p.index()];
+		return this.partitionPartitionAdjacencies[p.index];
 	}
 
 	@Override
 	public Node[] getNeighbours(Partition p) {
-		return this.partitionNodeAdjacencies[p.index()];
+		return this.partitionNodeAdjacencies[p.index];
 	}
 
 	@Override

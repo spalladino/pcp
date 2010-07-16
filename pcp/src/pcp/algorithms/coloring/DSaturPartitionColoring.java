@@ -291,7 +291,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		}
 		
 		// Try leaving this node unpainted if this partition can still be somehow colored
-		int partition = next.getPartition().index();
+		int partition = next.getPartition().index;
 		if (usablePartitionNodes[partition] > 0) {
 			if (log) log("Unhandling partition " + (partition + 1) + " of node " + (place + logNodeBase) + " for trying with another node");
 			unhandlePartition(partition);
@@ -316,7 +316,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	}
 
 	private void handleNode(int node) {
-		int partition = graph.getNode(node).getPartition().index();
+		int partition = graph.getNode(node).getPartition().index;
 		partitionsHandled[partition] = true;
 		nodesHandled[node] = true;
 		usablePartitionNodes[partition]--;
@@ -331,7 +331,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	}
 	
 	private void unhandleNode(int node) {
-		int partition = graph.getNode(node).getPartition().index();
+		int partition = graph.getNode(node).getPartition().index;
 		partitionsHandled[partition] = false;
 		nodesHandled[node] = false;
 		usablePartitionNodes[partition]++;
@@ -397,7 +397,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 
 	protected void assignColor(Node node, int color) throws AlgorithmException {
 		colorClass[node.index] = color;
-		coloredNodeInPartition[node.getPartition().index()] = node;
+		coloredNodeInPartition[node.getPartition().index] = node;
 		
 		for (Node n1 : graph.getNeighbours(node)) {
 			increaseColorCount(n1, color);
@@ -407,7 +407,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected void removeColor(Node node, int color) throws AlgorithmException {
 		//if (log) System.out.println("Unpainting node " + (node.index() + logNodeBase) + " of color " + color);
 		colorClass[node.index] = 0;
-		coloredNodeInPartition[node.getPartition().index()] = null;
+		coloredNodeInPartition[node.getPartition().index] = null;
 		
 		for (Node n1 : graph.getNeighbours(node)) {
 			decreaseColorCount(n1, color);
@@ -463,7 +463,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		this.lowerBound = 1;
 		
 		for (Partition p : graph.getPartitions()) {
-			usablePartitionNodes[p.index()] = graph.getNodes(p).length;
+			usablePartitionNodes[p.index] = graph.getNodes(p).length;
 		}
 		
 		if (colorAdjPartitions) {

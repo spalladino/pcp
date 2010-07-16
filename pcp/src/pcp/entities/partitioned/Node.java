@@ -47,12 +47,12 @@ public class Node implements Comparable<Node> {
 
 	@Override
 	public int compareTo(Node o) {
-		return ((Integer)index).compareTo(o.index);
+		return index - o.index;
 	}
 	
 	@Override
 	public String toString() {
-		return "X" + this.index + "(" + this.getPartition().index() + ")";
+		return "X" + this.index + "(" + this.getPartition().index + ")";
 	}
 	
 	

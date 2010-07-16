@@ -32,7 +32,7 @@ public class InducedGraph implements IPartitionedGraph {
 		
 		for (Node node : nodes) {
 			this.nodesMap.put(node.index, new Node(this, node.index));
-			int index = node.getPartition().index();
+			int index = node.getPartition().index;
 			if (!this.partitionsMap.containsKey(index)) {
 				this.partitionsMap.put(index, new Partition(this, index));
 			} 
@@ -138,9 +138,9 @@ public class InducedGraph implements IPartitionedGraph {
 
 	@Override
 	public Node[] getNodes(Partition partition) {
-		if (!this.nodesAdjacencies.containsKey(partition.index())) {
-			this.nodesAdjacencies.put(partition.index(), calculatePartition(partition));
-		} return this.nodesAdjacencies.get(partition.index());
+		if (!this.nodesAdjacencies.containsKey(partition.index)) {
+			this.nodesAdjacencies.put(partition.index, calculatePartition(partition));
+		} return this.nodesAdjacencies.get(partition.index);
 	}
 
 	private Node[] calculatePartition(Partition partition) {
@@ -154,7 +154,7 @@ public class InducedGraph implements IPartitionedGraph {
 
 	@Override
 	public Partition getPartition(Node node) {
-		return this.partitionsMap.get(node.getPartition().index());
+		return this.partitionsMap.get(node.getPartition().index);
 	}
 
 	@Override

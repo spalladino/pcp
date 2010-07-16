@@ -3,7 +3,6 @@ package pcp.utils;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -145,23 +144,15 @@ public class GraphUtils {
 	 * @return true if every node in one partition is adjacent to every node in the other one.
 	 */
 	public static boolean areBipartite(IPartitionedGraph graph, Partition p1, Partition p2) {
-		return checkAllNodesAdjacent(graph, p1, p2) && checkAllNodesAdjacent(graph, p2, p1);  
+		for (Node n1 : graph.getNodes(p1)) {
+			for (Node n2 : graph.getNodes(p2)) {
+				if (!graph.areAdjacent(n1, n2)) {
+					return false;
+				}
+			}
+		} return true;
 	}
 	
-	private static boolean checkAllNodesAdjacent(IPartitionedGraph graph, Partition p1, Partition p2) {
-		for (Node n1 : graph.getNodes(p1)) {
-			Set<Node> pending = new HashSet<Node>();
-			Collections.addAll(pending, graph.getNodes(p2));
-			for (Node adj : graph.getNeighbours(n1)) {
-				pending.remove(adj);
-			}
-			if (!pending.isEmpty()) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	public static void print(IPartitionedGraph graph, PrintStream stream) {
 		stream.println("|P|= " + graph.P());
 		stream.println("|N|= " + graph.N());

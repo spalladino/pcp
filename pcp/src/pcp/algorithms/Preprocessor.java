@@ -172,7 +172,7 @@ public class Preprocessor implements IExecutionDataProvider {
 		}
 		
 		// Remove partition if no nodes were left
-		if (builder.hasPartition(partition.index()) && builder.getNodes(partition).length == 0) {
+		if (builder.hasPartition(partition.index) && builder.getNodes(partition).length == 0) {
 			removePartition(partition);
 			changes = true;
 		}
@@ -195,7 +195,7 @@ public class Preprocessor implements IExecutionDataProvider {
 	
 	private void removeEdgesWithinPartition() {
 		for (Edge edge : builder.getEdges()) {
-			if (edge.getNode1().getPartition().index() == edge.getNode2().getPartition().index()) {
+			if (edge.getNode1().getPartition().index == edge.getNode2().getPartition().index) {
 				if (log) System.out.println("Removing edge " + edge);
 				builder.removeEdge(edge);
 				edgesRemoved++;
@@ -220,7 +220,7 @@ public class Preprocessor implements IExecutionDataProvider {
 			changes = false;
 			// Check every node in the partition to see if it can be removed
 			for (Partition p : builder.getPartitions()) {
-				if (builder.hasPartition(p.index())) {
+				if (builder.hasPartition(p.index)) {
 					for (Node node : builder.getNodes(p)) {
 						if (builder.getNeighbourPartitions(node).length < clique.size() - 1) {
 							builder.removePartition(node.getPartition());

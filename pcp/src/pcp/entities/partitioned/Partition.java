@@ -5,21 +5,17 @@ import pcp.entities.IPartitionedGraph;
 
 public class Partition implements Comparable<Partition> {
 
-	int name;
+	public int index;
 	IPartitionedGraph graph;
-	
-	public int index() {
-		return name;
-	}
 	
 	Partition(IPartitionedGraph graph, int name) {
 		this.graph = graph;
-		this.name = name;
+		this.index = name;
 	}
 
 	@Override
 	public int hashCode() {
-		return name;
+		return index;
 	}
 
 	@Override
@@ -31,18 +27,18 @@ public class Partition implements Comparable<Partition> {
 		if (graph == null) {
 			if (other.graph != null) return false;
 		} else if (!graph.equals(other.graph)) return false;
-		if (name != other.name) return false;
+		if (index != other.index) return false;
 		return true;
 	}
 
 	@Override
 	public int compareTo(Partition o) {
-		return ((Integer)name).compareTo(o.name);
+		return ((Integer)index).compareTo(o.index);
 	}
 
 	@Override
 	public String toString() {
-		return "P" + this.index();
+		return "P" + this.index;
 	}
 
 }

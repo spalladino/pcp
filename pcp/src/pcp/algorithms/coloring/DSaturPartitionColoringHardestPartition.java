@@ -28,7 +28,7 @@ public class DSaturPartitionColoringHardestPartition extends
 		int hardestWeight = -1;
 		
 		for (Partition p : graph.getPartitions()) {
-			if (partitionsHandled[p.index()]) continue;
+			if (partitionsHandled[p.index]) continue;
 			
 			// Hardest partition has greatest weight calculated according to config params
 			int partitionWeight = getWeight(p);
@@ -40,7 +40,7 @@ public class DSaturPartitionColoringHardestPartition extends
 		
 		// Once chosen, pick the easiest node
 		Node minNode = null;
-		for (Node n : graph.getNodes(graph.getPartitions()[hardest.index()])) {
+		for (Node n : graph.getNodes(graph.getPartitions()[hardest.index])) {
 			if (nodesHandled[n.index]) {
 				continue;
 			}
@@ -57,8 +57,8 @@ public class DSaturPartitionColoringHardestPartition extends
 	}
 
 	private int getWeight(Partition p) {
-		return (partitionColorCount[p.index()] * colorCountWeight) +
-			((colorAdjPartitions ? graph.P() : graph.N()) - partitionColorAdj[p.index()][0]) * uncoloredWeight +
+		return (partitionColorCount[p.index] * colorCountWeight) +
+			((colorAdjPartitions ? graph.P() : graph.N()) - partitionColorAdj[p.index][0]) * uncoloredWeight +
 			(graph.getNodes(p).length * sizeWeight);
 	}
 
@@ -70,11 +70,11 @@ public class DSaturPartitionColoringHardestPartition extends
 
 		if (colorAdjPartitions) {
 			for (Partition p : graph.getPartitions()) {
-				partitionColorAdj[p.index()][0] = graph.getNeighbourPartitions(p).length; 
+				partitionColorAdj[p.index][0] = graph.getNeighbourPartitions(p).length; 
 			}
 		} else {
 			for (Partition p : graph.getPartitions()) {
-				partitionColorAdj[p.index()][0] = graph.getNeighbours(p).length; 
+				partitionColorAdj[p.index][0] = graph.getNeighbours(p).length; 
 			}
 		}
 	}
@@ -85,7 +85,7 @@ public class DSaturPartitionColoringHardestPartition extends
 		super.assignColor(node, color);
 		
 		for (Partition p : graph.getNeighbourPartitions(node)) {
-			int part1 = p.index();
+			int part1 = p.index;
 			
 			if (partitionColorAdj[part1][color] == 0) {
 				partitionColorCount[part1]++;
@@ -105,7 +105,7 @@ public class DSaturPartitionColoringHardestPartition extends
 		super.removeColor(node, color);
 		
 		for (Partition p : graph.getNeighbourPartitions(node)) {
-			int part1 = p.index();
+			int part1 = p.index;
 
 			partitionColorAdj[part1][color]--;
 

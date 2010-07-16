@@ -207,7 +207,7 @@ public class ModelBuilder {
 				Node node = graph.getNode(i);
 				if (boundVariablesOnDegree && j > graph.getNeighbourPartitions(node).length) {
 					var.setUB(0.0);
-				} else if (boundVariablesOnPartitionIndex && strategy.breakSymmetry.equals(Symmetry.MinimumNodeLabel) && j > graph.getPartition(node).index()) {
+				} else if (boundVariablesOnPartitionIndex && strategy.breakSymmetry.equals(Symmetry.MinimumNodeLabel) && j > graph.getPartition(node).index) {
 					var.setUB(0.0);
 				}
 				
@@ -337,7 +337,7 @@ public class ModelBuilder {
 	protected void constrainColorSumStrengthenedPartition() throws IloException {
 		for (Partition p : graph.getPartitions()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("BSSTRP[%1$d]", p.index());
+			String name = String.format("BSSTRP[%1$d]", p.index);
 			for (Node n : graph.getNodes()) {
 				for (int j = 0; j < colors; j++) {
 					expr.addTerm(ws[j], 1);
@@ -474,7 +474,7 @@ public class ModelBuilder {
 	protected void constrainEachPartitionOneColor() throws IloException {
 		for (Partition p : graph.getPartitions()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("P[%1$d]", p.index());
+			String name = String.format("P[%1$d]", p.index);
 			for (int j = 0; j < colors; j++) {
 				for (Node n : graph.getNodes(p)) {
 					expr.addTerm(xs[n.index][j], 1);
@@ -491,7 +491,7 @@ public class ModelBuilder {
 	protected void constrainEachPartitionAtLeastOneColor() throws IloException {
 		for (Partition p : graph.getPartitions()) {
 			IloLinearIntExpr expr = modeler.linearIntExpr();
-			String name = String.format("P[%1$d]", p.index());
+			String name = String.format("P[%1$d]", p.index);
 			for (int j = 0; j < colors; j++) {
 				for (Node n : graph.getNodes(p)) {
 					expr.addTerm(xs[n.index][j], 1);
@@ -509,7 +509,7 @@ public class ModelBuilder {
 		SortedPartitionedGraph sg = new SortedPartitionedGraph(graph, new NodeDegreeCompleteComparator(true), null, null);
 		
 		for (Partition p : sg.getPartitions()) {
-			String name = String.format("SOS[%1$d]", p.index());
+			String name = String.format("SOS[%1$d]", p.index);
 			int index = 0;
 			int size = graph.getNodes(p).length * colors;
 			IloNumVar[] vars = new IloNumVar[size];

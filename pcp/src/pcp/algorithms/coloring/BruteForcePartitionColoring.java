@@ -96,7 +96,7 @@ public class BruteForcePartitionColoring extends ColoringAlgorithm {
 	@Override
 	public void useColor(int node, int color) throws AlgorithmException {
 		fixed[node] = true;
-		handled[graph.getNode(node).getPartition().index()] = true;
+		handled[graph.getNode(node).getPartition().index] = true;
 		assignColor(graph.getNode(node), color+1);
 	}
 

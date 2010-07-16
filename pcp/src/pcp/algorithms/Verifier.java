@@ -69,7 +69,7 @@ public class Verifier {
 			}
 			
 			if (coloredCount == 0) {
-				throw new AlgorithmException("Partition " + p.index() + " has no colored nodes.");
+				throw new AlgorithmException("Partition " + p.index + " has no colored nodes.");
 			} else if (coloredCount > 1) {
 				//We allow more than a colored node per partition
 				//throw new AlgorithmException("Partition " + p.val() + " has " + coloredCount + " colored nodes.");
