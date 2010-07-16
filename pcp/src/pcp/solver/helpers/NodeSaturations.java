@@ -36,6 +36,8 @@ public class NodeSaturations implements IColorAssigner {
 	}
 	
 	public void useColor(int node, int color) throws AlgorithmException {
+		color++;
+		
 		if (verifyConflicts && colorAdj[node][color] > 0) {
 			throw new AlgorithmException("Conflict on assign color");
 		}

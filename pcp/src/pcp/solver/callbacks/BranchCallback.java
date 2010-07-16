@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 import pcp.Logger;
-import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
@@ -32,6 +31,12 @@ import exceptions.AlgorithmException;
 
 public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implements IExecutionDataProvider {
 
+	private static enum DSaturAssignment {
+		CheckAdjs,
+		Fast,
+		Safe
+	}
+	
 	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
 	private static final boolean log = Settings.get().getBoolean("logging.callback.branching");
@@ -45,6 +50,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	private static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
 	private static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
 	private static final boolean consecColors = Settings.get().getBoolean("branch.dynamic.dsatur.conseccolors");
+	private static final DSaturAssignment assignment = Settings.get().getEnum("branch.dsatur.assign", DSaturAssignment.class);
 	
 	private static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
 	private static final boolean boundWs = Settings.get().getBoolean("branch.boundws");
@@ -259,6 +265,43 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		return t;
 	}
 	
+	private int assignColorsFromSolution(NodeSaturations saturs)
+		throws IloException, AlgorithmException {
+		
+		switch(assignment) {
+			case CheckAdjs: return assignColorsFromSolutionCheckingAdjs(saturs);
+			case Fast: return assignColorsFromSolutionFast(saturs);
+			case Safe: return assignColorsFromSolutionSafe(saturs);
+			default: throw new AlgorithmException("Unknown dsatur assignment enum " + assignment);
+		}
+	}
+	
+	private int assignColorsFromSolutionCheckingAdjs(NodeSaturations saturs)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		for (Partition p : graph.getPartitions()) {
+			part: for (Node n : graph.getNodes(p)) {
+				int i = n.index;
+				color: for (int j = 0; j < model.getColorCount(); j++) {
+					IloIntVar x = model.x(i, j);
+					double xval = super.getValue(x);
+					if (xval > nodeLB) {
+						for (Node adj : graph.getNeighbours(n)) {
+							if (super.getValue(model.x(adj.index, j)) > xval) {
+								continue color;
+							}
+						}
+						
+						fixedCount++;
+						saturs.useColor(i, j);
+						break part;
+					}
+				}				
+			}
+		}
+		return fixedCount;
+	}
+	
 	private int assignColorsFromSolutionFast(NodeSaturations saturs)
 			throws IloException, AlgorithmException {
 		int fixedCount = 0;
@@ -275,21 +318,10 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 				}				
 			}
 		}
-		
-		for (int i = 0; i < model.getNodeCount(); i++) {
-			for (int j = 0; j < model.getColorCount(); j++) {
-				IloIntVar x = model.x(i, j);
-				if (super.getValue(x) > nodeLB) {
-					fixedCount++;
-					saturs.useColor(i, j);
-					break;
-				}
-			}
-		} return fixedCount;
+		return fixedCount;
 	}
 
-	@SuppressWarnings("unused")
-	private int assignColorsFromSolution(IColorAssigner coloring) throws IloException, AlgorithmException {
+	private int assignColorsFromSolutionSafe(IColorAssigner coloring) throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		boolean[] colored = new boolean[graph.P()];
 		
@@ -356,7 +388,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		NodeSaturations saturs = new NodeSaturations(graph);
 	
 		try {
-			int count = assignColorsFromSolutionFast(saturs);
+			int count = assignColorsFromSolution(saturs);
 			if (log) System.out.println("Making dsatur branch having fixed " + count + " colors");
 		} catch (Exception ex) {
 			Logger.error("Error assigning coloring from solution in dsatur branching", ex);
