@@ -22,8 +22,77 @@
 \begin{document}
 	
 	\section{Branching dynamic}
+
+\subsection{Processing Runid 20100714BRANCHDSATURBOUNDS}
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.gapfound
+\item solution.nnodes
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: branch.singlevar: false, branch.boundws: false
+\item S2: branch.singlevar: false, branch.boundws: true
+\item S3: branch.singlevar: true, branch.boundws: false
+\item S4: branch.singlevar: true, branch.boundws: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
+\\
+ & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
+\\
+\hline
+EW 20 N=90 & 0.36 & 63148.67 & 63157.33 & 0.17 & 83817.33 & 88612.67 & 0.36 & 72862.67 & 72872.00 & 0.36 & 72881.67 & 72890.67
+\\
+EW 40 N=100 & 0.47 & 20440.67 & 20476.33 & 0.33 & 16798.67 & 24962.00 & 0.47 & 19800.00 & 19888.67 & 0.47 & 19936.00 & 19965.67
+\\
+EW 60 N=80 & 0.41 & 19941.67 & 20023.67 & 0.37 & 15522.33 & 18384.67 & 0.41 & 23841.33 & 23881.00 & 0.41 & 23841.33 & 23880.33
+\\
+EW 80 N=100 & 0.45 & 3781.00 & 3936.33 & 0.42 & 2169.33 & 3052.33 & 0.45 & 3625.33 & 3768.67 & 0.45 & 3625.33 & 3770.00
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
+\subsection{Processing Runid 20100713BRANCHSOS}
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.gapfound
+\item solution.nnodes
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: model.useSOS: false, branch.prios.enabled: false, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
+\item S2: model.useSOS: false, branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
+\item S3: model.useSOS: true, branch.prios.enabled: false, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\\
+ & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
+\\
+\hline
+EW 20 N=90 & 0.00 & 568490.33 & 625952.33 & 0.00 & 59682.33 & 59685.67 & 0.00 & 118963.67 & 484541.67
+\\
+EW 40 N=100 & 0.33 & 88075.33 & 107754.33 & 0.45 & 58665.33 & 58685.67 & 0.37 & 76035.33 & 88442.33
+\\
+EW 60 N=80 & 0.25 & 54254.67 & 77169.67 & 0.38 & 96712.00 & 97008.67 & 0.25 & 79482.33 & 88853.00
+\\
+EW 80 N=100 & 0.31 & 3000.00 & 6521.00
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
 	
-	Processing Runid 20100713BRANCHDYN2
+	\subsection{Processing Runid 20100713BRANCHDYN2}
 
 Data:
 \begin{itemize}

@@ -44,7 +44,8 @@ def branch_latextable():
                 )
 
 def branch_dyn_latextable():    
-        LatexProcessor('20100713BRANCHDYN2').process(
+        branchdyn2 = '20100713BRANCHDYN2'
+        LatexProcessor(branchdyn2).process(
                 ids=[metrics.FileName()],
                 datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
                 series=['branch.dynamic.fractional', 'branch.dynamic.dsatur', 'branch.direction', 'branch.dynamic.fractional.most'],
@@ -53,8 +54,30 @@ def branch_dyn_latextable():
                 aggr= aggregate.avg
                 )
 
+def branch_sos_latextable():    
+        branchbounds = '20100713BRANCHSOS'
+        LatexProcessor(branchbounds).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
+                series=['model.useSOS', 'branch.prios.enabled', 'branch.prios.psadjacent', 'branch.prios.colorindex'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
+
+def branch_bounds_latextable():    
+        branchbounds = '20100714BRANCHDSATURBOUNDS'
+        LatexProcessor(branchbounds).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
+                series=['branch.singlevar', 'branch.boundws'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
+
 if __name__ == '__main__':
-    branch_latextable()
+    branch_sos_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

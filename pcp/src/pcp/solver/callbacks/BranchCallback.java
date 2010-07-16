@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import pcp.Logger;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.interfaces.IColorAssigner;
@@ -256,7 +257,22 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		lastColorFixed = newj;
 		return t;
 	}
+	
+	private int assignColorsFromSolutionFast(NodeSaturations saturs)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		for (int j = 0; j < model.getColorCount(); j++) {
+			for (int i = 0; i < model.getNodeCount(); i++) {
+				IloIntVar x = model.x(i, j);
+				if (super.getValue(x) > nodeLB) {
+					fixedCount++;
+					saturs.useColor(i, j);
+				}
+			}
+		} return fixedCount;
+	}
 
+	@SuppressWarnings("unused")
 	private int assignColorsFromSolution(IColorAssigner coloring) throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		boolean[] colored = new boolean[graph.P()];
@@ -324,7 +340,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 		NodeSaturations saturs = new NodeSaturations(graph);
 	
 		try {
-			int count = assignColorsFromSolution(saturs);
+			int count = assignColorsFromSolutionFast(saturs);
 			if (log) System.out.println("Making dsatur branch having fixed " + count + " colors");
 		} catch (Exception ex) {
 			Logger.error("Error assigning coloring from solution in dsatur branching", ex);
