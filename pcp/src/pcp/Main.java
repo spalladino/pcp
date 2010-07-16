@@ -122,12 +122,16 @@ public class Main {
 			Solver solver) throws IloException, AlgorithmException {
 		execution.withOriginalInputData(builder);
 		
+
+		System.out.println("Starting preprocessing");
+		
 		// Preprocess graph
 		Preprocessor preprocessor = new Preprocessor(builder);
 		graph = preprocessor.preprocess().getGraph();
 		List<Node> clique = preprocessor.getClique();
 		preprocessor.fillData(execution.getData());
 		
+		System.out.println("Finished preprocessing");
 		// TODO: Store max initial clique size and compare against dsatur value
 		
 		// Make initial coloring
@@ -136,9 +140,6 @@ public class Main {
 			Collections.sort(clique, new SimpleNodeIndexComparator());
 			coloring.setInitialClique(clique);
 		}
-		
-		//System.out.println(SimpleGraphUtils.listNodes(clique));
-		//coloring.printColoring(System.out);
 		
 		// Build model
 		model = new ModelBuilder(graph, solver.getCplex()).buildModel(strategy, coloring, clique); 

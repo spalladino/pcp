@@ -375,5 +375,10 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 	public Partition getPartition(int partition) {
 		return getPartitions()[partition];
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%1$s (%2$d,%3$d,%4$d)", this.name, this.N(), this.E(), this.P());
+	}
 	
 }
