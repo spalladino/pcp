@@ -14,6 +14,7 @@ import pcp.Logger;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
 import pcp.interfaces.IColorAssigner;
 import pcp.interfaces.IExecutionDataProvider;
 import pcp.model.BuilderStrategy;
@@ -261,12 +262,27 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	private int assignColorsFromSolutionFast(NodeSaturations saturs)
 			throws IloException, AlgorithmException {
 		int fixedCount = 0;
-		for (int j = 0; j < model.getColorCount(); j++) {
-			for (int i = 0; i < model.getNodeCount(); i++) {
+		for (Partition p : graph.getPartitions()) {
+			part: for (Node n : graph.getNodes(p)) {
+				int i = n.index;
+				for (int j = 0; j < model.getColorCount(); j++) {
+					IloIntVar x = model.x(i, j);
+					if (super.getValue(x) > nodeLB) {
+						fixedCount++;
+						saturs.useColor(i, j);
+						break part;
+					}
+				}				
+			}
+		}
+		
+		for (int i = 0; i < model.getNodeCount(); i++) {
+			for (int j = 0; j < model.getColorCount(); j++) {
 				IloIntVar x = model.x(i, j);
 				if (super.getValue(x) > nodeLB) {
 					fixedCount++;
 					saturs.useColor(i, j);
+					break;
 				}
 			}
 		} return fixedCount;

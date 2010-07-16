@@ -15,6 +15,7 @@ public class NodeSaturations implements IColorAssigner {
 	private int[] colorCount;
 
 	private static final boolean colorAdjPartitions = Settings.get().getBoolean("dsatur.colorAdjPartitions");
+	private static final boolean verifyConflicts = true;
 	
 	public NodeSaturations(IPartitionedGraph graph) {
 		this.graph = graph;
@@ -35,6 +36,9 @@ public class NodeSaturations implements IColorAssigner {
 	}
 	
 	public void useColor(int node, int color) throws AlgorithmException {
+		if (verifyConflicts && colorAdj[node][color] > 0) {
+			throw new AlgorithmException("Conflict on assign color");
+		}
 		for (Node n1 : graph.getNeighbours(graph.getNode(node))) {
 			increaseColorCount(n1.index, color);
 		}
