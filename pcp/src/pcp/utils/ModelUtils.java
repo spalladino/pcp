@@ -17,7 +17,7 @@ public class ModelUtils {
 		int count = 0;
 		for (int i = 0; i < feasibilities.length; i++) {
 			if (feasibilities[i] != IntegerFeasibilityStatus.Infeasible 
-					&& (lbs[i] == 1 || ubs[i] == 0)) {
+					&& (lbs[i] > 0.99 || ubs[i] < 0.01)) {
 				count++;
 			}
 		} return count;

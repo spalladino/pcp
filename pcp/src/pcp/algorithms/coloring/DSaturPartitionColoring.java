@@ -317,7 +317,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 
 	private void handleNode(int node) {
 		int partition = graph.getNode(node).getPartition().index;
-		partitionsHandled[partition] = true;
+		handlePartition(partition);
 		nodesHandled[node] = true;
 		usablePartitionNodes[partition]--;
 	}
@@ -332,7 +332,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	
 	private void unhandleNode(int node) {
 		int partition = graph.getNode(node).getPartition().index;
-		partitionsHandled[partition] = false;
+		unhandlePartition(partition);
 		nodesHandled[node] = false;
 		usablePartitionNodes[partition]++;
 	}
