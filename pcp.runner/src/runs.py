@@ -82,9 +82,29 @@ branchdynruns = [ update_copy({
                  'branch.prios.psadjacent': '10',
                  'branch.prios.colorindex': '-1',
                  'branch.dynamic.dsatur.nodelb': '0.7',
+                 'branch.dynamic.dsatur.conseccolors': 'true'
                  
                },d) for d in [
 
+                {
+                    'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.fractional.most': 'true',
+                    'branch.dynamic.dsatur': 'false',
+                    'branch.dynamic.dsatur.conseccolors': 'false'
+                },
+                {
+                    'branch.dynamic.fractional': 'true',
+                    'branch.dynamic.fractional.most': 'false',
+                    'branch.dynamic.dsatur': 'false',
+                    'branch.dynamic.dsatur.conseccolors': 'false'
+                },
+                {
+                    'branch.dynamic.fractional': 'false',
+                    'branch.dynamic.dsatur': 'true',
+                    'branch.direction': '0',
+                    'branch.dynamic.dsatur.conseccolors': 'false'
+                },
+                
                 {
                     'branch.dynamic.fractional': 'true',
                     'branch.dynamic.fractional.most': 'true',

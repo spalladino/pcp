@@ -16,7 +16,7 @@ def main():
                 runs.branchdynruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100715BRANCHDYN3'
+                runid = '20100716BRANCHDYN4'
             )
     return
 
