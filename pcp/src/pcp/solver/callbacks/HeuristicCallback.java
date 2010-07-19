@@ -68,8 +68,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		int nodesSet = countNodesEqualOne();
 		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			setSolution(nodesSet);
-		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)
-				&& (!onlyOnUp || NodeData.getDirection(super.getNnodes()) == 1)) {
+		} else if (primalEnabled && super.getNnodes() > 1 && (
+				(!onlyOnUp && super.getNnodes() % everynodes == 0) ||
+				(onlyOnUp && NodeData.getDirection(super.getNodeData()) == 1))) {
 			setPrimal(nodesSet);
 		}
 	}

@@ -59,7 +59,7 @@ public class NodeData {
 	}
 	
 	public static int getDirection(Object data) {
-		if (data != null && data instanceof NodeData) {
+		if (data != null) {
 			NodeData ndata = (NodeData) data;
 			return ndata.branchDirection;
 		} return 0;
