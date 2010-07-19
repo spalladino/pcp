@@ -37,8 +37,8 @@ public class ColoringVerifier {
 		}
 		
 		for (Edge edge : graph.getEdges()) {
-			Integer c1 = coloring.getColor(edge.index1());
-			Integer c2 = coloring.getColor(edge.index2());
+			Integer c1 = coloring.getColor(edge.index1);
+			Integer c2 = coloring.getColor(edge.index2);
 			if (c1 != null && c1 == c2) throw new AlgorithmException("Both nodes in edge " + edge + " have color " + c1);
 		}
 		

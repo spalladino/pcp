@@ -41,11 +41,11 @@ public class Verifier {
 
 	private void adjacentsHaveDifferentColors() throws IloException, AlgorithmException {
 		for (Edge e : graph.getEdges()) {
-			int c1 = solver.getNodeColor(e.getNode1().index);
-			int c2 = solver.getNodeColor(e.getNode2().index);
+			int c1 = solver.getNodeColor(e.node1.index);
+			int c2 = solver.getNodeColor(e.node2.index);
 			
 			if (c1 > -1 && c2 > -1 && c1 == c2) {
-				throw new AlgorithmException(String.format("Adjacent nodes %1$d and %2$d have the same color %3$d.", e.getNode1().index, e.getNode2().index, c1));
+				throw new AlgorithmException(String.format("Adjacent nodes %1$d and %2$d have the same color %3$d.", e.node1.index, e.node2.index, c1));
 			}
 		}
 	}

@@ -39,42 +39,54 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 
 	public PartitionedGraph getGraph() {
 		if (mustRecreate) recreateGraph();
-		PartitionedGraph graph = new PartitionedGraph(getNodes(), getEdges(), getPartitions());
-		graph.name = this.name;
 		
 		int nn = nodes.size();
 		int pp = partitions.size();
+		int ee = edges.size();
 		
-		graph.matrix = new boolean[nn][nn];
-		graph.adjacencies = new Node[nn][];
-		graph.partitionNodes = new Node[pp][];
-		graph.nodePartition = new Partition[nn];
-		graph.nodePartitionAdjacencies = new Partition[nn][pp];
-		graph.partitionPartitionAdjacencies = new Partition[pp][];
-		graph.partitionNodeAdjacencies = new Node[pp][];
+		PartitionedGraph graph = new PartitionedGraph(nn, ee, pp);
+		graph.name = this.name;
+
+		Edge[] builderEdges = getEdges();
+		
+		for (int i = 0; i < nn; i++)  graph.getNodes()[i] = new Node(graph, i);
+		for (int i = 0; i < pp; i++)  graph.getPartitions()[i] = new Partition(graph, i);
+		for (int i = 0; i < ee; i++)  graph.getEdges()[i] = new Edge(graph.getNodes()[builderEdges[i].index1], graph.getNodes()[builderEdges[i].index2]);
 		
 		for (Node node : graph.nodes) {
-			node.graph = graph;
-			graph.nodePartition[node.index] = this.getPartition(node);
-			graph.adjacencies[node.index] = this.getNeighbours(node);
-			graph.nodePartitionAdjacencies[node.index] = this.getNeighbourPartitions(node);
+			graph.getNodePartition()[node.index] = graph.getPartitions()[this.getPartition(node).index];
+			graph.getAdjacencies()[node.index] = toGraph(this.getNeighbours(node), graph);
+			graph.getNodePartitionAdjacencies()[node.index] = toGraph(this.getNeighbourPartitions(node), graph);
 		}
 		
 		for (Partition partition : graph.partitions) {
-			partition.graph = graph;
-			graph.partitionNodes[partition.index] = this.getNodes(partition);
-			graph.partitionNodeAdjacencies[partition.index] = this.getNeighbours(partition);
-			graph.partitionPartitionAdjacencies[partition.index] = this.getNeighbourPartitions(partition);
+			graph.getPartitionNodes()[partition.index] = toGraph(this.getNodes(partition), graph);
+			graph.getPartitionNodeAdjacencies()[partition.index] = toGraph(this.getNeighbours(partition), graph);
+			graph.getPartitionPartitionAdjacencies()[partition.index] = toGraph(this.getNeighbourPartitions(partition), graph);
 		}
 		
 		for (Edge edge : graph.edges) {
-			graph.matrix[edge.node1.index][edge.node2.index] = true;
-			graph.matrix[edge.node2.index][edge.node1.index] = true;
+			graph.getMatrix()[edge.index1][edge.index2] = true;
+			graph.getMatrix()[edge.index2][edge.index1] = true;
 		}
 		
 		graph.gprime = (Graph)getGPrime();
 		
 		return graph;
+	}
+	
+	private Partition[] toGraph(Partition[] partitions, PartitionedGraph graph) {
+		Partition[] gpartitions = new Partition[partitions.length];
+		for (int i = 0; i < partitions.length; i++) {
+			gpartitions[i] = graph.getPartitions()[partitions[i].index];
+		} return gpartitions;
+	}
+	
+	private Node[] toGraph(Node[] nodes, PartitionedGraph graph) {
+		Node[] gnodes = new Node[nodes.length];
+		for (int i = 0; i < nodes.length; i++) {
+			gnodes[i] = graph.getNodes()[nodes[i].index];
+		} return nodes;
 	}
 
 	private void initialize() {
@@ -143,8 +155,8 @@ public class PartitionedGraphBuilder implements IPartitionedGraph, IPartitionedG
 		}
 		
 		for (Edge edge : edges) {
-			int n1 = oldToNewNode.get(edge.index1());
-			int n2 = oldToNewNode.get(edge.index2());
+			int n1 = oldToNewNode.get(edge.index1);
+			int n2 = oldToNewNode.get(edge.index2);
 			this.addEdge(n1, n2);
 		}
 		

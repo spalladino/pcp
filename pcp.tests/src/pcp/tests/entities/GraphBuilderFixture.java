@@ -88,8 +88,8 @@ public class GraphBuilderFixture {
 		assertEquals(0, graph.getNodes(graph.getPartitions()[0])[0].index);
 		assertEquals(1, graph.getNodes(graph.getPartitions()[0])[1].index);
 		
-		assertEquals(0, graph.getEdges()[0].getNode1().index);
-		assertEquals(1, graph.getEdges()[0].getNode2().index);
+		assertEquals(0, graph.getEdges()[0].node1.index);
+		assertEquals(1, graph.getEdges()[0].node2.index);
 	}
 	
 	@Test

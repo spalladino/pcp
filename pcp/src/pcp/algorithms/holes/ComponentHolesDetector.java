@@ -46,8 +46,8 @@ public class ComponentHolesDetector implements IHolesDetector<Node> {
         	if (returned[u]) continue;
 
             for(Edge e : graph.getEdges()) {
-                Node ev1 = e.getNode1();
-                Node ev2 = e.getNode2();
+                Node ev1 = e.node1;
+                Node ev2 = e.node2;
             	
                 if (!processEdge(handler, filter, node, u, ev1, ev2)) return;
                 //if (!processEdge(handler, filter, node, u, ev2, ev1)) return;
