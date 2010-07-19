@@ -195,7 +195,7 @@ public class Preprocessor implements IExecutionDataProvider {
 	
 	private void removeEdgesWithinPartition() {
 		for (Edge edge : builder.getEdges()) {
-			if (edge.getNode1().getPartition().index == edge.getNode2().getPartition().index) {
+			if (edge.node1.getPartition().index == edge.node2.getPartition().index) {
 				if (log) System.out.println("Removing edge " + edge);
 				builder.removeEdge(edge);
 				edgesRemoved++;

@@ -66,16 +66,16 @@ public class SortedProviderFixture {
 		assertEquals(graph.getNode(5), sortedGraph.getNodes(sortedGraph.getPartitions()[2])[0]);
 		assertEquals(graph.getNode(4), sortedGraph.getNodes(sortedGraph.getPartitions()[2])[1]);
 
-		assertEquals(0, sortedGraph.getEdges()[0].index1());
-		assertEquals(3, sortedGraph.getEdges()[0].index2());
-		assertEquals(3, sortedGraph.getEdges()[1].index1());
-		assertEquals(4, sortedGraph.getEdges()[1].index2());
-		assertEquals(5, sortedGraph.getEdges()[2].index1());
-		assertEquals(2, sortedGraph.getEdges()[2].index2());
-		assertEquals(5, sortedGraph.getEdges()[3].index1());
-		assertEquals(1, sortedGraph.getEdges()[3].index2());
-		assertEquals(0, sortedGraph.getEdges()[4].index1());
-		assertEquals(4, sortedGraph.getEdges()[4].index2());
+		assertEquals(0, sortedGraph.getEdges()[0].index1);
+		assertEquals(3, sortedGraph.getEdges()[0].index2);
+		assertEquals(3, sortedGraph.getEdges()[1].index1);
+		assertEquals(4, sortedGraph.getEdges()[1].index2);
+		assertEquals(5, sortedGraph.getEdges()[2].index1);
+		assertEquals(2, sortedGraph.getEdges()[2].index2);
+		assertEquals(5, sortedGraph.getEdges()[3].index1);
+		assertEquals(1, sortedGraph.getEdges()[3].index2);
+		assertEquals(0, sortedGraph.getEdges()[4].index1);
+		assertEquals(4, sortedGraph.getEdges()[4].index2);
 
 	}
 	

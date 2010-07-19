@@ -6,7 +6,7 @@ import pcp.entities.IPartitionedGraph;
 public class Node implements Comparable<Node> {
 	
 	public final int index;
-	IPartitionedGraph graph;
+	private final IPartitionedGraph graph;
 	
 	public int getDegree() {
 		return graph.getDegree(this);
