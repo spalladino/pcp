@@ -15,6 +15,7 @@ import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.interfaces.IColorAssigner;
+import pcp.interfaces.IColorAssigner.DSaturAssignment;
 import pcp.interfaces.IExecutionDataProvider;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
@@ -30,12 +31,6 @@ import exceptions.AlgorithmException;
 
 
 public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implements IExecutionDataProvider {
-
-	private static enum DSaturAssignment {
-		CheckAdjs,
-		Fast,
-		Safe
-	}
 	
 	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
