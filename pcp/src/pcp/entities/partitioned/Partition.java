@@ -33,7 +33,7 @@ public class Partition implements Comparable<Partition> {
 
 	@Override
 	public int compareTo(Partition o) {
-		return ((Integer)index).compareTo(o.index);
+		return index - o.index;
 	}
 
 	@Override
