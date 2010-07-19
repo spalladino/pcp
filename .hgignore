@@ -5,6 +5,7 @@ build
 porta.log
 bin
 logs
+ProfileProject
 drafts/*.aux
 drafts/*.bbl
 drafts/*.blg
