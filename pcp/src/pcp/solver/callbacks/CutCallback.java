@@ -110,9 +110,9 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 
 		// Do not add cuts on every node
-		if (isInternalNode() && 
-				(super.getNnodes() % cutEvery != 0 
-				|| (onlyOnUp && NodeData.getDirection(super.getNnodes()) != 1))) {
+		if (isInternalNode() && (
+				(!onlyOnUp && super.getNnodes() % cutEvery != 0) || 
+				(onlyOnUp && NodeData.getDirection(super.getNodeData()) != 1))) {
 			if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes());
 			return;
 		}
