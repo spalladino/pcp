@@ -287,19 +287,34 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 					double xval = super.getValue(x);
 					if (xval > nodeLB) {
 						for (Node adj : graph.getNeighbours(n)) {
-							if (super.getValue(model.x(adj.index, j)) > xval) {
+							if ((super.getValue(model.x(adj.index, j)) > xval)
+								|| (super.getValue(model.x(adj.index, j)) == xval
+									&& adj.index < i)) {
 								continue color;
 							}
 						}
 						
 						fixedCount++;
 						saturs.useColor(i, j);
+
 						break part;
 					}
 				}				
 			}
 		}
 		return fixedCount;
+	}
+
+	@SuppressWarnings("unused")
+	private void diagnoseConflict(Node n, int j, IloIntVar x,
+			AlgorithmException e) throws IloException, AlgorithmException {
+		System.out.println(e.getMessage());
+		System.out.println(x.toString() + " = " + super.getValue(x));
+		for (Node adj : graph.getNeighbours(n)) {
+			IloIntVar var = model.x(adj.index, j);
+			System.out.println(" " + var.toString() + " = " + super.getValue(var));
+		}
+		throw e;
 	}
 	
 	private int assignColorsFromSolutionFast(NodeSaturations saturs)
