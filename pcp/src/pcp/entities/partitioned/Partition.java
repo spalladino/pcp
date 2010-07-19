@@ -5,8 +5,8 @@ import pcp.entities.IPartitionedGraph;
 
 public class Partition implements Comparable<Partition> {
 
-	public int index;
-	IPartitionedGraph graph;
+	public final int index;
+	private final IPartitionedGraph graph;
 	
 	Partition(IPartitionedGraph graph, int name) {
 		this.graph = graph;
@@ -33,7 +33,7 @@ public class Partition implements Comparable<Partition> {
 
 	@Override
 	public int compareTo(Partition o) {
-		return ((Integer)index).compareTo(o.index);
+		return index - o.index;
 	}
 
 	@Override

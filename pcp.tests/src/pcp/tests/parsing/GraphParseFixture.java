@@ -222,11 +222,11 @@ public class GraphParseFixture {
 		assertEquals(p0, n1.getPartition());
 		assertEquals(p1, n2.getPartition());
 		
-		assertEquals(n0, e0.getNode1());
-		assertEquals(n1, e0.getNode2());
+		assertEquals(n0, e0.node1);
+		assertEquals(n1, e0.node2);
 
-		assertEquals(n0, e1.getNode1());
-		assertEquals(n2, e1.getNode2());
+		assertEquals(n0, e1.node1);
+		assertEquals(n2, e1.node2);
 	}
 
 	private void parse(String str) throws Exception {

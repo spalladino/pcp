@@ -29,8 +29,8 @@ public class NodeSaturations implements IColorAssigner {
 			}
 		} else {
 			for (Edge e : graph.getEdges()) {
-				colorAdj[e.index1()][0]++;
-				colorAdj[e.index2()][0]++;
+				colorAdj[e.index1][0]++;
+				colorAdj[e.index2][0]++;
 			}
 		}
 	}
@@ -39,7 +39,7 @@ public class NodeSaturations implements IColorAssigner {
 		color++;
 		
 		if (verifyConflicts && colorAdj[node][color] > 0) {
-			throw new AlgorithmException("Conflict on assign color");
+			throw new AlgorithmException("Conflict on assign color: node " + node + " has " + colorAdj[node][color] + " adjacents with color " + color);
 		}
 		for (Node n1 : graph.getNeighbours(graph.getNode(node))) {
 			increaseColorCount(n1.index, color);

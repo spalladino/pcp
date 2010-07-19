@@ -442,9 +442,9 @@ public class ModelBuilder {
 		for (Edge e : graph.getEdges()) {
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("E[%1$d,%2$d]", e.getNode1().index, e.getNode2().index);
-				expr.addTerm(xs[e.getNode1().index][j], 1);
-				expr.addTerm(xs[e.getNode2().index][j], 1);
+				String name = String.format("E[%1$d,%2$d]", e.node1.index, e.node2.index);
+				expr.addTerm(xs[e.node1.index][j], 1);
+				expr.addTerm(xs[e.node2.index][j], 1);
 				modeler.addLe(expr, 1, name);
 			}	
 		}
@@ -458,9 +458,9 @@ public class ModelBuilder {
 		for (Edge e : graph.getEdges()) {
 			for (int j = 0; j < colors; j++) {
 				IloLinearIntExpr expr = modeler.linearIntExpr();
-				String name = String.format("E[%1$d,%2$d]", e.getNode1().index, e.getNode2().index);
-				expr.addTerm(xs[e.getNode1().index][j], 1);
-				expr.addTerm(xs[e.getNode2().index][j], 1);
+				String name = String.format("E[%1$d,%2$d]", e.node1.index, e.node2.index);
+				expr.addTerm(xs[e.node1.index][j], 1);
+				expr.addTerm(xs[e.node2.index][j], 1);
 				expr.addTerm(ws[j], -1);
 				modeler.addLe(expr, 0, name);
 			}	

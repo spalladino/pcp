@@ -110,17 +110,18 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 
 		// Do not add cuts on every node
-		if (isInternalNode() && 
-				(super.getNnodes() % cutEvery != 0 
-				|| (onlyOnUp && NodeData.getDirection(super.getNnodes()) != 1))) {
-			if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes());
-			return;
+		if (isInternalNode() && (
+				(!onlyOnUp && super.getNnodes() % cutEvery != 0) || 
+				(onlyOnUp && NodeData.getDirection(super.getNodeData()) != 1))) {
+			if (logCallback) {
+				if (!onlyOnUp) System.out.println("Skipping cuts for node " + super.getNnodes() + " not divisible by " + cutEvery);
+				else System.out.println("Skipping cuts for node " + super.getNnodes() + " with direction " + NodeData.getDirection(super.getNodeData()));
+			} return;
 		}
 		
 		// On certain depth, don't make any more cuts
 		if (isInternalNode() && maxCutsDepth > 0) {
-			//final int countNodesFixed = ModelUtils.countNodesFixed(super.getFeasibilities(model.getAllXs()), super.getLBs(model.getAllXs()), super.getUBs(model.getAllXs()));
-			Integer depth = (Integer)getNodeData();
+			Integer depth = NodeData.getDepth(getNodeData());
 			if (depth != null && maxCutsDepth < depth) {
 				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + depth);
 				return;

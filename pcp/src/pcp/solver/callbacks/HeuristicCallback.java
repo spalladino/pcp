@@ -12,9 +12,10 @@ import pcp.algorithms.bounding.SolutionsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
+import pcp.entities.partitioned.Partition;
+import pcp.interfaces.IColorAssigner.DSaturAssignment;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
-import pcp.model.strategy.Adjacency;
 import pcp.model.strategy.Coloring;
 import pcp.model.strategy.Objective;
 import pcp.solver.data.NodeData;
@@ -27,19 +28,21 @@ import exceptions.AlgorithmException;
 
 public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
-	static final Adjacency adjacencyStrategy = BuilderStrategy.fromSettings().getAdjacencyConstraints();
-	static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
-	static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
+	private static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
+	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
-	static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
-	static final boolean onlyOnUp = Settings.get().getBoolean("primal.onlyonup");
-	static final double nodeLB = Settings.get().getDouble("primal.nodelb");
-	static final int everynodes = Settings.get().getInteger("primal.everynodes");
-	static final boolean useUB = Settings.get().getBoolean("primal.useub");
+	private static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
+	private static final boolean onlyOnUp = Settings.get().getBoolean("primal.onlyonup");
+	private static final double nodeLB = Settings.get().getDouble("primal.nodelb");
+	private static final int everynodes = Settings.get().getInteger("primal.everynodes");
+	private static final boolean useUB = Settings.get().getBoolean("primal.useub");
 		
-	static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
-	static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
-	static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
+	private static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
+	private static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
+	private static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
+	
+	private static final DSaturAssignment assignment = Settings.get().getEnum("primal.dsatur.assign", DSaturAssignment.class);
+	
 	
 	IPartitionedGraph graph;
 	Model model;
@@ -68,8 +71,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		int nodesSet = countNodesEqualOne();
 		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			setSolution(nodesSet);
-		} else if (primalEnabled && super.getNnodes() > 1 && (super.getNnodes() % everynodes == 0)
-				&& (!onlyOnUp || NodeData.getDirection(super.getNnodes()) == 1)) {
+		} else if (primalEnabled && super.getNnodes() > 1 && (
+				(!onlyOnUp && super.getNnodes() % everynodes == 0) ||
+				(onlyOnUp && NodeData.getDirection(super.getNodeData()) == 1))) {
 			setPrimal(nodesSet);
 		}
 	}
@@ -95,11 +99,12 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	}
 	
 	private void setPrimal(int nodesSet) {
-		ColoringAlgorithm coloring = Factory.get().coloring(coloringStrategy, graph)
+		ColoringAlgorithm coloring = Factory.get()
+			.coloring(coloringStrategy, graph)
 			.withBounder(new SolutionsBounder("coloring.primal"));
 		
 		try {
-			int fixed = fillPrimalColoring(coloring);
+			int fixed = assignColorsFromSolution(coloring);
 			setLowerBound(coloring);
 			createSolution(coloring);
 			metrics.primalHeur(coloring, super.getNnodes(), fixed, nodesSet);
@@ -192,12 +197,45 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			}
 		}
 	}
-	
-	private int fillPrimalColoring(ColoringAlgorithm coloring) throws IloException, AlgorithmException {
-		return fillPrimalColoringSafe(coloring);
-	}
 
-	private int fillPrimalColoringSafe(ColoringAlgorithm coloring)
+	private int assignColorsFromSolution(ColoringAlgorithm coloring)
+		throws IloException, AlgorithmException {
+		
+		switch(assignment) {
+			case CheckAdjs: return assignColorsFromSolutionCheckingAdjs(coloring);
+			case Fast: return assignColorsFromSolutionFast(coloring);
+			case Safe: return assignColorsFromSolutionSafe(coloring);
+			default: throw new AlgorithmException("Unknown dsatur assignment enum " + assignment);
+		}
+	}
+	
+	private int assignColorsFromSolutionCheckingAdjs(ColoringAlgorithm saturs)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		for (Partition p : graph.getPartitions()) {
+			part: for (Node n : graph.getNodes(p)) {
+				int i = n.index;
+				color: for (int j = 0; j < model.getColorCount(); j++) {
+					IloIntVar x = model.x(i, j);
+					double xval = super.getValue(x);
+					if (xval > nodeLB) {
+						for (Node adj : graph.getNeighbours(n)) {
+							if (super.getValue(model.x(adj.index, j)) > xval) {
+								continue color;
+							}
+						}
+						
+						fixedCount++;
+						saturs.useColor(i, j);
+						break part;
+					}
+				}				
+			}
+		}
+		return fixedCount;
+	}
+	
+	private int assignColorsFromSolutionSafe(ColoringAlgorithm coloring)
 			throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		boolean[] colored = new boolean[graph.P()];
@@ -261,8 +299,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		return fixedCount;
 	}
 
-	@SuppressWarnings("unused")
-	private int fillPrimalColoringFast(ColoringAlgorithm coloring)
+	private int assignColorsFromSolutionFast(ColoringAlgorithm coloring)
 			throws IloException, AlgorithmException {
 		int fixedCount = 0;
 		for (int j = 0; j < model.getColorCount(); j++) {

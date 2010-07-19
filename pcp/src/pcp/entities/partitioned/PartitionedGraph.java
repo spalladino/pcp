@@ -11,25 +11,25 @@ import pcp.utils.GraphUtils;
 public class PartitionedGraph implements IPartitionedGraph  {
 
 	// Index i0, i1 contains whether nodes i0 and i1 are adjacent 
-	boolean[][] matrix;
+	private final boolean[][] matrix;
 
 	// Index i contains the neighbours of node i
-	Node[][] adjacencies;
+	private final Node[][] adjacencies;
 	
 	// Index k contains the nodes that belong to partition k
-	Node[][] partitionNodes;
+	private final Node[][] partitionNodes;
 	
 	// Index i contains the partition node i belongs to
-	Partition[] nodePartition;
+	private final Partition[] nodePartition;
 	
 	// Index i contains array of partitions adjacent to node i
-	Partition[][] nodePartitionAdjacencies;
+	private final Partition[][] nodePartitionAdjacencies;
 
 	// Index k contains array of partitions adjacent to partition k
-	Partition[][] partitionPartitionAdjacencies;
+	private final Partition[][] partitionPartitionAdjacencies;
 	
 	// Index k contains array of nodes adjacent to partition k
-	Node[][] partitionNodeAdjacencies;
+	private final Node[][] partitionNodeAdjacencies;
 	
 	// G' graph corresponding to this partitioned graph
 	Graph gprime;
@@ -38,15 +38,32 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	final Partition[] partitions;
 	final Edge[] edges;
 	
-	String name;
+	private final int nodescount;
+	private final int partitionscount;
+	private final int edgescount;
 	
-	PartitionedGraph(Node[] nodes, Edge[] edges, Partition[] partitions) {
+	String name;
+
+	PartitionedGraph(Node[] nodes, Partition[] partitions, Edge[] edges) {
+		this.nodescount = nodes.length;
+		this.edgescount = edges.length;
+		this.partitionscount = partitions.length;
 		this.nodes = nodes;
 		this.partitions = partitions;
 		this.edges = edges;
+		this.matrix = new boolean[nodescount][nodescount];
+		this.adjacencies = new Node[nodescount][];
+		this.nodePartitionAdjacencies = new Partition[nodescount][];
+		this.partitionNodes = new Node[partitionscount][];
+		this.nodePartition = new Partition[nodescount];
+		this.partitionPartitionAdjacencies = new Partition[partitionscount][];
+		this.partitionNodeAdjacencies = new Node[partitionscount][];
 	}
 	
 	PartitionedGraph(int nodescount, int edgecount, int partitionscount) {
+		this.nodescount = nodescount;
+		this.edgescount = edgecount;
+		this.partitionscount = partitionscount;
 		this.edges = new Edge[edgecount];
 		this.nodes = new Node[nodescount];
 		this.partitions = new Partition[partitionscount];
@@ -102,7 +119,7 @@ public class PartitionedGraph implements IPartitionedGraph  {
 
 	@Override
 	public int E() {
-		return this.edges.length;
+		return edgescount;
 	}
 
 	@Override
@@ -157,5 +174,33 @@ public class PartitionedGraph implements IPartitionedGraph  {
 	@Override
 	public Partition getPartition(int partition) {
 		return partitions[partition];
+	}
+
+	boolean[][] getMatrix() {
+		return matrix;
+	}
+
+	Node[][] getAdjacencies() {
+		return adjacencies;
+	}
+
+	Node[][] getPartitionNodes() {
+		return partitionNodes;
+	}
+
+	Partition[] getNodePartition() {
+		return nodePartition;
+	}
+
+	Partition[][] getNodePartitionAdjacencies() {
+		return nodePartitionAdjacencies;
+	}
+
+	Partition[][] getPartitionPartitionAdjacencies() {
+		return partitionPartitionAdjacencies;
+	}
+
+	Node[][] getPartitionNodeAdjacencies() {
+		return partitionNodeAdjacencies;
 	}
 }

@@ -472,8 +472,8 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 			}
 		} else {
 			for (Edge e : graph.getEdges()) {
-				colorAdj[e.index1()][0]++;
-				colorAdj[e.index2()][0]++;
+				colorAdj[e.index1][0]++;
+				colorAdj[e.index2][0]++;
 			}
 		}
 	}

@@ -218,8 +218,8 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 		this.order = new int[graph.N()];
 		
 		for (Edge e : graph.getEdges()) {
-			colorAdj[e.index1()][0]++;
-			colorAdj[e.index2()][0]++;
+			colorAdj[e.index1][0]++;
+			colorAdj[e.index2][0]++;
 		}
 	}
 

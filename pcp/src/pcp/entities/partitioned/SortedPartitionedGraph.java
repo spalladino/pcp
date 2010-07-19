@@ -65,8 +65,8 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 			this.adjacencies = new Node[graph.N()][];
 			this.partitionNodes = new Node[graph.P()][];
 		} else {
-			this.adjacencies = graph.adjacencies;
-			this.partitionNodes = graph.partitionNodes;
+			this.adjacencies = graph.getAdjacencies();
+			this.partitionNodes = graph.getPartitionNodes();
 		} 
 		
 		this.adjacenciesCopartitionNodes = new Node[graph.N()][];
@@ -94,7 +94,7 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 
 	private Node[] getPartitionNodes(int index) {
 		if (this.partitionNodes[index] == null) {
-			this.partitionNodes[index] = graph.partitionNodes[index].clone();
+			this.partitionNodes[index] = graph.getPartitionNodes()[index].clone();
 			Arrays.sort(this.partitionNodes[index], this.nodeComparer);
 		}
 		return this.partitionNodes[index];
@@ -108,7 +108,7 @@ public class SortedPartitionedGraph implements IPartitionedGraph {
 	@Override
 	public Node[] getNeighbours(Node node) {
 		if (this.adjacencies[node.index] == null) {
-			this.adjacencies[node.index] = graph.adjacencies[node.index].clone();
+			this.adjacencies[node.index] = graph.getAdjacencies()[node.index].clone();
 			Arrays.sort(this.adjacencies[node.index], this.nodeComparer);
 		}
 		return this.adjacencies[node.index];
