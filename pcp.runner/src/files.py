@@ -291,7 +291,6 @@ dimacs = [
     'dimacs\\DSJC250.1.col',
     'dimacs\\DSJC250.5.col',
     'dimacs\\DSJC250.9.col',
-    'dimacs\\DSJR500.1c.col',
     'dimacs\\myciel6.col',
     'dimacs\\myciel7.col',
-    'dimacs\\queen9_9.col',]
+    ]

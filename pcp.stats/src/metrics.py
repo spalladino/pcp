@@ -37,6 +37,24 @@ class FileName:
         
         return fname
 
+class PreprocessRemoved:
+    
+    def __init__(self, item):
+        self.item = item
+    
+    def __call__(self, dict):
+        before = float(dict['original.graph.' + self.item])
+        after = float(dict['graph.' + self.item])
+        val = (before-after)/before
+        return "{0:.3f}".format(val)
+    
+    def __str__(self):
+        return self.item + " removed"
+
+    def type(self):
+        return "float"
+
+
 class BoundFound:
     
     def __init__(self):

@@ -2,21 +2,24 @@ from fixture import *
 from config import *
 
 import runs
+import runs.branch as branch
+import runs.heur as heur
+import runs.model as model
+import runs.preprocess as preproc
+
 import fetcher
 import files
 import os
-
+ 
 def main():
-    Fixture().resume()
-    
-    files = list(runs.fetch_branch_files())
+    files = preproc.files()
     print 'Processing: ', files
 
     Fixture().newrun(
-                runs.branchdynruns, 
+                preproc.runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100719BRANCHDYN5'
+                runid = '20100720PREPROC2'
             )
     return
 

@@ -78,12 +78,13 @@ public class ComponentPathDetector extends Algorithm {
 			this.edgeVisits = new int[model.getNodeCount()][model.getNodeCount()];
 			
 			for (Node node : graph.getNodes()) {
-				if ((data.x(node.index, color) < minInitialNodeValue) ||
-					(nodeVisits[node.index] >= maxInitialNodeVisits)) {
+				if (data.x(node.index, color) < minInitialNodeValue) {
 					break;
+				} else if (nodeVisits[node.index] >= maxInitialNodeVisits) {
+					continue;
 				} 
 				
-				sumX = 0;
+				this.sumX = 0;
 				process(node);
 			}
 		}
@@ -166,8 +167,6 @@ public class ComponentPathDetector extends Algorithm {
 				edgeVisits[previous.index][n.index]++;
 			} previous = n;
 		}
-		
-		
 	}
 
 	private boolean advance() {

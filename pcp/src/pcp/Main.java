@@ -44,9 +44,7 @@ public class Main {
 			System.exit(0);
 			return;
 		}
-		
-		
-		
+
 		solve(filename, runId);
 		System.exit(0);
 	}
@@ -87,6 +85,7 @@ public class Main {
 		}
 		
 		System.out.println("Solving " + filename + " with " + graph.P() + " partitions, " + graph.N() + " nodes and " + graph.E() + " edges.");
+		System.out.println("GPrime has " + graph.getGPrime().N() + " nodes and " + graph.getGPrime().E() + " edges.");
 		execution.withInputData(graph);
 		
 		solver.getCplex().setParam(IntParam.MIPDisplay, Settings.get().getInteger("logging.mipdisplay"));
@@ -123,7 +122,7 @@ public class Main {
 		execution.withOriginalInputData(builder);
 		
 
-		System.out.println("Starting preprocessing");
+		System.out.println("Starting graph preprocessing");
 		
 		// Preprocess graph
 		Preprocessor preprocessor = new Preprocessor(builder);
@@ -131,7 +130,7 @@ public class Main {
 		List<Node> clique = preprocessor.getClique();
 		preprocessor.fillData(execution.getData());
 		
-		System.out.println("Finished preprocessing");
+		System.out.println("Initial coloring and model building");
 		// TODO: Store max initial clique size and compare against dsatur value
 		
 		// Make initial coloring

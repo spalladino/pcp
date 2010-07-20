@@ -15,13 +15,16 @@ public class Preprocess {
 		ExecutionData execution = new ExecutionData().withProblemSettings();
 		
 		PartitionedGraphBuilder builder = factory.getGraphBuilder(filename);
+		execution.withOriginalInputData(builder);
 		
 		// Preprocess graph
 		Preprocessor preprocessor = new Preprocessor(builder);
 		preprocessor.preprocess().getGraph();
 		preprocessor.getClique();
 		preprocessor.fillData(execution.getData());
-				
+		
+		execution.withInputData(builder);
+		
 		execution.dump();
 	}
 	

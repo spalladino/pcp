@@ -33,6 +33,7 @@ public class Preprocessor implements IExecutionDataProvider {
 	private PartitionedGraphBuilder builder;
 	private List<pcp.entities.simple.Node> clique;
 	
+	private int maxcliquesize = 0;
 	private int partitionsRemoved = 0;
 	private int edgesRemoved = 0;
 	private int nodesRemoved = 0;
@@ -92,6 +93,7 @@ public class Preprocessor implements IExecutionDataProvider {
 		data.put("preprocess.nodesremoved", nodesRemoved);
 		data.put("preprocess.partitionsremoved", partitionsRemoved);
 		data.put("preprocess.cliquesize", clique == null ? 0 : clique.size());
+		data.put("preprocess.maxcliquesize", maxcliquesize);
 	}
 
 	/**
@@ -107,6 +109,10 @@ public class Preprocessor implements IExecutionDataProvider {
 		boolean retval = (newclique != null && newclique.size() > 1 && (this.clique == null || newclique.size() > this.clique.size()));
 		
 		this.clique = newclique;
+		
+		if (clique != null && this.maxcliquesize < this.clique.size()) 
+			this.maxcliquesize = this.clique.size();
+		
 		return retval;
 	}
 

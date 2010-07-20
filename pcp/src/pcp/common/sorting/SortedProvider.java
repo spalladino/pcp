@@ -45,7 +45,7 @@ public class SortedProvider implements ISortedProvider, Constants {
 
 
 	@Override
-	public Comparator<Node> getNodeComparator(int color, boolean asc) {
+	public BaseValueComparator<Node> getNodeComparator(int color, boolean asc) {
 		return asc
 			? new NodeColorValueComparator(data, color)
 			: new ReverseNodeColorValueComparator(data, color);
@@ -137,7 +137,7 @@ public class SortedProvider implements ISortedProvider, Constants {
 		if (graphs[color] == null) {
 			graphs[color] = new SortedPartitionedGraph(graph, 
 					getNodeComparator(color, asc), 
-					getEdgeComparator(color, asc), 
+					null, 
 					getPartitionComparator(color, asc));
 		} return graphs[color];
 	}
