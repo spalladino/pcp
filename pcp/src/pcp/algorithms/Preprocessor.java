@@ -110,7 +110,7 @@ public class Preprocessor implements IExecutionDataProvider {
 		
 		this.clique = newclique;
 		
-		if (this.maxcliquesize < this.clique.size()) 
+		if (clique != null && this.maxcliquesize < this.clique.size()) 
 			this.maxcliquesize = this.clique.size();
 		
 		return retval;

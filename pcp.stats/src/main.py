@@ -77,8 +77,19 @@ def branch_bounds_latextable():
                 aggr= aggregate.avg
                 )
 
+def preprocess_latextable():    
+        file = '20100720PREPROC2'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=[metrics.PreprocessRemoved('partitions'), metrics.PreprocessRemoved('nodes'), metrics.PreprocessRemoved('edges')], 
+                series=['solver.kind'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+
 if __name__ == '__main__':
-    branch_dyn_latextable()
+    preprocess_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

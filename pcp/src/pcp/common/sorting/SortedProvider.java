@@ -6,6 +6,7 @@ import java.util.List;
 
 import pcp.definitions.Constants;
 import pcp.entities.partitioned.Edge;
+import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.entities.partitioned.PartitionedGraph;
 import pcp.entities.partitioned.SortedPartitionedGraph;
@@ -44,7 +45,7 @@ public class SortedProvider implements ISortedProvider, Constants {
 
 
 	@Override
-	public NodeColorValueComparator getNodeComparator(int color, boolean asc) {
+	public BaseValueComparator<Node> getNodeComparator(int color, boolean asc) {
 		return asc
 			? new NodeColorValueComparator(data, color)
 			: new ReverseNodeColorValueComparator(data, color);
@@ -136,7 +137,7 @@ public class SortedProvider implements ISortedProvider, Constants {
 		if (graphs[color] == null) {
 			graphs[color] = new SortedPartitionedGraph(graph, 
 					getNodeComparator(color, asc), 
-					getEdgeComparator(color, asc), 
+					null, 
 					getPartitionComparator(color, asc));
 		} return graphs[color];
 	}

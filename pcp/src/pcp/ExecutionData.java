@@ -67,6 +67,9 @@ public class ExecutionData {
 		this.data.put(prefix + ".partitionsize", (float)graph.N() / (float)graph.P());
 		this.data.put(prefix + ".density", (float)(2*graph.E()) / (float)(graph.N() * (graph.N()-1)));
 		
+		this.data.put(prefix + ".gprime.nodes", graph.getGPrime().N());
+		this.data.put(prefix + ".gprime.edges", graph.getGPrime().E());
+		
 		return this;
 	}
 	
