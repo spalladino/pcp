@@ -46,10 +46,12 @@ def branch_latextable():
 def branch_dyn_latextable():    
         branchdyn2 = '20100713BRANCHDYN2'
         branchdyn3 = '20100715BRANCHDYN3'
-        LatexProcessor(branchdyn3).process(
+        branchdyn5 = '20100719BRANCHDYN5'
+        
+        LatexProcessor(branchdyn5).process(
                 ids=[metrics.FileName()],
                 datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
-                series=['branch.dynamic.fractional', 'branch.dynamic.dsatur', 'branch.direction', 'branch.dynamic.fractional.most'],
+                series=['branch.dynamic.fractional', 'branch.dynamic.dsatur', 'branch.direction', 'branch.dynamic.fractional.most', 'branch.dynamic.dsatur.conseccolors', 'solver.useCplexPrimalHeuristic'],
                 datafilter= None,
                 runfilter= None,
                 aggr= aggregate.avg
