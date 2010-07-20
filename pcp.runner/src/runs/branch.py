@@ -5,6 +5,7 @@ from common import update_copy
 
 
 def files():
+    #return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2)\\.in')
     return fetcher.Fetcher(datadir).fetch_files('benchdens', '((e06n80)|(e02n90)|(e0(4|8)n100))\\.00(0|1|2)\\.in')
 
 branchboundingruns = [
@@ -58,7 +59,7 @@ branchdynruns = [ update_copy({
                  'branch.enabled': 'true',
                  'cuts.enabled': 'false',
                   
-                 'solver.useCplexPrimalHeuristic': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
                  'solver.maxTime': '900',
                  
                  'branch.selection': '1',
@@ -85,7 +86,12 @@ branchdynruns = [ update_copy({
                 {
                     'branch.dynamic.fractional': 'false',
                     'branch.dynamic.dsatur': 'true',
-                    'branch.direction': '0',
+                    'branch.dynamic.dsatur.conseccolors': 'true'
+                },
+                 {
+                    'branch.dynamic.fractional': 'false',
+                    'branch.dynamic.dsatur': 'true',
+                    'branch.dynamic.dsatur.conseccolors': 'false'
                 },
                 
                 ]   
