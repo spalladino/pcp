@@ -118,6 +118,20 @@ class GapMetric:
     def type(self):
         return "real"
 
+class Ks:
+    
+    def __init__(self, prop):
+        self.prop = prop
+    
+    def __call__(self, dict):
+        return int(float(dict.get(self.prop)) / 1000)
+    
+    def __str__(self):
+        return str(self.prop) + ' Ks'
+    
+    def type(self):
+        return "real"
+
 class TypedMetric:
     def __init__(self, prop):
         self.prop, self.type = self.__nametype(prop)

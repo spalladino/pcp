@@ -50,7 +50,7 @@ def branch_dyn_latextable():
         
         LatexProcessor(branchdyn5).process(
                 ids=[metrics.FileName()],
-                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
+                datas=['solution.gap', metrics.Ks('solution.gapfound'), metrics.Ks('solution.nnodes')], 
                 series=['branch.dynamic.fractional', 'branch.dynamic.dsatur', 'branch.direction', 'branch.dynamic.fractional.most', 'branch.dynamic.dsatur.conseccolors', 'solver.useCplexPrimalHeuristic'],
                 datafilter= None,
                 runfilter= None,
@@ -91,7 +91,7 @@ def preprocess_latextable():
                 )
 
 if __name__ == '__main__':
-    preprocess_latextable()
+    branch_dyn_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

@@ -13,6 +13,7 @@
 \usepackage{rotating}
 \usepackage{hyperref}
 \usepackage{color}
+\usepackage{ulem}
 
 \usetikzlibrary{backgrounds,fit,arrows} 
 
@@ -20,7 +21,7 @@
 \addtolength{\textheight}{2cm}
 
 % Versioning
-\newenvironment{nuevo}{\marginpar{$<$nuevo$>$}}{\marginpar{$<$/nuevo$>$}}
+\newenvironment{nuevo}{\marginpar{nuevo...}}{\marginpar{...nuevo}}
 
 % LPs
 \newenvironment{lpmodel}{\subsubsection*{Model:} }{ }
@@ -58,7 +59,7 @@
 \numberwithin{table}{section}
 \numberwithin{algorithm}{section}
 
-%\includeonly{algorithm}
+\includeonly{results.branching}
 
 % Document start
 \begin{document}
