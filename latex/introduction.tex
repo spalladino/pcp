@@ -182,8 +182,8 @@ A partitioned graph $G$ can be constructed in the following way:
 		\node[n] (n3) at ( 4,4) {$t_1$}
 			edge [-]	(n2)
 			edge [-]	(n5)
-			edge [<-, bend right, draw=red] node[auto] {\textcolor{red}{$R_1$}} 	(n0)
-			edge [<-, bend left, draw=red] node[auto,swap] {\textcolor{red}{$R_2$}} (n0)
+			edge [<-, bend right, draw=black!50] node[auto] {\textcolor{black!50}{$R_1$}} 	(n0)
+			edge [<-, bend left, draw=black!50] node[auto,swap] {\textcolor{black!50}{$R_2$}} (n0)
 		;
 		
 		\node[n] (n6) at ( 2,-2) {$s_2$}
@@ -192,8 +192,8 @@ A partitioned graph $G$ can be constructed in the following way:
 		
 		\node[n] (n7) at ( 6,2) {$t_2$}
 			edge [-]	(n5)
-			edge [<-, bend right, draw=blue] node[auto] {\textcolor{blue}{$R_3$}}  (n6)
-			edge [<-, bend left, draw=blue]	node[auto,swap] {\textcolor{blue}{$R_4$}} (n6) 
+			edge [<-, bend right, draw=black!50] node[auto] {\textcolor{black!50}{$R_3$}}  (n6)
+			edge [<-, bend left, draw=black!50]	node[auto,swap] {\textcolor{black!50}{$R_4$}} (n6) 
 		;
 		
 		\node[n] (n8) at ( 4,-2) {}
@@ -207,7 +207,7 @@ A partitioned graph $G$ can be constructed in the following way:
 		
 	\end{tikzpicture} 
 		\label{fig:samplerouting}
-		\caption{Sample network in which connections $s_1 \rightarrow t_1$ and $s_2 \rightarrow t_2$ are to be implemented. Potential routes $R_1, R_2$ are proposed for the first, while routes $R_3, R_4$ are proposed for the second one. The corresponding partitioned graph is presented in figure \ref{fig:solvedamplerouting}.}
+		\caption{Sample network in which connections $s_1 \rightarrow t_1$ and $s_2 \rightarrow t_2$ are to be implemented. Potential routes $R_1, R_2$ are proposed for the first, while routes $R_3, R_4$ are proposed for the second one. The corresponding partitioned graph is presented in figure \ref{fig:solvedsamplerouting}.}
 	\end{figure}
 	
 \begin{figure}[h]
@@ -215,7 +215,7 @@ A partitioned graph $G$ can be constructed in the following way:
 		\begin{tikzpicture} 
 			[n/.style= {minimum size=3mm,thick,circle,draw=black!75}] 
 
-			\node[n,fill=black!25] (n0) at ( 0,0) {$R_1$}; 
+			\node[n,fill=blue!25] (n0) at ( 0,0) {$R_1$}; 
 
 			\node[n,fill=black!25] (n1) at ( 0,2) {$R_2$};
 
@@ -223,7 +223,7 @@ A partitioned graph $G$ can be constructed in the following way:
 				edge [-]	(n1)
 			;
 
-			\node[n,fill=black!25] (n3) at ( 5,2) {$R_4$};
+			\node[n,fill=blue!25] (n3) at ( 5,2) {$R_4$};
 
 				\begin{pgfonlayer}{background} 
 					\node [fill=black!10,circle,fit=(n0) (n1),label=170:$s_1 \rightarrow t_1$] {}; 
@@ -232,11 +232,68 @@ A partitioned graph $G$ can be constructed in the following way:
 
 		\end{tikzpicture} 
 	
-		\label{fig:solvedamplerouting}
-		\caption{Conflicts partitioned graph for network from figure \ref{fig:samplerouting}. Routes $R_1$ and $R_2$ satisfy the same connection request, as such, they are contained in the same partition; same happens for $R_3$ and $R_4$. Since routes $R_2$ and $R_3$ share a physical link, the corresponding nodes are adjacent to prevent that they are assigned the same frequency.}
+		\label{fig:solvedsamplerouting}
+		\caption{Conflicts partitioned graph for network from figure \ref{fig:samplerouting}. Routes $R_1$ and $R_2$ satisfy the same connection request, as such, they are contained in the same partition; same happens for $R_3$ and $R_4$. Since routes $R_2$ and $R_3$ share a physical link, the corresponding nodes are adjacent to prevent that they are assigned the same frequency. A 1-coloring, which assigns the same label to $R_1$ and $R_4$ is shown, and the corresponding lightpaths generated are shown in figure \ref{fig:solvedsampleroutingnetwork}.}
 \end{figure}
 
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style= {minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,2) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 2,4) {}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( 2,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 4,2) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 4,4) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, bend right, draw=blue!100] node[auto] {\textcolor{blue!100}{$R_1$}} 	(n0)
+			edge [<-, bend left, draw=black!10] node[auto,swap] {\textcolor{black!10}{$R_2$}} (n0)
+		;
+		
+		\node[n] (n6) at ( 2,-2) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 6,2) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!10] node[auto] {\textcolor{black!10}{$R_3$}}  (n6)
+			edge [<-, bend left, draw=blue!100]	node[auto,swap] {\textcolor{blue!100}{$R_4$}} (n6) 
+		;
+		
+		\node[n] (n8) at ( 4,-2) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 6,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+		
+	\end{tikzpicture} 
+		\label{fig:solvedsampleroutingnetwork}
+		\caption{Solution for the network presented in figure \ref{fig:samplerouting} using the coloring obtained in \ref{fig:solvedsamplerouting}. Since $R_1$ and $R_4$ were the colored nodes, using the same label, then those are the routes established and lightpaths using that label are created to satisfy the connection requests.}
+	\end{figure}
+
 Each wavelength is represented as a color. The problem then consists in coloring a single node within each partition, this is, assigning a wavelength to a single route from the set of candidates for each connection request. The fact that two nodes may not be colored if they are adjacent guarantees  that no wavelength conflicts may occur between two different lightpaths in the same link.
+
+An example is shown in figures \ref{fig:samplerouting}, \ref{fig:solvedsamplerouting} and \ref{fig:solvedsampleroutingnetwork}.
 
 In this work we will focus on finding an exact solution for the partitioned coloring problem.
 

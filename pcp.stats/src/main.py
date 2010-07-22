@@ -90,6 +90,17 @@ def preprocess_latextable():
                 aggr= aggregate.avg 
                 )
 
+def primal_latextable():    
+        file = '20100720PRIMAL'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'],  
+                series=[ 'branch.dynamic.dsatur','primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.onlyonup', 'branch.direction'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+
 def primal_settings_latextable():    
         file = '20100720PRIMALSET'
         LatexProcessor(file).process(
@@ -104,7 +115,7 @@ def primal_settings_latextable():
 
 
 if __name__ == '__main__':
-    primal_settings_latextable()
+    primal_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

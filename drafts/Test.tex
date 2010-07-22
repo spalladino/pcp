@@ -23,6 +23,46 @@
 	
 	\section{Primal heuristic}
 	
+	Processing Runid 20100720PRIMAL
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.gapfound
+\item solution.nnodes
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: branch.dynamic.dsatur: false, primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.onlyonup: true, branch.direction: 0
+\item S2: branch.dynamic.dsatur: false, primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: true, branch.direction: 0
+\item S3: branch.dynamic.dsatur: false, primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.onlyonup: true, branch.direction: 0
+\item S4: branch.dynamic.dsatur: true, primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.onlyonup: true, branch.direction: 0
+\item S5: branch.dynamic.dsatur: true, primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: true, branch.direction: 0
+\item S6: branch.dynamic.dsatur: true, primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.onlyonup: true, branch.direction: 0
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6}
+\\
+ & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
+\\
+\hline
+EW 20 N=90 & 0.00 & 63663.33 & 63696.33 & 0.00 & 62548.67 & 62587.00 & 0.00 & 63663.33 & 63696.33 & 0.17 & 77168.67 & 96068.00 & 0.17 & 83757.67 & 94188.67 & 0.17 & 77168.67 & 90499.00
+\\
+EW 40 N=100 & 0.44 & 55966.67 & 55987.67 & 0.44 & 57706.00 & 57724.00 & 0.44 & 55948.00 & 55962.33 & 0.33 & 14653.33 & 25582.67 & 0.33 & 12722.00 & 21938.67 & 0.33 & 14653.33 & 21783.00
+\\
+EW 60 N=80 & 0.38 & 97066.67 & 98861.33 & 0.38 & 96811.33 & 102842.00 & 0.38 & 97059.00 & 98854.00 & 0.37 & 18251.00 & 19700.00 & 0.37 & 9103.33 & 17210.00 & 0.37 & 16206.67 & 16781.67
+\\
+EW 80 N=100 & 0.45 & 13186.67 & 13246.00 & 0.46 & 12622.33 & 12650.67 & 0.45 & 13268.00 & 13301.33 & 0.42 & 2046.67 & 3607.67 & 0.38 & 2403.67 & 2551.00 & 0.41 & 1994.67 & 2641.67
+\\
+\hline 
+ \end{tabular}
+
+	
+	\clearpage
+	
+	\subsection{Primal heuristic settings}
+	
 	Processing Runid 20100720PRIMALSET
 
 	Data:

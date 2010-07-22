@@ -4,3 +4,9 @@
 \label{subsec:resultsprimal}
 
 In this section we evaluate the efectiveness of the devised primal heuristic, in comparison with the default heuristic provided by the \textsc{cplex} engine, in the context of a branch and bound algorithm. 
+
+\begin{itemize}
+\item{Settings: running on every node and on up work best (VERY similar) (difference noticeable in higher density), but only on up explores more nodes (less computational effort, scanning on non up nodes reports no benefit)}
+\item{On low density, priorities work better, but on higher, dsatur branch with primal heur (cplex off) works best}
+\item{Conclusion: use only on up, cplex off, primal on except on very low density}
+\end{itemize}
