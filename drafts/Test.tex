@@ -21,6 +21,46 @@
 
 \begin{document}
 	
+	\section{Primal heuristic}
+	
+	Processing Runid 20100720PRIMALSET
+
+	Data:
+	\begin{itemize}
+	\item solution.gap
+	\item solution.gapfound
+	\item solution.nnodes
+	\end{itemize}
+	Series:
+	\begin{itemize}
+	\item S1: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: false, branch.direction: 0, primal.everynodes: 1
+	\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: false, branch.direction: 0, primal.everynodes: 2
+	\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: false, branch.direction: 0, primal.everynodes: 4
+	\item S4: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: true, branch.direction: 0, primal.everynodes: 2
+	\item S5: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: true, branch.direction: 1, primal.everynodes: 2
+	\end{itemize}
+	\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+	\hline
+	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+	\\
+	 & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
+	\\
+	\hline
+	EW 20 N=90 & 0.17 & 83757.67 & 85735.00 & 0.17 & 83757.67 & 91784.00 & 0.17 & 83757.67 & 95281.67 & 0.17 & 83757.67 & 93755.00 & 0.17 & 84369.00 & 93611.67
+	\\
+	EW 40 N=100 & 0.33 & 12722.00 & 19394.67 & 0.33 & 12722.00 & 22038.67 & 0.33 & 12722.00 & 23619.67 & 0.33 & 12722.00 & 21918.00 & 0.33 & 12826.67 & 23111.67
+	\\
+	EW 60 N=80 & 0.37 & 9103.33 & 15259.33 & 0.37 & 9103.33 & 17275.67 & 0.37 & 9103.33 & 18372.33 & 0.37 & 9103.33 & 17201.00 & 0.37 & 18961.33 & 19701.33
+	\\
+	EW 80 N=100 & 0.38 & 2018.00 & 2267.00 & 0.41 & 2482.33 & 2718.33 & 0.41 & 2631.33 & 3014.33 & 0.38 & 2403.67 & 2547.67 & 0.41 & 2034.67 & 3010.33
+	\\
+	\hline 
+	 \end{tabular}
+
+	
+	
+	\clearpage
+	
 	\section{Branching dynamic}
 
 Processing Runid 20100719BRANCHDYN5
@@ -127,6 +167,9 @@ EW 80 N=100 & 0.45 & 3781.00 & 3936.33 & 0.42 & 2169.33 & 3052.33 & 0.45 & 3625.
 \\
 \hline 
  \end{tabular}
+
+(.36 + .47 + .45 + .41) / 4
+(.17 + .33 + .37 + .42) / 4
 
 \clearpage
 
