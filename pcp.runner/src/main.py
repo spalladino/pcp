@@ -7,34 +7,43 @@ import runs.heur as heur
 import runs.model as model
 import runs.preprocess as preproc
 import runs.primal as primal
+import runs.cuts as cuts
 
 import fetcher
 import files
 import os
  
 def main():
-    files = primal.files()
+    files = cuts.files()
     print 'Processing: ', files
 
     Fixture().newrun(
-                primal.primalsettingsruns, 
+                cuts.cliqueruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100720PRIMALSET'
+                runid = '20100722CLIQUECUTS'
             )
-    return
     
-    files = primal.files()
+    files = cuts.files()
     print 'Processing: ', files
 
     Fixture().newrun(
-                primal.primalruns, 
+                cuts.blockcolorruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100720PRIMAL'
+                runid = '20100722BLOCKCOLORCUTS'
             )
     
+    files = cuts.files()
+    print 'Processing: ', files
 
+    Fixture().newrun(
+                cuts.greekruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100722PATHHOLECUTS'
+            )
+    
 if __name__ == '__main__':
     main()
     

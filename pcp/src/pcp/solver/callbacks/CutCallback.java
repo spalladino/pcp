@@ -120,6 +120,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		}
 		
 		// On certain depth, don't make any more cuts
+		// TODO: Check max depth using only up branches
 		if (isInternalNode() && maxCutsDepth > 0) {
 			Integer depth = NodeData.getDepth(getNodeData());
 			if (depth != null && maxCutsDepth < depth) {
@@ -236,10 +237,13 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			
 			expr.addTerm(model.w(color), -1);
 			add(CutFamily.Clique, expr, LeqtZero, name);
+			//System.out.println(super.getValue(model.w(color)));
 			
 		} catch (Exception ex) {
 			System.err.println("Could not generate clique cut: " + ex.getMessage());
 		}
+		
+
 	}
 	
 	@Override
