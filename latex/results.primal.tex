@@ -3,10 +3,40 @@
 \subsection{Primal Heuristic}
 \label{subsec:resultsprimal}
 
-In this section we evaluate the efectiveness of the devised primal heuristic, in comparison with the default heuristic provided by the \textsc{cplex} engine, in the context of a branch and bound algorithm. 
+In this section we evaluate the efectiveness of the devised primal heuristic, in comparison with the default heuristic provided by the \textsc{cplex} engine, in the context of a branch and bound algorithm. We used the same test suite as in section \ref{subsec:resultsbranching}.
 
-\begin{itemize}
-\item{Settings: running on every node and on up work best (VERY similar) (difference noticeable in higher density), but only on up explores more nodes (less computational effort, scanning on non up nodes reports no benefit)}
-\item{On low density, priorities work better, but on higher, dsatur branch with primal heur (cplex off) works best}
-\item{Conclusion: use only on up, cplex off, primal on except on very low density}
-\end{itemize}
+\TODO{Subsection for primal using static prios}
+
+\subsubsection*{Using \textsc{dsatur-(C+1)} branching}
+
+We first tested the primal heuristic using the \textsc{dsatur-(C+1)} branching criteria in graphs with different densities, running for up to 15 minutes. The tests compare the obtained gap, the node number in which that gap was obtained and the total number of nodes explored, for both the \textsc{cplex} engine's primal heuristic and our degree of saturation heuristic presented in \ref{subsec:alg:primal}. Results are presented in table \ref{table:primal:dsatur}.
+
+\begin{table}[h]
+\label{table:primal:dsatur}
+\centering
+
+\begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{\textsc{cplex}} & \multicolumn{3}{|c|}{\textsc{dsatur}} & \multicolumn{3}{|c|}{\textsc{dsatur} + \textsc{cplex}}
+\\
+ & gap & found & nodes & gap & found & nodes & gap & found & nodes 
+\\
+\hline
+EW 20\% N=90 & 0.17 & 76.67 & 95.67 & 0.17 & 83.00 & 93.67 & 0.17 & 76.67 & 90.00
+\\
+EW 40\% N=100 & 0.33 & 14.33 & 25.00 & 0.33 & 12.00 & 21.33 & 0.33 & 14.33 & 21.00
+\\
+EW 60\% N=80 & 0.37 & 17.33 & 19.00 & 0.37 & 8.33 & 16.67 & 0.37 & 15.33 & 16.00
+\\
+EW 80\% N=100 & 0.42 & 1.33 & 2.67 & 0.38 & 2.33 & 2.33 & 0.41 & 1.67 & 2.33
+\\
+\hline 
+\end{tabular}
+
+\caption{Obtained gap, node number (in thousands) in which the gap was obtained and total number of nodes explored (in thousands) for different primal heuristics in a branch and bound using \textsc{dsatur-(C+1)} branching.}
+
+\end{table}
+
+Although there are differences in the gap only on higher density graphs, the custom primal heuristic finds a good solution earlier in the branch and bound tree, which reports more benefits in longer executions. The total number of nodes explored is slightly larger when the engine's default primal heuristic is used, which is easily explained as built-in algorithms tend to execute faster than custom ones injected in the framework.
+
+Based on these results, we will be using the custom primal heuristic by itself, without relying on \textsc{cplex}'s heuristic, for the branch and cut algorithm.

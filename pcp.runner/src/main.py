@@ -14,6 +14,9 @@ import files
 import os
  
 def main():
+    
+    #RUN PRIMAL STATIC RUNS
+    
     files = cuts.files()
     print 'Processing: ', files
 

@@ -94,9 +94,9 @@ def primal_latextable():
         file = '20100720PRIMAL'
         LatexProcessor(file).process(
                 ids=[metrics.FileName()],
-                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'],  
+                datas=['solution.gap', metrics.Ks('solution.gapfound'), metrics.Ks('solution.nnodes')],  
                 series=[ 'branch.dynamic.dsatur','primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.onlyonup', 'branch.direction'],
-                datafilter= None,
+                datafilter= {'branch.dynamic.dsatur': 'false'},
                 runfilter= None,
                 aggr= aggregate.avg 
                 )
@@ -105,9 +105,9 @@ def primal_settings_latextable():
         file = '20100720PRIMALSET'
         LatexProcessor(file).process(
                 ids=[metrics.FileName()],
-                datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'],  
+                datas=['solution.gap', metrics.Ks('solution.gapfound'), metrics.Ks('solution.nnodes')],  
                 series=['primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.onlyonup', 'branch.direction', 'primal.everynodes'],
-                datafilter= None,
+                datafilter= {'branch.direction': '0'},
                 runfilter= None,
                 aggr= aggregate.avg 
                 )

@@ -76,6 +76,50 @@ primalruns = create_runs({
                 ])
 
 
+primalstaticruns = create_runs({
+                 'solver.kind': 'PcpBranchAndCut',
+                 
+                 'solver.useCutCallback': 'true',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'true',
+                 'branch.enabled': 'true',
+                 'cuts.enabled': 'false',
+                  
+                 'solver.maxTime': '900',
+                 
+                 'branch.selection': '1',
+                 'branch.direction': '0',
+
+                 'branch.prios.enabled': 'true',
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.dynamic.dsatur.nodelb': '0.7',
+                 'branch.dynamic.dsatur.conseccolors': 'true',
+                 
+                 'branch.dynamic.fractional': 'false',
+                 'branch.dynamic.dsatur': 'false',
+                 'primal.onlyonup': 'false',
+                 'primal.everynodes': '1',
+               }, [
+
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'true',
+                },
+                {
+                 'primal.enabled': 'false',
+                 'solver.useCplexPrimalHeuristic': 'true',
+                },
+                ])
+
+
 primalsettingsruns = create_runs({
                  'solver.kind': 'PcpBranchAndCut',
                  
