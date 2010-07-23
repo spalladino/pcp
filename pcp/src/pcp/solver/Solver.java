@@ -55,16 +55,16 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 		this.cplex = new IloCplex();
 		cplex.setParam(IntParam.Threads, 1);
 		cplex.setParam(BooleanParam.PreLinear, false);
-		cplex.setParam(IntParam.MIPEmphasis, mipEmph);
-		cplex.setParam(IntParam.Probe, probing);
-		
-		if (maxTime > 0.0)  cplex.setParam(DoubleParam.TiLim, maxTime);
+	
+		if (maxTime > 0.0) {
+			cplex.setParam(DoubleParam.TiLim, maxTime);
+		}
 		
 		if (!useCplexPrimal) {
 			turnOffCplexPrimalHeur();
 		}
 	}
-	
+
 	public boolean solve() throws Exception {
 		System.out.println("Solving with " + this.getClass().getName());
 		if (model.isTrivial()) return true;
@@ -218,6 +218,11 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 		
 		if (heurCallback != null) heurCallback.getMetrics().fillData(data);
 		if (branchCallback != null) branchCallback.fillData(data);
+	}
+
+	protected void setMipParameters() throws IloException {
+		cplex.setParam(IntParam.MIPEmphasis, mipEmph);
+		cplex.setParam(IntParam.Probe, probing);
 	}
 
 	protected void setBranchingSettings() throws IloException {

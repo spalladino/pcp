@@ -23,6 +23,7 @@ public class PcpBranchAndCutSolver extends Solver {
 	protected PcpBranchAndCutSolver(boolean cutsOnRootOnly) throws IloException {
 		super();
 
+		setMipParameters();
 		turnOffDynamicSearch();
 
 		if (!useCplexCuttingPlanes) {

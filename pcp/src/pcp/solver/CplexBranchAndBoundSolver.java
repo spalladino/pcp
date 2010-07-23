@@ -7,6 +7,8 @@ public class CplexBranchAndBoundSolver extends Solver {
 	public CplexBranchAndBoundSolver() throws IloException {
 		super();
 		
+		setMipParameters();
+		
 		turnOffCplexCuts();
 		turnOffDynamicSearch();
 	}

@@ -11,6 +11,7 @@ public class CplexBranchAndCutSolver extends Solver {
 
 	public CplexBranchAndCutSolver() throws IloException {
 		super();
+		setMipParameters();
 		turnOffDynamicSearch();
 	}
 	

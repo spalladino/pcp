@@ -68,11 +68,6 @@ public class Main {
 			e.printStackTrace(System.err);
 			return;
 		}
-
-		if (!new ConnectivityChecker(graph).check()) {
-			System.err.println("Graph is disconnected");
-			return;
-		}
 		
 		if (Settings.get().getBoolean("output.exportModel")) {
 			exportModel(solver, filename);
@@ -117,7 +112,7 @@ public class Main {
 		solver.end();
 	}
 
-	private static void build(BuilderStrategy strategy, ExecutionData execution, PartitionedGraphBuilder builder,
+	public static void build(BuilderStrategy strategy, ExecutionData execution, PartitionedGraphBuilder builder,
 			Solver solver) throws IloException, AlgorithmException {
 		execution.withOriginalInputData(builder);
 		
@@ -129,6 +124,12 @@ public class Main {
 		graph = preprocessor.preprocess().getGraph();
 		List<Node> clique = preprocessor.getClique();
 		preprocessor.fillData(execution.getData());
+		
+		// Check the graph
+		if (!new ConnectivityChecker(graph).check()) {
+			System.err.println("Graph is disconnected");
+			return;
+		}
 		
 		System.out.println("Initial coloring and model building");
 		// TODO: Store max initial clique size and compare against dsatur value
