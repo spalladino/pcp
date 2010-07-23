@@ -112,10 +112,30 @@ def primal_settings_latextable():
                 aggr= aggregate.avg 
                 )
 
-
+def cuts_clique_latextable():    
+        file = '20100722CLIQUECUTS'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap','cuts.niters','solution.time'],   
+                series=['clique.colorsAsc', 'clique.backtrackBrokenIneqs', 'clique.backtrackLastCandidate'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+        
+def cuts_iset_latextable():    
+        file = '20100722PATHHOLECUTS'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap','cuts.niters','solution.time'],   
+                series=['cuts.iset.usePathsAlgorithm', 'cuts.iset.useBreakingSymmetry'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
 
 if __name__ == '__main__':
-    primal_latextable()
+    cuts_iset_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

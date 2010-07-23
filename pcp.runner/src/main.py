@@ -15,36 +15,16 @@ import os
  
 def main():
     
-    #RUN PRIMAL STATIC RUNS
+    Fixture().resume()
     
     files = cuts.files()
     print 'Processing: ', files
 
     Fixture().newrun(
-                cuts.cliqueruns, 
+                cuts.familiesruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100722CLIQUECUTS'
-            )
-    
-    files = cuts.files()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                cuts.blockcolorruns, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100722BLOCKCOLORCUTS'
-            )
-    
-    files = cuts.files()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                cuts.greekruns, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100722PATHHOLECUTS'
+                runid = '20100723CUTSFAMILIES'
             )
     
 if __name__ == '__main__':

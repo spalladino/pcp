@@ -33,7 +33,15 @@ baseprops = {
              'primal.enabled': 'true',
              'primal.onlyonup': 'true',
              'branch.enabled': 'true',
-             }
+             
+            'clique.colorsAsc': 'false',
+            'clique.backtrackBrokenIneqs': 'false',
+            'clique.backtrackLastCandidate': 'false',
+            'blockColor.usePool': 'false',
+            'cuts.iset.usePathsAlgorithm': 'true',
+            'cuts.iset.useBreakingSymmetry': 'false'
+                          
+              }
 
 cliqueruns = create_runs(update_copy(baseprops, {
                  'clique.enabled': 'true',
@@ -73,6 +81,58 @@ cliqueruns = create_runs(update_copy(baseprops, {
                     'clique.backtrackBrokenIneqs': 'true',
                     'clique.backtrackLastCandidate': 'true'
                   },] )
+
+familiesruns = create_runs(baseprops, [
+                       {
+                         'clique.enabled': 'true',
+                         'path.enabled': 'true',
+                         'gprime.path.enabled': 'true',
+                         'blockcolor.enabled': 'true',
+                         'solver.useCplexCuttingPlanes': 'false',
+                       }, 
+                       {
+                         'clique.enabled': 'true',
+                         'path.enabled': 'true',
+                         'gprime.path.enabled': 'true',
+                         'blockcolor.enabled': 'true',
+                         'solver.useCplexCuttingPlanes': 'true',
+                       }, 
+                       {
+                         'clique.enabled': 'false',
+                         'path.enabled': 'false',
+                         'gprime.path.enabled': 'false',
+                         'blockcolor.enabled': 'false',
+                         'solver.useCplexCuttingPlanes': 'true',
+                       }, 
+                       {
+                         'clique.enabled': 'true',
+                         'path.enabled': 'false',
+                         'gprime.path.enabled': 'false',
+                         'blockcolor.enabled': 'true',
+                         'solver.useCplexCuttingPlanes': 'false',
+                       }, 
+                       {
+                         'clique.enabled': 'true',
+                         'path.enabled': 'false',
+                         'gprime.path.enabled': 'false',
+                         'blockcolor.enabled': 'true',
+                         'solver.useCplexCuttingPlanes': 'true',
+                       }, 
+                       {
+                         'clique.enabled': 'true',
+                         'path.enabled': 'true',
+                         'gprime.path.enabled': 'false',
+                         'blockcolor.enabled': 'true',
+                         'solver.useCplexCuttingPlanes': 'false',
+                       }, 
+                       {
+                         'clique.enabled': 'true',
+                         'path.enabled': 'true',
+                         'gprime.path.enabled': 'false',
+                         'blockcolor.enabled': 'true',
+                         'solver.useCplexCuttingPlanes': 'true',
+                       },
+                       ])
 
 blockcolorruns = create_runs(update_copy(baseprops, {
                  'clique.enabled': 'false',

@@ -1,5 +1,5 @@
 \documentclass[landscape, 12pt]{report}
-\usepackage[a2paper,landscape]{geometry}
+\usepackage[a1paper,landscape]{geometry}
 \usepackage[ansinew]{inputenc}
 \usepackage{amsmath}
 \usepackage{enumerate}
@@ -20,6 +20,100 @@
 \setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-46mm}
 
 \begin{document}
+	
+	\section{Cuts}
+	
+	\subsection{Path vs hole}
+	
+	Processing Runid 20100722PATHHOLECUTS
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item cuts.niters
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: cuts.iset.usePathsAlgorithm: false, cuts.iset.useBreakingSymmetry: false
+\item S2: cuts.iset.usePathsAlgorithm: false, cuts.iset.useBreakingSymmetry: true
+\item S3: cuts.iset.usePathsAlgorithm: true, cuts.iset.useBreakingSymmetry: false
+\item S4: cuts.iset.usePathsAlgorithm: true, cuts.iset.useBreakingSymmetry: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
+\\
+ & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time
+\\
+\hline
+EW 20 N=100 & 0.50 & 65.60 & 7.14 & 0.50 & 65.60 & 7.18 & 0.50 & 83.60 & 18.71 & 0.50 & 83.60 & 18.71
+\\
+EW 40 N=100 & 0.53 & 65.40 & 12.37 & 0.53 & 65.40 & 12.37 & 0.53 & 81.20 & 31.32 & 0.53 & 81.20 & 31.31
+\\
+EW 60 N=100 & 0.60 & 27.20 & 12.50 & 0.60 & 27.20 & 12.50 & 0.60 & 20.20 & 8.49 & 0.60 & 20.20 & 8.50
+\\
+EW 80 N=100 & 0.48 & 6.00 & 3.11 & 0.48 & 6.00 & 3.12 & 0.48 & 5.60 & 1.78 & 0.48 & 5.60 & 1.80
+\\
+HK 10 N=100 & 0.20 & 0.40 & 0.09 & 0.20 & 0.40 & 0.09 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08
+\\
+HK 20 N=100 & 0.20 & 1.00 & 0.19 & 0.20 & 1.00 & 0.19 & 0.20 & 1.00 & 0.16 & 0.20 & 1.00 & 0.16
+\\
+HK 30 N=100 & 0.10 & 8.00 & 1.10 & 0.10 & 8.00 & 1.10 & 0.10 & 4.00 & 0.26 & 0.10 & 4.00 & 0.26
+\\
+HK 40 N=100 & 0.08 & 4.00 & 0.85 & 0.08 & 4.00 & 0.84 & 0.08 & 2.60 & 0.16 & 0.08 & 2.60 & 0.16
+\\
+\hline 
+ \end{tabular}
+	
+	\subsection{Clique}
+	
+	Processing Runid 20100722CLIQUECUTS
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item cuts.niters
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: clique.colorsAsc: false, clique.backtrackBrokenIneqs: false, clique.backtrackLastCandidate: false
+\item S2: clique.colorsAsc: false, clique.backtrackBrokenIneqs: false, clique.backtrackLastCandidate: true
+\item S3: clique.colorsAsc: false, clique.backtrackBrokenIneqs: true, clique.backtrackLastCandidate: false
+\item S4: clique.colorsAsc: false, clique.backtrackBrokenIneqs: true, clique.backtrackLastCandidate: true
+\item S5: clique.colorsAsc: true, clique.backtrackBrokenIneqs: false, clique.backtrackLastCandidate: false
+\item S6: clique.colorsAsc: true, clique.backtrackBrokenIneqs: false, clique.backtrackLastCandidate: true
+\item S7: clique.colorsAsc: true, clique.backtrackBrokenIneqs: true, clique.backtrackLastCandidate: false
+\item S8: clique.colorsAsc: true, clique.backtrackBrokenIneqs: true, clique.backtrackLastCandidate: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7} & \multicolumn{3}{|c|}{S8}
+\\
+ & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time
+\\
+\hline
+EW 20 N=100 & 0.47 & 22.40 & 2.46 & 0.46 & 18.80 & 2.62 & 0.46 & 20.00 & 2.74 & 0.46 & 23.40 & 3.04 & 0.46 & 23.60 & 2.87 & 0.46 & 19.40 & 2.70 & 0.46 & 20.20 & 2.67 & 0.46 & 19.60 & 2.60
+\\
+EW 40 N=100 & 0.39 & 45.00 & 11.24 & 0.39 & 36.00 & 11.25 & 0.39 & 26.60 & 11.66 & 0.39 & 28.40 & 11.71 & 0.39 & 45.60 & 11.76 & 0.39 & 30.40 & 10.39 & 0.39 & 40.40 & 13.68 & 0.39 & 33.40 & 13.63
+\\
+EW 60 N=100 & 0.38 & 67.60 & 45.31 & 0.38 & 61.00 & 48.38 & 0.38 & 57.20 & 69.02 & 0.38 & 53.60 & 67.36 & 0.38 & 79.40 & 48.29 & 0.38 & 62.60 & 47.81 & 0.38 & 59.00 & 69.81 & 0.38 & 52.20 & 63.96
+\\
+EW 80 N=100 & 0.25 & 152.80 & 172.25 & 0.25 & 146.40 & 182.08 & 0.25 & 100.40 & 292.45 & 0.25 & 138.20 & 333.76 & 0.25 & 136.80 & 161.15 & 0.25 & 122.20 & 156.23 & 0.25 & 116.20 & 302.42 & 0.25 & 129.00 & 323.72
+\\
+HK 10 N=100 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.09
+\\
+HK 20 N=100 & 0.20 & 1.00 & 0.17 & 0.20 & 1.00 & 0.17 & 0.20 & 1.00 & 0.17 & 0.20 & 1.00 & 0.17 & 0.20 & 1.00 & 0.16 & 0.20 & 1.00 & 0.18 & 0.20 & 1.00 & 0.17 & 0.20 & 1.00 & 0.17
+\\
+HK 30 N=100 & 0.03 & 3.80 & 0.37 & 0.03 & 4.00 & 0.37 & 0.03 & 3.80 & 0.36 & 0.03 & 3.00 & 0.36 & 0.03 & 4.00 & 0.37 & 0.03 & 4.20 & 0.37 & 0.03 & 3.80 & 0.37 & 0.03 & 3.60 & 0.37
+\\
+HK 40 N=100 & 0.05 & 4.80 & 0.23 & 0.05 & 3.40 & 0.21 & 0.05 & 4.40 & 0.23 & 0.05 & 4.00 & 0.21 & 0.05 & 4.80 & 0.24 & 0.05 & 3.40 & 0.21 & 0.05 & 4.40 & 0.22 & 0.05 & 4.00 & 0.22
+\\
+\hline 
+ \end{tabular}
+	
+	\clearpage
 	
 	\section{Primal heuristic}
 	
