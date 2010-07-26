@@ -47,7 +47,7 @@ cliqueruns = create_runs(update_copy(baseprops, {
                  'clique.enabled': 'true',
                  'path.enabled': 'false',
                  'gprime.path.enabled': 'false',
-                 'blockcolor.enabled': 'false',
+                 'blockColor.enabled': 'false',
                  }), [{
                     'clique.colorsAsc': 'false',
                     'clique.backtrackBrokenIneqs': 'false',
@@ -87,58 +87,59 @@ familiesruns = create_runs(baseprops, [
                          'clique.enabled': 'true',
                          'path.enabled': 'true',
                          'gprime.path.enabled': 'true',
-                         'blockcolor.enabled': 'true',
+                         'blockColor.enabled': 'true',
                          'solver.useCplexCuttingPlanes': 'false',
                        }, 
                        {
                          'clique.enabled': 'true',
                          'path.enabled': 'true',
                          'gprime.path.enabled': 'true',
-                         'blockcolor.enabled': 'true',
+                         'blockColor.enabled': 'true',
                          'solver.useCplexCuttingPlanes': 'true',
                        }, 
                        {
                          'clique.enabled': 'false',
                          'path.enabled': 'false',
                          'gprime.path.enabled': 'false',
-                         'blockcolor.enabled': 'false',
+                         'blockColor.enabled': 'false',
                          'solver.useCplexCuttingPlanes': 'true',
                        }, 
                        {
                          'clique.enabled': 'true',
                          'path.enabled': 'false',
                          'gprime.path.enabled': 'false',
-                         'blockcolor.enabled': 'true',
+                         'blockColor.enabled': 'true',
                          'solver.useCplexCuttingPlanes': 'false',
                        }, 
                        {
                          'clique.enabled': 'true',
                          'path.enabled': 'false',
                          'gprime.path.enabled': 'false',
-                         'blockcolor.enabled': 'true',
+                         'blockColor.enabled': 'true',
                          'solver.useCplexCuttingPlanes': 'true',
                        }, 
                        {
                          'clique.enabled': 'true',
                          'path.enabled': 'true',
                          'gprime.path.enabled': 'false',
-                         'blockcolor.enabled': 'true',
+                         'blockColor.enabled': 'true',
                          'solver.useCplexCuttingPlanes': 'false',
                        }, 
                        {
                          'clique.enabled': 'true',
                          'path.enabled': 'true',
                          'gprime.path.enabled': 'false',
-                         'blockcolor.enabled': 'true',
+                         'blockColor.enabled': 'true',
                          'solver.useCplexCuttingPlanes': 'true',
                        },
                        ])
+
 
 blockcolorruns = create_runs(update_copy(baseprops, {
                  'clique.enabled': 'false',
                  'path.enabled': 'false',
                  'gprime.path.enabled': 'false',
-                 'blockcolor.enabled': 'true',
+                 'blockColor.enabled': 'true',
                  }), [{
                         'blockColor.usePool': 'false'
                        }, 
@@ -151,7 +152,7 @@ greekruns = create_runs(update_copy(baseprops, {
                  'path.enabled': 'true',
                  'holes.enabled': 'true',
                  'gprime.path.enabled': 'false',
-                 'blockcolor.enabled': 'false',
+                 'blockColor.enabled': 'false',
                  }), [{
                         'cuts.iset.usePathsAlgorithm': 'true',
                         'cuts.iset.useBreakingSymmetry': 'false'

@@ -92,7 +92,9 @@ def preprocess_latextable():
 
 def primal_latextable():    
         file = '20100720PRIMAL'
-        LatexProcessor(file).process(
+        filestatic = '20100723PRIMALSTATIC2'
+        
+        LatexProcessor(filestatic).process(
                 ids=[metrics.FileName()],
                 datas=['solution.gap', metrics.Ks('solution.gapfound'), metrics.Ks('solution.nnodes')],  
                 series=[ 'branch.dynamic.dsatur','primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.onlyonup', 'branch.direction'],
@@ -134,8 +136,19 @@ def cuts_iset_latextable():
                 aggr= aggregate.avg 
                 )
 
+def cuts_families_latextable():
+        file = '20100723CUTSFAMILIES'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap','cuts.niters','solution.time'],   
+                series=['clique.enabled', 'path.enabled', 'gprime.path.enabled','solver.useCplexCuttingPlanes'],
+                datafilter= {'blockColor.enabled': 'false'},
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+
 if __name__ == '__main__':
-    cuts_iset_latextable()
+    cuts_families_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

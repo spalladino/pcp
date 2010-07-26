@@ -23,6 +23,55 @@
 	
 	\section{Cuts}
 	
+	\subsection{Families}
+	
+	Processing Runid 20100723CUTSFAMILIES
+
+	Data:
+	\begin{itemize}
+	\item solution.gap
+	\item cuts.niters
+	\item solution.time
+	\end{itemize}
+	Series:
+	\begin{itemize}
+	\item S1: clique.enabled: false, path.enabled: false, gprime.path.enabled: false, solver.useCplexCuttingPlanes: true
+	\item S2: clique.enabled: true, path.enabled: false, gprime.path.enabled: false, solver.useCplexCuttingPlanes: false
+	\item S3: clique.enabled: true, path.enabled: false, gprime.path.enabled: false, solver.useCplexCuttingPlanes: true
+	\item S4: clique.enabled: true, path.enabled: true, gprime.path.enabled: false, solver.useCplexCuttingPlanes: false
+	\item S5: clique.enabled: true, path.enabled: true, gprime.path.enabled: false, solver.useCplexCuttingPlanes: true
+	\item S6: clique.enabled: true, path.enabled: true, gprime.path.enabled: true, solver.useCplexCuttingPlanes: false
+	\item S7: clique.enabled: true, path.enabled: true, gprime.path.enabled: true, solver.useCplexCuttingPlanes: true
+	\end{itemize}
+	\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|ccc|}
+	\hline
+	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6} & \multicolumn{3}{|c|}{S7}
+	\\
+	 & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time
+	\\
+	\hline
+	EW 20 N=100 & 0.50 & 4.00 & 0.70 & 0.47 & 22.40 & 2.46 & 0.46 & 25.20 & 2.85 & 0.48 & 22.80 & 2.92 & 0.46 & 25.20 & 3.65 & 0.48 & 22.80 & 2.95 & 0.46 & 25.20 & 3.68
+	\\
+	EW 40 N=100 & 0.49 & 8.80 & 2.62 & 0.39 & 45.00 & 11.14 & 0.39 & 35.40 & 11.24 & 0.39 & 34.60 & 10.54 & 0.39 & 42.00 & 11.94 & 0.39 & 42.20 & 12.05 & 0.39 & 40.40 & 11.77
+	\\
+	EW 60 N=100 & 0.47 & 34.00 & 14.35 & 0.38 & 67.60 & 45.32 & 0.38 & 72.60 & 53.71 & 0.38 & 82.40 & 49.10 & 0.38 & 71.00 & 50.51 & 0.38 & 82.40 & 49.23 & 0.38 & 70.20 & 50.41
+	\\
+	EW 80 N=100 & 0.40 & 27.80 & 14.73 & 0.25 & 152.80 & 171.73 & 0.25 & 119.00 & 147.56 & 0.25 & 145.20 & 157.28 & 0.25 & 129.20 & 156.77 & 0.25 & 145.20 & 158.62 & 0.25 & 129.20 & 157.80
+	\\
+	HK 10 N=100 & 0.20 & 0.40 & 0.09 & 0.20 & 0.40 & 0.08 & 0.20 & 0.40 & 0.10 & 0.20 & 0.40 & 0.09 & 0.20 & 0.40 & 0.10 & 0.20 & 0.40 & 0.09 & 0.20 & 0.40 & 0.10
+	\\
+	HK 20 N=100 & 0.20 & 1.00 & 0.20 & 0.20 & 1.00 & 0.16 & 0.20 & 1.00 & 0.22 & 0.20 & 1.00 & 0.18 & 0.20 & 1.00 & 0.23 & 0.20 & 1.00 & 0.18 & 0.20 & 1.00 & 0.23
+	\\
+	HK 30 N=100 & 0.00 & 3.60 & 0.42 & 0.03 & 3.80 & 0.37 & 0.00 & 2.20 & 0.37 & 0.03 & 4.00 & 0.41 & 0.00 & 2.00 & 0.41 & 0.03 & 4.00 & 0.45 & 0.00 & 2.00 & 0.42
+	\\
+	HK 40 N=100 & 0.05 & 1.40 & 0.21 & 0.05 & 4.80 & 0.22 & 0.05 & 5.60 & 0.30 & 0.05 & 5.20 & 0.25 & 0.05 & 4.80 & 0.30 & 0.05 & 5.20 & 0.26 & 0.05 & 4.80 & 0.31
+	\\
+	\hline 
+	 \end{tabular}
+	
+	
+	\clearpage
+	
 	\subsection{Path vs hole}
 	
 	Processing Runid 20100722PATHHOLECUTS
@@ -152,6 +201,41 @@ EW 80 N=100 & 0.45 & 13186.67 & 13246.00 & 0.46 & 12622.33 & 12650.67 & 0.45 & 1
 \hline 
  \end{tabular}
 
+	
+	\subsection{Primal statics}
+	
+	Processing Runid 20100723PRIMALSTATIC2
+	Data:
+	\begin{itemize}
+	\item solution.gap
+	\item solution.gapfound Ks
+	\item solution.nnodes Ks
+	\end{itemize}
+	Series:
+	\begin{itemize}
+	\item S1: branch.dynamic.dsatur: false, primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.onlyonup: false, branch.direction: 0
+	\item S2: branch.dynamic.dsatur: false, primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.onlyonup: false, branch.direction: 0
+	\item S3: branch.dynamic.dsatur: false, primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.onlyonup: false, branch.direction: 0
+	\end{itemize}
+	\begin{tabular}{|c|ccc|ccc|ccc|}
+	\hline
+	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+	\\
+	 & solution.gap & solution.gapfound Ks & solution.nnodes Ks & solution.gap & solution.gapfound Ks & solution.nnodes Ks & solution.gap & solution.gapfound Ks & solution.nnodes Ks
+	\\
+	\hline
+	EW 20 N=90 & 0.00 & 63.33 & 63.33 & 0.00 & 62.33 & 62.33 & 0.00 & 63.33 & 63.33
+	\\
+	EW 40 N=100 & 0.44 & 55.33 & 55.33 & 0.46 & 26.00 & 26.00 & 0.46 & 25.33 & 25.33
+	\\
+	EW 60 N=80 & 0.38 & 96.67 & 98.67 & 0.40 & 27.67 & 28.33 & 0.40 & 27.67 & 27.67
+	\\
+	EW 80 N=100 & 0.45 & 13.00 & 13.00 & 0.41 & 2.67 & 3.33 & 0.41 & 3.33 & 3.33
+	\\
+	\hline 
+	 \end{tabular}
+	
+	
 	
 	\clearpage
 	

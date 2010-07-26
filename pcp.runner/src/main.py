@@ -15,8 +15,6 @@ import os
  
 def main():
     
-    Fixture().resume()
-    
     files = cuts.files()
     print 'Processing: ', files
 
@@ -24,7 +22,17 @@ def main():
                 cuts.familiesruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100723CUTSFAMILIES'
+                runid = '20100726CUTSFAMILIES2'
+            )
+    
+    files = cuts.files()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                cuts.blockcolorruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100726BLOCKCOLOR2'
             )
     
 if __name__ == '__main__':
