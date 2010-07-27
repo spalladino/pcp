@@ -306,7 +306,7 @@ On every iteration the most promising node is added to the path being built. In 
 \end{algorithmic}
 \end{algorithm}
 
-As an alternative to the previous algorithm, we also implemented the hole detection algorithm presented in \cite{nikolopoulos2004hole}. We adapted the algorithm presented in the paper to reject a node if it belongs to a partition already in the path, therefore exploring only component holes; and tested this implementation against the previous one in section \ref{sec:results}.
+As an alternative to the previous algorithm, we also implemented the hole detection algorithm presented in \cite{nikolopoulos2004hole}. We adapted the algorithm presented in the paper to reject a node if it belongs to a partition already in the path, therefore exploring only component holes; testing this implementation against the previous one showed that our custom algorithm performed slightly better, and generated path as well as hole inequalities.
 
 \subsubsection*{Partitions graph independent set inequalities}
 
