@@ -6,8 +6,8 @@ from common import update_copy
 
 
 def files():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n120\\.00[\\d]\\.in') + \
-        fetcher.Fetcher(datadir).fetch_files('benchnodes', 'n((100)|(120)|(140)|(160)|(180)|(200))\\.00[\\d]\\.in') + \
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n120\\.00(0|1|2)\\.in') + \
+        fetcher.Fetcher(datadir).fetch_files('benchnodes', 'n((100)|(120)|(140)|(160)|(180)|(200))\\.00(0|1|2)\\.in') + \
         fetcher.Fetcher(datadir).fetch_files('holme', 'n120d0(1|2|3|4)\\.00[\\d]\\.in') 
     
 
@@ -44,10 +44,40 @@ baseprops = {
             
             'solver.mipEmphasis': '0',
             'solver.probing': '0',
-
+			'cuts.minCliques': '40'
+			
             'pruning.enabled': 'false',
-            'pruning.minset': '10000',
+            'pruning.minset': '10',
             'pruning.remaining': '20',
             'pruning.frac': '1.0',
 
+			'clique.enabled': 'true',
+			'path.enabled': 'true',
+			'gprime.path.enabled': 'true',
+			'blockColor.enabled': 'true',
+			'solver.useCplexCuttingPlanes': 'true',
+
               }
+			  
+pruning_runs = create_runs(baseprops, [
+				{
+					'pruning.enabled': 'false',
+
+				},
+				{
+					'pruning.enabled': 'true',
+		            'pruning.remaining': '10',
+				},
+				{
+					'pruning.enabled': 'true',
+		            'pruning.remaining': '20',
+				},
+				{
+					'pruning.enabled': 'true',
+		            'pruning.remaining': '30',
+				},
+				{
+					'pruning.enabled': 'true',
+		            'pruning.remaining': '40',
+				}
+				])
