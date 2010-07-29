@@ -15,11 +15,25 @@ We used different types of instances on each test depending on the focus of the 
 
 Random graphs were built according to two different schemes:
 \begin{itemize}
-	\defitem{Erdos-R\'enyi}{Also known as binomial graphs\cite{erdosrenyi}, each of the possible edges between the set of $n$ nodes is chosen to be included with probability $p$; this parameter determines the density of the graph. This procedure generates graphs with an equal distribution of degrees among its nodes.}
-	\defitem{Holme-Kim}{Also known as powerlaw cluster graphs\cite{holme2002growing}, the graph is constructed iteratively by attaching each new node to a number $t$ of already existing nodes using preferential attachment based on the degree of existing nodes. Also, after the addition of each edge, there is a probability $p$ that a triangle will be created by adding an additional edge. These graphs are controlled by two parameters: node count $n$ and density $p$; value $t$ is inferred as the product between $p$ and $n$.} 
+	\defitem{Erdos-R\'enyi}{Also known as binomial graphs\cite{erdosrenyi}, each of the possible edges between the set of $n$ nodes is chosen to be included with probability $p$; this parameter determines the density of the graph. This procedure generates graphs with an equal distribution of degrees among its nodes.
+	\begin{figure}
+	  \begin{center}
+	    \includegraphics[scale=0.5]{imgs/binomial-10-04.png}
+	  \end{center}
+		\label{results:graph:binomial}
+		\caption{Sample random binomial graph with $10$ nodes and a $40\%$ probability to create an edge between each pair of nodes.}
+	\end{figure}
+	}
+	\defitem{Holme-Kim}{Also known as powerlaw cluster graphs\cite{holme2002growing}, the graph is constructed iteratively by attaching each new node to a number $t$ of already existing nodes using preferential attachment based on the degree of existing nodes. Also, after the addition of each edge, there is a probability $p$ that a triangle will be created by adding an additional edge. These graphs are controlled by two parameters: node count $n$ and density $p$; value $t$ is inferred as the product between $p$ and $n$.
+	\begin{figure}
+	  \begin{center}
+	    \includegraphics[scale=0.5]{imgs/hk-10-04.png}
+	  \end{center}
+		\label{results:graph:binomial}
+		\caption{Sample random powerlaw cluster graph with $10$ nodes, note how certain nodes have a much higher degree than the others.}
+	\end{figure}
+	} 
 \end{itemize}
-
-\TODO{Add drawings for both graph types using matplotlib}
 
 Since both of the previous procedures generate unpartitioned graphs, they are partitioned after their generation by grouping nodes with consecutive indices in partitions of a certain size. For most instances we used a fixed partition size of $2$, although in some cases we used random sizes varying from $1$ to $4$.
 
