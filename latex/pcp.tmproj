@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>../drafts/Test.tex</string>
+	<string>results.cuts.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>pcp.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-26T19:10:44Z</date>
+			<date>2010-07-28T19:06:16Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -22,19 +22,19 @@
 			<key>filename</key>
 			<string>results.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-23T19:17:59Z</date>
+			<date>2010-07-28T22:19:56Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>results.primal.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-26T21:12:03Z</date>
+			<date>2010-07-28T19:06:24Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>results.branching.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-26T22:01:40Z</date>
+			<date>2010-07-28T19:06:21Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -52,13 +52,15 @@
 			<key>filename</key>
 			<string>results.cuts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-27T19:04:38Z</date>
+			<date>2010-07-28T22:26:38Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>ineqs.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-14T13:45:24Z</date>
+			<date>2010-07-28T22:19:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -82,7 +84,7 @@
 			<key>filename</key>
 			<string>algorithm.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-26T18:46:31Z</date>
+			<date>2010-07-27T20:36:11Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -148,9 +150,7 @@
 			<key>filename</key>
 			<string>../drafts/Test.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-27T19:04:39Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-07-28T22:26:38Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -170,28 +170,12 @@
 				<key>column</key>
 				<integer>15</integer>
 				<key>line</key>
-				<integer>69</integer>
+				<integer>117</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>53</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>27</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>15</integer>
-				<key>line</key>
-				<integer>69</integer>
-			</dict>
+			<integer>0</integer>
 		</dict>
 		<key>../pcp/run.properties</key>
 		<dict>
@@ -282,14 +266,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>414</integer>
 				<key>line</key>
-				<integer>362</integer>
+				<integer>308</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>346</integer>
+			<integer>370</integer>
 		</dict>
 		<key>alio/AlioInforms.tex</key>
 		<dict>
@@ -396,14 +380,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>61</integer>
+				<integer>84</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>53</integer>
+			<integer>41</integer>
 		</dict>
 		<key>references.bib</key>
 		<dict>
@@ -438,14 +422,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>107</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>4</integer>
 		</dict>
 		<key>results.dsatur.tex</key>
 		<dict>
@@ -480,14 +464,30 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>65</integer>
+				<integer>11</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>1</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>13</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>11</integer>
+			</dict>
 		</dict>
 		<key>results.tex</key>
 		<dict>
@@ -529,6 +529,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{293, 93}, {1129, 741}}</string>
+	<string>{{282, 34}, {1129, 741}}</string>
 </dict>
 </plist>

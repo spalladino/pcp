@@ -76,7 +76,7 @@ class BoundFound:
 
 class CutMetric:
     
-    def __init__(self, cut, prop):
+    def __init__(self, cut, prop='count'):
         self.cut = cut
         self.prop = prop
     
