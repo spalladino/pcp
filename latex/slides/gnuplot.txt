@@ -1,0 +1,33 @@
+set xrange [0:6]
+set yrange [0:6]
+set terminal 'png'
+
+f(x)=(-.25*x+4)
+g(x)=(-3*x + 15)
+
+set output 'lpsample1.png'
+plot f(x) title 'x + 4y = 16', g(x) t '3x + y = 15', (-x + 2) t 'objective'
+
+set output 'lpsample2.png'
+plot f(x) title 'x + 4y = 16', g(x) t '3x + y = 15', (-x + 7) t 'objective'
+
+unset output
+set terminal 'window'
+
+
+
+set xrange [0:6]
+set yrange [0:6]
+set terminal 'png'
+
+f(x)=(-.25*x+4)
+g(x)=(-3*x + 15)
+
+set output 'lpsample1.png'
+plot f(x) title 'x + 4y = 16', g(x) t '3x + y = 15', (-x + 2) t 'objective'
+
+set output 'lpsample2.png'
+plot f(x) title 'x + 4y = 16', g(x) t '3x + y = 15', (-x + 7) t 'objective'
+
+unset output
+set terminal 'window'

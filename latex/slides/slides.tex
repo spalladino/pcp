@@ -8,6 +8,7 @@
 \usepackage{indentfirst}
 \usepackage{latexsym}
 \usepackage{proof}
+\usepackage{color}
 
 \usepackage{tikz}
 \usetikzlibrary{backgrounds,fit,arrows} 
@@ -17,6 +18,11 @@
 \newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
 \newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
 \newcommand{\lpineq}[2]{\[ #1 \qquad #2 \]}
+\newcommand{\xor}{\veebar}
+
+\definecolor{briancolor}{rgb}{0.2,0.2,0.7}
+
+\input{graphs.tex}
 
 \begin{document}
 
@@ -39,38 +45,11 @@
 
 Un grafo $G$ se define como un par $V,E$ donde $V$ es un conjunto de nodos, unidos por los ejes del conjunto $E$.
 
+\vspace{11pt}
+
 \begin{figure}[h]
 	\centering	
-	\begin{tikzpicture}
-		[n/.style= {thick,circle,draw=black}] 
-
-		\node[n] (n0) at ( 0,0) {$v_0$}
-		;
-
-		\node[n] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
-
-		\node[n] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n4) at ( -2,3) {$v_4$}
-			edge [-]	(n3)
-			edge [-]	(n2)
-		;
-		
-		\node[n] (n5) at ( -2,1) {$v_5$}
-			edge [-]	(n2)
-			edge [-]	(n4)
-			edge [-]	(n0)
-		;
-
-	\end{tikzpicture} 
+	\samplegraph
 \end{figure}
 
 \end{frame} 
@@ -82,36 +61,7 @@ El problema de coloreo consiste en asignar un \textbf{color} a cada nodo de mane
 
 \begin{figure}[h]
 	\centering	
-	\begin{tikzpicture} 
-		[n/.style= {thick,circle,draw=black}] 
-
-		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
-		;
-
-		\node[n,fill=blue!40] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
-
-		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
-		
-		\node[n,fill=red!40] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
-		
-		\node[n,fill=blue!40] (n4) at ( -2,3) {$v_4$}
-			edge [-]	(n3)
-			edge [-]	(n2)
-		;
-		
-		\node[n,fill=green!40] (n5) at ( -2,1) {$v_5$}
-			edge [-]	(n2)
-			edge [-]	(n4)
-			edge [-]	(n0)
-		;
-
-	\end{tikzpicture} 
+	\samplecoloredgraph
 \end{figure}
 
 \end{frame}
@@ -126,6 +76,7 @@ Pintando el mapa de sudamérica...
 	\includegraphics[scale=0.5]{../imgs/southamerica.png}
 \end{figure}
 
+
 \end{frame}
 
 
@@ -134,44 +85,11 @@ Pintando el mapa de sudamérica...
 
 Un grafo \textbf{particionado} es un grafo en el que el conjunto de nodos se encuentra dividido en particiones $P_0, \ldots,P_q$.
 
+\vspace{21pt}
+
 \begin{figure}[h]
 	\centering	
-	\begin{tikzpicture} 
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
-
-		\node[n] (n0) at ( 0,0) {$v_0$}
-		;
-
-		\node[n] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
-
-		\node[n] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n4) at ( -2,3) {$v_4$}
-			edge [-]	(n3)
-			edge [-]	(n2)
-		;
-		
-		\node[n] (n5) at ( -2,1) {$v_5$}
-			edge [-]	(n2)
-			edge [-]	(n4)
-			edge [-]	(n0)
-		;
-		
-		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
-		\end{pgfonlayer}
-
-	\end{tikzpicture} 
+	\samplepartitionedgraph
 \end{figure}
 
 \end{frame}
@@ -183,42 +101,7 @@ El problema de coloreo \textbf{particionado} consiste en, dado un grafo particio
 
 \begin{figure}[h]
 	\centering	
-	\begin{tikzpicture} 
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
-
-		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
-		;
-
-		\node[n] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
-
-		\node[n,fill=green!40] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
-		
-		\node[n,fill=red!40] (n4) at ( -2,3) {$v_4$}
-			edge [-]	(n3)
-			edge [-]	(n2)
-		;
-		
-		\node[n] (n5) at ( -2,1) {$v_5$}
-			edge [-]	(n2)
-			edge [-]	(n4)
-			edge [-]	(n0)
-		;
-		
-		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
-		\end{pgfonlayer}
-
-	\end{tikzpicture} 
+	\samplepartitionedcoloredgraph
 \end{figure}
 
 \end{frame}
@@ -248,57 +131,8 @@ El objetivo es determinar un conjunto de rutas tal que se minimice la cantidad d
 
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture} 
-		[bend angle=40,
-		n/.style={font=\tiny,minimum size=2mm,thick,circle,draw=black!75,fill=black!25}] 
-		
-		\node[n] (n0) at ( 0,0) {$s_1$}; 
-		
-		\node[n] (n1) at ( 0,1) {}
-			edge [-]	(n0)
-		;
-
-		\node[n] (n2) at ( 1,2) {}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n4) at ( 1,0) {}
-			edge [-]	(n0)
-		;
-		
-		\node[n] (n5) at ( 2,1) {}
-			edge [-]	(n4)
-		;
-		
-		\node[n] (n3) at ( 2,2) {$t_1$}
-			edge [-]	(n2)
-			edge [-]	(n5)
-			edge [<-, draw=black!50] node[auto] {} 	(n0)
-			
-		;
-		
-		\node[n] (n6) at ( 1,-1) {$s_2$}
-			edge [-]	(n4)
-		;
-		
-		\node[n] (n7) at ( 3,1) {$t_2$}
-			edge [-]	(n5)
-			edge [<-, draw=black!50] node[auto] {} 	(n6)
-			
-		;
-		
-		\node[n] (n8) at ( 2,-1) {}
-			edge [-]	(n6)
-		;
-
-		\node[n] (n9) at ( 3,0) {}
-			edge [-]	(n8)
-			edge [-]	(n7)
-		;
-		
-	\end{tikzpicture} 
-		%\caption{Sample network in which connections $s_1 \rightarrow t_1$ and $s_2 \rightarrow t_2$ are to be implemented. Potential routes $R_1, R_2$ are proposed for the first, while routes $R_3, R_4$ are proposed for the second one. The corresponding partitioned graph is presented in figure \ref{fig:solvedsamplerouting}.}
-	\end{figure}
+	\samplenetwork
+\end{figure}
 
 \end{frame} 
 
@@ -320,56 +154,8 @@ Mediante una heurística, se genera una cierta cantidad de caminos distintos entr
 
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture} 
-		[bend angle=40,
-		n/.style= {font=\tiny,minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
-		
-		\node[n] (n0) at ( 0,0) {$s_1$}; 
-		
-		\node[n] (n1) at ( 0,1) {}
-			edge [-]	(n0)
-		;
-
-		\node[n] (n2) at ( 1,2) {}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n4) at ( 1,0) {}
-			edge [-]	(n0)
-		;
-		
-		\node[n] (n5) at ( 2,1) {}
-			edge [-]	(n4)
-		;
-		
-		\node[n] (n3) at ( 2,2) {$t_1$}
-			edge [-]	(n2)
-			edge [-]	(n5)
-			edge [<-, bend right, draw=black!50] node[auto,font=\tiny] {$R_1$} 	(n0)
-			edge [<-, bend left, draw=black!50] node[auto,swap,font=\tiny] {$R_2$} (n0)
-		;
-		
-		\node[n] (n6) at ( 1,-1) {$s_2$}
-			edge [-]	(n4)
-		;
-		
-		\node[n] (n7) at ( 3,1) {$t_2$}
-			edge [-]	(n5)
-			edge [<-, bend right, draw=black!50] node[auto,font=\tiny] {$R_3$}  (n6)
-			edge [<-, bend left, draw=black!50]	node[auto,swap,font=\tiny] {$R_4$} (n6) 
-		;
-		
-		\node[n] (n8) at ( 2,-1) {}
-			edge [-]	(n6)
-		;
-
-		\node[n] (n9) at ( 3,0) {}
-			edge [-]	(n8)
-			edge [-]	(n7)
-		;
-		
-	\end{tikzpicture} 
-	\end{figure}
+	\samplenetworkroutes
+\end{figure}
 
 \end{frame} 
 
@@ -395,88 +181,100 @@ Nuestro ejemplo puede resolverse usando una única frecuencia...
 
 \begin{figure}[h]
 		\centering	
-		\begin{tikzpicture} 
-			[n/.style= {font=\tiny,minimum size=1mm,thick,circle,draw=black!75}] 
-
-			\node[n,fill=blue!75] (n0) at ( 0,0) {$R_1$}; 
-
-			\node[n,fill=black!25] (n1) at ( 0,1) {$R_2$};
-
-			\node[n,fill=black!25] (n2) at ( 3,0) {$R_3$}
-				edge [-]	(n1)
-			;
-
-			\node[n,fill=blue!75] (n3) at ( 3,1) {$R_4$};
-
-				\begin{pgfonlayer}{background} 
-					\node [font=\tiny,fill=black!10,circle,fit=(n0) (n1),label=170:$s_1 \rightarrow t_1$] {}; 
-					\node [font=\tiny,fill=black!10,circle,fit=(n2) (n3),label=350:$s_2 \rightarrow t_2$] {}; 
-				\end{pgfonlayer}
-
-		\end{tikzpicture} 
-	
+		\alt<1>{\networkpcpgraph}{\networkpcpcoloredgraph}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture} 
-		[bend angle=40,
-		n/.style= {font=\tiny,minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
-		
-		\node[n] (n0) at ( 0,0) {$s_1$}; 
-		
-		\node[n] (n1) at ( 0,1) {}
-			edge [-]	(n0)
-		;
+	\alt<1>{\samplenetworkroutes}{\solvednetwork}
+\end{figure}
 
-		\node[n] (n2) at ( 1,2) {}
-			edge [-]	(n1)
-		;
-		
-		\node[n] (n4) at ( 1,0) {}
-			edge [-]	(n0)
-		;
-		
-		\node[n] (n5) at ( 2,1) {}
-			edge [-]	(n4)
-		;
-		
-		\node[n] (n3) at ( 2,2) {$t_1$}
-			edge [-]	(n2)
-			edge [-]	(n5)
-			edge [<-, bend right, draw=blue!100] node[font=\tiny,auto] {$R_1$} 	(n0)
-			edge [<-, bend left, draw=black!10] node[font=\tiny,auto,swap] {$R_2$} (n0)
-		;
-		
-		\node[n] (n6) at ( 1,-1) {$s_2$}
-			edge [-]	(n4)
-		;
-		
-		\node[n] (n7) at ( 3,1) {$t_2$}
-			edge [-]	(n5)
-			edge [<-, bend right, draw=black!10] node[font=\tiny,auto] {$R_3$}  (n6)
-			edge [<-, bend left, draw=blue!100]	node[font=\tiny,auto,swap] {$R_4$} (n6) 
-		;
-		
-		\node[n] (n8) at ( 2,-1) {}
-			edge [-]	(n6)
-		;
-
-		\node[n] (n9) at ( 3,0) {}
-			edge [-]	(n8)
-			edge [-]	(n7)
-		;
-		
-	\end{tikzpicture} 
-	\end{figure}
+\uncover<2>{}
 
 \end{frame} 
 
-\subsection{Related work}
+\section{Programación lineal}
+
+\subsection{Programación lineal}
+
+\begin{frame} 
+\frametitle{Programación lineal}
+
+Buscamos maximizar/minimizar una función objetivo sujeta a un conjunto de restricciones lineales sobre las variables.
+
+Por ejemplo, dadas $x, y \in \Re$...
+
+\begin{align*}
+\text{{maximizar}} \quad & x + y \\
+\text{{sujeto a}} \quad & x + 4y \leq 16 \\
+& 3x + y \leq 15 \\
+& x, y \in \Re^{\geq 0}
+\end{align*}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal}
+
+Las restricciones determinan una región factible sobre la que se busca el óptimo que maximiza la función objetivo.
+
+\begin{figure}[h]
+	\centering
+	\alt<1>{\includegraphics[scale=0.5]{lpsample1.png}}{\includegraphics[scale=0.5]{lpsample2.png}}
+\end{figure}
+
+\uncover<2>{}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Modelado}
+
+Podemos usar programación lineal para modelar múltiples escenarios, sean de economía, planificación, etc.
+
+Intentemos usarlo para modelar implicaciones lógicas: cada variable toma valores $0$ si es falsa o $1$ si es verdadera:
+
+\begin{align*}
+\text{maximizar} \quad & x + y + z\\
+\alt<1>
+{\text{sujeto a} \quad & x \xor y \\
+& x \xor z \\
+& y \xor z \\
+& x, y, z \quad \text{bool} \\}
+{\text{sujeto a} \quad & x + y \leq 1 \\
+& x + z \leq 1 \\
+& y + z \leq 1 \\
+& 0 \leq x, y, z \leq 1 \\}
+\end{align*}
+
+\uncover<3>{El óptimo de este problema está en \alert{$<x,y,z> = <\frac{1}{2},\frac{1}{2},\frac{1}{2}>$.}}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+Necesitamos restringir a que las variables tomen solamente valores enteros para evitar casos como el anterior.
+
+Al problema resultante se lo llama de programación lineal \textbf{entera}.
+
+\begin{align*}
+\text{maximizar} \quad & x + y + z\\
+\text{sujeto a} \quad & x + y \leq 1 \\
+& x + z \leq 1 \\
+& y + z \leq 1 \\
+& \alert{x, y, z \in \{0,1\}} \\
+\end{align*}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
 
 
 
-\subsection{Related work}
+\end{frame} 
+
 
 \begin{frame} 
 \frametitle{Related work}

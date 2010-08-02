@@ -1,0 +1,396 @@
+
+\newcommand{\samplegraph}{
+	\begin{tikzpicture}
+		[n/.style= {thick,circle,draw=black}] 
+
+		\node[n] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplecoloredgraph}{\begin{tikzpicture} 
+		[n/.style= {thick,circle,draw=black}] 
+
+		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n,fill=blue!40] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=red!40] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=blue!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n,fill=green!40] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplepartitionedgraph}{
+\begin{tikzpicture} 
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} }
+
+\newcommand{\samplepartitionedcoloredgraph}{
+\begin{tikzpicture} 
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=green!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=red!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplenetwork}
+{\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style={font=\tiny,minimum size=2mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,1) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 1,2) {}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( 1,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 2,1) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 2,2) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, draw=black!50] node[auto] {} 	(n0)
+			
+		;
+		
+		\node[n] (n6) at ( 1,-1) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 3,1) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, draw=black!50] node[auto] {} 	(n6)
+			
+		;
+		
+		\node[n] (n8) at ( 2,-1) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 3,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+			\end{tikzpicture} 
+}
+
+\newcommand{\samplenetworkroutes}
+{
+\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style= {font=\tiny,minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,1) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 1,2) {}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( 1,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 2,1) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 2,2) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!50] node[auto,font=\tiny] {$R_1$} 	(n0)
+			edge [<-, bend left, draw=black!50] node[auto,swap,font=\tiny] {$R_2$} (n0)
+		;
+		
+		\node[n] (n6) at ( 1,-1) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 3,1) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!50] node[auto,font=\tiny] {$R_3$}  (n6)
+			edge [<-, bend left, draw=black!50]	node[auto,swap,font=\tiny] {$R_4$} (n6) 
+		;
+		
+		\node[n] (n8) at ( 2,-1) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 3,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+		
+	\end{tikzpicture} 
+	}
+	
+\newcommand{\networkpcpgraph}
+{
+\begin{tikzpicture} 
+			[n/.style= {font=\tiny,minimum size=1mm,thick,circle,draw=black!75}] 
+
+			\node[n,fill=black!25] (n0) at ( 0,0) {$R_1$}; 
+
+			\node[n,fill=black!25] (n1) at ( 0,1) {$R_2$};
+
+			\node[n,fill=black!25] (n2) at ( 3,0) {$R_3$}
+				edge [-]	(n1)
+			;
+
+			\node[n,fill=black!25] (n3) at ( 3,1) {$R_4$};
+
+			\begin{pgfonlayer}{background} 
+				\node [font=\tiny,fill=black!10,circle,fit=(n0) (n1),label=170:$s_1 \rightarrow t_1$] {}; 
+				\node [font=\tiny,fill=black!10,circle,fit=(n2) (n3),label=350:$s_2 \rightarrow t_2$] {}; 
+			\end{pgfonlayer}
+
+		\end{tikzpicture} 
+}
+
+\newcommand{\networkpcpcoloredgraph}
+{
+\begin{tikzpicture} 
+			[n/.style= {font=\tiny,minimum size=1mm,thick,circle,draw=black!75}] 
+
+			\node[n,fill=blue!75] (n0) at ( 0,0) {$R_1$}; 
+
+			\node[n,fill=black!25] (n1) at ( 0,1) {$R_2$};
+
+			\node[n,fill=black!25] (n2) at ( 3,0) {$R_3$}
+				edge [-]	(n1)
+			;
+
+			\node[n,fill=blue!75] (n3) at ( 3,1) {$R_4$};
+
+				\begin{pgfonlayer}{background} 
+					\node [font=\tiny,fill=black!10,circle,fit=(n0) (n1),label=170:$s_1 \rightarrow t_1$] {}; 
+					\node [font=\tiny,fill=black!10,circle,fit=(n2) (n3),label=350:$s_2 \rightarrow t_2$] {}; 
+				\end{pgfonlayer}
+
+		\end{tikzpicture} 
+}
+
+\newcommand{\solvednetwork}
+{
+\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style= {font=\tiny,minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,1) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 1,2) {}
+			edge [-]	(n1)
+		;
+		
+			\node[n] (n4) at ( 1,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 2,1) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 2,2) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, bend right, draw=blue!100] node[font=\tiny,auto] {\textcolor{blue!100}{$R_1$}} 	(n0)
+			edge [<-, bend left, draw=black!10] node[font=\tiny,auto,swap] {\textcolor{black!10}{$R_2$}} (n0)
+		;
+		
+		\node[n] (n6) at ( 1,-1) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 3,1) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!10] node[font=\tiny,auto] {\textcolor{black!10}{$R_3$}}  (n6)
+			edge [<-, bend left, draw=blue!100]	node[font=\tiny,auto,swap] {\textcolor{blue!100}{$R_4$}} (n6) 
+		;
+		
+		\node[n] (n8) at ( 2,-1) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 3,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+		
+	\end{tikzpicture} 
+}
+
+\newcommand{\lpsample}{
+\begin{tikzpicture}
+[scale=3,line cap=round
+% Styles
+axes/.style=,
+important line/.style={very thick},
+information text/.style={rounded corners,fill=red!10,inner sep=1ex}]
+% Local definitions
+\def\costhirty{0.8660256}
+% Colors
+\colorlet{anglecolor}{green!50!black}
+\colorlet{sincolor}{red}
+\colorlet{tancolor}{orange!80!black}
+\colorlet{coscolor}{blue}
+% The graphic
+\draw[help lines,step=0.5cm] (-1.4,-1.4) grid (1.4,1.4);
+\draw (0,0) circle (1cm);
+\begin{scope}[axes]
+\draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$} coordinate(x axis);
+\draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$} coordinate(y axis);
+\foreach \x/\xtext in {-1, -.5/-\frac{1}{2}, 1}
+\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+\foreach \y/\ytext in {-1, -.5/-\frac{1}{2}, .5/\frac{1}{2}, 1}
+\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white] {$\ytext$};
+\end{scope}
+\filldraw[fill=green!20,draw=anglecolor] (0,0) -- (3mm,0pt) arc(0:30:3mm);
+\draw (15:2mm) node[anglecolor] {$\alpha$};
+\draw[important line,sincolor]
+(30:1cm) -- node[left=1pt,fill=white] {$\sin \alpha$} (30:1cm |- x axis);
+\draw[important line,coscolor]
+(30:1cm |- x axis) -- node[below=2pt,fill=white] {$\cos \alpha$} (0,0);
+\draw[important line,tancolor] (1,0) -- node[right=1pt,fill=white] {
+$\displaystyle \tan \alpha \color{black}=
+\frac{{\color{sincolor}\sin \alpha}}{\color{coscolor}\cos \alpha}$}
+(intersection of 0,0--30:1cm and 1,0--1,1) coordinate (t);
+\draw (0,0) -- (t);
+\draw[xshift=1.85cm]
+node[right,text width=6cm,information text]
+{
+The {\color{anglecolor} angle $\alpha$} is $30^\circ$ in the
+example ($\pi/6$ in radians). The {\color{sincolor}sine of
+$\alpha$}, which is the height of the red line, is
+\[
+{\color{sincolor} \sin \alpha} = 1/2.
+\]
+By the Theorem of Pythagoras ...
+};
+\end{tikzpicture}
+36
+}
