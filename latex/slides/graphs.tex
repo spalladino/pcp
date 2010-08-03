@@ -344,53 +344,196 @@
 	\end{tikzpicture} 
 }
 
-\newcommand{\lpsample}{
+
+\newcommand{\samplepartitionedcoloredgraphB}{
 \begin{tikzpicture}
-[scale=3,line cap=round
-% Styles
-axes/.style=,
-important line/.style={very thick},
-information text/.style={rounded corners,fill=red!10,inner sep=1ex}]
-% Local definitions
-\def\costhirty{0.8660256}
-% Colors
-\colorlet{anglecolor}{green!50!black}
-\colorlet{sincolor}{red}
-\colorlet{tancolor}{orange!80!black}
-\colorlet{coscolor}{blue}
-% The graphic
-\draw[help lines,step=0.5cm] (-1.4,-1.4) grid (1.4,1.4);
-\draw (0,0) circle (1cm);
-\begin{scope}[axes]
-\draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$} coordinate(x axis);
-\draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$} coordinate(y axis);
-\foreach \x/\xtext in {-1, -.5/-\frac{1}{2}, 1}
-\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
-\foreach \y/\ytext in {-1, -.5/-\frac{1}{2}, .5/\frac{1}{2}, 1}
-\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white] {$\ytext$};
-\end{scope}
-\filldraw[fill=green!20,draw=anglecolor] (0,0) -- (3mm,0pt) arc(0:30:3mm);
-\draw (15:2mm) node[anglecolor] {$\alpha$};
-\draw[important line,sincolor]
-(30:1cm) -- node[left=1pt,fill=white] {$\sin \alpha$} (30:1cm |- x axis);
-\draw[important line,coscolor]
-(30:1cm |- x axis) -- node[below=2pt,fill=white] {$\cos \alpha$} (0,0);
-\draw[important line,tancolor] (1,0) -- node[right=1pt,fill=white] {
-$\displaystyle \tan \alpha \color{black}=
-\frac{{\color{sincolor}\sin \alpha}}{\color{coscolor}\cos \alpha}$}
-(intersection of 0,0--30:1cm and 1,0--1,1) coordinate (t);
-\draw (0,0) -- (t);
-\draw[xshift=1.85cm]
-node[right,text width=6cm,information text]
-{
-The {\color{anglecolor} angle $\alpha$} is $30^\circ$ in the
-example ($\pi/6$ in radians). The {\color{sincolor}sine of
-$\alpha$}, which is the height of the red line, is
-\[
-{\color{sincolor} \sin \alpha} = 1/2.
-\]
-By the Theorem of Pythagoras ...
-};
-\end{tikzpicture}
-36
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplepartitionedcoloredgraphC}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=blue!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=blue!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplepartitionedcoloredgraphD}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=blue!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\adjsrestrictionneighb}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {$i_0$}
+		;
+
+		\node[pnt] (n1) at (3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n2) at (3,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n3) at (3,-1) {}
+		;
+
+		\node[pnt] (n4) at (-3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-3,0) {}
+		;
+		
+		\node[n] (n6) at (-3,-1) {}
+			edge [-]	(n0)
+		;
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0)] {}; 
+			\node [fill=blue!5,circle,fit=(n1) (n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5) (n6)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\adjsrestrictionnode}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[pnt] (n0) at (0,0) {$i_0$}
+		;
+
+		\node[n] (n1) at (3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n2) at (3,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n3) at (3,-1) {}
+		;
+
+		\node[n] (n4) at (-3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-3,0) {}
+		;
+		
+		\node[n] (n6) at (-3,-1) {}
+			edge [-]	(n0)
+		;
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0)] {}; 
+			\node [fill=blue!5,circle,fit=(n1) (n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5) (n6)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
 }

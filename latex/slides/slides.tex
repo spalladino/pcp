@@ -15,8 +15,8 @@
 
 %\usetheme{warsaw}
 
-\newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
-\newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
+\newcommand{\lpobjective}[2]{#1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{#1 \[ #2 \qquad #3 \]}
 \newcommand{\lpineq}[2]{\[ #1 \qquad #2 \]}
 \newcommand{\xor}{\veebar}
 
@@ -316,50 +316,123 @@ La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino 
 
 \end{frame} 
 
+\begin{frame}
+\frametitle{Programación lineal entera}
+
+A diferencia de programación lineal con variables continuas, no se conoce algoritmo \textit{polinomial} para lineal entera.
+
+Entre las técnicas para resolver este tipo de problemas se encuentran los algoritmos de \textit{branch and cut}, como el que aplicamos en este trabajo.
+
+\end{frame}
+
+\section{Modelado}
 
 \begin{frame} 
-\frametitle{Related work}
+\frametitle{Modelo de coloreo}
 
-\begin{description}[Noronha, Ribeiro; 2006]
+Definimos las siguientes variables binarias:
 
-\item[Li, Simha; 2000]{Greedy one step and two step heuristics}
-\item[Noronha, Ribeiro; 2006]{Tabu search heuristic}
-\item[Frota et al; 2009]{Branch and cut based on asymmetric representatives formulation}
-
-\end{description}
-
-\pause
-
-We will propose an alternative integer programming formulation of the problem based on Mendez-Diaz and Zabala's model for standard coloring.
-
-\end{frame} 
-
-\section{Model}
-\subsection{Model definition}
-
-\begin{frame}
-\frametitle{Model}
-
-Every variable $x_{ij}$ is true if vertex $i$ is colored with color $j$. Variables $w_j$ are true if color $j$ is used in coloring the graph. 
+\begin{itemize}
+\item{$x_{ij}$ es verdadera sii el vértice $i$ es coloreado con el color $j$}
+\item{$w_{j}$ es verdadera sii el color $j$ fue usado}
+\end{itemize}
 
 \uncover<1->{
-\lpobjective{Minimize sum of colors used}
+\lpobjective{Buscamos minimizar la cantidad de colores distintos usados}
 {\min \sum_{j \in C} w_{j}}
 }
 
-\uncover<2->{
-\lprestriction{Neighbours shall not have the same colour, and variable $w_j$ must be true if the color is to be used}
-{x_{ij} + x_{kj} \leq w_j}{\forall j, \forall (i,k) \in E}
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Modelo de coloreo}
+
+Tenemos que agregar las restricciones de coloreo al modelo:
+
+\begin{itemize}
+\item<2->{
+\lprestriction{La variable $w_j$ es verdadera sii algún vértice usa el color $j$}
+{x_{ij} \leq w_j}{\forall j \in C, \forall i \in V}
 }
-\uncover<3->{
-\lprestriction{Every \only<3>{vertex}\alert<4>{\only<4>{partition}} has exactly one colour assigned}
-{\uncover<4>{\sum _{x_i \in p}} \sum_{j \in C} x_{ij} = 1}{\forall i \in V \uncover<4>{, p \in P}}
+
+\item<3->{
+\lprestriction{Dos vecinos no pueden usar el mismo color}
+{x_{ij} + x_{kj} \leq 1}{\forall j \in C, \forall (i,k) \in E}
 }
+
+\item<4->{
+\lprestriction{Cada \only<4>{vértice}\alert<5>{\only<5>{partición}} tiene exactamente un color asignado}
+{\uncover<5>{\sum _{x_i \in p}} \sum_{j \in C} x_{ij} = 1}{\forall i \in V \uncover<5>{, p \in P}}
+}
+\end{itemize}
 
 \end{frame} 
 
 \begin{frame}
-\frametitle{Improving LP}
+\frametitle{Modelo de coloreo}
+
+Con esto ya tenemos una formulación básica del problema que podemos resolver con un algoritmo de branch and cut.
+
+Pero podemos reforzar la formulación para mejorar los tiempos de resolución del algoritmo.
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Eliminación de simetría}
+
+Un problema que tiene este problema, que se traduce al modelo, es que admite muchas soluciones simétricas para un mismo grafo:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{symmetry.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Eliminación de simetría}
+
+Agregamos restricciones al modelo que eliminan estas soluciones simétricas:
+
+\begin{itemize}
+\item<2->{
+\lprestriction{No se permite usar un color hasta que no se hayan usado todos los anteriores}
+{w_j \geq w_{j+1}}{\forall 1 \leq j < c }
+}
+\item<3->{
+\lprestriction{Asignamos el color de menor índice al conjunto independiente que tenga la partición de menor índice}
+{x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1}}{\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j \leq k}
+}
+\item<4->{
+\lprestriction{Ninguna partición puede estar coloreada con un color de etiqueta mayor a su índice}
+{x_{ij} = 0}{\forall j > p(i) + 1}
+}
+
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Reformulación}
+
+Además de las restricciones de eliminación de simetría, reformulamos otras restricciones para reforzar el modelo:
+
+\begin{itemize}
+\item<2->{
+\lprestriction{Reemplazamos las restricciones de simetría pidiendo que o bien un nodo $i_0$ tiene el color $j$, o a lo sumo $r$ de sus vecinos lo utilizan.}
+{\sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j}{\forall j \in C, \; \forall i_0 \in V}
+\begin{figure}[h]
+\centering
+\uncover<3->{\alt<3>{\adjsrestrictionnode}{\adjsrestrictionneighb}}
+\end{figure}
+}
+\end{itemize}
+
+\uncover<4->{Estos cambios derivan en un modelo que genera soluciones equivalentes a las anteriores pero con mejor performance.}
+
+\end{frame} 
+
+\begin{frame} 
 
 We also take symmetry breaking constraints from the original model and additional restrictions for eliminating fractional solutions.
 
@@ -371,7 +444,6 @@ We also take symmetry breaking constraints from the original model and additiona
 
 \end{frame} 
 
-
 \begin{frame}
 \frametitle{Reworking adjacency constraints}
 
@@ -379,7 +451,6 @@ Adjacency constraints can be replaced by either of the following, which improve 
 
 \lprestriction{A node $i_0$ and all of its neighbours in a partition $p_0$ cannot share the same the color}
 {\sum_{i \in p_0 \cap N(i_0)} x_{ij_0} + x_{i_0j_0} \leq w_{j_0}}{\forall i_0 \in V, j_0 \in C, p_0 \in P}
-
 
 \lprestriction{A color $j_0$ may be used on a node $i_0$ or on at most $r$ of its neighbours, being $r$ the number of different partitions in $N(i_0)$}
 {\sum_{i \in N(i_0)} x_{ij_0} + r x_{i_0j_0} \leq r w_{j_0}}{ \forall j_0 \in C, i_0 \in V}
