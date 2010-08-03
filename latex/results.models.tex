@@ -2,11 +2,11 @@
 
 \subsection{Models comparison}
 
-We executed a test suite for determining which inequalities to use in the formulation of the problem. Recall from section \ref{sec:model} that there are several restrictions that can be applied to define the model, as well as additional ones that may strengthen the model or reduce symmetrical solutions.
+We executed a test suite for determining which inequalities to use in the formulation of the problem. Recall from section \ref{sec:model} that there are several restrictions that can be applied to define the model, as well as additional ones that may strengthen the model or reduce the number of symmetrical solutions.
 
-In order to test the effectiveness of the different formulations, we applied a fixed number of cutting planes iterations, using all implemented cuts with a slightly aggressive configuration, and reported the resulting MIP gap and running time (in seconds), as well as, in certain cases, how many rounds of cutting planes were executed. It is worth noting that in some cases fewer iterations than total were applied as the separation heuristics were not able to find any more violated constraints.
+In order to test the effectiveness of the different formulations, we applied a fixed number of cutting planes iterations, using all implemented cuts with a slightly aggressive configuration, and reported the resulting MIP gap and running time (in seconds), as well as how many rounds of cutting planes were executed. It is worth noting that in some cases fewer iterations than total were applied as the separation heuristics were not able to find any more violated inequalities.
 
-For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition, and powerlaw cluster graphs with the same size, changing only the density of the graphs. All graphs are preprocessed beforehand.
+For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition, and powerlaw cluster graphs with the same size, changing only the density of the graphs. All graphs were preprocessed beforehand.
 
 \subsubsection*{Adjacency constraints}
 
