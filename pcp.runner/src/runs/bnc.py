@@ -6,18 +6,20 @@ from common import update_copy
 
 
 def files():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n120\\.00(0|1|2)\\.in') + \
-        fetcher.Fetcher(datadir).fetch_files('benchnodes', 'n((100)|(120)|(140)|(160)|(180)|(200))\\.00(0|1|2)\\.in') + \
-        fetcher.Fetcher(datadir).fetch_files('holme', 'n120d0(1|2|3|4)\\.00[\\d]\\.in') 
-    
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((80)|(100))\\.00(0|1|2)\\.in')     
 
 baseprops = {
              'cuts.enabled': 'true',
              'cuts.iterations.root.max': '100',
+             'cuts.everynodes':'1',
+             'cuts.maxdepth':'0',
+             'cuts.local':'true',
+             'cuts.onlyonup':'true',
+                          
              'solver.maxTime': '1800',
              'solver.kind': 'PcpBranchAndCut',
              'branch.selection': '1',
-             'branch.direction': '0',
+             'branch.direction': '1',
              'branch.prios.enabled': 'true',
              'branch.prios.psize': '0',
              'branch.prios.psadjacent': '10',
@@ -44,29 +46,25 @@ baseprops = {
             
             'solver.mipEmphasis': '0',
             'solver.probing': '0',
-			'cuts.minCliques': '40'
+			'cuts.minCliques': '100',
 			
             'pruning.enabled': 'false',
-            'pruning.minset': '10',
-            'pruning.remaining': '20',
+            'pruning.minset': '5',
+            'pruning.remaining': '10',
             'pruning.frac': '1.0',
 
 			'clique.enabled': 'true',
 			'path.enabled': 'true',
 			'gprime.path.enabled': 'true',
 			'blockColor.enabled': 'true',
-			'solver.useCplexCuttingPlanes': 'true',
+			'solver.useCplexCuttingPlanes': 'false',
+            'solver.useCplexPrimalHeuristic': 'false',
 
               }
 			  
 pruning_runs = create_runs(baseprops, [
 				{
 					'pruning.enabled': 'false',
-
-				},
-				{
-					'pruning.enabled': 'true',
-		            'pruning.remaining': '10',
 				},
 				{
 					'pruning.enabled': 'true',
@@ -74,10 +72,28 @@ pruning_runs = create_runs(baseprops, [
 				},
 				{
 					'pruning.enabled': 'true',
-		            'pruning.remaining': '30',
+		            'pruning.remaining': '40',
 				},
 				{
 					'pruning.enabled': 'true',
-		            'pruning.remaining': '40',
-				}
+		            'pruning.remaining': '60',
+				},
 				])
+
+pruning_noub_runs = create_runs(baseprops, [
+                {
+                    'pruning.useub': 'false',
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '20',
+                },
+                {
+                    'pruning.useub': 'false',
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '40',
+                },
+                {
+                    'pruning.useub': 'false',
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '60',
+                },
+                ])

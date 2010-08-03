@@ -8,31 +8,24 @@ import runs.model as model
 import runs.preprocess as preproc
 import runs.primal as primal
 import runs.cuts as cuts
+import runs.bnc as bnc
 
 import fetcher
 import files
 import os
  
 def main():
+
+    Fixture().resume()
     
-    files = cuts.files()
+    files = bnc.files()
     print 'Processing: ', files
 
     Fixture().newrun(
-                cuts.familiesruns, 
+                bnc.pruning_noub_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100726CUTSFAMILIES2'
-            )
-    
-    files = cuts.files()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                cuts.blockcolorruns, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100726BLOCKCOLOR2'
+                runid = '20100803PRUNINGNOUB'
             )
     
 if __name__ == '__main__':
