@@ -537,3 +537,111 @@
 
 	\end{tikzpicture} 
 }
+
+
+\newcommand{\extclique}{
+\begin{tikzpicture}
+		[
+		n/.style= {minimum size=3mm,thick,circle,draw=black,fill=black!100},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {}
+		;
+
+		\node[n] (n1) at (1,0) {}
+		;
+		
+		\node[n] (n2) at (4,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at (5,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+
+		\node[n] (n4) at (-3,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3)
+		;
+		
+		\node[n] (n5) at (-4,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3)
+		;
+
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,circle,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+
+\newcommand{\togprime}{
+\begin{tikzpicture}
+		[
+		n/.style= {minimum size=3mm,thick,circle,draw=black,fill=black!100},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {}
+		;
+
+		\node[n] (n1) at (1,0) {}
+		;
+		
+		\node[n] (n2) at (4,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at (5,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+
+		\node[n] (n4) at (-3,4) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-4,3) {}
+			edge [-]	(n1)
+			edge [-]	(n2)
+		;
+
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,circle,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+
+\newcommand{\gprime}{
+\begin{tikzpicture}
+		[
+		n/.style= {minimum size=3mm,thick,circle,draw=black,fill=black!100},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {}
+		;
+		
+		\node[n] (n2) at (4,4) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-4,4) {}
+		;
+
+	\end{tikzpicture} 
+}
+

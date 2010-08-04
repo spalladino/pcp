@@ -64,7 +64,7 @@ El problema de coloreo consiste en asignar un \textbf{color} a cada nodo de mane
 	\samplecoloredgraph
 \end{figure}
 
-\end{frame}
+\end{frame}	
 
 \begin{frame}
 \frametitle{Coloreo}
@@ -432,97 +432,180 @@ Además de las restricciones de eliminación de simetría, reformulamos otras restr
 
 \end{frame} 
 
+\section{Resolución}
 \begin{frame} 
+\frametitle{Resolución}
 
-We also take symmetry breaking constraints from the original model and additional restrictions for eliminating fractional solutions.
+Una manera de resolver un problema de programación lineal entera consiste en aplicar un algoritmo de \textit{branch and cut}, el cual es una combinación de las técnicas de planos de corte y de branch and bound.
 
-\lprestriction{Color $j$ cannot be used unless color $j-1$ was used}
-{w_{j} \leq w_{j-1}}{\forall j \neq 0 \in C}
-
-\lprestriction{The label of a color used for a partition cannot exceed $\chi$}
-{\sum_{j \in C} w_{j} \geq \sum_{x_i \in p} \sum_{j \in C} x_{ij}}{\forall p \in P}
+Estas técnicas se basan en resolver el problema \textbf{sin} las restricciones de integralidad, eliminar la solucción fraccionaria con algún criterio, y repetir el proceso.
 
 \end{frame} 
 
-\begin{frame}
-\frametitle{Reworking adjacency constraints}
+\begin{frame} 
+\frametitle{Planos de corte}
 
-Adjacency constraints can be replaced by either of the following, which improve the relaxation's resolution.
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
 
-\lprestriction{A node $i_0$ and all of its neighbours in a partition $p_0$ cannot share the same the color}
-{\sum_{i \in p_0 \cap N(i_0)} x_{ij_0} + x_{i_0j_0} \leq w_{j_0}}{\forall i_0 \in V, j_0 \in C, p_0 \in P}
-
-\lprestriction{A color $j_0$ may be used on a node $i_0$ or on at most $r$ of its neighbours, being $r$ the number of different partitions in $N(i_0)$}
-{\sum_{i \in N(i_0)} x_{ij_0} + r x_{i_0j_0} \leq r w_{j_0}}{ \forall j_0 \in C, i_0 \in V}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample1filled.png}
+\end{figure}
 
 \end{frame} 
 
-\subsection{Valid inequalities}
+\begin{frame} 
+\frametitle{Planos de corte}
 
-\begin{frame}
-\frametitle{Extended clique inequalities}
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
 
-Let $K \subseteq V$ an \textit{extended clique} if for every pair $v,w \in K$, either $v$ and $w$ are adjacent or belong to the same partition.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample4filled.png}
+\end{figure}
 
-We define the extended clique inequality as
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample5cutfilled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample6cutfilled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample7cut2filled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample8cut2filled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Requiere encontrar familias de desigualdades válidas, genéricas o particulares del problema, para usar como cortes.
+
+Se usan heurísticas para hallar el corte dado una solucción fraccionaria.
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Una partición no puede colorearse con el color $j_0$ a menos que todos los anteriores ya hayan sido usados.
+\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}}
+
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Dada una clique extendida, cada nodo en ella debe tener un color distinto.
 \lpineq{\sum_{i \in K} x_{ij_0} \leq w_{j_0}}{\forall j_0 \in C}
 
-We use a greedy heuristic to find maximal cliques in the graph which violate this inequality.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{extclique.png}
+\end{figure}
+}
+
+\end{itemize}
 
 \end{frame} 
 
-\begin{frame}
-\frametitle{Block color inequalities}
 
-Given the symmetry breaking constraints, a partition being coloured with any label greater or equal than $j_0$ is subject to $w_{j_0}$ being set.
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
 
-This allows us to define the block color constraints as:
-\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}
+\begin{itemize}
 
-All these constraints are simply handled by brute force.
+\item{Dado un conjunto independiente máximo $I$ de tamaño $\alpha$ tal que cada nodo está en una partición distinta, a lo sumo $\alpha$ nodos pueden tener el mismo color.
+\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha w_{j_0}}{\forall j_0 \in C}
+
+\uncover<2->{
+Especializamos esta desigualdad tomando subgrafos cuyos conjunto independientes máximos son fáciles de calcular.
+
+\begin{itemize}
+\item{Component paths}
+\item{Component holes}
+\end{itemize}
+}}
+\end{itemize}
 
 \end{frame} 
 
-\begin{frame}
-\frametitle{Component independent set inequalities}
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
 
-Let $I \subseteq V$ be a \textit{component independent set} if for every pair $v,w \in I$, $v$ and $w$ are not adjacent and belong to different partitions.
+\begin{itemize}
 
-This allows us to reuse the independent set inequality from the standard coloring problem.
-\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha(I) w_{j_0}}{\forall j_0 \in C}
+\item La desigualdad de conjunto independiente también puede aplicarse sobre el \textit{grafo de particiones} del grafo original.
 
-\pause
+Dado un grafo, el grafo de particiones tiene un nodo por cada partición, y dos nodos son adyacentes sii todos los nodos de las dos particiones eran adyacentes entre sí:
+\uncover<2->{
+\begin{figure}[h]
+	\centering
+	\alt<2>{\includegraphics[scale=0.4]{togprime.png}}
+	{\includegraphics[scale=0.4]{gprime.png}}
+\end{figure}
+}
 
-Which can be strengthened considering symmetry breaking.
-\lpineq{\sum _{i \in I} x_{ij_0} + \sum ^n _{j = n - \alpha(I) + 1} \sum _{i \in V} x_{ij} \leq \alpha(I) w_{j_0} + w_{n - \alpha(I) + 1}}
-{\forall j_0 \leq n - \alpha(G)}
+\uncover<4->{La desigualdad se aplica sobre el grafo de particiones y se expande a todos los nodos de cada partición.}
 
-\end{frame}
+\end{itemize}
 
-\begin{frame}
-\frametitle{Hole and path inequalities}
+\end{frame} 
 
-Component independent set inequalities can be specialized as component hole and component path inequalities, using $\lfloor |H|/2 \rfloor$ and $\lceil |P|/2 \rceil$ respectively as their cardinals.
 
-We use a greedy heuristic constructing a path from each node for each colour. The criteria for choosing a node is based on its corresponding $x_{ij}$ value and whether it has been previously visited or not.
+\begin{frame} 
+\frametitle{Branch and bound}
 
-\end{frame}
+Otra técnica de resolución es la de \textit{branch and bound}. Dada una solución a la relajación del problema, se crean dos subproblemas que eliminan dicha solución y se resuelven ambos por separado, continuando de manera recursiva.
 
-\begin{frame}
-\frametitle{G' independent set inequalities}
 
-Given a partitioned graph $G=(V,E,P)$, we define the graph $G'=(V',E')$, with $V' = P$ and $E'$ such that $p_1,p_2 \in V'$ are adjacent iif every node in partition $p_1$ in $G$ is adjacent to every node in partition $p_2$ in $G$. More formally:
-\[
-E' = \{(p_1,p_2) : p_1,p_2 \in V' \wedge \forall v \in p_1 \forall w \in p_2 : (v,w) \in E \}
-\]
 
-\pause
+\end{frame} 
 
-This grants another way to reuse independent set inequalities from the standard coloring problem; let $I'$ be an independent set in $G'$, then:
-
-\lpineq{\sum_{p \in I'} \sum_{i \in p} x_{ij_0} \leq \alpha(I') w_{j_0}}{\forall j_0 \in C}
-
-\end{frame}
 
 \section{Branch \& Cut}
 

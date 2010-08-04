@@ -37,5 +37,27 @@ plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', 'hull
 set output 'ilpsample3.png'
 plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', 'hull.dat' t 'hull' w lines lc 3, (-x + 7) t 'objective'
 
+set output 'ilpsample4.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7.63636) t 'objective' lc 5
+
+set output 'ilpsample5cut.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-x + 7.63636) t 'objective' lc 5
+
+set output 'ilpsample6cut.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-x + 7.285) t 'objective' lc 5
+
+set output 'ilpsample7cut2.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-0.5*x+5.5) t 'cut' lc 4, (-x + 7.285) t 'objective' lc 5
+
+set output 'ilpsample8cut2.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-0.5*x+5.5) t 'cut' lc 4, (-x + 7) t 'objective' lc 5
+
+set output 'ilpsample10.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7.5) t 'objective' lc 5
+
+set output 'ilpsample11.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7) t 'objective' lc 5
+
+
 unset output
 set terminal 'window'
