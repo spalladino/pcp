@@ -1,0 +1,736 @@
+%\documentclass[handout]{beamer}
+\documentclass[10pt]{beamer}
+\usepackage[spanish]{babel}
+\usepackage[ansinew]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{exscale}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{proof}
+\usepackage{color}
+
+\usepackage{tikz}
+\usetikzlibrary{backgrounds,fit,arrows} 
+
+%\usetheme{warsaw}
+
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
+
+\newcommand{\lpobjective}[2]{#1 \[ #2 \]}
+\newcommand{\lprestriction}[3]{#1 \[ #2 \qquad #3 \]}
+\newcommand{\lpineq}[2]{\[ #1 \qquad #2 \]}
+\newcommand{\xor}{\veebar}
+
+\definecolor{briancolor}{rgb}{0.2,0.2,0.7}
+
+\input{graphs.tex}
+
+\begin{document}
+
+\title[Un algoritmo de Branch \& Cut para PCP]{Un algoritmo de Branch \& Cut para el problema de coloreo particionado}
+\author[Santiago Palladino, Isabel Méndez-Díaz, Paula Zabala]{Santiago Palladino\\ \vskip 2pt Directoras: Isabel Méndez-Díaz, Paula Zabala \\ \vskip 8pt \{spalladino,imendez,pzabala\}@dc.uba.ar \\ \vskip 10pt \scriptsize{Facultad de Ciencias Exactas y Naturales \\ Universidad de Buenos Aires}}
+\institute{Tesis de Licenciatura}
+\date{Agosto 2010}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\setlength{\parskip}{10pt plus 1pt minus 1pt}
+
+\section{Introducci\'on}
+\subsection{Grafos}
+
+\begin{frame}
+\frametitle{Grafos}
+
+Un grafo $G$ se define como un par $V,E$ donde $V$ es un conjunto de nodos, unidos por los ejes del conjunto $E$.
+
+\vspace{11pt}
+
+\begin{figure}[h]
+	\centering	
+	\samplegraph
+\end{figure}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Coloreo}
+
+El problema de coloreo consiste en asignar un \textbf{color} a cada nodo de manera tal que dos nodos adyacentes tengan colores distintos. Se busca minimizar la cantidad de colores a utilizar.
+
+\begin{figure}[h]
+	\centering	
+	\samplecoloredgraph
+\end{figure}
+
+\end{frame}	
+
+\begin{frame}
+\frametitle{Coloreo}
+
+Pintando el mapa de sudamérica...
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{../imgs/southamerica.png}
+\end{figure}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Grafos particionados}
+
+Un grafo \textbf{particionado} es un grafo en el que el conjunto de nodos se encuentra dividido en particiones $P_0, \ldots,P_q$.
+
+\vspace{21pt}
+
+\begin{figure}[h]
+	\centering	
+	\samplepartitionedgraph
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Coloreo particionado}
+
+El problema de coloreo \textbf{particionado} consiste en, dado un grafo particionado, asignar un \textbf{color} a un solo nodo por particion, de manera tal que dos nodos adyacentes no usen colores iguales. Se busca minimizar la cantidad de colores a utilizar.
+
+\begin{figure}[h]
+	\centering	
+	\samplepartitionedcoloredgraph
+\end{figure}
+
+\end{frame}
+
+\subsection{Motivación}
+
+\begin{frame} 
+\frametitle{Redes WDM}
+
+Wavelength-division multiplexing (WDM) permite multiplexar distintas señales ópticas sobre un mismo enlace físico utilizando distintas frecuencias para cada uno.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{../imgs/wdm.png}
+\end{figure}
+
+Se tiene una red compuesta por nodos en la que las conexiones entre ellos utilizan esta tecnología. 
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Problema}
+
+Se tiene un conjunto de pedidos de conexiones entre nodos, donde cada conexión debe usar una única frecuencia a lo largo de todo el camino, y si dos conexiones comparten algun enlace físico deben usar frecuencias distintas.
+
+El objetivo es determinar un conjunto de rutas tal que se minimice la cantidad de frecuencias distintas usadas.
+
+\begin{figure}[h]
+	\centering
+	\samplenetwork
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Resolución en dos partes}
+
+Li y Sinha propusieron una solución en dos partes para este problema:
+\begin{enumerate}
+\item{Generar un conjunto de rutas posibles entre cada par de nodos a conectar}
+\item{Elegir una ruta de cada conjunto de manera tal que se minimice la cantidad de frecuencias necesarias}
+\end{enumerate}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Generación de rutas}
+
+Mediante una heurística, se genera una cierta cantidad de caminos distintos entre cada par de nodos que se desean conectar. Pueden usarse criterios de camino mínimo o de maximum edge disjoint path.
+
+\begin{figure}[h]
+	\centering
+	\samplenetworkroutes
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Asignación de frecuencias}
+
+El siguiente paso es elegir una ruta entre cada par de nodos y asignarle una frecuencia, de manera tal que dos rutas distintas con la misma frecuencia no compartan ningún enlace.
+
+Esto puede modelarse como un problema de coloreo particionado:
+\begin{itemize}
+\item{Los nodos representan las rutas}
+\item{Las rutas están agrupadas en particiones según qué conexión satisfacen}
+\item{Los ejes indican que las rutas comparten al menos un enlace y no pueden compartir frecuencia}
+\item{Las frecuencias se modelan mediante los colores}
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Asignación de frecuencias}
+
+Nuestro ejemplo puede resolverse usando una única frecuencia...
+
+\begin{figure}[h]
+		\centering	
+		\alt<1>{\networkpcpgraph}{\networkpcpcoloredgraph}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\alt<1>{\samplenetworkroutes}{\solvednetwork}
+\end{figure}
+
+\uncover<2>{}
+
+\end{frame} 
+
+\section{Programación lineal}
+
+\subsection{Programación lineal}
+
+\begin{frame} 
+\frametitle{Programación lineal}
+
+Buscamos maximizar/minimizar una función objetivo sujeta a un conjunto de restricciones lineales sobre las variables.
+
+Por ejemplo, dadas $x, y \in \Re$...
+
+\begin{align*}
+\text{{maximizar}} \quad & x + y \\
+\text{{sujeto a}} \quad & x + 4y \leq 16 \\
+& 3x + y \leq 15 \\
+& x, y \in \Re^{\geq 0}
+\end{align*}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal}
+
+Las restricciones determinan una región factible sobre la que se busca el óptimo que maximiza la función objetivo.
+
+\begin{figure}[h]
+	\centering
+	\alt<1>{\includegraphics[scale=0.5]{lpsample1.png}}{\includegraphics[scale=0.5]{lpsample2.png}}
+\end{figure}
+
+\uncover<2>{}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Modelado}
+
+Podemos usar programación lineal para modelar múltiples escenarios, sean de economía, planificación, etc.
+
+Intentemos usarlo para modelar implicaciones lógicas: cada variable toma valores $0$ si es falsa o $1$ si es verdadera:
+
+\begin{align*}
+\text{maximizar} \quad & x + y + z\\
+\alt<1>
+{\text{sujeto a} \quad & x \xor y \\
+& x \xor z \\
+& y \xor z \\
+& x, y, z \quad \text{bool} \\}
+{\text{sujeto a} \quad & x + y \leq 1 \\
+& x + z \leq 1 \\
+& y + z \leq 1 \\
+& 0 \leq x, y, z \leq 1 \\}
+\end{align*}
+
+\uncover<3>{El óptimo de este problema está en \alert{$<x,y,z> = <\frac{1}{2},\frac{1}{2},\frac{1}{2}>$.}}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+Necesitamos restringir a que las variables tomen solamente valores enteros para evitar casos como el anterior.
+
+Al problema resultante se lo llama de programación lineal \textbf{entera}.
+
+\begin{align*}
+\text{maximizar} \quad & x + y + z\\
+\text{sujeto a} \quad & x + y \leq 1 \\
+& x + z \leq 1 \\
+& y + z \leq 1 \\
+& \alert{x, y, z \in \{0,1\}} \\
+\end{align*}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample0.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample1.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample2.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample3.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Programación lineal entera}
+
+A diferencia de programación lineal con variables continuas, no se conoce algoritmo \textit{polinomial} para lineal entera.
+
+Entre las técnicas para resolver este tipo de problemas se encuentran los algoritmos de \textit{branch and cut}, como el que aplicamos en este trabajo.
+
+\end{frame}
+
+\section{Modelado}
+
+\begin{frame} 
+\frametitle{Modelo de coloreo}
+
+Definimos las siguientes variables binarias:
+
+\begin{itemize}
+\item{$x_{ij}$ es verdadera sii el vértice $i$ es coloreado con el color $j$}
+\item{$w_{j}$ es verdadera sii el color $j$ fue usado}
+\end{itemize}
+
+\uncover<1->{
+\lpobjective{Buscamos minimizar la cantidad de colores distintos usados}
+{\min \sum_{j \in C} w_{j}}
+}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Modelo de coloreo}
+
+Tenemos que agregar las restricciones de coloreo al modelo:
+
+\begin{itemize}
+\item<2->{
+\lprestriction{La variable $w_j$ es verdadera sii algún vértice usa el color $j$}
+{x_{ij} \leq w_j}{\forall j \in C, \forall i \in V}
+}
+
+\item<3->{
+\lprestriction{Dos vecinos no pueden usar el mismo color}
+{x_{ij} + x_{kj} \leq 1}{\forall j \in C, \forall (i,k) \in E}
+}
+
+\item<4->{
+\lprestriction{Cada \only<4>{vértice}\alert<5>{\only<5>{partición}} tiene exactamente un color asignado}
+{\uncover<5>{\sum _{x_i \in p}} \sum_{j \in C} x_{ij} = 1}{\forall i \in V \uncover<5>{, p \in P}}
+}
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Modelo de coloreo}
+
+Con esto ya tenemos una formulación básica del problema que podemos resolver con un algoritmo de branch and cut.
+
+Pero podemos reforzar la formulación para mejorar los tiempos de resolución del algoritmo.
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Eliminación de simetría}
+
+Un problema que tiene este problema, que se traduce al modelo, es que admite muchas soluciones simétricas para un mismo grafo:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{symmetry.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Eliminación de simetría}
+
+Agregamos restricciones al modelo que eliminan estas soluciones simétricas:
+
+\begin{itemize}
+\item<2->{
+\lprestriction{No se permite usar un color hasta que no se hayan usado todos los anteriores}
+{w_j \geq w_{j+1}}{\forall 1 \leq j < c }
+}
+\item<3->{
+\lprestriction{Asignamos el color de menor índice al conjunto independiente que tenga la partición de menor índice}
+{x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1}}{\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j \leq k}
+}
+\item<4->{
+\lprestriction{Ninguna partición puede estar coloreada con un color de etiqueta mayor a su índice}
+{x_{ij} = 0}{\forall j > p(i) + 1}
+}
+
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Reformulación}
+
+Además de las restricciones de eliminación de simetría, reformulamos otras restricciones para reforzar el modelo:
+
+\begin{itemize}
+\item<2->{
+\lprestriction{Reemplazamos las restricciones de simetría pidiendo que o bien un nodo $i_0$ tiene el color $j$, o a lo sumo $r$ de sus vecinos lo utilizan.}
+{\sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j}{\forall j \in C, \; \forall i_0 \in V}
+\begin{figure}[h]
+\centering
+\uncover<3->{\alt<3>{\adjsrestrictionnode}{\adjsrestrictionneighb}}
+\end{figure}
+}
+\end{itemize}
+
+\uncover<4->{Un candidato para $r$ es la cantidad de particiones en la vecindad de $i_0$.}
+
+\end{frame} 
+
+\section{Resolución}
+\begin{frame} 
+\frametitle{Resolución}
+
+Una manera de resolver un problema de programación lineal entera consiste en aplicar un algoritmo de \textit{branch and cut}, el cual es una combinación de las técnicas de planos de corte y de branch and bound.
+
+Estas técnicas se basan en resolver el problema \textbf{sin} las restricciones de integralidad, eliminar la solucción fraccionaria con algún criterio, y repetir el proceso.
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample1filled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample4filled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample5cutfilled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample6cutfilled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample7cut2filled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Dada una solución de la relajación del problema, se busca una \textit{desigualdad válida} que la elimine pero conserve todas las soluciones enteras del problema.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample8cut2filled.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Requiere encontrar familias de desigualdades válidas, genéricas o particulares del problema, para usar como cortes.
+
+Se usan heurísticas para hallar el corte dado una solucción fraccionaria.
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Una partición no puede colorearse con el color $j_0$ a menos que todos los anteriores ya hayan sido usados.
+\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}}
+
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Dada una clique extendida, cada nodo en ella debe tener un color distinto.
+\lpineq{\sum_{i \in K} x_{ij_0} \leq w_{j_0}}{\forall j_0 \in C}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{extclique.png}
+\end{figure}
+}
+
+\end{itemize}
+
+\end{frame} 
+
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Dado un conjunto independiente máximo $I$ de tamaño $\alpha$ tal que cada nodo está en una partición distinta, a lo sumo $\alpha$ nodos pueden tener el mismo color.
+\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha w_{j_0}}{\forall j_0 \in C}
+
+\uncover<2->{
+Especializamos esta desigualdad tomando subgrafos cuyos conjunto independientes máximos son fáciles de calcular.
+
+\begin{itemize}
+\item{Component paths}
+\item{Component holes}
+\end{itemize}
+}}
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item La desigualdad de conjunto independiente también puede aplicarse sobre el \textit{grafo de particiones} del grafo original.
+
+Dado un grafo, el grafo de particiones tiene un nodo por cada partición, y dos nodos son adyacentes sii todos los nodos de las dos particiones eran adyacentes entre sí:
+\uncover<2->{
+\begin{figure}[h]
+	\centering
+	\alt<2>{\includegraphics[scale=0.4]{togprime.png}}
+	{\includegraphics[scale=0.4]{gprime.png}}
+\end{figure}
+}
+
+\uncover<4->{La desigualdad se aplica sobre el grafo de particiones y se expande a todos los nodos de cada partición.}
+
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Branch and Bound}
+
+Otra técnica de resolución es la de \textit{branch and bound}. Dada una solución a la relajación del problema, se crean dos subproblemas que eliminan dicha solución y se resuelven ambos por separado, continuando de manera recursiva.
+
+\uncover<2->{
+Una manera típica de generar los subproblemas es tomar una variable con valor fraccionario $x^*$ en el óptimo y generar subproblemas a partir de agregar las restricciones:
+
+\begin{itemize}
+\item $x \leq \floor{x^*}$
+\item $x \geq \ceil{x^*}$
+\end{itemize}
+}
+\end{frame} 
+
+
+\begin{frame} 
+\frametitle{Branch and Bound}
+
+Generando los subproblemas dado el poliedro, brancheando primero por $x$ y después por $y$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample4filled.png}
+\end{figure}
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Branch and Bound}
+
+Generando los subproblemas dado el poliedro, brancheando primero por $x$ y después por $y$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample9.png}
+\end{figure}
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Branch and Bound}
+
+Generando los subproblemas dado el poliedro, brancheando primero por $x$ y después por $y$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample12.png}
+\end{figure}
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Branch and Bound}
+
+Generando los subproblemas dado el poliedro, brancheando primero por $x$ y después por $y$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample10.png}
+\end{figure}
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Branch and Bound}
+
+Generando los subproblemas dado el poliedro, brancheando primero por $x$ y después por $y$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{ilpsample11.png}
+\end{figure}
+\end{frame} 
+
+\section{Branch \& Cut}
+
+\begin{frame}
+\frametitle{Branch and Bound}
+
+Esta división en subproblemas genera un árbol que el algoritmo recorre hasta poder cerrar todos los nodos. Al branchear por variables, en un problema binario, se reduce a intentar las distintas combinaciones de ceros y unos:
+
+\begin{figure}[h]
+	\centering
+	\branchingtree
+\end{figure}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Branch and Bound}
+
+Una rama es cerrada cuando se cumple alguno de los siguientes:
+\begin{itemize}
+\item La relajación es infactible
+\item La solución de la relajación es entera
+\item La solución de la relajación es mayor a la menor solución entera encontrada (en minimización)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Branch and Bound}
+
+En PCP usamos como criterio de branching seleccionar un nodo de una partición sin colorear y asignarle un color distinto entre todos los posibles en los subproblemas:
+
+\begin{figure}[h]
+	\centering
+	\pcpbranchingtree
+\end{figure}
+
+\uncover<2->{El nodo elegido a colorear es el que tiene mayor grado de saturación, es decir, distintos colores usados para sus vecinos.}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Branch and Bound}
+
+Otro componente del branch and bound es la \textit{heurística primal}: consiste en derivar una solución entera a partir de un óptimo de la relajación.
+
+Un esquema típico consiste en tomar las variables con valor fraccionario y redondearlas al valor entero más cercano.
+
+\uncover<2->{En PCP fijamos las variables con valor suficientemente grande y corremos un algoritmo de coloreo secuencial basado en el grado de saturación de los nodos}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Branch and Cut}
+
+Un algoritmo de \textit{branch and cut} es una combinación de branch and bound y planos de corte.
+
+Sobre un esquema de branch and bound, se ejecutan planos de corte cada cierta cantidad de nodos para eliminar aún más soluciones fraccionarias.
+
+\uncover<2->{Esta técnica es la que suele dar los mejores resultados prácticos a la hora de resolver un problema de estas características.}
+
+\end{frame}
+
+\end{document}
+
+

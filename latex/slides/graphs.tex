@@ -1,0 +1,695 @@
+
+\newcommand{\samplegraph}{
+	\begin{tikzpicture}
+		[n/.style= {thick,circle,draw=black}] 
+
+		\node[n] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplecoloredgraph}{\begin{tikzpicture} 
+		[n/.style= {thick,circle,draw=black}] 
+
+		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n,fill=blue!40] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=red!40] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=blue!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n,fill=green!40] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplepartitionedgraph}{
+\begin{tikzpicture} 
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} }
+
+\newcommand{\samplepartitionedcoloredgraph}{
+\begin{tikzpicture} 
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=green!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=red!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplenetwork}
+{\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style={font=\tiny,minimum size=2mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,1) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 1,2) {}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( 1,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 2,1) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 2,2) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, draw=black!50] node[auto] {} 	(n0)
+			
+		;
+		
+		\node[n] (n6) at ( 1,-1) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 3,1) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, draw=black!50] node[auto] {} 	(n6)
+			
+		;
+		
+		\node[n] (n8) at ( 2,-1) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 3,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+			\end{tikzpicture} 
+}
+
+\newcommand{\samplenetworkroutes}
+{
+\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style= {font=\tiny,minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,1) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 1,2) {}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n4) at ( 1,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 2,1) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 2,2) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!50] node[auto,font=\tiny] {$R_1$} 	(n0)
+			edge [<-, bend left, draw=black!50] node[auto,swap,font=\tiny] {$R_2$} (n0)
+		;
+		
+		\node[n] (n6) at ( 1,-1) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 3,1) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!50] node[auto,font=\tiny] {$R_3$}  (n6)
+			edge [<-, bend left, draw=black!50]	node[auto,swap,font=\tiny] {$R_4$} (n6) 
+		;
+		
+		\node[n] (n8) at ( 2,-1) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 3,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+		
+	\end{tikzpicture} 
+	}
+	
+\newcommand{\networkpcpgraph}
+{
+\begin{tikzpicture} 
+			[n/.style= {font=\tiny,minimum size=1mm,thick,circle,draw=black!75}] 
+
+			\node[n,fill=black!25] (n0) at ( 0,0) {$R_1$}; 
+
+			\node[n,fill=black!25] (n1) at ( 0,1) {$R_2$};
+
+			\node[n,fill=black!25] (n2) at ( 3,0) {$R_3$}
+				edge [-]	(n1)
+			;
+
+			\node[n,fill=black!25] (n3) at ( 3,1) {$R_4$};
+
+			\begin{pgfonlayer}{background} 
+				\node [font=\tiny,fill=black!10,circle,fit=(n0) (n1),label=170:$s_1 \rightarrow t_1$] {}; 
+				\node [font=\tiny,fill=black!10,circle,fit=(n2) (n3),label=350:$s_2 \rightarrow t_2$] {}; 
+			\end{pgfonlayer}
+
+		\end{tikzpicture} 
+}
+
+\newcommand{\networkpcpcoloredgraph}
+{
+\begin{tikzpicture} 
+			[n/.style= {font=\tiny,minimum size=1mm,thick,circle,draw=black!75}] 
+
+			\node[n,fill=blue!75] (n0) at ( 0,0) {$R_1$}; 
+
+			\node[n,fill=black!25] (n1) at ( 0,1) {$R_2$};
+
+			\node[n,fill=black!25] (n2) at ( 3,0) {$R_3$}
+				edge [-]	(n1)
+			;
+
+			\node[n,fill=blue!75] (n3) at ( 3,1) {$R_4$};
+
+				\begin{pgfonlayer}{background} 
+					\node [font=\tiny,fill=black!10,circle,fit=(n0) (n1),label=170:$s_1 \rightarrow t_1$] {}; 
+					\node [font=\tiny,fill=black!10,circle,fit=(n2) (n3),label=350:$s_2 \rightarrow t_2$] {}; 
+				\end{pgfonlayer}
+
+		\end{tikzpicture} 
+}
+
+\newcommand{\solvednetwork}
+{
+\begin{tikzpicture} 
+		[bend angle=40,
+		n/.style= {font=\tiny,minimum size=3mm,thick,circle,draw=black!75,fill=black!25}] 
+		
+		\node[n] (n0) at ( 0,0) {$s_1$}; 
+		
+		\node[n] (n1) at ( 0,1) {}
+			edge [-]	(n0)
+		;
+
+		\node[n] (n2) at ( 1,2) {}
+			edge [-]	(n1)
+		;
+		
+			\node[n] (n4) at ( 1,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at ( 2,1) {}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n3) at ( 2,2) {$t_1$}
+			edge [-]	(n2)
+			edge [-]	(n5)
+			edge [<-, bend right, draw=blue!100] node[font=\tiny,auto] {\textcolor{blue!100}{$R_1$}} 	(n0)
+			edge [<-, bend left, draw=black!10] node[font=\tiny,auto,swap] {\textcolor{black!10}{$R_2$}} (n0)
+		;
+		
+		\node[n] (n6) at ( 1,-1) {$s_2$}
+			edge [-]	(n4)
+		;
+		
+		\node[n] (n7) at ( 3,1) {$t_2$}
+			edge [-]	(n5)
+			edge [<-, bend right, draw=black!10] node[font=\tiny,auto] {\textcolor{black!10}{$R_3$}}  (n6)
+			edge [<-, bend left, draw=blue!100]	node[font=\tiny,auto,swap] {\textcolor{blue!100}{$R_4$}} (n6) 
+		;
+		
+		\node[n] (n8) at ( 2,-1) {}
+			edge [-]	(n6)
+		;
+
+		\node[n] (n9) at ( 3,0) {}
+			edge [-]	(n8)
+			edge [-]	(n7)
+		;
+		
+	\end{tikzpicture} 
+}
+
+
+\newcommand{\samplepartitionedcoloredgraphB}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplepartitionedcoloredgraphC}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=blue!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=blue!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\samplepartitionedcoloredgraphD}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+
+		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$}
+		;
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0)
+		;
+
+		\node[n,fill=blue!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1)
+		;
+		
+		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2)
+		;
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0)
+		;
+		
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\adjsrestrictionneighb}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {$i_0$}
+		;
+
+		\node[pnt] (n1) at (3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n2) at (3,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n3) at (3,-1) {}
+		;
+
+		\node[pnt] (n4) at (-3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-3,0) {}
+		;
+		
+		\node[n] (n6) at (-3,-1) {}
+			edge [-]	(n0)
+		;
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0)] {}; 
+			\node [fill=blue!5,circle,fit=(n1) (n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5) (n6)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\adjsrestrictionnode}{
+\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[pnt] (n0) at (0,0) {$i_0$}
+		;
+
+		\node[n] (n1) at (3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n2) at (3,0) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n3) at (3,-1) {}
+		;
+
+		\node[n] (n4) at (-3,1) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-3,0) {}
+		;
+		
+		\node[n] (n6) at (-3,-1) {}
+			edge [-]	(n0)
+		;
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0)] {}; 
+			\node [fill=blue!5,circle,fit=(n1) (n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5) (n6)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+
+\newcommand{\extclique}{
+\begin{tikzpicture}
+		[
+		n/.style= {minimum size=3mm,thick,circle,draw=black,fill=black!100},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {}
+		;
+
+		\node[n] (n1) at (1,0) {}
+		;
+		
+		\node[n] (n2) at (4,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at (5,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+
+		\node[n] (n4) at (-3,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3)
+		;
+		
+		\node[n] (n5) at (-4,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3)
+		;
+
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,circle,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+
+\newcommand{\togprime}{
+\begin{tikzpicture}
+		[
+		n/.style= {minimum size=3mm,thick,circle,draw=black,fill=black!100},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {}
+		;
+
+		\node[n] (n1) at (1,0) {}
+		;
+		
+		\node[n] (n2) at (4,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+		
+		\node[n] (n3) at (5,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+		;
+
+		\node[n] (n4) at (-3,4) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-4,3) {}
+			edge [-]	(n1)
+			edge [-]	(n2)
+		;
+
+		\begin{pgfonlayer}{background} 
+			\node [fill=black!5,circle,fit=(n0) (n1)] {}; 
+			\node [fill=blue!5,circle,fit=(n2) (n3)] {}; 
+			\node [fill=green!5,circle,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{tikzpicture} 
+}
+
+
+\newcommand{\gprime}{
+\begin{tikzpicture}
+		[
+		n/.style= {minimum size=3mm,thick,circle,draw=black,fill=black!100},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=blue!60}] 
+
+		\node[n] (n0) at (0,0) {}
+		;
+		
+		\node[n] (n2) at (4,4) {}
+			edge [-]	(n0)
+		;
+		
+		\node[n] (n5) at (-4,4) {}
+		;
+
+	\end{tikzpicture} 
+}
+
+\newcommand{\branchingtree}{
+	\begin{tikzpicture} 
+		[black/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 branch/.style= {->}] 
+		
+		\node[black] (n4) at ( -3,-4) {};
+		\node[black] (n5) at ( -1,-4) {};
+
+		\node[black] (n6) at ( 1,-4) {};
+		\node[black] (n7) at ( 3,-4) {};
+
+		\node[black] (n1) at ( 2,-2) {}
+			edge[branch] node[swap,auto] {$x_2 = 0$} (n6)
+			edge[branch] node[auto] {$x_2 = 1$} (n7)	
+		;
+		
+		\node[black] (n2) at ( -2,-2) {}
+			edge[branch] node[swap,auto] {$x_2 = 0$} (n4)
+			edge[branch] node[auto] {$x_2 = 1$} (n5)	
+		;
+		
+		\node[black] (n0) at ( 0,0) {}
+			edge[branch] node[auto] {$x_1 = 1$} (n1)
+			edge[branch] node[auto,swap] {$x_1 = 0$} (n2)	
+		;
+		
+	\end{tikzpicture}}
+	
+\newcommand{\pcpbranchingtree}{
+	\begin{tikzpicture} 
+		[black/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 branch/.style= {->}] 
+		
+		\node[black,label=below:{$v \leftarrow j_0$}] (n1) at ( -4,-2) {};
+		\node[black,label=below:{$v \leftarrow j_1$}] (n2) at ( -2,-2) {};
+		\node[black,label=below:{$v \leftarrow j_2$}] (n3) at ( 0,-2) {};
+		\node[black,label=below:{$v \leftarrow j_3$}] (n4) at ( 2,-2) {};
+		\node[black,label=below:{$v \leftarrow \emptyset$}] (n5) at ( 4,-2) {};
+		
+		\node[black] (n0) at ( 0,0) {}
+			edge[branch] (n1)
+			edge[branch] (n2)
+			edge[branch] (n3)
+			edge[branch] (n4)
+			edge[branch] (n5)
+		;
+		
+	\end{tikzpicture}}

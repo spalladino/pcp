@@ -59,9 +59,8 @@ baseprops = {
 			'blockColor.enabled': 'true',
 			'solver.useCplexCuttingPlanes': 'false',
             'solver.useCplexPrimalHeuristic': 'false',
-
               }
-			  
+
 pruning_runs = create_runs(baseprops, [
 				{
 					'pruning.enabled': 'false',
@@ -95,5 +94,40 @@ pruning_noub_runs = create_runs(baseprops, [
                     'pruning.useub': 'false',
                     'pruning.enabled': 'true',
                     'pruning.remaining': '60',
+                },
+                ])
+				
+
+emph_runs = create_runs(baseprops, [
+                {
+                    'solver.mipEmphasis': '0',
+                },
+                {
+                    'solver.mipEmphasis': '1',
+                },
+                {
+                    'solver.mipEmphasis': '2',
+                },
+                {
+                    'solver.mipEmphasis': '3',
+                },
+                {
+                    'solver.mipEmphasis': '4',
+                },
+                ])
+
+
+prob_runs = create_runs(baseprops, [
+                {
+                    'solver.probing': '-1',
+                },
+                {
+                    'solver.probing': '1',
+                },
+                {
+                    'solver.probing': '2',
+                },
+                {
+                    'solver.probing': '3',
                 },
                 ])

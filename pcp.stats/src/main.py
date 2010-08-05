@@ -113,7 +113,7 @@ def primal_settings_latextable():
                 runfilter= None,
                 aggr= aggregate.avg 
                 )
-
+        
 def cuts_clique_latextable():    
         file = '20100722CLIQUECUTS'
         LatexProcessor(file).process(
@@ -124,6 +124,17 @@ def cuts_clique_latextable():
                 runfilter= None,
                 aggr= aggregate.avg 
                 )
+        
+def cuts_blockcolor_latextable():    
+        file = '20100726BLOCKCOLOR2'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap','cuts.niters','solution.time'],   
+                series=['blockColor.enabled','blockColor.usePool'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )        
         
 def cuts_iset_latextable():    
         file = '20100722PATHHOLECUTS'
@@ -137,12 +148,14 @@ def cuts_iset_latextable():
                 )
 
 def cuts_families_latextable():
-        file = '20100723CUTSFAMILIES'
+        file = '20100726CUTSFAMILIES2'
+        time_data = ['solution.gap','cuts.niters','solution.time']
+        number_data = [metrics.CutMetric('BlockColor'), metrics.CutMetric('Clique'), metrics.CutMetric('Hole'), metrics.CutMetric('Path'), metrics.CutMetric('GPHole'), metrics.CutMetric('GPPath')]
         LatexProcessor(file).process(
                 ids=[metrics.FileName()],
-                datas=['solution.gap','cuts.niters','solution.time'],   
-                series=['clique.enabled', 'path.enabled', 'gprime.path.enabled','solver.useCplexCuttingPlanes'],
-                datafilter= {'blockColor.enabled': 'false'},
+                datas=number_data,   
+                series=['blockColor.enabled','clique.enabled', 'path.enabled', 'gprime.path.enabled','solver.useCplexCuttingPlanes'],
+                datafilter= {'blockColor.enabled': 'true', 'path.enabled': 'true', 'gprime.path.enabled': 'true'},
                 runfilter= None,
                 aggr= aggregate.avg 
                 )
