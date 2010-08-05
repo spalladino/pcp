@@ -645,3 +645,51 @@
 	\end{tikzpicture} 
 }
 
+\newcommand{\branchingtree}{
+	\begin{tikzpicture} 
+		[black/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 branch/.style= {->}] 
+		
+		\node[black] (n4) at ( -3,-4) {};
+		\node[black] (n5) at ( -1,-4) {};
+
+		\node[black] (n6) at ( 1,-4) {};
+		\node[black] (n7) at ( 3,-4) {};
+
+		\node[black] (n1) at ( 2,-2) {}
+			edge[branch] node[swap,auto] {$x_2 = 0$} (n6)
+			edge[branch] node[auto] {$x_2 = 1$} (n7)	
+		;
+		
+		\node[black] (n2) at ( -2,-2) {}
+			edge[branch] node[swap,auto] {$x_2 = 0$} (n4)
+			edge[branch] node[auto] {$x_2 = 1$} (n5)	
+		;
+		
+		\node[black] (n0) at ( 0,0) {}
+			edge[branch] node[auto] {$x_1 = 1$} (n1)
+			edge[branch] node[auto,swap] {$x_1 = 0$} (n2)	
+		;
+		
+	\end{tikzpicture}}
+	
+\newcommand{\pcpbranchingtree}{
+	\begin{tikzpicture} 
+		[black/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 branch/.style= {->}] 
+		
+		\node[black,label=below:{$v \leftarrow j_0$}] (n1) at ( -4,-2) {};
+		\node[black,label=below:{$v \leftarrow j_1$}] (n2) at ( -2,-2) {};
+		\node[black,label=below:{$v \leftarrow j_2$}] (n3) at ( 0,-2) {};
+		\node[black,label=below:{$v \leftarrow j_3$}] (n4) at ( 2,-2) {};
+		\node[black,label=below:{$v \leftarrow \emptyset$}] (n5) at ( 4,-2) {};
+		
+		\node[black] (n0) at ( 0,0) {}
+			edge[branch] (n1)
+			edge[branch] (n2)
+			edge[branch] (n3)
+			edge[branch] (n4)
+			edge[branch] (n5)
+		;
+		
+	\end{tikzpicture}}

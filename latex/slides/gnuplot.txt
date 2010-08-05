@@ -58,6 +58,9 @@ plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x +
 set output 'ilpsample11.png'
 plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7) t 'objective' lc 5
 
+set output 'ilpsample12.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7.5) t 'objective' lc 5
+
 
 unset output
 set terminal 'window'
