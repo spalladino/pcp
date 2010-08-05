@@ -7,7 +7,6 @@ import pcp.porta.model.*;
 import porta.interfaces.*;
 
 /** Token Manager. */
-@SuppressWarnings("all")
 public class ModelParserTokenManager implements ModelParserConstants
 {
 

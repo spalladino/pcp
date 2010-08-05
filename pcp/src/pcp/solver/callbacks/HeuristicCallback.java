@@ -35,7 +35,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	private static final boolean onlyOnUp = Settings.get().getBoolean("primal.onlyonup");
 	private static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	private static final int everynodes = Settings.get().getInteger("primal.everynodes");
-	private static final boolean useUB = Settings.get().getBoolean("primal.useub");
+	private static final boolean useUB = Settings.get().getBoolean("pruning.useub");
 		
 	private static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
 	private static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");

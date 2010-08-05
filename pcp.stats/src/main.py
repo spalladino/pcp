@@ -147,8 +147,19 @@ def cuts_families_latextable():
                 aggr= aggregate.avg 
                 )
 
+def bnc_pruning_latextable():
+        file = '20100802PRUNING2PARTIAL'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.leafheur.count','solution.nnodes','solution.time','solution.gap'],   
+                series=['pruning.enabled', 'pruning.remaining'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+
 if __name__ == '__main__':
-    cuts_families_latextable()
+    bnc_pruning_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

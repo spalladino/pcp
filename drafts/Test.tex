@@ -21,6 +21,107 @@
 
 \begin{document}
 	
+	\section{Branch and cut}
+	
+	\subsection{Pruning}
+	
+Processing Runid 20100802PRUNING2PARTIAL
+	
+	Data:
+\begin{itemize}
+\item solution.leafheur.count
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.remaining: 10
+\item S2: pruning.enabled: true, pruning.remaining: 20
+\item S3: pruning.enabled: true, pruning.remaining: 40
+\item S4: pruning.enabled: true, pruning.remaining: 60
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3} & \multicolumn{4}{|c|}{S4}
+\\
+ & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=100 & 0.00 & 11835.00 & 1800.03 & 0.25 & 0.00 & 11707.00 & 1800.02 & 0.25 & 0.00 & 11702.33 & 1800.03 & 0.25 & 115.33 & 11760.67 & 1800.03 & 0.25
+\\
+EW 20 N=80 & 0.00 & 1.00 & 0.39 & 0.00 & 0.00 & 1.00 & 0.38 & 0.00 & 0.00 & 1.00 & 0.35 & 0.00 & 0.00 & 1.00 & 0.36 & 0.00
+\\
+EW 40 N=100 & 0.00 & 2342.00 & 1800.06 & 0.22 & 0.00 & 2329.33 & 1800.05 & 0.22 & 0.00 & 2328.67 & 1800.05 & 0.22 & 192.33 & 2355.67 & 1800.05 & 0.30
+\\
+EW 40 N=80 & 0.00 & 1288.33 & 379.74 & 0.00 & 0.00 & 1288.33 & 382.91 & 0.00 & 0.00 & 1288.33 & 382.79 & 0.00 & 0.00 & 1288.33 & 382.82 & 0.00
+\\
+EW 60 N=100 & 0.00 & 1225.33 & 1800.07 & 0.22 & 0.00 & 1219.33 & 1800.05 & 0.22 & 0.00 & 1219.00 & 1800.06 & 0.22 & 344.33 & 1045.67 & 1800.08 & 0.29
+\\
+EW 60 N=80 & 0.00 & 3244.00 & 1800.02 & 0.23 & 0.00 & 3227.00 & 1800.16 & 0.23 & 175.00 & 3371.00 & 1800.02 & 0.25 & 175.00 & 3371.00 & 1800.03 & 0.25
+\\
+\hline 
+ \end{tabular}
+
+	
+	Processing Runid 20100728PRUNING
+ 
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.remaining: 20
+\item S2: pruning.enabled: true, pruning.remaining: 10
+\item S3: pruning.enabled: true, pruning.remaining: 20
+\item S4: pruning.enabled: true, pruning.remaining: 30
+\item S5: pruning.enabled: true, pruning.remaining: 40
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes
+\\
+\hline
+EW 20 N=120 & 0.25 & 1800.02 & 4276.33 & 0.25 & 1800.04 & 4281.33 & 0.25 & 1800.04 & 4281.00 & 0.25 & 1800.03 & 4281.33 & 0.25 & 1800.03 & 4281.00
+\\
+EW 40 N=120 & 0.37 & 1800.03 & 824.00 & 0.37 & 1800.06 & 823.67 & 0.37 & 1800.04 & 823.67 & 0.37 & 1800.04 & 823.67 & 0.37 & 1800.05 & 824.00
+\\
+EW 50 N=100 & 0.29 & 1800.04 & 2151.33 & 0.29 & 1800.03 & 2152.00 & 0.29 & 1800.03 & 2152.00 & 0.29 & 1800.03 & 2152.00 & 0.29 & 1800.05 & 2152.00
+\\
+EW 50 N=120 & 0.42 & 1800.09 & 270.33 & 0.42 & 1800.08 & 270.33 & 0.42 & 1800.11 & 270.00 & 0.42 & 1800.09 & 270.00 & 0.42 & 1800.12 & 270.00
+\\
+EW 50 N=140 & 0.42 & 1800.14 & 61.00 & 0.42 & 1800.14 & 61.00 & 0.42 & 1800.14 & 61.00 & 0.42 & 1800.07 & 61.00 & 0.42 & 1800.13 & 60.67
+\\
+EW 50 N=160 & 0.57 & 1800.23 & 0.67 & 0.57 & 1800.24 & 0.67 & 0.57 & 1800.19 & 0.67 & 0.57 & 1800.10 & 1.00 & 0.57 & 1800.25 & 0.67
+\\
+EW 50 N=180 & 0.58 & 1800.29 & 0.00 & 0.58 & 1800.31 & 0.00 & 0.58 & 1800.38 & 0.00 & 0.58 & 1800.22 & 0.00 & 0.58 & 1800.35 & 0.00
+\\
+EW 50 N=200 & 0.63 & 1800.32 & 0.00 & 0.63 & 1800.37 & 0.00 & 0.63 & 1800.38 & 0.00 & 0.63 & 1800.32 & 0.00 & 0.63 & 1800.32 & 0.00
+\\
+EW 60 N=120 & 0.36 & 1800.08 & 111.67 & 0.36 & 1800.09 & 111.67 & 0.36 & 1800.07 & 111.67 & 0.36 & 1800.07 & 111.67 & 0.36 & 1800.11 & 111.67
+\\
+EW 80 N=120 & 0.30 & 1800.21 & 14.33 & 0.30 & 1800.22 & 14.33 & 0.30 & 1800.26 & 14.33 & 0.30 & 1800.21 & 14.33 & 0.30 & 1800.16 & 14.33
+\\
+HK 10 N=120 & 0.00 & 1.07 & 5.40 & 0.00 & 1.06 & 5.40 & 0.00 & 1.06 & 5.40 & 0.00 & 1.07 & 5.40 & 0.00 & 1.07 & 5.40
+\\
+HK 20 N=120 & 0.00 & 10.04 & 80.00 & 0.00 & 10.08 & 80.00 & 0.00 & 10.05 & 80.00 & 0.00 & 10.07 & 80.00 & 0.00 & 10.06 & 80.00
+\\
+HK 30 N=120 & 0.00 & 12.33 & 32.60 & 0.00 & 12.31 & 32.60 & 0.00 & 12.31 & 32.60 & 0.00 & 12.32 & 32.60 & 0.00 & 12.31 & 32.60
+\\
+HK 40 N=120 & 0.00 & 0.31 & 0.00 & 0.00 & 0.31 & 0.00 & 0.00 & 0.31 & 0.00 & 0.00 & 0.31 & 0.00 & 0.00 & 0.31 & 0.00
+\\
+e06n100 & 0.33 & 39.14 & 0.00
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+	
 	\section{Cuts}
 	
 	\subsection{Families}

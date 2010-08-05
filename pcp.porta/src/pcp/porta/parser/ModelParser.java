@@ -7,7 +7,6 @@ import porta.model.*;
 import pcp.porta.model.*;
 import porta.interfaces.*;
 
-@SuppressWarnings("all")
 public class ModelParser implements ModelParserConstants {
         Model model;
         Constraint current;

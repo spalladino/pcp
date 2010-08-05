@@ -16,8 +16,6 @@ import os
  
 def main():
 
-    Fixture().resume()
-    
     files = bnc.files()
     print 'Processing: ', files
 
@@ -25,7 +23,17 @@ def main():
                 bnc.pruning_noub_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100803PRUNINGNOUB'
+                runid = '20100805PRUNINGNOUB'
+            )
+    
+    files = bnc.files()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100803PRUNING3'
             )
     
 if __name__ == '__main__':
