@@ -30,10 +30,20 @@ def main():
     print 'Processing: ', files
 
     Fixture().newrun(
-                bnc.pruning_runs, 
+                bnc.emph_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100803PRUNING3'
+                runid = '20100805EMPH'
+            )
+    
+    files = bnc.files()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                bnc.prob_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100805PROBING'
             )
     
 if __name__ == '__main__':

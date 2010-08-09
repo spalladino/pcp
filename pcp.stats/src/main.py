@@ -161,7 +161,7 @@ def cuts_families_latextable():
                 )
 
 def bnc_pruning_latextable():
-        file = '20100802PRUNING2PARTIAL'
+        file = '20100805PRUNINGNOUB'
         LatexProcessor(file).process(
                 ids=[metrics.FileName()],
                 datas=['solution.leafheur.count','solution.nnodes','solution.time','solution.gap'],   

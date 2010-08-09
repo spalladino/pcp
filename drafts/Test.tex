@@ -25,6 +25,42 @@
 	
 	\subsection{Pruning}
 	
+	Processing Runid 20100805PRUNINGNOUB
+
+Data:
+\begin{itemize}
+\item solution.leafheur.count
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: true, pruning.remaining: 20
+\item S2: pruning.enabled: true, pruning.remaining: 40
+\item S3: pruning.enabled: true, pruning.remaining: 60
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=100 & 0.00 & 11832.00 & 1800.03 & 0.25 & 0.00 & 11833.33 & 1800.03 & 0.25 & 15.33 & 3322.33 & 4069.78 & 0.25
+\\
+EW 40 N=100 & 0.00 & 2341.33 & 1800.05 & 0.22 & 0.00 & 2341.67 & 1800.05 & 0.22 & 139.33 & 1902.00 & 31134.51 & 0.30
+\\
+EW 60 N=100 & 0.00 & 1225.67 & 1800.06 & 0.22 & 0.00 & 1225.67 & 1800.06 & 0.22 & 22.00 & 57.00 & 3715.12 & 0.34
+\\
+EW 80 N=100 & 0.00 & 307.33 & 1800.06 & 0.19 & 0.67 & 259.33 & 39309.85 & 0.19 & 1.67 & 7.33 & 19102.80 & 0.22
+\\
+\hline 
+ \end{tabular}
+
+	
+	 \clearpage
+	
 Processing Runid 20100802PRUNING2PARTIAL
 	
 	Data:
