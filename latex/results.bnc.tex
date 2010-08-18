@@ -1,0 +1,40 @@
+%!TEX root = pcp.tex
+
+\subsection{Branch and cut}
+\label{subsec:resultsbnc}
+
+Last but not least, in determining the best configuration for the different components of a branch and cut algorithm, we evaluated the algorithm's performance with different settings relative to the whole branch and cut process. We evaluated different criteria for running the exhaustive implicit enumeration in subtrees, as described in \ref{subsec:alg:implicit}, and also different MIP relative parameters in the underlying \textsc{cplex} framework we used.
+
+\subsubsection{Exhaustive implicit enumeration}
+
+Our first test, once most parameters in the branch and cut algorithm were fixed, was to determine the threshold to run a full \textsc{dsatur} on a node once enough partitions' colors had been fixed during the branching process. Since the algorithm considered only non-fixed partitions for its execution, we experimented with values within acceptable ranges for an exhaustive enumeration: we chose 20, 40 and 60 as the number of remaining partitions to color which triggered the enumeration.
+
+We used graphs of 100 nodes with 2 nodes per partition and different densities, in branch and cut executions of 30 minutes, to check the behaviours of these strategies.
+
+Results were not encouraging. 
+
+\begin{sidewaystable}[h]
+\label{table:bnc:prune}
+\centering
+
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=100 & 0.00 & 11833.00 & 0.25 & 0.00 & 11834.00 & 0.25 & 115.33 & 11877.00 & 0.25
+\\
+EW 40 N=100 & 0.00 & 2341.00 & 0.22 & 0.00 & 2340.67 & 0.22 & 192.33 & 2367.67 & 0.30
+\\
+EW 60 N=100 & 0.00 & 1225.67 & 0.22 & 0.00 & 1225.67 & 0.22 & 345.00 & 1050.00 & 0.29
+\\
+EW 80 N=100 & 0.00 & 307.67 & 0.19 & 2.00 & 313.67 & 0.19 & 28.00 & 119.00 & 0.21 (*)
+\\
+\hline 
+ \end{tabular}
+
+\caption{Average number of times the enumeration was triggered, number of nodes in the tree and resulting gap, for different number of uncolored partitions for triggering the exhaustive enumeration. The execution marked with a (*) indicate that the execution of the enumeration algorithm took an unacceptable amount of time for the imposed bounds.}
+
+\end{sidewaystable}

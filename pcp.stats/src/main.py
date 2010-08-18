@@ -162,10 +162,11 @@ def cuts_families_latextable():
 
 def bnc_pruning_latextable():
         file = '20100805PRUNINGNOUB'
-        LatexProcessor(file).process(
+        file2 = '20100803PRUNINGWITHUB'
+        LatexProcessor(file2).process(
                 ids=[metrics.FileName()],
                 datas=['solution.leafheur.count','solution.nnodes','solution.time','solution.gap'],   
-                series=['pruning.enabled', 'pruning.remaining'],
+                series=['pruning.enabled', 'pruning.remaining', 'primal.useub'],
                 datafilter= None,
                 runfilter= None,
                 aggr= aggregate.avg 
@@ -194,7 +195,7 @@ def bnc_emph_latextable():
                 )
 
 if __name__ == '__main__':
-    bnc_emph_latextable()
+    bnc_pruning_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

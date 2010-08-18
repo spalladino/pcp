@@ -68,35 +68,40 @@ pruning_runs = create_runs(baseprops, [
 				{
 					'pruning.enabled': 'true',
 		            'pruning.remaining': '20',
+                    'pruning.useub': 'true',
+                    'primal.useub': 'true',
+				},
+				{
+					'pruning.enabled': 'true',
+		            'pruning.remaining': '30',
+                    'pruning.useub': 'true',
+                    'primal.useub': 'true',
 				},
 				{
 					'pruning.enabled': 'true',
 		            'pruning.remaining': '40',
+                    'pruning.useub': 'true',
+                    'primal.useub': 'true',
 				},
-				{
-					'pruning.enabled': 'true',
-		            'pruning.remaining': '60',
-				},
-				])
-
-pruning_noub_runs = create_runs(baseprops, [
-                {
+                 {
                     'pruning.useub': 'false',
+                    'primal.useub': 'false',
                     'pruning.enabled': 'true',
                     'pruning.remaining': '20',
                 },
                 {
                     'pruning.useub': 'false',
+                    'primal.useub': 'false',
                     'pruning.enabled': 'true',
-                    'pruning.remaining': '40',
+                    'pruning.remaining': '30',
                 },
                 {
                     'pruning.useub': 'false',
+                    'primal.useub': 'false',
                     'pruning.enabled': 'true',
-                    'pruning.remaining': '60',
+                    'pruning.remaining': '40',
                 },
-                ])
-				
+				])
 
 emph_runs = create_runs(baseprops, [
                 {
