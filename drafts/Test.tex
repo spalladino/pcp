@@ -23,6 +23,79 @@
 	
 	\section{Branch and cut}
 	
+	\subsection{Probing and emph}
+	
+	Processing Runid 20100813PROBING
+
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.probing: -1
+\item S2: solver.probing: 1
+\item S3: solver.probing: 2
+\item S4: solver.probing: 3
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
+\\
+ & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=100 & 11319.00 & 1800.03 & 0.25 & 23284.33 & 1800.03 & 0.25 & 24523.67 & 1800.03 & 0.25 & 24517.67 & 1800.02 & 0.25
+\\
+EW 40 N=100 & 2366.67 & 1800.04 & 0.22 & 5396.67 & 1800.04 & 0.22 & 2348.00 & 1800.11 & 0.22 & 2345.33 & 1800.04 & 0.22
+\\
+EW 60 N=100 & 1227.67 & 1800.05 & 0.22 & 1227.33 & 1800.06 & 0.22 & 1171.67 & 1800.07 & 0.22 & 1171.33 & 1800.06 & 0.22
+\\
+EW 80 N=100 & 347.00 & 1800.06 & 0.15 & 346.00 & 1800.14 & 0.19 & 308.33 & 1800.08 & 0.19 & 309.00 & 1800.13 & 0.19
+\\
+\hline 
+ \end{tabular}
+ 
+ Processing Runid 20100813EMPH
+
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.mipEmphasis: 0
+\item S2: solver.mipEmphasis: 1
+\item S3: solver.mipEmphasis: 2
+\item S4: solver.mipEmphasis: 3
+\item S5: solver.mipEmphasis: 4
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+ & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=100 & 11840.00 & 1800.02 & 0.25 & 11705.00 & 1800.03 & 0.25 & 18266.33 & 1800.02 & 0.25 & 20810.00 & 1800.03 & 0.25 & 11841.33 & 1800.03 & 0.25
+\\
+EW 40 N=100 & 2343.33 & 1800.04 & 0.22 & 2186.00 & 1800.05 & 0.22 & 3055.33 & 1800.06 & 0.17 & 3707.00 & 1800.06 & 0.17 & 2342.67 & 1800.05 & 0.22
+\\
+EW 60 N=100 & 1226.00 & 1800.07 & 0.22 & 1219.33 & 1800.06 & 0.22 & 820.33 & 1800.04 & 0.22 & 675.67 & 1800.07 & 0.22 & 1225.33 & 1800.07 & 0.22
+\\
+EW 80 N=100 & 307.67 & 1800.05 & 0.19 & 305.33 & 1800.08 & 0.19 & 188.67 & 1800.10 & 0.19 & 104.67 & 1800.06 & 0.19 & 308.00 & 1800.05 & 0.19
+\\
+\hline 
+ \end{tabular}
+
+
+	
+	\clearpage
+	
 	\subsection{Pruning}
 	
 	Processing Runid 20100805PRUNINGNOUB

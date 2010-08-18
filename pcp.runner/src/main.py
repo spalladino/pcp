@@ -11,29 +11,19 @@ import runs.cuts as cuts
 import runs.bnc as bnc
 
 import fetcher
-import files
+import files as f
 import os
  
 def main():
 
-    files = bnc.files()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                bnc.pruning_noub_runs, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100805PRUNINGNOUB'
-            )
-    
-    files = bnc.files()
+    files = f.dimacs
     print 'Processing: ', files
 
     Fixture().newrun(
                 bnc.emph_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100805EMPH'
+                runid = '20100818EMPHDIMACS'
             )
     
     files = bnc.files()
@@ -43,7 +33,7 @@ def main():
                 bnc.prob_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100805PROBING'
+                runid = '20100818PROBDIMACS'
             )
     
 if __name__ == '__main__':

@@ -171,8 +171,30 @@ def bnc_pruning_latextable():
                 aggr= aggregate.avg 
                 )
 
+def bnc_probing_latextable():
+        file = '20100813PROBING'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.nnodes','solution.time','solution.gap'],   
+                series=['solver.probing'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+        
+def bnc_emph_latextable():
+        file = '20100813EMPH'
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.nnodes','solution.time','solution.gap'],   
+                series=['solver.mipEmphasis'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg 
+                )
+
 if __name__ == '__main__':
-    bnc_pruning_latextable()
+    bnc_emph_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
