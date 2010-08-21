@@ -11,17 +11,21 @@ Our first test, once most parameters in the branch and cut algorithm were fixed,
 
 We used graphs of 100 nodes with 2 nodes per partition and different densities, in branch and cut executions of 30 minutes, to check the behaviours of these strategies.
 
-Results were not encouraging. 
+Results were not encouraging, as shown in table \ref{table:bnc:prune}. Setting a low number of unfixed partitions as the threshold to start the exact algorithm caused the algorithm to be never invoked, as the branch and cut itself could prune the whole subtree after very few partitions were colored in the branch process.
+
+On the other hand, making the exact \textsc{dsatur} start earlier caused the algorithm to consume much more time than the available, surpassing the $1800$ seconds bound for high-density graphs, or simply left less time to explore a larger number of nodes, in both cases greatly hurting the obtained gap.
+
+As a result of these experiments, we will be enabling exhaustive implicit enumeration only for very low thresholds ($20$ partitions pending) in order to avoid any problems caused by running the exact algorithm for long periods. Although this setting may cause the algorithm to never be triggered, in other cases such as larger graphs with a greater time bound there is a possibility for this algorithm to actually be effective. 
 
 \begin{sidewaystable}[h]
 \label{table:bnc:prune}
 \centering
 
-\begin{tabular}{|c|cccc|cccc|cccc|}
+\begin{tabular}{|c|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{20} & \multicolumn{3}{|c|}{40} & \multicolumn{3}{|c|}{60}
 \\
- & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap & solution.leafheur.count & solution.nnodes & solution.time & solution.gap
+ & \# times & nodes & gap & \# times & nodes & gap & \# times & nodes & gap
 \\
 \hline
 EW 20 N=100 & 0.00 & 11833.00 & 0.25 & 0.00 & 11834.00 & 0.25 & 115.33 & 11877.00 & 0.25
@@ -36,5 +40,90 @@ EW 80 N=100 & 0.00 & 307.67 & 0.19 & 2.00 & 313.67 & 0.19 & 28.00 & 119.00 & 0.2
  \end{tabular}
 
 \caption{Average number of times the enumeration was triggered, number of nodes in the tree and resulting gap, for different number of uncolored partitions for triggering the exhaustive enumeration. The execution marked with a (*) indicate that the execution of the enumeration algorithm took an unacceptable amount of time for the imposed bounds.}
+
+\end{sidewaystable}
+
+\subsubsection{Probing}
+
+An available setting in the \textsc{cplex} framework is the probing level. This controls how much processing is invested in a preprocessing stage to derive logical implications from setting binary variables to a fixed value. As \textsc{cplex}'s manual \cite{cplex121} explains:
+
+\begin{quote}
+
+Probing is a technique that looks at the logical implications of fxing each binary variable to 0 (zero) or 1 (one). It is performed after preprocessing and before the solution of the root relaxation. Probing can be expensive, so this parameter should be used selectively. On models that are in some sense easy, the extra time spent probing may not reduce the overall time enough to be worthwhile. On diffcult models, probing may incur very large runtime costs at the beginning and yet pay off with shorter overall runtime. 
+
+\end{quote}
+
+We experimented with binomial graphs of fixed size and different densities, as usual, with different probing levels set. Results are shown in table \ref{table:bnc:probing}, and differ greatly between different densities.
+
+For low densities, a moderate level of probing seems to be the best option, as it managed to explore a greater amount of nodes in the tree during the imposed $1800$ seconds. 
+
+On the other hand, greater densities seems to benefit more from disabling probing whatsoever, as the custom bounds implied during the branch process (see \ref{subsubsec:alg:branch:bounds}) benefit largely from higher-degree nodes, making the engine's probing unnecesary and yielding a better gap.
+
+Therefore, we will be using moderate probing settings for low density graphs, and disabling probing altogether for higher densities.
+
+\begin{sidewaystable}[h]
+\label{table:bnc:probing}
+\centering
+
+\begin{tabular}{|c|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{disabled} & \multicolumn{2}{|c|}{moderate} & \multicolumn{2}{|c|}{aggressive} & \multicolumn{2}{|c|}{very aggressive}
+\\
+ & nnodes & gap & nnodes & gap & nnodes & gap & nnodes & gap
+\\
+\hline
+EW 20 N=100 & 11319.00 & 0.25 & 23284.33 & 0.25 & 24523.67 & 0.25 & 24517.67 & 0.25
+\\
+EW 40 N=100 & 2366.67 & 0.22 & \textbf{5396.67} & \textbf{0.22} & 2348.00 & 0.22 & 2345.33 & 0.22
+\\
+EW 60 N=100 & 1227.67 & 0.22 & 1227.33 & 0.22 & 1171.67 & 0.22 & 1171.33 & 0.22
+\\
+EW 80 N=100 & \textbf{347.00} & \textbf{0.15} & 346.00 & 0.19 & 308.33 & 0.19 & 309.00 & 0.19
+\\
+\hline 
+ \end{tabular}
+ 
+\caption{Average number of nodes in the tree and resulting gap, for different MIP probing levels.}
+
+\end{sidewaystable}
+
+\subsubsection{Emphasizing feasibility and optimality}
+
+Arriving to an optimal solution in a branch and cut algorithm requires both (1) obtaining integral feasible solutions of decreasing objective value, and (2) generate a proof that the best integral solution obtained is actually an optimum. The emphasis the framework puts on these two parts of the algorithm is controlled by a \textit{MIP emphasis} parameter, which can be given the following values:
+
+\begin{itemize}
+\defitem{Balanced}{Have a reasonable balance between feasibility and optimality, which is the default behaviour.}
+\defitem{Emphasize feasibility}{Focus on feasibility instead of optimality, which produces better solutions earlier and works better under tight time constraints when an optimality proof is not necessary.}
+\defitem{Emphasize optimality}{Focus on the proof of optimality by attempting to raise the best bound\footnote{The best bound is the lowest possible value that an integer feasible solution could have.} faster.}
+\defitem{Emphasize best bound}{Focus even more in the proof of optimality by attempting solely to move the best bound; this causes intermediate optimal solutions to be rarely found as it cares exclusively to arrive to a final optimal solution.}
+\defitem{Hidden feasibility}{Attempts to find high quality feasible solutions that are considered hidden, this is, difficult to obtain through the branch and cut process; this causes the proof of optimality to take longer than with other settings.}
+\end{itemize}
+
+We evaluated these different configurations in the usual set of binomial graphs, reporting both gaps and number of nodes explored in the tree; results are shown in table \ref{table:bnc:emph}.
+
+\begin{sidewaystable}[h]
+\label{table:bnc:emph}
+\centering
+
+\begin{tabular}{|c|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5}
+\\
+ & nodes & gap & nodes & gap & nodes & gap & nodes & gap & nodes & gap
+\\
+\hline
+EW 20 N=100 & 11840.00 & 0.25 & 11705.00 & 0.25 & 18266.33 & 0.25 & \textbf{20810.00} & 0.25 & 11841.33 & 0.25
+\\
+EW 40 N=100 & 2343.33 & 0.22 & 2186.00 & 0.22 & 3055.33 & 0.17 & \textbf{3707.00} & \textbf{0.17} & 2342.67 & 0.22
+\\
+EW 60 N=100 & \textbf{1226.00} & 0.22 & 1219.33 & 0.22 & 820.33 & 0.22 & 675.67 & 0.22 & 1225.33 & 0.22
+\\
+EW 80 N=100 & \textbf{307.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 0.19 & 308.00 & 0.19
+\\
+\hline 
+\end{tabular}
+
+ 
+\caption{Average number of nodes in the tree and resulting gap, for different MIP emphasis settings.}
 
 \end{sidewaystable}

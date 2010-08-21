@@ -15,17 +15,26 @@ import files as f
 import os
  
 def main():
-
-    files = f.dimacs
+    
+    files = model.files()
     print 'Processing: ', files
 
     Fixture().newrun(
-                bnc.emph_runs, 
+                model.modelruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100818EMPHDIMACS'
+                runid = '20100820MODELBNB'
             )
     
+    files = bnc.files90()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100820PRUNE90')
+
     files = bnc.files()
     print 'Processing: ', files
 
@@ -33,7 +42,7 @@ def main():
                 bnc.prob_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100818PROBDIMACS'
+                runid = '20100820PROBDIMACS'
             )
     
 if __name__ == '__main__':

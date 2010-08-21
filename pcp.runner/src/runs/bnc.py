@@ -8,6 +8,9 @@ from common import update_copy
 def files():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((100))\\.00(0|1|2)\\.in')     
 
+def files90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((90))\\.00(0|1|2)\\.in')
+
 baseprops = {
              'cuts.enabled': 'true',
              'cuts.iterations.root.max': '100',
