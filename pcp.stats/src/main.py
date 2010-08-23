@@ -32,6 +32,16 @@ def dsatur_latextable(p):
                 runfilter= None,
                 aggr= aggregate.avg
                 )
+
+def model_bnb_latextable():    
+        LatexProcessor('20100820MODELBNB').process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap'], 
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
         
 def branch_latextable():    
         LatexProcessor('20100707BRANCHSTATIC2').process(
@@ -195,7 +205,7 @@ def bnc_emph_latextable():
                 )
 
 if __name__ == '__main__':
-    bnc_pruning_latextable()
+    model_bnb_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
