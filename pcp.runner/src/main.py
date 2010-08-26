@@ -17,16 +17,7 @@ import os
  
 def main():
     
-    files = bncm.files_lowdens()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                bncm.lowdens_runs, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100824BNCMLOW'
-            )
-    
+   
     files = bncm.files_highdens()
     print 'Processing: ', files
 
@@ -34,7 +25,17 @@ def main():
                 bncm.highdens_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100824BNCMHIGH'
+                runid = '20100826BNCMHIGH2'
+            )
+    
+    files = bncm.files_lowdens()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                bncm.lowdens_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100826BNCMLOW2'
             )
     
     

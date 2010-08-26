@@ -6,10 +6,10 @@ from common import update_copy
 
 
 def files_lowdens():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4)n((80))\\.00(0|1|2|3)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4)n((85))\\.00(0|1|2|3)\\.in')
 
 def files_highdens():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((80))\\.00(0|1|2|3)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((85))\\.00(0|1|2|3)\\.in')
 
 baseprops = {
              'cuts.enabled': 'true',
