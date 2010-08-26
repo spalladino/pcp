@@ -44,6 +44,7 @@ public class ModelBuilder {
 	protected IloMPModeler modeler;
 	
 	protected int colors;
+	protected int initialCliqueSize;
 	
 	public ModelBuilder(PartitionedGraph graph, IloMPModeler modeler) {
 		this.graph = graph;
@@ -61,6 +62,7 @@ public class ModelBuilder {
 		
 		Model model = new Model(this.graph);
 		model.strategy = strategy;
+		
 		this.colors = model.colors = coloring.getChi();
 		
 		// Initialize variables and objective function
@@ -158,6 +160,7 @@ public class ModelBuilder {
 	private void boundClique(ColoringAlgorithm coloring, List<pcp.entities.simple.Node> maxgpclique) throws IloException, AlgorithmException {
 		if (!fixClique || maxgpclique == null) return;
 		
+		this.initialCliqueSize = maxgpclique.size();
 		for (pcp.entities.simple.Node snode : maxgpclique) {
 			int color = coloring.getPartitionColor(snode.index());
 			
@@ -267,13 +270,16 @@ public class ModelBuilder {
 	 */
 	protected void constrainSymmetryVerticesNumber() throws IloException {
 		for (int j = 0; j < colors-1; j++) {
+			// We ensure there is no relation between labels in the initial clique and outside
+			if (fixClique && initialCliqueSize > 0 && j+1 == initialCliqueSize) continue;
+			
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("BSVNUM[%1$d]", j);
 			for (Node n : graph.getNodes()) {
 				expr.addTerm(xs[n.index][j], 1);
 				expr.addTerm(xs[n.index][j+1], -1);
 			}
-			
+
 			modeler.addGe(expr, 0, name);
 		}
 	}

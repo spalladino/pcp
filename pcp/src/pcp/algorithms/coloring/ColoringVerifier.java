@@ -53,15 +53,15 @@ public class ColoringVerifier {
 		}
 		
 		if (strategy.getBreakSymmetry().equals(Symmetry.VerticesNumber)) {			
-			int j0, j1;
-			j0 = getNodeCount(coloring, 0);
-			
-			for (int j = 1; j < coloring.getChi(); j++) {
-				j1 = getNodeCount(coloring, j);
-				if (j1 > j0) {
-					throw new AlgorithmException("Color " + j + " uses " + j1 + " nodes while color " + (j-1) + " uses " + j0);
-				} j0 = j1;
-			}
+//			int j0, j1;
+//			j0 = getNodeCount(coloring, 0);
+//			
+//			for (int j = 1; j < coloring.getChi(); j++) {
+//				j1 = getNodeCount(coloring, j);
+//				if (j1 > j0) {
+//					throw new AlgorithmException("Color " + j + " uses " + j1 + " nodes while color " + (j-1) + " uses " + j0);
+//				} j0 = j1;
+//			}
 		} else if (strategy.getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {			
 			int maxcolor = -1;
 			for (int i = 0; i < graph.P(); i++) {
@@ -79,6 +79,7 @@ public class ColoringVerifier {
 		return this;
 	}
 	
+	@SuppressWarnings("unused")
 	private int getNodeCount(ColoringAlgorithm coloring, int color) throws AlgorithmException {
 		int count = 0;
 		for (int i = 0; i < graph.N(); i++) {

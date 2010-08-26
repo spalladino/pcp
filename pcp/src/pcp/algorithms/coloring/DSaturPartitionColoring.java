@@ -94,7 +94,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		} else if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {
 			sortSolution(new ColorMinPartitionLabelComparator(this, false));
 		}
-		
+				
 		if (hasSolution() && verify) {
 			new ColoringVerifier(this.graph).verify(this);
 		}

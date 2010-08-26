@@ -228,6 +228,8 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 						fixedCount++;
 						saturs.useColor(i, j);
 						break part;
+					} else if (super.getUB(x) == 0.0) {
+						saturs.forbidColor(i, j);
 					}
 				}				
 			}

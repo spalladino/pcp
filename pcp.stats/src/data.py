@@ -11,7 +11,7 @@ def getobject(path, createfunc):
 		input = open(path, 'rb')
 		obj = pickle.load(input)
 		input.close()
-		print ' Successfully loaded', path
+		print ' Successfully loaded'
 		return obj
 	
 	except:
@@ -21,7 +21,7 @@ def getobject(path, createfunc):
 			output = open(path, 'wb')
 			pickle.dump(obj, output, -1)
 			output.close()
-			print ' Successfully created and stored', path
+			print ' Successfully created and stored'
 		except:
 			' Created but not stored', path
 			pass

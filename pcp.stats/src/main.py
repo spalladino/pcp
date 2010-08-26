@@ -36,7 +36,7 @@ def dsatur_latextable(p):
 def model_bnb_latextable():    
         LatexProcessor('20100820MODELBNB').process(
                 ids=[metrics.FileName()],
-                datas=['solution.gap'], 
+                datas=['solution.gap', 'solution.chi'], 
                 series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
                 datafilter= None,
                 runfilter= None,
@@ -202,6 +202,28 @@ def bnc_emph_latextable():
                 datafilter= None,
                 runfilter= None,
                 aggr= aggregate.avg 
+                )
+
+def bnc_models_latextable():
+        filel = '20100824BNCMLOW'
+        fileh = '20100824BNCMHIGH'
+        
+        LatexProcessor(filel).process(
+                ids=[metrics.FileName()],
+                datas=['solution.chi','solution.nnodes','solution.time','solution.gap'],   
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.concat 
+                )
+        
+        LatexProcessor(fileh).process(
+                ids=[metrics.FileName()],
+                datas=['solution.chi','solution.nnodes','solution.time','solution.gap'],   
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.concat 
                 )
 
 if __name__ == '__main__':
