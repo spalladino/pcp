@@ -6,10 +6,10 @@ from common import update_copy
 
 
 def files_lowdens():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4)n((85))\\.00(0|1|2|3)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4)n((90))\\.00(0|1|2|3)\\.in')
 
 def files_highdens():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((85))\\.00(0|1|2|3)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((90))\\.00(0|1|2|3)\\.in')
 
 baseprops = {
              'cuts.enabled': 'true',
@@ -19,7 +19,7 @@ baseprops = {
              'cuts.local':'true',
              'cuts.onlyonup':'true',
                           
-             'solver.maxTime': '1800',
+             'solver.maxTime': '2400',
              'solver.kind': 'PcpBranchAndCut',
              'branch.selection': '1',
              'branch.direction': '1',
@@ -82,7 +82,7 @@ lowdens_runs = create_runs(baseprops, [
                 {
                     'pruning.enabled': 'false',
                     'solver.probing': '-1',
-                    'solver.mipEmphasis': '0',
+                    'solver.mipEmphasis': '3',
                     'strategy.colorBound': 'UpperNodesSum',
                     'strategy.symmetry': 'UseLowerLabelFirst',                    
                 },
@@ -108,6 +108,7 @@ highdens_runs = create_runs(baseprops, [
                     'solver.probing': '-1',
                     'solver.mipEmphasis': '0',
                     'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.adjacency': 'AdjacentsLeqOne',
                     'strategy.symmetry': 'UseLowerLabelFirst',                    
                 },
                 ])

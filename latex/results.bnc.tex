@@ -99,7 +99,9 @@ Arriving to an optimal solution in a branch and cut algorithm requires both (1) 
 \defitem{Hidden feasibility}{Attempts to find high quality feasible solutions that are considered hidden, this is, difficult to obtain through the branch and cut process; this causes the proof of optimality to take longer than with other settings.}
 \end{itemize}
 
-We evaluated these different configurations in the usual set of binomial graphs, reporting both gaps and number of nodes explored in the tree; results are shown in table \ref{table:bnc:emph}.
+We evaluated these different configurations in the usual set of binomial graphs, reporting both gaps and number of nodes explored in the tree; results are shown in table \ref{table:bnc:emph}. All of them arrived to the same gap values, but there were observable differences between the number of nodes explored in the tree.
+
+For low density graphs, emphasizing the best bound yielded the highest number of nodes explored within the same time frame, while in higher density graphs a balanced approach managed to explore more nodes. These configurations will be used for further experimentation, depending on the processed graph's density.
 
 \begin{sidewaystable}[h]
 \label{table:bnc:emph}
@@ -107,7 +109,7 @@ We evaluated these different configurations in the usual set of binomial graphs,
 
 \begin{tabular}{|c|cc|cc|cc|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5}
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{balanced} & \multicolumn{2}{|c|}{feasibility} & \multicolumn{2}{|c|}{optimality} & \multicolumn{2}{|c|}{best bound} & \multicolumn{2}{|c|}{hidden}
 \\
  & nodes & gap & nodes & gap & nodes & gap & nodes & gap & nodes & gap
 \\
@@ -118,7 +120,7 @@ EW 40 N=100 & 2343.33 & 0.22 & 2186.00 & 0.22 & 3055.33 & 0.17 & \textbf{3707.00
 \\
 EW 60 N=100 & \textbf{1226.00} & 0.22 & 1219.33 & 0.22 & 820.33 & 0.22 & 675.67 & 0.22 & 1225.33 & 0.22
 \\
-EW 80 N=100 & \textbf{307.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 0.19 & 308.00 & 0.19
+EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 0.19 & 308.00 & 0.19
 \\
 \hline 
 \end{tabular}

@@ -210,4 +210,53 @@ First two constraints define the problem itself, by specifying that a node must 
 
 Note that while adjacency restrictions \ref{eqn:adjscolorpone} reported better results than the chosen ones (\ref{eqn:adjsneighb}) in most cases, the latter worked better in dense graphs, which are the ones that, due to a larger problem size, take longer to solve their linear relaxation. Therefore, we opt for improving the resolution of the hardest graphs instead of getting slightly better results in the rest. 
 
+\subsubsection*{Branch and bound testing}
+
+While the previous formulation was chosen for working on a cutting planes algorithm, we are also interested in the behaviour of different models in standard branch and bound algorithms. 
+
+We tested many variations to the chosen model in a branch and bound algorithm, bound to $1800$ seconds, with graphs with $90$ nodes, partition size $2$ and different densities. The branch and bound uses default \textsc{cplex} settings, no custom callbacks were yet applied.
+
+We present in table \ref{table:models:bnb} the following configurations, chosen based on their results:
+
+\begin{itemize}
+\defitem{M4}{Chosen model from cutting planes experimentation phase.}
+\defitem{M1}{Relaxes that exactly one node must be painted per partition (\ref{eqn:partsum}) by replacing it with at least one painted per partition (\ref{eqn:partsumgeq}).}
+\defitem{M8}{Strengthens the model using not only \ref{eqn:wjleqsumcolor} restrictions but also applying \ref{eqn:wjgeqsumpart}.}
+\defitem{M3}{Uses simple color conflict constraints, requiring that two adjacent nodes cannot use the same color (\ref{eqn:adjscolorpone}).}
+\defitem{M10}{Bases symmetry breaking on the number of nodes of each color class (\ref{eqn:symnodecount}).}
+\end{itemize}
+
+\begin{table}
+\label{table:models:bnb}
+\centering
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{M4} & \multicolumn{1}{|c|}{M1} & \multicolumn{1}{|c|}{M3}  & \multicolumn{1}{|c|}{M8}  & \multicolumn{1}{|c|}{M10} 
+\\
+\hline
+EW 20 N=90 & \textbf{0.00} & \textbf{0.00} & 0.25  & \textbf{0.00}  & 0.25
+\\
+EW 40 N=90 & 0.33 & \textbf{0.22} & 0.33 & 0.33 & 0.28 
+\\
+EW 60 N=90 & 0.39 & 0.37 & 0.41 & 0.37 & \textbf{0.15}
+\\
+EW 80 N=90 & 0.38 & 0.43 & 0.31 & 0.39 & \textbf{0.00}
+\\
+\hline 
+ \end{tabular}
+
+\caption{Gap obtained in a standard branch and bound algorithm for different models.}
+
+\end{table}
+
+Results were most interesting. The formulation chosen for the cutting planes algorithm yielded good results only for lowest density graphs. In other cases, using different models returned better results:
+\begin{itemize}
+\item In graphs with $40\%$ density, relaxing the \ref{eqn:partsum} constraint on painting one node per partition greatly reduces the obtained gap, as can be seen in the results for $M1$.
+\item In the most dense graphs, using tighter model strengthening constraints yields better results, as $M8$ has a much lower gap than the chosen model.
+\item However, in $60\%$ density and greater, using vertex count constraints ($M10$) solved the problem to optimality in most cases, being a huge advance over the chosen model.
+\end{itemize}
+
+Although we will be using the previous formulation for fixing different settings throughout the following experimentations, we will reuse the results exposed here as alternative models for the final branch and cut algorithm.
+
 \clearpage
