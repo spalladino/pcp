@@ -8,7 +8,7 @@ In order to test the effectiveness of the different formulations, we applied a f
 
 For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition, and powerlaw cluster graphs with the same size, changing only the density of the graphs. All graphs were preprocessed beforehand.
 
-\subsubsection*{Adjacency constraints}
+\subsubsection{Adjacency constraints}
 
 We first tested the four different adjacency (or color conflict) constraints we had proposed, using arbitrarily chosen constraints \ref{eqn:partsum}, \ref{eqn:lowerlabel} and \ref{eqn:wjleqsumcolor} to complete the model. The different adjacency constraints being tested are the following: 
 
@@ -55,7 +55,7 @@ Results are displayed on table \ref{table:models:adj}. Differences between gaps 
 	\caption{Comparison of different color conflict constraints on the model formulation: adjacent nodes sum bounded by $w_j$ (\ref{eqn:adjscolorp}), adjacent nodes sum bounded by $1$ (\ref{eqn:adjscolorpone}), adjacencies grouped by partition (\ref{eqn:adjsperpart}) and using clique coverage of the neighbourhood (\ref{eqn:adjsneighb}).}
 \end{sidewaystable}
 
-\subsubsection*{Colored nodes per partition}
+\subsubsection{Colored nodes per partition}
 
 A quick test we also ran in parallel was to determine whether to paint exactly one node per partition (\ref{eqn:partsum}), or to relax this constraint and allow for painting more than a single node (\ref{eqn:partsumgeq}). 
 
@@ -96,7 +96,7 @@ HK 40\% & 0.076 & 0.398 & 0.048 & 0.416
 
 \end{table}
 
-\subsubsection*{Model strengthening}
+\subsubsection{Model strengthening}
 
 We also compared applying only constraint \ref{eqn:wjleqsumcolor}, which ensures that variable $w_j$ is set only if a node uses color $j$ (regardless of the objective function), to adding restrictions \ref{eqn:wjgeqsumnode} and \ref{eqn:wjgeqsumpart}:
 
@@ -143,7 +143,7 @@ HK 40\% & 0.048 &  5.2 & \b{0.416} & 0.048 &  4.0 & 0.398 & 0.048 &  5.2 & 0.438
 \end{table}
 
 
-\subsubsection*{Symmetry breaking}
+\subsubsection{Symmetry breaking}
 
 Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}.
 
@@ -193,7 +193,7 @@ HK 40\% & 0.048 &  3.8 & 0.316 & 0.05 &  6.2 & 0.494 & 0.048 &  5.2 & 0.416 & \b
 
 \end{sidewaystable}
 
-\subsubsection*{Chosen formulation}
+\subsubsection{Chosen formulation}
 \label{subsubsec:results:model:chosen}
 
 Taking into account all previous results, the set of constraints that we will use in the \PCP{} formulation for all subsequent computational experiments will be the following:
@@ -211,7 +211,7 @@ First two constraints define the problem itself, by specifying that a node must 
 
 Note that while adjacency restrictions \ref{eqn:adjscolorpone} reported better results than the chosen ones (\ref{eqn:adjsneighb}) in most cases, the latter worked better in dense graphs, which are the ones that, due to a larger problem size, take longer to solve their linear relaxation. Therefore, we opt for improving the resolution of the hardest graphs instead of getting slightly better results in the rest. 
 
-\subsubsection*{Branch and bound testing}
+\subsubsection{Branch and bound testing}
 
 While the previous formulation was chosen for working on a cutting planes algorithm, we are also interested in the behaviour of different models in standard branch and bound algorithms. 
 

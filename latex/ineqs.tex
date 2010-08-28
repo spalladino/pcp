@@ -43,7 +43,7 @@ As was defined in \ref{subsec:intro:definitions}, a component independent set $I
 
 The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, $\alpha_P(W)$, is not easy to calculate, as it is as difficult as the coloring problem itself, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to determine.
 
-\subsubsection*{Component hole inequalities}
+\subsubsection{Component hole inequalities}
 
 A simple instantiation of the previous inequality can be done by picking a subset $W$ that induces a component hole $H$\footnote{A component hole is a chordless cycle in which every node belongs to a different partition.} in the partitioned graph. As in a standard hole, it holds that $\alpha_P(H) = \floor{n / 2}$, where $n$ is the length of the hole, therefore the only effort required lies in finding a component hole in the graph.
 
@@ -54,7 +54,7 @@ Therefore, given a component hole $H$ in the partitioned graph, the component ho
 \sum _{i \in H} x_{ij} \leq \floor{n / 2} w_{j} \quad \forall j \in C
 \end{equation}
 
-\subsubsection*{Component path inequalities}
+\subsubsection{Component path inequalities}
 
 Similar to the previous case, the component independent set can be instantiated with a component path $P$, which is a standard path where every node belongs to a different partition. In this case, it holds that for every component path of length $n$, $\alpha(P) = \ceil{n / 2}$, and the inequality results:
 
@@ -63,7 +63,7 @@ Similar to the previous case, the component independent set can be instantiated 
 \sum _{i \in P} x_{ij} \leq \ceil{n / 2} w_{j} \quad \forall j \in C
 \end{equation}
 
-\subsubsection*{Strengthening by breaking symmetry}
+\subsubsection{Strengthening by breaking symmetry}
 
 Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest $\alpha_P +1$ labels will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
 

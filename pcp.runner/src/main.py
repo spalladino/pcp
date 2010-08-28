@@ -16,29 +16,16 @@ import files as f
 import os
  
 def main():
-    
    
-    files = bncm.files_lowdens()
+    files = f.dimacs
     print 'Processing: ', files
 
     Fixture().newrun(
-                bncm.lowdens_runs, 
+                bncm.lowdens_runs + bncm.highdens_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100826BNCMLOW2'
+                runid = '20100827DIMACSBNCMODEL'
             )
-    
-    
-    files = bncm.files_highdens()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                bncm.highdens_runs, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100826BNCMHIGH2'
-            )
-    
     
 if __name__ == '__main__':
     main()

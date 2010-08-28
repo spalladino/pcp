@@ -84,7 +84,7 @@ The partitioned coloring problem is defined as an assignment of colors to the no
 	\label{fig:samplepartitionedcoloring}
 \end{figure}
 
-\subsubsection*{Complexity}
+\subsubsection{Complexity}
 
 It is easy to see that when $|P_i| = 1\ \forall P_i \in P$, this is, there is a single node per partition, the partitioned coloring problem is equivalent to the standard graph coloring problem previously mentioned. In terms of complexity classes, PCP belongs to the same class as the standard coloring problem.
 
@@ -140,7 +140,7 @@ In the offline or static version of the RWA problem, the set of connections to b
 
 The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria that can be used to evaluate the quality of a set of routes, such as the number of lightpaths used for each route, or generating particular traffic patterns. In this work we will be focusing only in optimizing the number of wavelengths, which will eventually lead to the \PCP{}.
 
-\subsubsection*{Two-phase resolution}
+\subsubsection{Two-phase resolution}
 
 There are multiple methods, both heuristic and exact, for solving the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{Li00thepartition}, use a two-phase approach: a routing phase and an assignment phase.
 
@@ -156,6 +156,7 @@ A partitioned graph $G$ can be constructed in the following way:
 \end{itemize}
 
 \begin{figure}[h]
+	
 	\centering
 	\begin{tikzpicture} 
 		[bend angle=40,
@@ -206,11 +207,14 @@ A partitioned graph $G$ can be constructed in the following way:
 		;
 		
 	\end{tikzpicture} 
-		\label{fig:samplerouting}
+
 		\caption{Sample network in which connections $s_1 \rightarrow t_1$ and $s_2 \rightarrow t_2$ are to be implemented. Potential routes $R_1, R_2$ are proposed for the first, while routes $R_3, R_4$ are proposed for the second one. The corresponding partitioned graph is presented in figure \ref{fig:solvedsamplerouting}.}
+		
+		\label{fig:samplerouting}
 	\end{figure}
 	
 \begin{figure}[h]
+
 		\centering	
 		\begin{tikzpicture} 
 			[n/.style= {minimum size=3mm,thick,circle,draw=black!75}] 
@@ -232,8 +236,9 @@ A partitioned graph $G$ can be constructed in the following way:
 
 		\end{tikzpicture} 
 	
-		\label{fig:solvedsamplerouting}
 		\caption{Conflicts partitioned graph for network from figure \ref{fig:samplerouting}. Routes $R_1$ and $R_2$ satisfy the same connection request, as such, they are contained in the same partition; same happens for $R_3$ and $R_4$. Since routes $R_2$ and $R_3$ share a physical link, the corresponding nodes are adjacent to prevent that they are assigned the same frequency. A 1-coloring, which assigns the same label to $R_1$ and $R_4$ is shown, and the corresponding lightpaths generated are shown in figure \ref{fig:solvedsampleroutingnetwork}.}
+
+		\label{fig:solvedsamplerouting}
 \end{figure}
 
 \begin{figure}[h]
@@ -287,8 +292,9 @@ A partitioned graph $G$ can be constructed in the following way:
 		;
 		
 	\end{tikzpicture} 
-		\label{fig:solvedsampleroutingnetwork}
+		
 		\caption{Solution for the network presented in figure \ref{fig:samplerouting} using the coloring obtained in \ref{fig:solvedsamplerouting}. Since $R_1$ and $R_4$ were the colored nodes, using the same label, then those are the routes established and lightpaths using that label are created to satisfy the connection requests.}
+		\label{fig:solvedsampleroutingnetwork}
 	\end{figure}
 
 Each wavelength is represented as a color. The problem then consists in coloring a single node within each partition, this is, assigning a wavelength to a single route from the set of candidates for each connection request. The fact that two nodes may not be colored if they are adjacent guarantees  that no wavelength conflicts may occur between two different lightpaths in the same link.
@@ -300,7 +306,7 @@ In this work we will focus on finding an exact solution for the partitioned colo
 \subsection{Previous work}
 \label{subsec:previouswork}
 
-\subsubsection*{Coloring}
+\subsubsection{Coloring}
 
 The graph coloring problem has been studied extensively in literature, attempting to find both exact and approximate solutions.
 
@@ -322,7 +328,7 @@ There is also extensive work using integer linear programming formulations for t
 
 Our goal in this work will be to generalize this last ILP formulation to solve the partitioned coloring problem.
 
-\subsubsection*{min-RWA}
+\subsubsection{min-RWA}
 
 Initial techniques to solve the min-RWA problem as a two-stage problem, such as \cite{hyytia14wavelength}, pick a single route for every connection using shortest-path algorithms and then use different heuristics to solve a standard coloring problem in the assignment stage. In \cite{manohar2002routing} the shortest-path routing solution is replaced by a maximum edge disjoint path solution in order to reduce conflicts between routes.
 
@@ -330,7 +336,7 @@ Other approaches to the problem tackle the routing and wavelength assignment as 
 
 An exact approach using an integer programming formulation with column generation is used in \cite{lee2002optimization}, which solves both the routing and the wavelength assignment problems in the same formulation.
 
-\subsubsection*{PCP}
+\subsubsection{PCP}
 
 Two-stage approaches for min-RWA were improved in \cite{Li00thepartition} by introducing the partitioned coloring problem, which allowed multiple routes to be picked for each connection in the initial phase. In that work, two groups of heuristics were developed: one-step and two-step. The former consists in picking the easiest node to color in every partition, and then picking the hardest one from that set using different criteria (largest-first, smallest-last, color-degree); the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
 

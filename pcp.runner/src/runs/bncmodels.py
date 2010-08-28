@@ -19,7 +19,7 @@ baseprops = {
              'cuts.local':'true',
              'cuts.onlyonup':'true',
                           
-             'solver.maxTime': '2400',
+             'solver.maxTime': '3600',
              'solver.kind': 'PcpBranchAndCut',
              'branch.selection': '1',
              'branch.direction': '1',

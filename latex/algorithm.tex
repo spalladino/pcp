@@ -9,7 +9,7 @@ In this section we will present the implemented branch-and-cut algorithm, includ
 
 The structure of a branch and cut algorithm can be considered a combination of cutting planes and branch and bound schemes, which we describe below.
 
-\subsubsection*{Cutting planes}
+\subsubsection{Cutting planes}
 
 Cutting planes algorithms rely solely on valid inequalities for solving the problem. Given a solution of the model's linear relaxation \footnote{The linear relaxation of an integer linear programming consists in removing all integrality constraints on the variables.}, cutting planes are added to the formulation in order to remove the fractional solution obtained. 
 
@@ -39,7 +39,7 @@ The algorithm depends on having an adequate set of cutting planes families, alon
 
 Note that, besides the valid inequalities specific to each problem, such as the ones we have presented for \PCP{} in section \ref{sec:ineqs}, there are generic families of cutting planes that can be applied to any problem. However, problem-specific cuts usually have better performance than generic ones.
 
-\subsubsection*{Branch and bound}
+\subsubsection{Branch and bound}
 
 The branch and bound scheme explores different solutions by setting bounds on fractional variables on every partial solution. The algorithm starts by solving the relaxation, like cutting planes, but instead of removing the fractional solution by adding a valid inequality, it creates two subproblems, usually by fixing a particular variable with a fractional value to either zero or one. 
 
@@ -77,13 +77,13 @@ Besides the \textit{branching} behaviour of the algorithm, both upper and lower 
 
 The branch and bound scheme does not specify which node to select on each iteration, or how to generate the subproblems on each node. The selection strategy and the branching strategy are chosen depending on the problem to solve.
 
-\subsubsection*{Cut and branch}
+\subsubsection{Cut and branch}
 
 The cut and branch scheme is simply an execution of the cutting planes algorithm until a certain threshold is reached (expressed in running time, number of cuts iterations or mip gap). Then the generation of cutting planes is stopped and a branch and bound algorithm is executed, using the initial formulation augmented with all the generated cutting planes.
 
 This algorithm usually yields better results than the previous ones, as cutting planes may have difficulties finding inequalities that remove fractional solutions very close to the convex hull, and a pure branch and bound scheme usually takes too long to solve as the enumeration may be too large. However, since the cutting planes may cause that the relaxations in the branch and bound become tougher to solve, a good balance between the two phases is extremely important for a good overall performance.
 
-\subsubsection*{Branch and cut}
+\subsubsection{Branch and cut}
 
 While the cut and branch algorithm applies cutting planes only at the root of the branch and bound tree, the branch and cut version uses cutting planes throughout the whole tree. Although cuts are applied more aggressively at the root, on certain internal nodes more iterations of cuts are executed. 
 
@@ -148,7 +148,7 @@ Last 3 steps are performed until no more changes are made to the graph. The resu
 
 Every step is processed by brute force, since their running time is polynomial in the size of the graph, except for step 4 for which we use the algorithm presented below.
 
-\subsubsection*{Partitions graph clique detection}
+\subsubsection{Partitions graph clique detection}
 
 To find the maximum clique in the partitions graph we use a simple backtracking algorithm. Since the running time of this algorithm can be excessive for a preprocessing step, we bound the running time of this algorithm to five seconds; however, the algorithm usually ends much sooner, as the partitions graph is not only smaller but also much less dense than the original graph. 
 
@@ -222,7 +222,7 @@ For each family of valid inequalities listed in \ref{sec:ineqs}, an heuristic is
 
 Since these algorithms are applied frequently during the branch and cut tree, it is imperative that their running time is as fast as possible, in order to minimize the added overhead to the whole algorithm.
 
-\subsubsection*{Extended clique cuts}
+\subsubsection{Extended clique cuts}
 
 Separation of extended clique cuts (\ref{ineq:extendedclique}) is done using a very similar algorithm to \ref{alg:gpclique}, adapted to partitioned graphs and without backtracking, so running time is acceptable for a separation algorithm. This algorithm is executed once for each color, and nodes are sorted based not on their degree but on their $x_{ij}$ value in the current solution.
 
@@ -264,7 +264,7 @@ In order to avoid exploring the same solution space multiple times for different
 \end{algorithmic}
 \end{algorithm} 
 
-\subsubsection*{Component independent set inequalities}
+\subsubsection{Component independent set inequalities}
 
 Component hole \ref{ineq:chole} and component path \ref{ineq:cpath} inequalities are separated within the same procedure using a greedy heuristic. In a similar fashion to algorithm \ref{alg:sep:extclique}, for every color the graph is sorted according to $x_{ij}$ values, and for each initial node a component path or hole is greedily constructed. Once again, bounds for a maximum number of visits on each node are imposed, thus rejecting nodes with a certain number of visits or belonging to a partition already in the path, since this would violate the \textit{component} property.
 
@@ -308,13 +308,13 @@ On every iteration the most promising node is added to the path being built. In 
 
 As an alternative to the previous algorithm, we also implemented the hole detection algorithm presented in \cite{nikolopoulos2004hole}. We adapted the algorithm presented in the paper to reject a node if it belongs to a partition already in the path, therefore exploring only component holes; testing this implementation against the previous one showed that our custom algorithm performed slightly better, and generated path as well as hole inequalities.
 
-\subsubsection*{Partitions graph independent set inequalities}
+\subsubsection{Partitions graph independent set inequalities}
 
 For both path and hole inequalities (\ref{ineq:gpiset}) over the partitions graph $G'$, algorithms equivalent to the ones used for component independent sets are applied as separation heuristics.
 
 Graph $G'$ is constructed once at the beginning of the branch and cut and is then used as input for these heuristics. Since there are no $x_{ij}$ variables to use for sorting the nodes of the graph, the value $\sum_{i \in P_k} x_{ij}$ is used for each partition $P_k$, this is, the sum of the values of the partition's nodes.
 
-\subsubsection*{Block color inequalities}
+\subsubsection{Block color inequalities}
 
 Block color inequalities (\ref{ineq:blockcp}) are explored using brute force, since there are no more than $c \times q$ of them, and checking whether they are violated or not can be performed fast enough.
 
@@ -360,7 +360,7 @@ Whichever method of branching is chosen, it requires that the solutions represen
 
 Choosing which variable to branch on, and what bounds are implied within each branch, is part of what is called the branching strategy. 
 
-\subsubsection*{Static priorities}
+\subsubsection{Static priorities}
 
 The simplest way to choose which variable to branch on is to assign a priority to each $x_{ij}$, which will be used to pick the branching variable when necessary: the integer infeasible variable with the highest priority is picked on every branching. 
 
@@ -374,7 +374,7 @@ We experimented in section \ref{subsec:resultsbranching} with combinations of th
 
 Using this criteria has the huge drawback that no information regarding the actual value of the $x_{ij}$ variable is used, so these priorities work best as a tie-breaker for another strategy.
 
-\subsubsection*{Fractional values}
+\subsubsection{Fractional values}
 \label{subsubsec:alg:branch:frac}
 
 A common practice is to pick the most fractional variable to branch on. We determine such variable as:
@@ -386,7 +386,7 @@ In case of a tie, we use the static priority set for the variables to determine 
 
 This is a common branching technique, but does not exploit any particular feature of the problem being studied, unlike the one described below.
 
-\subsubsection*{Degree of saturation}
+\subsubsection{Degree of saturation}
 \label{subsubsec:alg:branch:dsatur}
 
 A branching strategy specifically related to the partitioned coloring problem is to branch on a node with the highest degree of saturation. Since these nodes are usually the most difficult ones to handle, it is reasonable to fix their values as early as possible in the branch and cut tree.
@@ -412,7 +412,7 @@ Having chosen a node $v_i$ for branching, we must choose which variable $x_{i^*j
 From the mentioned set of candidates $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$, the variable with the highest value is chosen for branching. Overall, we are branching on the node with the highest degree of saturation, fixing it to the most probable color it was assigned in the relaxation.
 }
 
-\subsubsection*{Implied bounds}
+\subsubsection{Implied bounds}
 \label{subsubsec:alg:branch:bounds}
 
 When manually specifying the branching variable and creating the subproblems, it is also possible to fix more variables that would be affected by the value assigned to the first one.
