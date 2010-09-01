@@ -41,7 +41,7 @@ As was defined in \ref{subsec:intro:definitions}, a component independent set $I
 \sum _{i \in W} x_{ij} \leq \alpha_P(W) w_{j} \quad \forall j \in C
 \end{equation}
 
-The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, $\alpha_P(W)$, is not easy to calculate, as it is as difficult as the coloring problem itself, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to determine.
+The restriction is applied to a subgraph of $G$ induced by the nodes $W \subseteq V$. Since the cardinal of the maximum component independent set of the subgraph, $\alpha_P(W)$, is not easy to calculate, as it is as difficult as the coloring problem itself, this inequality is applied to particular subsets of the graph with an $\alpha_P$ easy to determine\footnote{Note that even though component clique inequalities, which state that every vertex in a component clique must have a different color, are a particular instantiation of these inequalities, they are superseded by extended clique inequalities, as the latter bound the sum of a larger set of nodes; this occurs because every component clique is an extended clique, but not the other way around. As such, component clique inequalities will not be considered.}.
 
 \subsubsection{Component hole inequalities}
 
@@ -65,9 +65,9 @@ Similar to the previous case, the component independent set can be instantiated 
 
 \subsubsection{Strengthening by breaking symmetry}
 
-Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest $\alpha_P +1$ labels will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
+Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest $\alpha_P +1$ labels, $j_{q-\alpha_P+2} \ldots$, will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
 
-Therefore, in the worst case, in which all nodes in $V \setminus W$ use different colors, then an assignment as the one shown in table \ref{table:cisetcoloring} will occur. This coloring uses only the first $q - \alpha_P + 1$ colors, and leaves all colors with a greater label unused. 
+Being $W$ the component independent set, in the worst case, in which all nodes in $V \setminus W$ use different colors, an assignment as the one shown in table \ref{table:cisetcoloring} will occur. This coloring uses only the first $q - \alpha_P + 1$ colors, and leaves all colors with a greater label unused. 
 
 \begin{table}
 \centering	
@@ -107,9 +107,9 @@ Combining this inequality with \ref{ineq:ciset}, results in the following compon
 
 Both component hole (\ref{ineq:chole}) and component path inequalities (\ref{ineq:cpath}) can be strengthened using this argument.
 
-\subsection{Partitions graph inequalities}
+\subsection{Partition graph inequalities}
 
-Let $G' = <V',E'>$ be the partitions graph of $G$\footnote{The partitions graph $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v' \in V'$ corresponds to a partition $P_v \in P$, and two nodes $u',v' \in V'$ are adjacent if and only if every node in $P_u$ in $G$ is adjacent to every node in $P_v$.}. Most bounds found for coloring $G'$ can be reused in the original $G$ by extending the constraint over every node represented by each $p \in V'$.
+Let $G' = <V',E'>$ be the partition graph\footnote{The \textit{partition graph} $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v'_k \in V'$ corresponds to a partition $P_k \in P$, and two nodes $v'_i,v'_j \in V'$ are adjacent if and only if every node in $P_i$ in $G$ is adjacent to every node in $P_j$.} of $G$. Most bounds found for coloring $G'$ can be reused in the original $G$ by extending the constraint over every node represented by each $p \in V'$.
 
 A clear example are independent set inequalities. Let $W' \subseteq V'$ a subset of nodes inducing a subgraph in $G'$, then the independent set inequality holds:
 
@@ -132,9 +132,11 @@ These constraints over $G'$ can be converted to constraints $G$ by replacing eve
 \sum_{P_k \in W} \sum_{i \in P_k} x_{ij_0} + \sum ^c _{j = j_t + 1} \sum _{i \in V} x_{ij} \leq \alpha(W') w_{j_0} + w_{j_t + 1} \quad \forall j_0 \leq j_t, \; j_t = q - \alpha(W')
 \end{equation}
 
-Once again, since the size $\alpha$ of the maximum independent set of a graph is NP-hard to calculate, the subgraph induced by $W'$ is chosen in such a way that this number is trivial to obtain. This inequality is then specialized with $W'$ inducing either a path or a hole in $G'$, having $\alpha(W)$ equal to $\ceil{|W| / 2}$ and $\floor{|W| / 2}$, yielding \textit{partitions graph path inequalities} and \textit{partitions graph hole inequalities}, respectively.
+Once again, since the size $\alpha$ of the maximum independent set of a graph is NP-hard to calculate, the subgraph induced by $W'$ is chosen in such a way that this number is trivial to obtain. This inequality is then specialized with $W'$ inducing either a path or a hole in $G'$, having $\alpha(W)$ equal to $\ceil{|W| / 2}$ and $\floor{|W| / 2}$, yielding \textit{partition graph path inequalities} and \textit{partition graph hole inequalities}, respectively.
 
-Note that partitions graph independent set inequalities are less frequent than component independent set ones, since $G'$ tends to be less dense as partition sizes increase; however, the former are much stronger as they impose restrictions over all the nodes in the partitions covered, instead of over a single node per partition.
+\textit{Partition graph clique inequalities} predicate over a set of nodes which are all adjacent to each other or belong to the same partition, which is the very definition of an \textit{extended clique}. Since partition graph clique inequalities are more restrictive than the extended clique ones, as they require that every node in every partition involved is part of the clique, the former will not be considered and we will be applying only the latter.
+
+Note that partition graph independent set inequalities are less frequent than component independent set ones, since $G'$ tends to be less dense as partition sizes increase; however, the former are much stronger as they impose restrictions over all the nodes in the partitions covered, instead of over a single node per partition.
 
 \subsection{Block color inequalities}
 

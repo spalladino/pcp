@@ -134,7 +134,7 @@ Based on these assumptions, we generalized two different versions for partitione
 
 The easiest node variant is based on the \textit{onestepCD} heuristic proposed in \cite{Li00thepartition}. In order to pick the node to color, the easiest node is chosen from every uncolored partition, where \textit{easiest} is defined in terms of lowest color degree, with tie breaking on lowest number of uncolored neighbours. From the resulting set, the node with the highest color degree is chosen, as in classic \textsc{dsatur}. 
 
-In other words, this algorithm picks the hardest node from the set of the easiest nodes on each uncolored partition.
+In other words, this algorithm picks the hardest node from the set of the easiest nodes on each uncolored partition. Note that if every partition contains a single node, this algorithm behaves exactly as classic \textsc{dsatur}.
 
 Also, in an attempt to explore different solutions earlier to obtain better upper bounds, we also implemented a randomized version of the algorithm. From the set of the easiest nodes in every partition, only half of the time the hardest node is chosen, the other half another candidate is chosen with probability decreasing as its color degree decreases.
 
