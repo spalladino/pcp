@@ -271,7 +271,7 @@ public class ModelBuilder {
 	protected void constrainSymmetryVerticesNumber() throws IloException {
 		for (int j = 0; j < colors-1; j++) {
 			// We ensure there is no relation between labels in the initial clique and outside
-			if (fixClique && initialCliqueSize > 0 && j+1 == initialCliqueSize) continue;
+			if (fixClique && initialCliqueSize > 0 && j <= initialCliqueSize) continue;
 			
 			IloLinearIntExpr expr = modeler.linearIntExpr();
 			String name = String.format("BSVNUM[%1$d]", j);

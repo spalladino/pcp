@@ -94,7 +94,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		} else if (BuilderStrategy.fromSettings().getBreakSymmetry().equals(Symmetry.MinimumNodeLabel)) {
 			sortSolution(new ColorMinPartitionLabelComparator(this, false));
 		}
-				
+
 		if (hasSolution() && verify) {
 			new ColoringVerifier(this.graph).verify(this);
 		}
@@ -164,20 +164,31 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 
 	private void sortSolution(Comparator<Integer> colorComparator) throws AlgorithmException {
 		if (!hasSolution()) return;
+		//int cliqueSize = clique == null ? 0 : clique.size();
+		int cliqueSize = initialCliqueSize;
+		Integer[] colors = new Integer[solution - cliqueSize];
+		for (int j = 0; j < colors.length; j++) colors[j] = j + cliqueSize;
 		
-		Integer[] colors = new Integer[solution];
-		for (int j = 0; j < solution; j++) colors[j] = j;
 		Arrays.sort(colors, colorComparator);
 		
 		// Only bestColorClass must be modified
 		int[] sortedBestColorClass = new int[graph.N()];
-		for (int j = 0; j < solution; j++) {
+		for (int j = 0; j < colors.length; j++) {
 			for (int i = 0; i < graph.N(); i++) {
 				if (bestColorClass[i] == colors[j]+1) {
-					sortedBestColorClass[i] = j + 1;
+					sortedBestColorClass[i] = j + 1 + cliqueSize;
 				}
 			}
-		} this.bestColorClass = sortedBestColorClass;
+		} 
+		
+		// Keep lower colors not modified
+		for (int i = 0; i < graph.N(); i++) {
+			if (bestColorClass[i] != 0 && bestColorClass[i] <= cliqueSize) {
+				sortedBestColorClass[i] = bestColorClass[i];
+			}
+		}
+		
+		this.bestColorClass = sortedBestColorClass;
 	}
 
 	private int partitions(int painted, int currentColor) throws AlgorithmException {

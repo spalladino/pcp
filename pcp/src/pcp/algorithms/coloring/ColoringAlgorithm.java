@@ -12,6 +12,8 @@ import exceptions.AlgorithmException;
 
 public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	
+	protected static int initialCliqueSize;
+	
 	protected IPartitionedGraph graph;
 	protected IAlgorithmBounder bounder;
 	
@@ -84,6 +86,8 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	public void setInitialClique(List<pcp.entities.simple.Node> clique) throws AlgorithmException {
 		int index = 0;
 		this.clique = clique;
+		initialCliqueSize = clique.size();
+		
 		// Every partition in the clique is assigned a color in ascending order 
 		for(pcp.entities.simple.Node snode : clique) {
 			useColorPartition(snode.index(), index);

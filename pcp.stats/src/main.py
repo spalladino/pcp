@@ -205,29 +205,29 @@ def bnc_emph_latextable():
                 )
 
 def bnc_models_latextable():
-        filel = '20100824BNCMLOW'
-        fileh = '20100824BNCMHIGH'
+        filel = '20100826BNCMLOW2'
+        fileh = '20100826BNCMHIGH2'
         
         LatexProcessor(filel).process(
                 ids=[metrics.FileName()],
                 datas=['solution.chi','solution.nnodes','solution.time','solution.gap'],   
-                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
                 datafilter= None,
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'solver.probing', 'solver.mipEmphasis'],
                 runfilter= None,
-                aggr= aggregate.concat 
+                aggr= aggregate.avg 
                 )
         
         LatexProcessor(fileh).process(
                 ids=[metrics.FileName()],
                 datas=['solution.chi','solution.nnodes','solution.time','solution.gap'],   
-                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'solver.probing', 'solver.mipEmphasis'],
                 datafilter= None,
                 runfilter= None,
-                aggr= aggregate.concat 
+                aggr= aggregate.avg 
                 )
 
 if __name__ == '__main__':
-    model_bnb_latextable()
+    bnc_models_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
