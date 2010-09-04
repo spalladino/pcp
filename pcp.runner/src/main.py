@@ -16,17 +16,38 @@ import files as f
 import os
  
 def main():
-   
-    files = f.dimacs
+    
+    files = bnc.filesvlow()
     print 'Processing: ', files
 
     Fixture().newrun(
-                bncm.lowdens_runs + bncm.highdens_runs, 
+                bnc.hopefully_final_runs_vlow, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100827DIMACSBNCMODEL'
+                runid = '20100903FINALVLOW'
             )
     
+    files = bnc.fileslow()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                bnc.hopefully_final_runs_low, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100903FINALLOW'
+            )
+    
+    files = bnc.fileshigh()
+    print 'Processing: ', files
+
+    Fixture().newrun(
+                bnc.hopefully_final_runs_high, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100903FINALHIGH'
+            )
+                
+                   
 if __name__ == '__main__':
     main()
     

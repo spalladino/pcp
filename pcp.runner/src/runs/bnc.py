@@ -11,6 +11,14 @@ def files():
 def files90():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((90))\\.00(0|1|2)\\.in')
 
+
+def filesvlow():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2)n((100))\\.00(3|4)\\.in')
+def fileslow():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(4)n((100))\\.00(3|4)\\.in')
+def fileshigh():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((100))\\.00(3|4)\\.in')
+
 baseprops = {
              'cuts.enabled': 'true',
              'cuts.iterations.root.max': '100',
@@ -63,6 +71,132 @@ baseprops = {
 			'solver.useCplexCuttingPlanes': 'false',
             'solver.useCplexPrimalHeuristic': 'false',
               }
+
+hopefully_final_runs_vlow = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '-1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsLeqOne',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintAtLeastOne',               
+                            },
+                            {
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'false',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'false',
+                             },
+                              {
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'false',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'false',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
+hopefully_final_runs_low = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                            {
+                             'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',     
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             },
+                              {
+                               'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',     
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
+hopefully_final_runs_high = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '0',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                            {
+                             'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             },
+                              {
+                               'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
 
 pruning_runs = create_runs(baseprops, [
 				{

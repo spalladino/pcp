@@ -10,7 +10,15 @@ For these tests we used binomial graphs with a fixed size of 100 nodes with exac
 
 \subsubsection{Adjacency constraints}
 
-We first tested the four different adjacency (or color conflict) constraints we had proposed, using arbitrarily chosen constraints \ref{eqn:partsum}, \ref{eqn:lowerlabel} and \ref{eqn:wjleqsumcolor} to complete the model. The different adjacency constraints being tested are the following: 
+We first tested the four different adjacency (or color conflict) constraints we had proposed, using arbitrarily chosen constraints \ref{eqn:partsum}, \ref{eqn:lowerlabel} and \ref{eqn:wjleqsumcolor} to complete the model:
+
+\begin{align*}
+&\sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 &\quad \forall P_k \in P \tag{\ref{eqn:partsum}} \\
+&w_j \geq w_{j+1} &\quad \forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
+&w_j \leq \sum_{i \in V} x_{ij} &\quad \forall j \in C \tag{\ref{eqn:wjleqsumcolor}} \\
+\end{align*}
+
+The different adjacency constraints being tested in this experiment are the following: 
 
 \begin{align*}
 &x_{ij} + x_{kj} \leq w_j \sumheight &\quad \forall (i,k) \in E, \; \forall j \in C \tag{\ref{eqn:adjscolorp}} \\
@@ -19,15 +27,14 @@ We first tested the four different adjacency (or color conflict) constraints we 
 &\sum_{i \in P_k \cap N(i_0)} x_{ij} + x_{i_0j} \leq w_j &\quad \forall j \in C, \; \forall P_k \in P, \; \forall i_0 \in V \tag{\ref{eqn:adjsperpart}} 
 \end{align*}
 
-Results are displayed on table \ref{table:models:adj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n \times c$ additional constraints \ref{eqn:nodelessthanwj}.
+Results are displayed on table \ref{table:modelsadj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n \times c$ additional constraints \ref{eqn:nodelessthanwj}.
 
 \begin{sidewaystable}
-\label{table:models:adj}
 \centering
 
 	\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
 	\hline
-	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjscolorp}} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjscolorpone}} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjsneighb}} & \multicolumn{3}{|c|}{constraint \ref{eqn:adjsperpart}} 
+	\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{Constraint \ref{eqn:adjscolorp}} & \multicolumn{3}{|c|}{Constraint \ref{eqn:adjscolorpone}} & \multicolumn{3}{|c|}{Constraint \ref{eqn:adjsneighb}} & \multicolumn{3}{|c|}{Constraint \ref{eqn:adjsperpart}} 
 	\\
 	& gap & rounds & time & gap & rounds & time & gap & rounds & time & gap & rounds & time 
 	\\
@@ -53,6 +60,7 @@ Results are displayed on table \ref{table:models:adj}. Differences between gaps 
 	 \end{tabular}
 	
 	\caption{Comparison of different color conflict constraints on the model formulation: adjacent nodes sum bounded by $w_j$ (\ref{eqn:adjscolorp}), adjacent nodes sum bounded by $1$ (\ref{eqn:adjscolorpone}), adjacencies grouped by partition (\ref{eqn:adjsperpart}) and using clique coverage of the neighbourhood (\ref{eqn:adjsneighb}).}
+	\label{table:modelsadj}
 \end{sidewaystable}
 
 \subsubsection{Colored nodes per partition}
@@ -164,7 +172,7 @@ Minimum partition index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) hav
 
 \begin{tabular}{|c|ccc|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{min partition label} & \multicolumn{3}{|c|}{none} & \multicolumn{3}{|c|}{label ordering} & \multicolumn{3}{|c|}{node count}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{Constraint \ref{eqn:minlabel}} & \multicolumn{3}{|c|}{None} & \multicolumn{3}{|c|}{Constraint \ref{eqn:lowerlabel}} & \multicolumn{3}{|c|}{Constraint \ref{eqn:symnodecount}}
 \\
  & gap & niters & time & gap & niters & time & gap & niters & time & gap & niters & time
 \\
@@ -189,25 +197,25 @@ HK 40\% & 0.048 &  3.8 & 0.316 & 0.05 &  6.2 & 0.494 & 0.048 &  5.2 & 0.416 & \b
 \hline 
  \end{tabular}
 
-\caption{Comparison of the inclusion of different symmetry breaking constraints in the model: assigning the lowest color label to the color class with the lowest node index, applying no constraint whatsoever, forcing lower labels to be used first and assigning the lowest color label to the color class with the greatest number of nodes.}
+\caption{Comparison of the inclusion of different symmetry breaking constraints in the model: assigning the lowest color label to the color class with the lowest node index \eqref{eqn:minlabel}, applying no constraint whatsoever, forcing lower labels to be used first \eqref{eqn:lowerlabel} and assigning the lowest color label to the color class with the greatest number of nodes \eqref{eqn:symnodecount}.}
 
 \end{sidewaystable}
 
-\subsubsection{Chosen formulation}
+\subsubsection{Chosen formulation from cutting planes}
 \label{subsubsec:results:model:chosen}
 
-Taking into account all previous results, the set of constraints that we will use in the \PCP{} formulation for all subsequent computational experiments will be the following:
+Taking into account all previous results in a cutting planes algorithm, the set of constraints that we will use in the \PCP{} formulation for subsequent computational experiments will be the following:
 
 \begin{align}
 \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad &\forall P_k \in P \tag{\ref{eqn:partsum}} \\
  \sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j \quad &\forall j \in C, \; \forall i_0 \in V \tag{\ref{eqn:adjsneighb}} \\
  w_j \leq \sum_{i \in V} x_{ij} \quad &\forall j \in C \tag{\ref{eqn:wjleqsumcolor}} \\
- w_j \geq w_{j+1} \sumheight \quad &\forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
  x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad &\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j \leq k \tag{\ref{eqn:minlabel}} \\
- x_{ij}, w_{j} \in \{0,1\} \quad &\forall i \in V, \; \forall j \in C \sumheight \nonumber
+ %w_j \geq w_{j+1} \sumheight \quad &\forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
+  x_{ij}, w_{j} \in \{0,1\} \quad &\forall i \in V, \; \forall j \in C \sumheight \nonumber
 \end{align}
 
-First two constraints define the problem itself, by specifying that a node must be colored in each partition and no color conflicts must occur; constraints \ref{eqn:wjleqsumcolor} simply strengthen the linear relaxation; and \ref{eqn:lowerlabel} and \ref{eqn:minlabel} eliminate symmetrical solutions. Last set of constraints are the binary restrictions.
+First two constraints define the problem itself, by specifying that a node must be colored in each partition and no color conflicts must occur; constraints \ref{eqn:wjleqsumcolor} simply strengthen the linear relaxation; and \ref{eqn:minlabel} eliminate symmetrical solutions. Last set of constraints are the binary restrictions.
 
 Note that while adjacency restrictions \ref{eqn:adjscolorpone} reported better results than the chosen ones (\ref{eqn:adjsneighb}) in most cases, the latter worked better in dense graphs, which are the ones that, due to a larger problem size, take longer to solve their linear relaxation. Therefore, we opt for improving the resolution of the hardest graphs instead of getting slightly better results in the rest. 
 
@@ -258,6 +266,6 @@ Results were most interesting. The formulation chosen for the cutting planes alg
 \item However, in $60\%$ density and greater, using vertex count constraints ($M10$) solved the problem to optimality in most cases, being a huge advance over the chosen model.
 \end{itemize}
 
-Although we will be using the previous formulation for fixing different settings throughout the following experimentations, we will reuse the results exposed here as alternative models for the final branch and cut algorithm.
+Although we will be using the previous formulation for fixing different settings throughout the following experimentations, we will reuse the results exposed here as alternative models for the final branch and cut algorithm, in order to pick the best performing model for the final version of the algorithm.
 
 \clearpage

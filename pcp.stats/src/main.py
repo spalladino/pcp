@@ -206,7 +206,7 @@ def bnc_emph_latextable():
 
 def bnc_models_latextable():
         filel = '20100826BNCMLOW2'
-        fileh = '20100826BNCMHIGH2'
+        fileh = '20100902BNCMHIGH2FIXED'
         
         LatexProcessor(filel).process(
                 ids=[metrics.FileName()],
@@ -224,6 +224,27 @@ def bnc_models_latextable():
                 datafilter= None,
                 runfilter= None,
                 aggr= aggregate.avg 
+                )
+
+def bnc_models_fix_latextable():
+        fileh = '20100901BNCMODELHIGHFIXVN'
+        LatexProcessor(fileh).process(
+                ids=[metrics.FileName()],
+                datas=['solution.chi','solution.nnodes','solution.time','solution.gap'],   
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'solver.probing', 'solver.mipEmphasis'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.concat 
+                )
+        
+        fileh = '20100826BNCMHIGH2'
+        LatexProcessor(fileh).process(
+                ids=[metrics.FileName()],
+                datas=['data.filename', 'run.filename'],   
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective', 'solver.probing', 'solver.mipEmphasis'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.concat 
                 )
 
 if __name__ == '__main__':

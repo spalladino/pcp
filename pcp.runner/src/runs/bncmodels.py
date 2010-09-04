@@ -112,3 +112,14 @@ highdens_runs = create_runs(baseprops, [
                     'strategy.symmetry': 'UseLowerLabelFirst',                    
                 },
                 ])
+
+
+highdens_runs_fix = create_runs(baseprops, [
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                    'strategy.symmetry': 'VerticesNumber',                    
+                },
+                ])

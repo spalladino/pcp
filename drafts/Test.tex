@@ -21,6 +21,139 @@
 
 \begin{document}
 	
+	\section{Model BNC Fixed Finally}
+	
+	Processing Runid 20100826BNCMLOW2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 3
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=90 & 3.75 & 23078.25 & 579.85 & 0.00 & 3.75 & 19959.75 & 1161.73 & 0.00 & 3.75 & 27248.25 & 1800.29 & 0.19
+\\
+EW 40 N=90 & 6.00 & 9387.75 & 2400.06 & 0.17 & 6.00 & 13978.50 & 2400.05 & 0.17 & 6.00 & 8405.50 & 2400.03 & 0.17
+\\
+\hline 
+ \end{tabular}
+ 
+ 
+ 
+Processing Runid 20100902BNCMHIGH2FIXED
+
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 60 N=90 & 8.75 & 1750.75 & 2400.06 & 0.23 & 8.75 & 2381.00 & 2400.06 & 0.23 & 8.75 & 2414.75 & 3600.09 & 0.23
+\\
+EW 80 N=90 & 12.75 & 477.50 & 2400.08 & 0.16 & 13.00 & 1133.00 & 2400.07 & 0.15 & 12.75 & 644.75 & 3600.11 & 0.16
+\\
+\hline 
+ \end{tabular}
+
+	
+	\clearpage
+	
+	\section{Model BNC Fix}
+	
+	Processing Runid 20100826BNCMHIGH2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item data.filename
+\item run.filename
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
+\\
+ & data.filename & run.filename & data.filename & run.filename & data.filename & run.filename
+\\
+\hline
+EW 60 N=90 & ['003.run', '006.run', '009.run', '012.run'] & ['e06n90.000.in', 'e06n90.001.in', 'e06n90.002.in', 'e06n90.003.in'] & ['001.run', '004.run', '007.run', '010.run'] & ['e06n90.000.in', 'e06n90.001.in', 'e06n90.002.in', 'e06n90.003.in'] & ['002.run', '005.run', '008.run', '011.run'] & ['e06n90.000.in', 'e06n90.001.in', 'e06n90.002.in', 'e06n90.003.in']
+\\
+EW 80 N=90 & ['015.run', '018.run', '021.run', '024.run'] & ['e08n90.000.in', 'e08n90.001.in', 'e08n90.002.in', 'e08n90.003.in'] & ['013.run', '016.run', '019.run', '022.run'] & ['e08n90.000.in', 'e08n90.001.in', 'e08n90.002.in', 'e08n90.003.in'] & ['014.run', '017.run', '020.run', '023.run'] & ['e08n90.000.in', 'e08n90.001.in', 'e08n90.002.in', 'e08n90.003.in']
+\\
+\hline 
+ \end{tabular}
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	
+	
+	Processing Runid 20100901BNCMODELHIGHFIXVN
+ 
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+\end{itemize}
+\begin{tabular}{|c|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1}
+\\
+ & solution.chi & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 60 N=90 & [8, 9, 9, 9] & [1304, 2785, 2785, 2785] & ['3600.08', '3600.13', '3600.08', '3600.08'] & ['0.25', '0.22', '0.22', '0.22']
+\\
+EW 80 N=90 & [12, 13, 13, 13] & [479, 700, 700, 700] & ['3600.14', '3600.06', '3600.11', '3600.13'] & ['0.17', '0.15', '0.15', '0.15']
+\\
+\hline 
+ \end{tabular}
+
+	
 	\section{Model BNC V2}
 Processing Runid 20100826BNCMLOW2
  Successfully loaded
