@@ -313,7 +313,7 @@ public class ModelBuilder {
 							expr.addTerm(xs[u.index][j-1], -1);
 						}
 					}			
-					modeler.le(expr, 0, name);
+					modeler.addLe(expr, 0, name);
 				}
 			}
 		}
