@@ -17,26 +17,6 @@ import os
  
 def main():
     
-    files = bnc.filesvlow()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                bnc.hopefully_final_runs_vlow, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100903FINALVLOW'
-            )
-    
-    files = bnc.fileslow()
-    print 'Processing: ', files
-
-    Fixture().newrun(
-                bnc.hopefully_final_runs_low, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20100903FINALLOW'
-            )
-    
     files = bnc.fileshigh()
     print 'Processing: ', files
 
@@ -44,7 +24,7 @@ def main():
                 bnc.hopefully_final_runs_high, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100903FINALHIGH'
+                runid = '20100906FINALHIGH'
             )
                 
                    
