@@ -133,56 +133,56 @@ EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 
 \clearpage
 
 \subsubsection{Alternate models in branch and cut}
-
-\begin{itemize}
-\item solution.chi
-\item solution.nnodes
-\item solution.time
-\item solution.gap
-\end{itemize}
-Series:
-\begin{itemize}
-\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
-\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
-\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 3
-\end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
-\\
- & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
-\\
-\hline
-EW 20 N=90 & 23078.25 & 579.85 & 0.00 & 19959.75 & 1161.73 & 0.00 & 27248.25 & 1800.29 & 0.19
-\\
-EW 40 N=90 & 9387.75 & 2400.06 & 0.17 & 13978.50 & 2400.05 & 0.17 & 8405.50 & 2400.03 & 0.17
-\\
-\hline 
- \end{tabular}
-
-
-\begin{itemize}
-\item solution.chi
-\item solution.nnodes
-\item solution.time
-\item solution.gap
-\end{itemize}
-Series:
-\begin{itemize}
-\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-\end{itemize}
-\begin{tabular}{|c|cc|cc|cc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
-\\
- & nodes & gap & nodes & gap & nodes & gap
-\\
-\hline
-EW 60 N=90 & 1750.75& 0.23 & 2381.00 & 0.23 & 2200.25 & 0.23
-\\
-EW 80 N=90 & 477.50 & 0.16 & 1133.00& 0.15 & 644.75 &0.16
-\\
-\hline 
- \end{tabular}
+%
+%\begin{itemize}
+%\item solution.chi
+%\item solution.nnodes
+%\item solution.time
+%\item solution.gap
+%\end{itemize}
+%Series:
+%\begin{itemize}
+%\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
+%\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
+%\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 3
+%\end{itemize}
+%\begin{tabular}{|c|ccc|ccc|ccc|}
+%\hline
+%\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+%\\
+% & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
+%\\
+%\hline
+%EW 20 N=90 & 23078.25 & 579.85 & 0.00 & 19959.75 & 1161.73 & 0.00 & 27248.25 & 1800.29 & 0.19
+%\\
+%EW 40 N=90 & 9387.75 & 2400.06 & 0.17 & 13978.50 & 2400.05 & 0.17 & 8405.50 & 2400.03 & 0.17
+%\\
+%\hline 
+% \end{tabular}
+%
+%
+%\begin{itemize}
+%\item solution.chi
+%\item solution.nnodes
+%\item solution.time
+%\item solution.gap
+%\end{itemize}
+%Series:
+%\begin{itemize}
+%\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+%\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+%\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+%\end{itemize}
+%\begin{tabular}{|c|cc|cc|cc|}
+%\hline
+%\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
+%\\
+% & nodes & gap & nodes & gap & nodes & gap
+%\\
+%\hline
+%EW 60 N=90 & 1750.75& 0.23 & 2381.00 & 0.23 & 2200.25 & 0.23
+%\\
+%EW 80 N=90 & 477.50 & 0.16 & 1133.00& 0.15 & 644.75 &0.16
+%\\
+%\hline 
+% \end{tabular}

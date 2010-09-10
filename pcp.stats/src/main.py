@@ -246,9 +246,27 @@ def bnc_models_fix_latextable():
                 runfilter= None,
                 aggr= aggregate.concat 
                 )
+        
+def final_1_latextable():
+    
+        series = ['solver.kind', 'solver.useCplexPrimalHeuristic', 'solver.useCplexPreprocess', 'solver.useCplexCuttingPlanes', 'model.variables.boundOnDegree', 'model.variables.boundOnPartitionIndex', 'model.variables.fixClique',]
+        datas=['solution.chi','solution.nnodes','solution.time','solution.gap']
+        
+        files = ['20100908FINALVLOW2', '20100908FINALLOW2', '20100908FINALHIGH2']
+        
+        for file in files:
+            LatexProcessor(file).process(
+                    ids=[metrics.FileName()],
+                    datas=datas,   
+                    series=series,
+                    datafilter= None,
+                    runfilter= None,
+                    aggr= aggregate.avg 
+                    )
+        
 
 if __name__ == '__main__':
-    bnc_models_latextable()
+    final_1_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")
