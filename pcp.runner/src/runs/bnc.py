@@ -19,6 +19,13 @@ def fileslow():
 def fileshigh():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((100))\\.00(3|4)\\.in')
 
+def filesvlow90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2)n((90))\\.00(3|4)\\.in')
+def fileslow90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(4)n((90))\\.00(3|4)\\.in')
+def fileshigh90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((90))\\.00(3|4)\\.in')
+
 baseprops = {
              'cuts.enabled': 'true',
              'cuts.iterations.root.max': '100',
@@ -153,6 +160,66 @@ hopefully_final_runs_low = create_runs(baseprops, [
                            ])
 
 hopefully_final_runs_high = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '0',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                            {
+                             'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             },
+                              {
+                               'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
+hopefully_final_runs_dimacs = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
                            {
                             'solver.maxTime': '7200',
                             'pruning.enabled': 'true',

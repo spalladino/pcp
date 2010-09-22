@@ -21,6 +21,96 @@
 
 \begin{document}
 	
+	\section{Runs with 90 nodes}
+	
+	Processing Runid 20100920BNC90VLOW
+. . . . . .  Successfully created and stored
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 20 N=90 & 3.00 & 161.00 & 1.49 & 0.00 & 3.00 & 161.00 & 1.48 & 0.00 & 3.00 & 0.00 & 0.34 & 0.00
+\\
+\hline 
+ \end{tabular}
+ 
+ 
+Processing Runid 20100920BNC90LOW
+. . . . . .  Successfully created and stored
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 40 N=90 & 6.00 & 239628.00 & 7200.02 & 0.17 & 6.00 & 74407.00 & 7200.02 & 0.17 & 6.00 & 33385.50 & 7200.02 & 0.17
+\\
+\hline 
+ \end{tabular}
+ 
+ 
+Processing Runid 20100920BNC90HIGH
+. . . . . . . . . . . .  Successfully created and stored
+Data:
+\begin{itemize}
+\item solution.chi
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\end{itemize}
+\begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 60 N=90 & 9.00 & 55567.00 & 7200.02 & 0.33 & 9.00 & 96855.50 & 7200.02 & 0.36 & 9.00 & 10794.00 & 7200.03 & 0.22
+\\
+EW 80 N=90 & 12.50 & 51981.50 & 7200.04 & 0.26 & 12.50 & 36921.50 & 7200.03 & 0.23 & 12.50 & 1803.00 & 7200.08 & 0.11
+\\
+\hline 
+ \end{tabular}
+
+	
+	\clearpage
+	
 	\section{Hopefully final runs}
 	
 	\subsection{Errored}

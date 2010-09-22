@@ -17,24 +17,34 @@ import os
  
 def main():
     
-    files = f.dimacs
-    print 'Processing: ', files
+    files = bnc.filesvlow90()
+    print 'Processing vlow: ', files
+
+    Fixture().newrun(
+                bnc.hopefully_final_runs_vlow, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20100920BNC90VLOW'
+            )
+    
+    files = bnc.fileslow90()
+    print 'Processing low: ', files
 
     Fixture().newrun(
                 bnc.hopefully_final_runs_low, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100910DIMACSFINALLOW'
+                runid = '20100920BNC90LOW'
             )
     
-    files = f.dimacs
-    print 'Processing: ', files
+    files = bnc.fileshigh90()
+    print 'Processing high: ', files
 
     Fixture().newrun(
                 bnc.hopefully_final_runs_high, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100910DIMACSFINALHIGH'
+                runid = '20100920BNC90HIGH'
             )
                 
                    
