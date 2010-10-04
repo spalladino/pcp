@@ -239,18 +239,18 @@ We present in table \ref{table:models:bnb} the following configurations, chosen 
 \label{table:models:bnb}
 \centering
 
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{M4} & \multicolumn{1}{|c|}{M1} & \multicolumn{1}{|c|}{M3}  & \multicolumn{1}{|c|}{M8}  & \multicolumn{1}{|c|}{M10} 
+\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{M4} & \multicolumn{1}{|c|}{M1} & \multicolumn{1}{|c|}{M3}  & \multicolumn{1}{|c|}{M8} 
 \\
 \hline
-EW 20 N=90 & \textbf{0.00} & \textbf{0.00} & 0.25  & \textbf{0.00}  & 0.25
+EW 20 N=90 & \textbf{0.00} & \textbf{0.00} & 0.25  & \textbf{0.00}  
 \\
-EW 40 N=90 & 0.33 & \textbf{0.22} & 0.33 & 0.33 & 0.28 
+EW 40 N=90 & 0.33 & \textbf{0.22} & 0.33 & 0.33 
 \\
-EW 60 N=90 & 0.39 & 0.37 & 0.41 & 0.37 & \textbf{0.15}
+EW 60 N=90 & 0.39 & \textbf{0.37} & 0.41 & \textbf{0.37}
 \\
-EW 80 N=90 & 0.38 & 0.43 & 0.31 & 0.39 & \textbf{0.00}
+EW 80 N=90 & 0.38 & 0.43 & \textbf{0.31} & 0.39
 \\
 \hline 
  \end{tabular}
@@ -263,7 +263,7 @@ Results were most interesting. The formulation chosen for the cutting planes alg
 \begin{itemize}
 \item In graphs with $40\%$ density, relaxing the \ref{eqn:partsum} constraint on painting one node per partition greatly reduces the obtained gap, as can be seen in the results for $M1$.
 \item In the most dense graphs, using tighter model strengthening constraints yields better results, as $M8$ has a much lower gap than the chosen model.
-\item However, in $60\%$ density and greater, using vertex count constraints ($M10$) solved the problem to optimality in most cases, being a huge advance over the chosen model.
+\item In the highest density graphs, using simple color conflict constraints returned a better result.
 \end{itemize}
 
 Although we will be using the previous formulation for fixing different settings throughout the following experimentations, we will reuse the results exposed here as alternative models for the final branch and cut algorithm, in order to pick the best performing model for the final version of the algorithm.
