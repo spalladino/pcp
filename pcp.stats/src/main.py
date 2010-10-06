@@ -26,7 +26,7 @@ def model_latextable(p):
 def dsatur_latextable(p):    
         p.process(
                 ids=[metrics.FileName()],
-                datas=['solution.chi','solution.found'], 
+                datas=['solution.chi','solution.found', 'solution.nnodes'], 
                 series=['strategy.coloring', 'dsatur.partition.weight.size', 'dsatur.partition.weight.colorCount', 'dsatur.partition.weight.uncolored'],
                 datafilter= {'dsatur.partition.weight.size':'1', 'dsatur.partition.weight.colorCount':'10000', 'dsatur.partition.weight.uncolored':'100'},
                 runfilter= None,
@@ -297,9 +297,26 @@ def final_90_latextable():
                     runfilter= None,
                     aggr= aggregate.avg 
                     )
+            
+def final_dimacs_latextable():
+    
+        series = ['solver.kind', 'solver.useCplexPrimalHeuristic', 'solver.useCplexPreprocess', 'solver.useCplexCuttingPlanes', 'model.variables.boundOnDegree', 'model.variables.boundOnPartitionIndex', 'model.variables.fixClique']
+        datas=['solution.chi','solution.nnodes','solution.time','solution.gap']
+        
+        files = ['20100910DIMACSFINAL2PARTIAL']
+        
+        for file in files:
+            LatexProcessor(file).process(
+                    ids=[metrics.FileName()],
+                    datas=datas,   
+                    series=series,
+                    datafilter= None,
+                    runfilter= None,
+                    aggr= aggregate.concat 
+                    )
 
 if __name__ == '__main__':
-    final_90_latextable()
+    final_dimacs_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

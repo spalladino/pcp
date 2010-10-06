@@ -204,6 +204,133 @@ hopefully_final_runs_high = create_runs(baseprops, [
                              }
                            ])
 
+
+
+hopefully_final_runs_vlow_2 = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintAtLeastOne',               
+                            },
+                            {
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'false',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'false',
+                             },
+                              {
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'false',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'false',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
+hopefully_final_runs_low_2 = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                            {
+                             'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',     
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             },
+                              {
+                               'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',     
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
+hopefully_final_runs_high_2 = create_runs(baseprops, [
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '-1',
+                            'solver.mipEmphasis': '0',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                            {
+                             'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             },
+                              {
+                               'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            
+                             'solver.maxTime': '7200',
+                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.useCplexPrimalHeuristic': 'true',
+                             'solver.useCplexPreprocess': 'true',
+                             'solver.useCplexCuttingPlanes': 'true',
+                             'model.variables.boundOnDegree': 'false',
+                             'model.variables.boundOnPartitionIndex': 'false',
+                             'model.variables.fixClique': 'false',
+                             }
+                           ])
+
 hopefully_final_runs_dimacs = create_runs(baseprops, [
                            {
                             'solver.maxTime': '7200',

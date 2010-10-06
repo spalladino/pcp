@@ -1,212 +1,138 @@
 %!TEX root = pcp.tex
 
-\subsection{Branch and cut}
-\label{subsec:resultsbnc}
+\subsection{Benchmarks}
+\label{subsec:resultsbenchs}
 
-Last but not least, in determining the best configuration for the different components of a branch and cut algorithm, we evaluated the algorithm's performance with different settings relative to the whole branch and cut process. We evaluated different criteria for running the exhaustive implicit enumeration in subtrees, as described in \ref{subsec:alg:implicit}, and also different MIP relative parameters in the underlying \textsc{cplex} framework we used.
-
-\subsubsection{Exhaustive implicit enumeration}
-
-Our first test, once most parameters in the branch and cut algorithm were fixed, was to determine the threshold to run a full \textsc{dsatur} on a node once enough partitions' colors had been fixed during the branching process. Since the algorithm considered only non-fixed partitions for its execution, we experimented with values within acceptable ranges for an exhaustive enumeration: we chose 20, 40 and 60 as the number of remaining partitions to color which triggered the enumeration.
-
-We used graphs of 100 nodes with 2 nodes per partition and different densities, in branch and cut executions of 30 minutes, to check the behaviours of these strategies.
-
-Results were not encouraging, as shown in table \ref{table:bnc:prune}. Setting a low number of unfixed partitions as the threshold to start the exact algorithm caused the algorithm to be never invoked, as the branch and cut itself could prune the whole subtree after very few partitions were colored in the branch process.
-
-On the other hand, making the exact \textsc{dsatur} start earlier caused the algorithm to consume much more time than the available, surpassing the $1800$ seconds bound for high-density graphs, or simply left less time to explore a larger number of nodes, in both cases greatly hurting the obtained gap.
-
-As a result of these experiments, we will be enabling exhaustive implicit enumeration only for very low thresholds ($20$ partitions pending) in order to avoid any problems caused by running the exact algorithm for long periods. Although this setting may cause the algorithm to never be triggered, in other cases such as larger graphs with a greater time bound there is a possibility for this algorithm to actually be effective. 
-
-\begin{sidewaystable}[h]
-\label{table:bnc:prune}
-\centering
-
-\begin{tabular}{|c|ccc|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{20} & \multicolumn{3}{|c|}{40} & \multicolumn{3}{|c|}{60}
-\\
- & \# times & nodes & gap & \# times & nodes & gap & \# times & nodes & gap
-\\
-\hline
-EW 20 N=100 & 0.00 & 11833.00 & 0.25 & 0.00 & 11834.00 & 0.25 & 115.33 & 11877.00 & 0.25
-\\
-EW 40 N=100 & 0.00 & 2341.00 & 0.22 & 0.00 & 2340.67 & 0.22 & 192.33 & 2367.67 & 0.30
-\\
-EW 60 N=100 & 0.00 & 1225.67 & 0.22 & 0.00 & 1225.67 & 0.22 & 345.00 & 1050.00 & 0.29
-\\
-EW 80 N=100 & 0.00 & 307.67 & 0.19 & 2.00 & 313.67 & 0.19 & 28.00 & 119.00 & 0.21 (*)
-\\
-\hline 
- \end{tabular}
-
-\caption{Average number of times the enumeration was triggered, number of nodes in the tree and resulting gap, for different number of uncolored partitions for triggering the exhaustive enumeration. The execution marked with a (*) indicate that the execution of the enumeration algorithm took an unacceptable amount of time for the imposed bounds.}
-
-\end{sidewaystable}
-
-\subsubsection{Probing}
-
-An available setting in the \textsc{cplex} framework is the probing level. This controls how much processing is invested in a preprocessing stage to derive logical implications from setting binary variables to a fixed value. As \textsc{cplex}'s manual \cite{cplex121} explains:
-
-\begin{quote}
-
-Probing is a technique that looks at the logical implications of fxing each binary variable to 0 (zero) or 1 (one). It is performed after preprocessing and before the solution of the root relaxation. Probing can be expensive, so this parameter should be used selectively. On models that are in some sense easy, the extra time spent probing may not reduce the overall time enough to be worthwhile. On diffcult models, probing may incur very large runtime costs at the beginning and yet pay off with shorter overall runtime. 
-
-\end{quote}
-
-We experimented with binomial graphs of fixed size and different densities, as usual, with different probing levels set. Results are shown in table \ref{table:bnc:probing}, and differ greatly between different densities.
-
-For low densities, a moderate level of probing seems to be the best option, as it managed to explore a greater amount of nodes in the tree during the imposed $1800$ seconds. 
-
-On the other hand, greater densities seems to benefit more from disabling probing whatsoever, as the custom bounds implied during the branch process (see \ref{subsubsec:alg:branch:bounds}) benefit largely from higher-degree nodes, making the engine's probing unnecesary and yielding a better gap.
-
-Therefore, we will be using moderate probing settings for low density graphs, and disabling probing altogether for higher densities.
-
-\begin{sidewaystable}[h]
-\label{table:bnc:probing}
-\centering
-
-\begin{tabular}{|c|cc|cc|cc|cc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{disabled} & \multicolumn{2}{|c|}{moderate} & \multicolumn{2}{|c|}{aggressive} & \multicolumn{2}{|c|}{very aggressive}
-\\
- & nnodes & gap & nnodes & gap & nnodes & gap & nnodes & gap
-\\
-\hline
-EW 20 N=100 & 11319.00 & 0.25 & 23284.33 & 0.25 & 24523.67 & 0.25 & 24517.67 & 0.25
-\\
-EW 40 N=100 & 2366.67 & 0.22 & \textbf{5396.67} & \textbf{0.22} & 2348.00 & 0.22 & 2345.33 & 0.22
-\\
-EW 60 N=100 & 1227.67 & 0.22 & 1227.33 & 0.22 & 1171.67 & 0.22 & 1171.33 & 0.22
-\\
-EW 80 N=100 & \textbf{347.00} & \textbf{0.15} & 346.00 & 0.19 & 308.33 & 0.19 & 309.00 & 0.19
-\\
-\hline 
- \end{tabular}
- 
-\caption{Average number of nodes in the tree and resulting gap, for different MIP probing levels.}
-
-\end{sidewaystable}
-
-\subsubsection{Emphasizing feasibility and optimality}
-
-Arriving to an optimal solution in a branch and cut algorithm requires both (1) obtaining integral feasible solutions of decreasing objective value, and (2) generate a proof that the best integral solution obtained is actually an optimum. The emphasis the framework puts on these two parts of the algorithm is controlled by a \textit{MIP emphasis} parameter, which can be given the following values:
+Computational experiments in the previous sections have allowed us to determine the best parametrizations of the branch and cut algorithm for graphs of different densities. Besides the common settings used for all graphs, along with the model detailed in section \ref{subsubsec:results:model:chosen}, we apply the following density-specific settings:
 
 \begin{itemize}
-\defitem{Balanced}{Have a reasonable balance between feasibility and optimality, which is the default behaviour.}
-\defitem{Emphasize feasibility}{Focus on feasibility instead of optimality, which produces better solutions earlier and works better under tight time constraints when an optimality proof is not necessary.}
-\defitem{Emphasize optimality}{Focus on the proof of optimality by attempting to raise the best bound\footnote{The best bound is the lowest possible value that an integer feasible solution could have.} faster.}
-\defitem{Emphasize best bound}{Focus even more in the proof of optimality by attempting solely to move the best bound; this causes intermediate optimal solutions to be rarely found as it cares exclusively to arrive to a final optimal solution.}
-\defitem{Hidden feasibility}{Attempts to find high quality feasible solutions that are considered hidden, this is, difficult to obtain through the branch and cut process; this causes the proof of optimality to take longer than with other settings.}
+
+\item{For low density graphs, $20\%$, use a moderate level of probing, emphasize best bound as MIP emphasis, and apply the following constraints instead of \ref{eqn:partsum}:
+\[
+\sum_{i \in P_k} \sum_{j \in C} x_{ij} \geq 1 \tag{\ref{eqn:partsumgeq}}
+\]}
+
+\item{In the case of $40\%$-density graphs, use a moderate level of probing, emphasizing best bound as MIP emphasis.}
+
+\item{For graphs of higher density, disable probing whatsoever and apply a balanced MIP emphasis.}
+
 \end{itemize}
 
-We evaluated these different configurations in the usual set of binomial graphs, reporting both gaps and number of nodes explored in the tree; results are shown in table \ref{table:bnc:emph}. All of them arrived to the same gap values, but there were observable differences between the number of nodes explored in the tree.
+Using these previous settings, we ran the branch and cut algorithm for 2 hours to determine the best results achieved on a fresh suite of test graphs.
 
-For low density graphs, emphasizing the best bound yielded the highest number of nodes explored within the same time frame, while in higher density graphs a balanced approach managed to explore more nodes. These configurations will be used for further experimentation, depending on the processed graph's density.
-
-\begin{sidewaystable}[h]
-\label{table:bnc:emph}
-\centering
-
-\begin{tabular}{|c|cc|cc|cc|cc|cc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{balanced} & \multicolumn{2}{|c|}{feasibility} & \multicolumn{2}{|c|}{optimality} & \multicolumn{2}{|c|}{best bound} & \multicolumn{2}{|c|}{hidden}
-\\
- & nodes & gap & nodes & gap & nodes & gap & nodes & gap & nodes & gap
-\\
-\hline
-EW 20 N=100 & 11840.00 & 0.25 & 11705.00 & 0.25 & 18266.33 & 0.25 & \textbf{20810.00} & 0.25 & 11841.33 & 0.25
-\\
-EW 40 N=100 & 2343.33 & 0.22 & 2186.00 & 0.22 & 3055.33 & 0.17 & \textbf{3707.00} & \textbf{0.17} & 2342.67 & 0.22
-\\
-EW 60 N=100 & \textbf{1226.00} & 0.22 & 1219.33 & 0.22 & 820.33 & 0.22 & 675.67 & 0.22 & 1225.33 & 0.22
-\\
-EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 0.19 & 308.00 & 0.19
-\\
-\hline 
-\end{tabular}
-
- 
-\caption{Average number of nodes in the tree and resulting gap, for different MIP emphasis settings.}
-
-\end{sidewaystable}
-
-\clearpage
-
-
-
-
-
-\subsubsection{Alternative models in branch and cut}
-
-After fixing all of the parameters involved in the different components of the branch and cut algorithm, we decided to revisit the first step and re-evaluate alternative model formulations, this time using the full branch and cut algorithm for comparing the different configurations.
-
-We tested separately low-density and high-density binomial graphs, with a fixed number of $90$ nodes and $2$ nodes per partition. For graphs with $20\%$ and $40\%$ density, we tested the following strategies:
-
-\begin{itemize}
-\defitem{Strategy 1}{Relax the restriction that every partition must have exactly one node colored, and allow for more than a single node to have a single color; this is, replace restrictions \ref{eqn:partsum} for restrictions \ref{eqn:partsumgeq}.}
-\defitem{Strategy 2}{Default model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
-\defitem{Strategy 3}{Relaxed symmetry breaking constraints, using simple \ref{eqn:lowerlabel} instead of \ref{eqn:minlabel} and \ref{eqn:nodeszero}; also uses simpler \ref{eqn:wjgeqsumnode} instead of \ref{eqn:wjgeqsumpart} for eliminating fractional solutions.}
-\end{itemize}
-
-As for higher density graphs, $60\%$ and $80\%$, we tested the following three different strategies:
-
-\begin{itemize}
-\defitem{Strategy 1}{Uses simpler \ref{eqn:wjgeqsumnode} instead of \ref{eqn:wjgeqsumpart} for eliminating fractional solutions; also uses traditional color conflict constraints \ref{eqn:adjscolorpone} and \ref{eqn:nodelessthanwj}.}
-\defitem{Strategy 2}{Default model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
-\defitem{Strategy 3}{Uses number of vertices in each color class as symmetry breaking constraint, this is, replaces constraints \ref{eqn:minlabel} with \ref{eqn:symnodecount}.}
-\end{itemize}
-
-\begin{table}[h]
-\label{table:bnc:modellow}
-\centering
+%\subsubsection{Runs with 90 nodes}
+%	
+%	Data:
 %\begin{itemize}
-%\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
-%\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
-%\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 3
+%\item solution.chi
+%\item solution.nnodes
+%\item solution.time
+%\item solution.gap
 %\end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{Strategy 1} & \multicolumn{3}{|c|}{Strategy 2} & \multicolumn{3}{|c|}{Strategy 3}
-\\
- & nodes & time & gap & nodes & time & gap & nodes & time & gap
-\\
-\hline
-EW 20 N=90 & 23078 & 579.85 & 0.00 & 19959 & 1161.73 & 0.00 & 27248 & 1800.29 & 0.19
-\\
-EW 40 N=90 & 9387 & 2400.06 & 0.17 & 13978 & 2400.05 & 0.17 & 8405 & 2400.03 & 0.17
-\\
-\hline 
- \end{tabular}
-
-\caption{Average number of nodes in the tree, running time and resulting gap, for three different model strategies for low density binomial graphs.}
-
-\end{table}
-
-\begin{table}[h]
-\label{table:bnc:modelhigh}
-\centering
-
+%Series:
 %\begin{itemize}
-%\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-%\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-%\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
+%\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+%\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
 %\end{itemize}
-\begin{tabular}{|c|cc|cc|cc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3}
-\\
- & nodes & gap & nodes & gap & nodes & gap
-\\
-\hline
-EW 60 N=90 & 1750& 0.23 & 2381 & 0.23 & 2200 & 0.23
-\\
-EW 80 N=90 & 477 & 0.16 & 1133 & 0.15 & 644 &0.16
-\\
-\hline 
- \end{tabular}
+%\begin{tabular}{|c|cccc|cccc|cccc|}
+%\hline
+%\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+%\\
+% & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+%\\
+%\hline
+%EW 20 N=90 & 3.00 & 161.00 & 1.49 & 0.00 & 3.00 & 161.00 & 1.48 & 0.00 & 3.00 & 0.00 & 0.34 & 0.00
+%\\
+%\hline 
+% \end{tabular}
+%
+% 
+%Data:
+%
+%\begin{itemize}
+%\item solution.chi
+%\item solution.nnodes
+%\item solution.time
+%\item solution.gap
+%\end{itemize}
+%Series:
+%\begin{itemize}
+%\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+%\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\end{itemize}
+%\begin{tabular}{|c|cccc|cccc|cccc|}
+%\hline
+%\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+%\\
+% & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+%\\
+%\hline
+%EW 40 N=90 & 6.00 & 239628.00 & 7200.02 & 0.17 & 6.00 & 74407.00 & 7200.02 & 0.17 & 6.00 & 33385.50 & 7200.02 & 0.17
+%\\
+%\hline 
+% \end{tabular}
+% 
+%
+% 
+%Data:
+%
+%\begin{itemize}
+%\item solution.chi
+%\item solution.nnodes
+%\item solution.time
+%\item solution.gap
+%\end{itemize}
+%Series:
+%\begin{itemize}
+%\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+%\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\end{itemize}
+%\begin{tabular}{|c|cccc|cccc|cccc|}
+%\hline
+%\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+%\\
+% & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+%\\
+%\hline
+%EW 60 N=90 & 9.00 & 55567.00 & 7200.02 & 0.33 & 9.00 & 96855.50 & 7200.02 & 0.36 & 9.00 & 10794.00 & 7200.03 & 0.22
+%\\
+%EW 80 N=90 & 12.50 & 51981.50 & 7200.04 & 0.26 & 12.50 & 36921.50 & 7200.03 & 0.23 & 12.50 & 1803.00 & 7200.08 & 0.11
+%\\
+%\hline 
+% \end{tabular}
  
- \caption{Average number of nodes in the tree, running time and resulting gap, for three different model strategies for high density binomial graphs.}
-
-\end{table}
-
-Results for both tests are presented in tables \ref{table:bnc:modellow} and \ref{table:bnc:modelhigh}. In the case of $20\%$ density graphs, the best performing strategy in terms of running time was the one using restrictions \ref{eqn:partsumgeq} for specifying that at least one node must have at least one color assigned in each partition. This was not the case for $40\%$ density graphs, in which the model we had been using for previous tests managed to explore the largest number of nodes in the same running time reporting the same gap. Higher density graphs also returned the best results with the strategy being used previously.
+% \subsubsection{Dimacs}
+% 
+% Data:
+%\begin{itemize}
+%\item solution.chi
+%\item solution.nnodes
+%\item solution.time
+%\item solution.gap
+%\end{itemize}
+%Series:
+%\begin{itemize}
+%\item S1: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+%\item S2: solver.kind: CplexBranchAndCutSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\end{itemize}
+%\begin{tabular}{|c|cccc|cccc|cccc|}
+%\hline
+%\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+%\\
+% & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap & solution.chi & solution.nnodes & solution.time & solution.gap
+%\\
+%\hline
+%dimacsDSJC125 & 34.50 & 873.00 & 7200.09 & 0.34 & 34.50 & 873.00 & 7200.13 & 0.34 & 33.25 & 36.00 & 7200.20 & 0.26
+%\\
+%dimacsDSJC250 & 44.33 & 147.33 & 7200.68 & 3.8e+72 & 44.33 & 147.00 & 7200.78 & 3.8e+72 & 44.33 & 45.00 & 7200.83 & 3.8e+72
+%\\
+%dimacsmyciel6 & 7.00 & 149674.00 & 7200.02 & 0.29 & 7.00 & 152009.00 & 7200.03 & 0.29 & 7.00 & 43359.50 & 7200.04 & 0.29
+%\\
+%dimacsmyciel7 & 8.00 & 1124.00 & 7200.03 & 0.53 & 8.00 & 1123.00 & 7200.02 & 0.53 & 8.00 & 667.00 & 7200.09 & 0.50
+%\\
+%\hline 
+% \end{tabular}
