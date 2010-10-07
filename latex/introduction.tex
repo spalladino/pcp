@@ -7,13 +7,13 @@
 
 Needless to say, graphs are widely used for modeling different scenarios in multiple areas of expertise, as well as for solving problems on those scenarios by translating them into well-known problems. 
 
-One of those problems is the graph coloring problem, which consists in assigning a color to each node in a graph, with the constraint that two adjacent nodes may not have the same color. The objective is to generate a valid coloring using the minimum number of colors.
+One of those problems is the graph coloring problem, which consists in assigning a color to each node in a graph, with the constraint that two adjacent nodes must not have the same color. The objective is to generate a valid coloring using the minimum number of colors.
 
 One of the most famous real life problems which led to the generalization of the graph coloring problem was the \textit{4 colors problem}. In 1852, the question of whether any planar map could be colored using only four colors, in such a way that no two regions sharing a border had the same color, was posed. Modeling neighbour regions as adjacent nodes in a planar graph led to the planar graph coloring problem, which was eventually generalized into coloring a generic graph.
 
 Graph coloring is widely used in multiple applications, such as schedule assignment to solve time incompatibilities, assignment of radio frequencies to prevent interference between neighboring radios, or even assigning variables to registers during the flow of a program.
 
-The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns each node $v \in V$ to a natural number which represents a color. A \textit{k-coloring} is an assignment which uses exactly $k$ different colors.
+The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns each node $v \in V$ to a natural number which represents a color, such that no two adjacent nodes have the same color. A \textit{k-coloring} is an assignment which uses exactly $k$ different colors.
 
 \begin{figure}[h]
 	\centering
@@ -58,7 +58,7 @@ There is also extensive work using integer linear programming formulations for t
 \item{In \cite{mehrotra1996column} a column generation approach is used based on an independent set formulation of the problem, in which a binary variable $x_S$ defines whether the independent set $S$ is given a color label or not; this formulation requires a variable for each possible color class in the graph.}
 \item{An ILP model for acyclic orientations with path constraints is presented in \cite{figueiredo2005acyclic} and then applied to solve the vertex coloring problem.}
 \item{The representatives model presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric} uses $x_{uv}$ variables which determine whether vertex $v$ \textit{represents} color $u$; having exactly one node represent each color class allows easy symmetry breaking.}
-\item{M\'endez-D\'iaz and Zabala \cite{mendez2006branch,mendez2008cutting} developed both branch-and-cut and cutting planes algorithms for a standard formulation of the problem, using $x_{ij}$ variables to specify whether node $i$ used color $j$, and $w_j$ variables as witnesses to whether color $j$ was in use. Several symmetry breaking constraints were added to the model to ensure a fast resolution.}
+\item{In \cite{mendez2006branch,mendez2008cutting} both branch-and-cut and cutting planes algorithms were developed for a standard formulation of the problem, using $x_{ij}$ variables to specify whether node $i$ used color $j$, and $w_j$ variables as witnesses to whether color $j$ was in use. Several symmetry breaking constraints were added to the model to ensure a fast resolution.}
 \end{itemize}
 
 \subsection{Routing and Wavelength Assignment in WDM Networks}
@@ -130,7 +130,7 @@ The decision version of PCP is NP-Complete.
 We will prove NP-Completeness by proving both belonging to NP and NP-Hard classes.
 
 \begin{itemize}
-\item{\textit{NP:} Given an input partitions graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
+\item{\textit{NP:} Given an input partitioned graph $G = <V,E,P>$ and an assignment of colors for a subset of nodes, checking that the number of colors used is $k$ is trivial, and a simple algorithm such as \ref{alg:pcpvalidity} can easily check the validity of the coloring in polynomial time.}
 \item{\textit{NP-Hard:} Any instance of standard graph $k-coloring$ can be converted to an instance of PCP by partitioning the initial graph $G$ in such a way that every partition contains a single node. The solution to the original $k-coloring$ problem is the same as the solution to the constructed \PCP{}. Since standard coloring is NP-Hard, this implies that PCP is NP-Hard as well.}
 \end{itemize}
 
@@ -321,7 +321,7 @@ Each wavelength is represented as a color. The problem then consists in coloring
 
 An example is shown in figures \ref{fig:samplerouting}, \ref{fig:solvedsamplerouting} and \ref{fig:solvedsampleroutingnetwork}.
 
-In this work we will focus on finding an exact solution for the partitioned coloring problem, using a branch and cut algorithm based on a generalization of the coloring model proposed by Mendez-Díaz and Zabala.
+In this work we will focus on finding an exact solution for the partitioned coloring problem, using a branch and cut algorithm based on a generalization of the coloring model proposed in \cite{mendez2006branch,mendez2008cutting}.
 
 \subsubsection*{Previous work}
 
@@ -330,6 +330,26 @@ In \cite{Li00thepartition}, two groups of heuristics were developed for solving 
 In \cite{noronha2006routing} the one-step color-degree constructive heuristic is used in a tabu search approach, TS-PCP. Routes are generated in an initial stage using a $k$-EDR constructive procedure, based on the maximum edge disjoint path heuristic by \cite{kleinberg1996approximation}, and the resulting partitioned coloring problem is solved with TS-PCP.
 
 Due to the complexity of the problem, most of the work on PCP is composed by heuristic approaches. However, in \cite{frota2010branch}, a branch and cut algorithm is devised, using an integer linear programming model based on the asymmetric representatives formulation for the standard coloring problem, presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric}.
+
+\subsection{Objective of this work}
+
+A common approach for obtaining exact solutions to complex combinatorial optimization problems is to model them as integer linear programming problems, and solve them using branch and bound, cutting planes or branch and cut algorithms, among others. 
+
+Therefore, the objective of this work will be to develop a branch and cut algorithm for solving the partitioned coloring problem, by modelling it as an integer linear programming problem, with a generalization of the standard coloring model presented in \cite{mendez2006branch,mendez2008cutting}. 
+
+We will be using \textsc{cplex} as a branch and cut framework and introduce custom initial heuristics, cutting planes, primal heuristics and branching strategies, designed specifically for this problem, and evaluate their performance against the default implementation provided by \textsc{cplex}.
+
+This work is structured in seven chapters. In chapter \ref{sec:model} we present different models for representing an instance of \PCP{}, starting with a basic model that captures all necessary restrictions, for later strengthening it by modifying the constraints with stronger ones or introducing new ones, such as symmetry breaking constraints.
+
+Chapter \ref{sec:ineqs} dwelves deeper into the polyhedron defined in the previous chapter by presenting valid inequalities derived for \PCP{}. These inequalities will be later applied as cutting planes in both cutting planes and branch and cut algorithms.
+
+Alternative algorithms for solving the problem are presented in chapter \ref{sec:heur}. We present enumeration algorithms for solving the standard coloring problem, and generalize them partition coloring, focusing in the \textsc{dsatur} algorithm \cite{brelaz1979new} and its generalization. These algorithms will be adapted to be used as initial and primal heuristics during the branch and cut process.
+
+The implemented branch and cut algorithm is presented in chapter \ref{sec:bnc}, where we present the general structure for cutting plane, branch and bound and branch and cut algorithms, as well as different components of a branch and cut (separation heuristics, initial heuristics, primal heuristics, branching strategies, node selection strategies) and how we implemented them for dealing with the \PCP{}.
+
+This implementation is then tested in chapter \ref{sec:results}. Given a test suite of binomial, powerlaw cluster and \textsc{dimacs} challange graphs, we first evaluated multiple configurations for all of the different components, starting by choosing a model to be used in the algorithm, and testing the effectiveness of the different heuristics and strategies with different parameterizations. We then test the performance of the algorithm, once we have all parameters fixed, against a fresh test suite and report the obtained MIP gap.
+
+Finally, in chapter \ref{sec:conclusions}, we sum up the work achieved, draw conclusions from it and present possible future research lines.
 
 \subsection{Definitions}
 \label{subsec:intro:definitions}

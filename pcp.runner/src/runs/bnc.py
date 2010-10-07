@@ -11,6 +11,8 @@ def files():
 def files90():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((90))\\.00(0|1|2)\\.in')
 
+def fileshk():
+    fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00(3|4)\\.in')
 
 def filesvlow():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2)n((100))\\.00(3|4)\\.in')
@@ -224,14 +226,14 @@ hopefully_final_runs_vlow_2 = create_runs(baseprops, [
                             },
                             {
                              'solver.maxTime': '7200',
-                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.kind': 'CplexDynamicSearch',
                              'solver.useCplexPrimalHeuristic': 'false',
                              'solver.useCplexPreprocess': 'true',
                              'solver.useCplexCuttingPlanes': 'false',
                              },
                               {
                              'solver.maxTime': '7200',
-                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.kind': 'CplexDynamicSearch',
                              'solver.useCplexPrimalHeuristic': 'false',
                              'solver.useCplexPreprocess': 'true',
                              'solver.useCplexCuttingPlanes': 'false',
@@ -264,7 +266,7 @@ hopefully_final_runs_low_2 = create_runs(baseprops, [
                             'strategy.partition': 'PaintExactlyOne',     
                             
                              'solver.maxTime': '7200',
-                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.kind': 'CplexDynamicSearch',
                              'solver.useCplexPrimalHeuristic': 'true',
                              'solver.useCplexPreprocess': 'true',
                              'solver.useCplexCuttingPlanes': 'true',
@@ -276,7 +278,7 @@ hopefully_final_runs_low_2 = create_runs(baseprops, [
                             'strategy.partition': 'PaintExactlyOne',     
                             
                              'solver.maxTime': '7200',
-                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.kind': 'CplexDynamicSearch',
                              'solver.useCplexPrimalHeuristic': 'true',
                              'solver.useCplexPreprocess': 'true',
                              'solver.useCplexCuttingPlanes': 'true',
@@ -309,7 +311,7 @@ hopefully_final_runs_high_2 = create_runs(baseprops, [
                             'strategy.partition': 'PaintExactlyOne',               
                             
                              'solver.maxTime': '7200',
-                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.kind': 'CplexDynamicSearch',
                              'solver.useCplexPrimalHeuristic': 'true',
                              'solver.useCplexPreprocess': 'true',
                              'solver.useCplexCuttingPlanes': 'true',
@@ -321,7 +323,7 @@ hopefully_final_runs_high_2 = create_runs(baseprops, [
                             'strategy.partition': 'PaintExactlyOne',               
                             
                              'solver.maxTime': '7200',
-                             'solver.kind': 'CplexBranchAndCutSearch',
+                             'solver.kind': 'CplexDynamicSearch',
                              'solver.useCplexPrimalHeuristic': 'true',
                              'solver.useCplexPreprocess': 'true',
                              'solver.useCplexCuttingPlanes': 'true',

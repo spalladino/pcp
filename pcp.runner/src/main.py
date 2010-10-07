@@ -21,32 +21,61 @@ def main():
     print 'Processing vlow: ', files
 
     Fixture().newrun(
-                bnc.hopefully_final_runs_vlow, 
+                bnc.hopefully_final_runs_vlow_2, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100920BNC90VLOW'
+                runid = '20101006BNC90VLOW2'
             )
     
     files = bnc.fileslow90()
     print 'Processing low: ', files
 
     Fixture().newrun(
-                bnc.hopefully_final_runs_low, 
+                bnc.hopefully_final_runs_low_2, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100920BNC90LOW'
+                runid = '20101006BNC90LOW2'
             )
     
     files = bnc.fileshigh90()
     print 'Processing high: ', files
 
     Fixture().newrun(
-                bnc.hopefully_final_runs_high, 
+                bnc.hopefully_final_runs_high_2, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20100920BNC90HIGH'
+                runid = '20101006BNC90HIGH2'
             )
-                
+    
+    files = bnc.fileshk()
+    print 'Processing HK1: ', files
+
+    Fixture().newrun(
+                bnc.hopefully_final_runs_low, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101006BNCHK'
+            )
+    
+    files = bnc.fileshk()
+    print 'Processing HK2: ', files
+    
+    Fixture().newrun(
+                bnc.hopefully_final_runs_low_2, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101006BNCHK2'
+            )
+    
+    files = f.dimacs
+    print 'Processing DIMACS: ', files
+    
+    Fixture().newrun(
+                bnc.hopefully_final_runs_low_2, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101006BNCDIMACS2'
+            )            
                    
 if __name__ == '__main__':
     main()
