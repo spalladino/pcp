@@ -12,7 +12,7 @@ def files90():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((90))\\.00(0|1|2)\\.in')
 
 def fileshk():
-    fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00(3|4)\\.in')
+    return fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00(3|4)\\.in')
 
 def filesvlow():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2)n((100))\\.00(3|4)\\.in')

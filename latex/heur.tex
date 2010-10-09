@@ -151,11 +151,11 @@ Therefore, in order to determine the hardest partition to color, we experimented
 
 Different combinations of these criteria, as well as the different variants of the algorithm, will be compared in section \ref{subsec:resultspdsatur}.
 
-\subsection{Ad-hoc modifications}
+\subsubsection{Ad-hoc modifications}
 
 As will be presented in section \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
 
-Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. The algorithm colors these partitions first, trying all different node combinations within the partitions before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
+Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. Since we still have to determine which node to color in each partition, we have to try every possible way of picking a single node from each partition to be colored. Therefore, the algorithm colors $P_{K_1},\ldots,P_{K_\omega}$ first, trying all possible node combinations, before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
 
 Also, since the algorithm is used as a primal heuristic within the branch and cut tree (see \ref{subsec:alg:primal}), it supports forcing the coloring of certain nodes, keeping those assignments fixed during the enumeration process. In case certain node-color combinations are forbidden due to the restrictions imposed during branching, solutions assigning those combinations are not explored in the algorithm.
 

@@ -3,16 +3,7 @@
 \section{Valid inequalities}
 \label{sec:ineqs}
 
-In this section we will derive valid inequalities for the \PCP{} polyhedron, which will be used as cutting planes in the branch-and-cut algorithm. We will make our analysis using the most basic formulation presented in section \ref{subsec:model:formulation}, except for some inequalities which will exploit symmetry breaking restrictions from \ref{subsec:model:symmetry}. 
-
-\begin{align}
-\text{\textsc{minimize}} \quad & \sum_{j \in C} w_j \nonumber \\
-\text{\textsc{subject to}} \quad & \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad \forall P_k \in P \nonumber \\
-& x_{ij} + x_{kj} \leq w_j \quad \forall (i,k) \in E, \; \forall j \in C \sumheight \nonumber \\
-& x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
-\end{align}
-
-Note that any valid inequalities found for the basic formulation are still valid for any other strengthened models, so the inequalities can still be used as cuts regardless of the model implemented.
+In this section we will derive valid inequalities for the \PCP{} polyhedron, which will be used as cutting planes in the branch-and-cut algorithm. Note that regardless which of the various formulations presented in the previous section we choose, the following inequalities will be valid for all of them; therefore, the inequalities can be used as cuts in the branch and cut algorithm regardless of the model implemented.
 
 \subsection{Extended clique inequalities}
 
@@ -30,7 +21,7 @@ Combining this inequality with the fact that in \PCP{} at most one node per part
 \sum_{i \in K_P} x_{ij} \leq w_{j} \quad \forall j \in C
 \end{equation}
 
-Similar inequalities were developed by \cite{frota2010branch}, based on the asymmetric representatives formulation, but applied only on component cliques\footnote{Clique in which every node belongs to a different partition.}. Extended cliques have the added benefit of covering a larger set of nodes, and maintain their effectiveness regardless of the partition size used.
+Similar inequalities were developed by \cite{frota2010branch}, based on the asymmetric representatives formulation, but applied only on component cliques\footnote{Clique in which every node belongs to a different partition.}. Extended cliques have the added benefit of covering a larger set of nodes, being stronger than their component-based counterparts, and maintain their effectiveness regardless of the partition size used.
 
 \subsection{Component independent set inequalities}
 
@@ -65,7 +56,9 @@ Similar to the previous case, the component independent set can be instantiated 
 
 \subsubsection{Strengthening by breaking symmetry}
 
-Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest $\alpha_P +1$ labels, $j_{q-\alpha_P+2} \ldots$, will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
+Component independent set inequalities can be strengthened by taking into consideration symmetry breaking constraints \ref{eqn:lowerlabel} $w_j \geq w_{j+1}$. This means that these inequalities will only be valid for models which include such constraint.
+
+In case a component independent of size $\alpha_P$ set is colored with label $j^* \leq q - \alpha_P$, then it is possible to ensure that the colors with the highest $\alpha_P +1$ labels, $j_{q-\alpha_P+2} \ldots$, will be left unused, since there are $\alpha_P$ nodes using the same color $j^*$.
 
 Being $W$ the component independent set, in the worst case, in which all nodes in $V \setminus W$ use different colors, an assignment as the one shown in table \ref{table:cisetcoloring} will occur. This coloring uses only the first $q - \alpha_P + 1$ colors, and leaves all colors with a greater label unused. 
 
@@ -75,8 +68,8 @@ Being $W$ the component independent set, in the worst case, in which all nodes i
 \hline
 \textbf{color label} & \textbf{partitions count} \\
 \hline
-$j_0$ & $1$\\
 $j_1$ & $1$\\
+$j_2$ & $1$\\
 \vdots & \vdots \\
 $j^*$ & $\alpha_P$ \\
 \vdots & \vdots \\

@@ -3,7 +3,7 @@
 \section{Model}
 \label{sec:model}
 
-In this section we will present the BIP formulation for the \PCP{}, as a generalization of the CP model used by M\'endez-D\'iaz and Zabala in \cite{mendez2008cutting}.
+In this section we will present various binary integer programming formulations for the \PCP{}, generalized from the CP model presented in \cite{mendez2008cutting}, which will be used in the branch and cut algorithm.
 
 \subsection{Formulation}
 \label{subsec:model:formulation}
@@ -89,7 +89,7 @@ This restriction generates a much lower number of equations in dense graphs, as 
 
 One of the main issues with the model presented is that it allows for multiple symmetric solutions; the same happens with the standard coloring model SCP. 
 
-Since it does not matter which color labels are used in the coloring, any $\chi$ colors can be used, resulting in $P(c,\chi)$\footnote{Number of different ordered subsets of size $\chi$ from a set of size $c$, equals to $c! / (c - \chi)!$} different solutions for every equivalent coloring; therefore, introducing additional constraints with the purpose of removing symmetric solutions is expected to produce an improvement in the algorithm, as it greatly limits the solution space.
+Since it does not matter which color labels are used in the coloring, any $\chi$ colors can be used, resulting in $P(c,k)$\footnote{Number of different ordered subsets of size $k$ from a set of size $c$, equals to $c! / (c - k)!$} different solutions for every equivalent coloring; therefore, introducing additional constraints with the purpose of removing symmetric solutions is expected to produce an improvement in the algorithm, as it greatly limits the solution space.
 
 The easiest restriction to generate is to prevent color $j+1$ from being used unless color $j$ is used in the coloring. This ensures that only colors with labels $1 \ldots k$ are used in a k-coloring, leaving always the last $k+1 \ldots c$ unused, thus reducing the number of symmetric solutions from $P(c,k)$ to $k!$.
 
@@ -107,7 +107,7 @@ A stricter requirement that can be imposed is to forbid having more vertices col
 
 However, this restriction allows symmetric solutions by exchanging labels between color classes with same cardinal, which is likely to occur in regular graphs. 
 
-In order to completely remove symmetric solutions, it is possible to enforce the following restriction, which implies that among all possible assignments, only the one that assigns the lowest possible color label to the partition with the lowest index is used: 
+In order to further remove symmetric solutions, it is possible to enforce the following restriction, which implies that among all possible assignments to the set of partitions defined by color classes, only the one that assigns the lowest possible color label to the partition with the lowest index is used: 
 
 \begin{align}
 x_{ij} = 0 \quad &\forall j > p(i) + 1 \label{eqn:nodeszero} \\
