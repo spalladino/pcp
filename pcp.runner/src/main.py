@@ -17,35 +17,66 @@ import os
  
 def main():
     
-    files = bnc.fileshk()
-    print 'Processing HK1: ', files
-
+    files = model.files90()
+    print 'Processing Model: ', files
     Fixture().newrun(
-                bnc.hopefully_final_runs_low, 
+                model.modelruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20101008BNCHK'
+                runid = '20101015MODELBNB90')
+    
+    files = model.files85()
+    print 'Processing Model: ', files
+    Fixture().newrun(
+                model.modelruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101015MODELBNB85'
             )
     
-    files = bnc.fileshk()
-    print 'Processing HK2: ', files
-    
+    files = model.files80()
+    print 'Processing Model: ', files
     Fixture().newrun(
-                bnc.hopefully_final_runs_low_2, 
+                model.modelruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20101008BNCHK2'
+                runid = '20101015MODELBNB80'
             )
     
-    files = f.dimacs
-    print 'Processing DIMACS: ', files
-    
+    files = model.files60()
+    print 'Processing Model: ', files
     Fixture().newrun(
-                bnc.hopefully_final_runs_low_2, 
+                model.modelruns_noinit, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20101008BNCDIMACS2'
-            )            
+                runid = '20101015MODELBNBNOINIT60'
+            )
+    
+    files = model.files70()
+    print 'Processing Model: ', files
+    Fixture().newrun(
+                model.modelruns_noinit, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101015MODELBNBNOINIT70'
+            )
+    
+    files = model.files70()
+    print 'Processing Model: ', files
+    Fixture().newrun(
+                model.modelruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101015MODELBNB70'
+            )
+    
+    files = model.files80()
+    print 'Processing Model: ', files
+    Fixture().newrun(
+                model.modelruns_noinit, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101015MODELBNBNOINIT80')
                    
 if __name__ == '__main__':
     main()

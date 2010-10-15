@@ -4,11 +4,20 @@ from config import datadir
 from common import create_runs
 from common import update_copy
 
+def files90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2|3|4)\\.in')
 
+def files85():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n85\\.00(0|1|2|3|4)\\.in')
 
-def files():
-    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2)\\.in') + \
-        fetcher.Fetcher(datadir).fetch_files('holme', 'n100d0(1|2|3|4)\\.00(0|1|2)\\.in')
+def files80():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n80\\.00(0|1|2|3|4)\\.in')
+
+def files70():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n70\\.00(0|1|2|3|4)\\.in')
+
+def files60():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n60\\.00(0|1|2|3|4)\\.in')
 
 
 baseprops = {
@@ -65,7 +74,11 @@ baseprops = {
             'solver.useCplexPrimalHeuristic': 'true',
               }
 
-modelruns = create_runs(baseprops, [{
+baseprops_noinit = baseprops.copy()
+baseprops_noinit['solver.useInitialSolution'] = 'false'
+
+modelruns = create_runs(baseprops, [
+            {
                 'strategy.partition': 'PaintAtLeastOne',
             },
             {
@@ -105,9 +118,47 @@ modelruns = create_runs(baseprops, [{
                 'strategy.symmetry': 'MinimumNodeLabel',
                 'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
             },
+            ])
+
+modelruns_noinit = create_runs(baseprops_noinit, [
             {
-                'strategy.objective': 'Linear',
+                'strategy.partition': 'PaintAtLeastOne',
             },
             {
-                'strategy.objective': 'Geometric',
-            }])
+                'strategy.partition': 'PaintExactlyOne',
+            },
+            {
+                'strategy.adjacency': 'AdjacentsLeqColor',
+            },
+            {
+                'strategy.adjacency': 'AdjacentsLeqOne',
+            },
+            {
+                'model.adjacentsNeighbourhood.useCliqueCover': 'false'
+            },
+            {
+                'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+            },
+            {
+                'strategy.symmetry': 'None',
+            },
+            {
+                'strategy.symmetry': 'VerticesNumber',
+            },
+            {
+                'strategy.symmetry': 'MinimumNodeLabel',
+            },
+            {
+                'strategy.colorBound': 'UpperNodesSum',
+            },
+            {
+                'strategy.colorBound': 'UpperNodesSumLowerSum',
+            },
+            {
+                'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+            },
+            {
+                'strategy.symmetry': 'MinimumNodeLabel',
+                'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+            },
+            ])
