@@ -41,6 +41,7 @@ class LatexProcessor(Processor):
         
         print '\hline'
         
+        # Rungroup: las 3 corridas de una determinada densidad 
         for key, runset in runsets:
             print ' & '.join([str(k).replace('\\', '') for k in key] \
                  + flatten([[str(aggr(map(f,rungroup))).rjust(4) for f in fs] for k,rungroup in groupby_sorted(runset, key=runkey)])) \
