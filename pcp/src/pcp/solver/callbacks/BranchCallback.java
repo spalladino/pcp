@@ -50,7 +50,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	private static final boolean branchSingle = Settings.get().getBoolean("branch.singlevar");
 	private static final boolean boundWs = Settings.get().getBoolean("branch.boundws");
 	
-	private static final boolean manual = true;
+	private static final boolean manual = Settings.get().getBoolean("branch.manual");
 	
 	Model model;
 	IPartitionedGraph graph;

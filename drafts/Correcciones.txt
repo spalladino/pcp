@@ -26,6 +26,8 @@ Branch:
 - Agregar a 631 que pasa a las static prios cuando hay un callback vacio, ver si suben los tiempos. Seteo manual de branch?
 La corrida fue 20100706BRANCHSTATIC original, tomar los datos de esa corrida para hacer una nueva
 Ya estaban con el callback vacio puesto y dieron esos valores, armar corrida donde se hace seteo manual de las default
+La corrida es 20101215BRANCHSTATIC3
+
 
 Primal:
 -------
@@ -33,6 +35,8 @@ Primal:
 - La 641 tiene un typo en el header (nodes)
 - En 641 y 642 comparar contra un callback vacio de CPLEX
 - Cambiar conclusion del final para echarle la culpa al callback y no a la heuristica q toma solo 200 ms
+La 641 es 20100723PRIMALSTATIC2, la 642 es 20100720PRIMAL
+Ya usan un callback vacio :(
 
 Cuts:
 -----

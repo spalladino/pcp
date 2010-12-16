@@ -5,8 +5,10 @@ from common import update_copy
 
 
 def files():
-    #return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2)\\.in')
     return fetcher.Fetcher(datadir).fetch_files('benchdens', '((e06n80)|(e02n90)|(e0(4|8)n100))\\.00(0|1|2)\\.in')
+
+def files90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2)\\.in')
 
 branchboundingruns = [
                       update_copy({
@@ -163,6 +165,7 @@ branchstaticmanualruns = list([ update_copy({
                  'branch.prios.enabled': 'true',                 
                  'branch.direction': '0',
                  'branch.selection': '1', 
+                 'branch.manual': 'true',
                },d) for d in [
                 { 'branch.prios.enabled': 'false'},       
                 {
@@ -186,6 +189,34 @@ branchstaticmanualruns = list([ update_copy({
                  'branch.prios.psize': '0',
                  'branch.prios.psadjacent': '10',
                  'branch.prios.colorindex': '-1',
+                },
+                { 'branch.prios.enabled': 'false',
+                  'branch.manual': 'false'
+                },       
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '1',
+                 'branch.manual': 'false'
+                },
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '-10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.manual': 'false'
+                },
+                
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '-10',
+                 'branch.prios.colorindex': '1',
+                 'branch.manual': 'false'
+                },
+                {
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.manual': 'false'
                 }
                 ]   
             ])

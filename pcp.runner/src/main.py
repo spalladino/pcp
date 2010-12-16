@@ -17,6 +17,16 @@ import os
  
 def main():
     
+    files = branch.files()
+    print 'Processing Branch Static 3: ', files
+    Fixture().newrun(
+                branch.branchstaticmanualruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20101215BRANCHSTATIC3')
+    
+    return
+    
     files = model.files90()
     print 'Processing Model: ', files
     Fixture().newrun(
