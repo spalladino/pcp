@@ -3,6 +3,8 @@ import metrics
 import aggregate
 
 from latexprocessor import LatexProcessor
+from gnuplotprocessor import *
+from simpleprocessor import SimpleProcessor
 
 def simpletable(p):    
     p.simpletable(["graph.nodes", "preprocess.time","solution.time", "solution.chi"], ["path.enabled", 
@@ -315,8 +317,24 @@ def final_dimacs_latextable():
                     aggr= aggregate.concat 
                     )
 
+def test():
+    GnuPlotGapsProcessor('20100629MODELS').process(
+        ids=[metrics.FileName()],
+        datas=['data.filename', 'solution.gap','cuts.niters','solution.time'], 
+        series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+        datafilter= None,
+        runfilter= None,
+        aggr= aggregate.concat
+    )
+
+def test_simple():
+    SimpleProcessor('20100629MODELS').process(
+        datas=[metrics.FileName(), 'data.filename', 'solution.gap','cuts.niters','solution.time'], 
+        series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+    )
+    
 if __name__ == '__main__':
-    final_dimacs_latextable()
+    test()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

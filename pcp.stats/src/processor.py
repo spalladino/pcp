@@ -16,7 +16,7 @@ class Processor(object):
         self.runs = self.loader.load()
         self.runid = self.loader.runid
 
-    def makerunsets(self, series, runfilter, datafilter):
+    def makerunsets(self, series, runfilter, datafilter, store=False):
         runkey = lambda run: map(lambda m: metrics.evalmetric(m, run), series)
         
         runs = self.runs
@@ -28,6 +28,8 @@ class Processor(object):
         
         if len(series) == 0:
             runsets = [(["run"], runs)]
+        elif store:
+            runsets = groupby_store(sorted(runs, key=runkey), runkey)
         else:
             runsets = itertools.groupby(sorted(runs, key=runkey), runkey)
         

@@ -14,7 +14,7 @@ class SimpleProcessor(Processor):
         
         runsets = self.makerunsets(series, runfilter, datafilter)
         
-        print ', '.join(datas)
+        print ', '.join([str(d) for d in datas])
         for key, runset in runsets:
             print ', '.join(['%s: %s' % (s,k) for s,k in zip(series,key)])
             for run in runset:

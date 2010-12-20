@@ -9,8 +9,10 @@ Tablas modelo: 611, 612, 613, 614
 
 - Correr con cutting planes y reportar grafico de evolucion del gap, para justificar tiempos tan parecidos.
 	Cutting planes listos, hacer un aggregator que se encargue de esto y un outputter que dibuje un grafico en algo como gnuplot o matplotlib.
+	20100629MODELS.7z
 - Correr un branch and bound puro, sin cortes, con primal solo de cplex. Correr solo instancias que terminen y reportar tiempo de cada uno. Copiar de figura 7.7 de la tesis de Isa. 
 	Listo, ver 20101015MODELBNB70 y cia.
+	Falta hacer la tabla nomas
 - Falta la tabla de la seccion 6.1.6. Aunque haga el B&B anterior, poner este que hay distintas combinaciones.
 	Ver cual es la tabla
 

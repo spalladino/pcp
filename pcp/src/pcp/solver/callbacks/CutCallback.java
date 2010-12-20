@@ -82,6 +82,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	double[] ws;
 	double[][] xs;
 	
+	Double[] rootTimes;
 	Double[] rootGaps;
 	Double[] rootLBs;
 	
@@ -91,6 +92,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		this.onlyRoot = onlyRoot;
 		this.rootGaps = new Double[maxItersRoot+1];
 		this.rootLBs = new Double[maxItersRoot+1];
+		this.rootTimes = new Double[maxItersRoot+1];
 	}
 	
 	@Override
@@ -133,6 +135,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		if (!isInternalNode()) {
 			rootGaps[iters] = super.getMIPRelativeGap();
 			rootLBs[iters] = super.getValue(model.getColorSum());
+			//rootTimes[iters] //TODO: Fill root times
 		}
 		
 		// Reset iter count on node change
@@ -345,6 +348,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		this.getMetrics().fillData(data);
 		data.put("root.gaps", rootGaps);
 		data.put("root.lbs", rootLBs);
+		data.put("root.times", rootTimes);
 	}
 
 	private boolean isInternalNode() throws IloException {
