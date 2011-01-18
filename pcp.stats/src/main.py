@@ -322,7 +322,8 @@ def test():
         ids=[metrics.FileName()],
         datas=['data.filename', 'solution.gap','cuts.niters','solution.time'], 
         series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
-        datafilter= None,
+        #datafilter= None,
+        datafilter= {'strategy.adjacency': 'AdjacentsNeighbourhood', 'strategy.colorBound': 'UpperNodesSum', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
         runfilter= None,
         aggr= aggregate.concat
     )

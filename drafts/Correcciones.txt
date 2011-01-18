@@ -28,7 +28,7 @@ Branch:
 - Agregar a 631 que pasa a las static prios cuando hay un callback vacio, ver si suben los tiempos. Seteo manual de branch?
 La corrida fue 20100706BRANCHSTATIC original, tomar los datos de esa corrida para hacer una nueva
 Ya estaban con el callback vacio puesto y dieron esos valores, armar corrida donde se hace seteo manual de las default
-La corrida es 20101215BRANCHSTATIC3
+La corrida es 20101215BRANCHSTATIC3, falta armar tabla y ver valores
 
 
 Primal:

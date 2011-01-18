@@ -1,0 +1,42 @@
+set terminal png
+
+set xlabel 'Time (seconds)' 
+set ylabel 'Gap'
+
+file='modelsgap-ew20-n100-sym.txt'
+set output sprintf('%s.png',file)
+set xrange [0:5] 
+plot file index 0 t '2.14' w linespoints,\
+file index 1 t 'None' w linespoints,\
+file index 2 t '2.11' w linespoints,\
+file index 3 t '2.12' w linespoints
+unset output
+
+set autoscale x
+
+file='modelsgap-ew40-n100-sym.txt'
+set output sprintf('%s.png',file)
+set xrange [0:20] 
+plot file index 0 t '2.14' w linespoints,\
+file index 1 t 'None' w linespoints,\
+file index 2 t '2.11' w linespoints,\
+file index 3 t '2.12' w linespoints
+unset output
+
+file='modelsgap-ew60-n100-sym.txt'
+set output sprintf('%s.png',file)
+set xrange [0:80] 
+plot file index 0 t '2.14' w linespoints,\
+file index 1 t 'None' w linespoints,\
+file index 2 t '2.11' w linespoints,\
+file index 3 t '2.12' w linespoints
+unset output
+
+file='modelsgap-ew80-n100-sym.txt'
+set output sprintf('%s.png',file)
+set xrange [0:200] 
+plot file index 0 t '2.14' w linespoints,\
+file index 1 t 'None' w linespoints,\
+file index 2 t '2.11' w linespoints,\
+file index 3 t '2.12' w linespoints
+unset output
