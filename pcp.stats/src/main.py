@@ -327,6 +327,15 @@ def test():
         runfilter= None,
         aggr= aggregate.concat
     )
+    LatexProcessor('20100629MODELS').process(
+        ids=[metrics.FileName()],
+        datas=['data.filename', 'solution.gap',], 
+        series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+        #datafilter= None,
+        datafilter= {'strategy.adjacency': 'AdjacentsNeighbourhood', 'strategy.colorBound': 'UpperNodesSum', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
+        runfilter= None,
+        aggr= aggregate.concat
+    )
 
 def test_simple():
     SimpleProcessor('20100629MODELS').process(

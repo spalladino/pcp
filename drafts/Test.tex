@@ -20,6 +20,99 @@
 \setlength{\evensidemargin}{\margen}\addtolength{\evensidemargin}{-46mm}
 
 \begin{document}
+
+\section{Rerunning models}
+
+
+Processing Runid 20100629MODELS
+ Successfully loaded
+ 
+ 
+Data:
+\begin{itemize}
+\item solution.gap
+\item cuts.niters
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4}
+\\
+ & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time & solution.gap & cuts.niters & solution.time
+\\
+\hline
+EW 20 N=100 & 0.46 & 20.80 & 3.09 & 0.46 & 18.20 & 8.45 & 0.46 & 20.40 & 7.92 & 0.47 & 16.00 & 6.03
+\\
+EW 40 N=100 & 0.30 & 34.40 & 20.34 & 0.47 & 31.60 & 21.24 & 0.47 & 32.60 & 17.88 & 0.31 & 39.80 & 31.48
+\\
+EW 60 N=100 & 0.04 & 34.80 & 153.70 & 0.42 & 73.20 & 96.82 & 0.42 & 72.60 & 87.58 & 0.16 & 86.40 & 433.19
+\\
+EW 80 N=100 & 0.05 & 43.20 & 299.66 & 0.29 & 192.20 & 401.30 & 0.29 & 192.40 & 349.56 & 0.16 & 100.60 & 202.28
+\\
+HK 10 N=100 & 0.20 & 0.60 & 0.08 & 0.21 & 4.40 & 0.26 & 0.20 & 0.80 & 0.11 & 0.15 & 0.60 & 0.09
+\\
+HK 20 N=100 & 0.12 & 0.60 & 0.14 & 0.21 & 9.80 & 0.75 & 0.20 & 1.00 & 0.19 & 0.12 & 0.60 & 0.12
+\\
+HK 30 N=100 & 0.00 & 2.00 & 0.31 & 0.00 & 3.40 & 0.52 & 0.00 & 3.20 & 0.49 & 0.00 & 2.40 & 0.46
+\\
+HK 40 N=100 & 0.05 & 3.80 & 0.32 & 0.05 & 6.20 & 0.49 & 0.05 & 5.20 & 0.42 & 0.02 & 4.40 & 0.38
+\\
+\hline 
+ \end{tabular}
+ 
+ 
+ 
+ 
+ 
+Processing Runid 20100629MODELS
+ Successfully loaded
+Data:
+\begin{itemize}
+\item data.filename
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4}
+\\
+ & data.filename & solution.gap & data.filename & solution.gap & data.filename & solution.gap & data.filename & solution.gap
+\\
+\hline
+EW 20 N=100 & ['009.run', '024.run', '039.run', '054.run', '069.run'] & ['0.46', '0.46', '0.46', '0.46', '0.46'] & ['007.run', '022.run', '037.run', '052.run', '067.run'] & ['0.45', '0.46', '0.46', '0.46', '0.46'] & ['002.run', '010.run', '017.run', '025.run', '032.run', '040.run', '047.run', '055.run', '062.run', '070.run'] & ['0.45', '0.45', '0.46', '0.46', '0.46', '0.46', '0.46', '0.46', '0.46', '0.46'] & ['008.run', '023.run', '038.run', '053.run', '068.run'] & ['0.45', '0.47', '0.47', '0.47', '0.47']
+\\
+EW 40 N=100 & ['084.run', '099.run', '114.run', '129.run', '144.run'] & ['0.33', '0.29', '0.29', '0.29', '0.29'] & ['082.run', '097.run', '112.run', '127.run', '142.run'] & ['0.41', '0.48', '0.48', '0.48', '0.48'] & ['077.run', '085.run', '092.run', '100.run', '107.run', '115.run', '122.run', '130.run', '137.run', '145.run'] & ['0.41', '0.41', '0.48', '0.48', '0.48', '0.48', '0.48', '0.48', '0.48', '0.48'] & ['083.run', '098.run', '113.run', '128.run', '143.run'] & ['0.41', '0.29', '0.29', '0.29', '0.29']
+\\
+EW 60 N=100 & ['159.run', '174.run', '189.run', '204.run', '219.run'] & ['-', '-', '-', '0.10', '0.10'] & ['157.run', '172.run', '187.run', '202.run', '217.run'] & ['0.40', '0.41', '0.41', '0.44', '0.44'] & ['152.run', '160.run', '167.run', '175.run', '182.run', '190.run', '197.run', '205.run', '212.run', '220.run'] & ['0.40', '0.40', '0.41', '0.41', '0.41', '0.41', '0.44', '0.44', '0.44', '0.44'] & ['158.run', '173.run', '188.run', '203.run', '218.run'] & ['0.20', '0.10', '0.10', '0.20', '0.20']
+\\
+EW 80 N=100 & ['234.run', '249.run', '264.run', '279.run', '294.run'] & ['-', '-', '-', '0.13', '0.13'] & ['232.run', '247.run', '262.run', '277.run', '292.run'] & ['0.25', '0.30', '0.30', '0.31', '0.31'] & ['227.run', '235.run', '242.run', '250.run', '257.run', '265.run', '272.run', '280.run', '287.run', '295.run'] & ['0.24', '0.24', '0.30', '0.30', '0.30', '0.30', '0.31', '0.31', '0.31', '0.31'] & ['233.run', '248.run', '263.run', '278.run', '293.run'] & ['0.22', '-', '-', '0.29', '0.29']
+\\
+HK 10 N=100 & ['309.run', '324.run', '339.run', '354.run', '369.run'] & ['0.25', '0.25', '0.25', '-', '0.25'] & ['307.run', '322.run', '337.run', '352.run', '367.run'] & ['0.25', '0.28', '0.25', '-', '0.25'] & ['302.run', '310.run', '317.run', '325.run', '332.run', '340.run', '347.run', '355.run', '362.run', '370.run'] & ['0.25', '0.25', '0.25', '0.25', '0.25', '0.25', '-', '-', '0.25', '0.25'] & ['308.run', '323.run', '338.run', '353.run', '368.run'] & ['0.25', '0.25', '0.25', '-', '-']
+\\
+HK 20 N=100 & ['384.run', '399.run', '414.run', '429.run', '444.run'] & ['0.20', '0.20', '-', '0.20', '-'] & ['382.run', '397.run', '412.run', '427.run', '442.run'] & ['0.20', '0.22', '0.20', '0.21', '0.20'] & ['377.run', '385.run', '392.run', '400.run', '407.run', '415.run', '422.run', '430.run', '437.run', '445.run'] & ['0.20', '0.20', '0.20', '0.20', '0.20', '0.20', '0.20', '0.20', '0.20', '0.20'] & ['383.run', '398.run', '413.run', '428.run', '443.run'] & ['0.20', '0.20', '-', '0.20', '-']
+\\
+HK 30 N=100 & ['459.run', '474.run', '489.run', '504.run', '519.run'] & ['-', '-', '-', '-', '-'] & ['457.run', '472.run', '487.run', '502.run', '517.run'] & ['-', '-', '-', '-', '-'] & ['452.run', '460.run', '467.run', '475.run', '482.run', '490.run', '497.run', '505.run', '512.run', '520.run'] & ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'] & ['458.run', '473.run', '488.run', '503.run', '518.run'] & ['-', '-', '-', '-', '-']
+\\
+HK 40 N=100 & ['534.run', '549.run', '564.run', '579.run', '594.run'] & ['-', '0.12', '-', '-', '0.12'] & ['532.run', '547.run', '562.run', '577.run', '592.run'] & ['-', '0.13', '-', '-', '0.12'] & ['527.run', '535.run', '542.run', '550.run', '557.run', '565.run', '572.run', '580.run', '587.run', '595.run'] & ['-', '-', '0.12', '0.12', '-', '-', '-', '-', '0.12', '0.12'] & ['533.run', '548.run', '563.run', '578.run', '593.run'] & ['-', '0.12', '-', '-', '-']
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
 	
 	\section{Runs with 90 nodes}
 	

@@ -1,42 +1,48 @@
+cd 'f:\tesis\workspace\latex\plots' 
+
 set terminal png
 
+set autoscale x
 set xlabel 'Time (seconds)' 
 set ylabel 'Gap'
 
-file='modelsgap-ew20-n100-sym.txt'
-set output sprintf('%s.png',file)
-set xrange [0:5] 
+file='F:\Tesis\Workspace\pcp.stats\output.txt'
+fileout='modelsgap-ew20-n100-sym'
+set key title 'EW 100 Nodes 20% Density'
+set output sprintf('%s.png',fileout)
+#set xrange [0:5] 
 plot file index 0 t '2.14' w linespoints,\
 file index 1 t 'None' w linespoints,\
 file index 2 t '2.11' w linespoints,\
 file index 3 t '2.12' w linespoints
 unset output
 
-set autoscale x
-
-file='modelsgap-ew40-n100-sym.txt'
-set output sprintf('%s.png',file)
-set xrange [0:20] 
-plot file index 0 t '2.14' w linespoints,\
-file index 1 t 'None' w linespoints,\
-file index 2 t '2.11' w linespoints,\
-file index 3 t '2.12' w linespoints
+fileout='modelsgap-ew40-n100-sym'
+set key title 'EW 100 Nodes 40% Density'
+set output sprintf('%s.png',fileout)
+#set xrange [0:20] 
+plot file index 4 t '2.14' w linespoints,\
+file index 5 t 'None' w linespoints,\
+file index 6 t '2.11' w linespoints,\
+file index 7 t '2.12' w linespoints
 unset output
 
-file='modelsgap-ew60-n100-sym.txt'
-set output sprintf('%s.png',file)
-set xrange [0:80] 
-plot file index 0 t '2.14' w linespoints,\
-file index 1 t 'None' w linespoints,\
-file index 2 t '2.11' w linespoints,\
-file index 3 t '2.12' w linespoints
+fileout='modelsgap-ew60-n100-sym'
+set key title 'EW 100 Nodes 60% Density'
+set output sprintf('%s.png',fileout)
+#set xrange [0:80] 
+plot file index 8 t '2.14' w linespoints,\
+file index 9 t 'None' w linespoints,\
+file index 10 t '2.11' w linespoints,\
+file index 11 t '2.12' w linespoints
 unset output
 
-file='modelsgap-ew80-n100-sym.txt'
-set output sprintf('%s.png',file)
-set xrange [0:200] 
-plot file index 0 t '2.14' w linespoints,\
-file index 1 t 'None' w linespoints,\
-file index 2 t '2.11' w linespoints,\
-file index 3 t '2.12' w linespoints
+fileout='modelsgap-ew80-n100-sym'
+set key title 'EW 100 Nodes 80% Density'
+set output sprintf('%s.png',fileout)
+#set xrange [0:200] 
+plot file index 12 t '2.14' w linespoints,\
+file index 13 t 'None' w linespoints,\
+file index 14 t '2.11' w linespoints,\
+file index 15 t '2.12' w linespoints
 unset output

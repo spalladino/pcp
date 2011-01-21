@@ -153,7 +153,7 @@ HK 40\% & 0.048 &  5.2 & \b{0.416} & 0.048 &  4.0 & 0.398 & 0.048 &  5.2 & 0.438
 
 \subsubsection{Symmetry breaking}
 
-Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}.
+Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}. The evolution of the obtained gap in time for different densities is shown in figure \ref{fig:models:sym}. \TODO{Analyze thos graphs}
 
 \begin{align*}
 & w_j \geq w_{j+1} \sumheight \quad &\forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
@@ -200,6 +200,18 @@ HK 40\% & 0.048 &  3.8 & 0.316 & 0.05 &  6.2 & 0.494 & 0.048 &  5.2 & 0.416 & \b
 \caption{Comparison of the inclusion of different symmetry breaking constraints in the model: assigning the lowest color label to the color class with the lowest node index \eqref{eqn:minlabel}, applying no constraint whatsoever, forcing lower labels to be used first \eqref{eqn:lowerlabel} and assigning the lowest color label to the color class with the greatest number of nodes \eqref{eqn:symnodecount}.}
 
 \end{sidewaystable}
+
+\begin{figure}
+\centering
+\subfloat[EW 100 Nodes 20\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew20-n100-sym.png}}
+\subfloat[EW 100 Nodes 40\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew40-n100-sym.png}}
+\\
+\subfloat[EW 100 Nodes 60\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew60-n100-sym.png}}
+\subfloat[EW 100 Nodes 80\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew80-n100-sym.png}}
+\caption{Comparison of the inclusion of different symmetry breaking constraints in the model, visualizing evolution of the gap during time in a cutting planes algorithm. Compared constraints are: assigning the lowest color label to the color class with the lowest node index \eqref{eqn:minlabel}, applying no constraint whatsoever, forcing lower labels to be used first \eqref{eqn:lowerlabel} and assigning the lowest color label to the color class with the greatest number of nodes \eqref{eqn:symnodecount}.}
+\label{fig:models:sym}
+\end{figure}
+
 
 \subsubsection{Chosen formulation from cutting planes}
 \label{subsubsec:results:model:chosen}
