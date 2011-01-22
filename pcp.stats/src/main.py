@@ -317,7 +317,7 @@ def final_dimacs_latextable():
                     aggr= aggregate.concat 
                     )
 
-def test():
+def models_graphs_symmetry():
     GnuPlotGapsProcessor('20100629MODELS').process(
         ids=[metrics.FileName()],
         datas=['data.filename', 'solution.gap','cuts.niters','solution.time'], 
@@ -327,16 +327,30 @@ def test():
         runfilter= None,
         aggr= aggregate.concat
     )
-    LatexProcessor('20100629MODELS').process(
+    
+def models_graphs_adjacency():
+    #idx 2
+    GnuPlotGapsProcessor('20100629MODELS').process(
         ids=[metrics.FileName()],
-        datas=['data.filename', 'solution.gap',], 
+        datas=['data.filename', 'solution.gap','cuts.niters','solution.time'], 
         series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
-        #datafilter= None,
-        datafilter= {'strategy.adjacency': 'AdjacentsNeighbourhood', 'strategy.colorBound': 'UpperNodesSum', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
+        datafilter= { 'strategy.symmetry': 'UseLowerLabelFirst', 'strategy.colorBound': 'UpperNodesSum', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
         runfilter= None,
         aggr= aggregate.concat
     )
-
+    
+def models_graphs_colorbound():
+    #idx 1
+    GnuPlotGapsProcessor('20100629MODELS').process(
+        ids=[metrics.FileName()],
+        datas=['data.filename', 'solution.gap','cuts.niters','solution.time'], 
+        series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+        datafilter= { 'strategy.adjacency': 'AdjacentsNeighbourhood', 'strategy.symmetry': 'UseLowerLabelFirst', 'strategy.partition': 'PaintExactlyOne', 'strategy.objective': 'Equal', 'model.adjacentsNeighbourhood.useCliqueCover':'true'},
+        runfilter= None,
+        aggr= aggregate.concat
+    )
+    
+    
 def test_simple():
     SimpleProcessor('20100629MODELS').process(
         datas=[metrics.FileName(), 'data.filename', 'solution.gap','cuts.niters','solution.time'], 
@@ -344,7 +358,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    test()
+    models_graphs_colorbound()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

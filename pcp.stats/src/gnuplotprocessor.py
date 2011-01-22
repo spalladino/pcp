@@ -50,7 +50,7 @@ class GnuPlotGapsProcessor(GnuPlotProcessor):
                   
         
     def timed_gaps(self, rungroup):
-        idx = 4
+        idx = 1
         def not_none(x): return x != None
         gaps = filter(not_none, rungroup[idx]['root.gaps'])
         if len(gaps) == 0: return []

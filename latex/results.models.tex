@@ -29,6 +29,8 @@ The different adjacency constraints being tested in this experiment are the foll
 
 Results are displayed on table \ref{table:modelsadj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n \times c$ additional constraints \ref{eqn:nodelessthanwj}.
 
+Graphics \ref{fig:models:adj} \TODO{Explain these graphics}
+
 \begin{sidewaystable}
 \centering
 
@@ -62,6 +64,18 @@ Results are displayed on table \ref{table:modelsadj}. Differences between gaps a
 	\caption{Comparison of different color conflict constraints on the model formulation: adjacent nodes sum bounded by $w_j$ (\ref{eqn:adjscolorp}), adjacent nodes sum bounded by $1$ (\ref{eqn:adjscolorpone}), adjacencies grouped by partition (\ref{eqn:adjsperpart}) and using clique coverage of the neighbourhood (\ref{eqn:adjsneighb}).}
 	\label{table:modelsadj}
 \end{sidewaystable}
+
+
+\begin{figure}
+\centering
+\subfloat[EW 100 Nodes 20\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew20-n100-adj.png}}
+\subfloat[EW 100 Nodes 40\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew40-n100-adj.png}}
+\\
+\subfloat[EW 100 Nodes 60\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew60-n100-adj.png}}
+\subfloat[EW 100 Nodes 80\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew80-n100-adj.png}}
+\caption{Comparison of the inclusion of different color conflict constraints in the model, visualizing evolution of the gap during time in a cutting planes algorithm. Compared constraints are: adjacent nodes sum bounded by $w_j$ (\ref{eqn:adjscolorp}), adjacent nodes sum bounded by $1$ (\ref{eqn:adjscolorpone}), adjacencies grouped by partition (\ref{eqn:adjsperpart}) and using clique coverage of the neighbourhood (\ref{eqn:adjsneighb}).}
+\label{fig:models:adj}
+\end{figure}
 
 \subsubsection{Colored nodes per partition}
 
@@ -113,7 +127,7 @@ We also compared applying only constraint \ref{eqn:wjleqsumcolor}, which ensures
 \sum_{j \in C} w_j \geq \sum_{j \in C} \sum_{i \in P_k} j x_{ij} \quad \forall P_k \in P \tag{\ref{eqn:wjgeqsumpart}}
 \end{align*}
 
-Results on table \ref{table:models:colorbound} show that there is very little difference between the three variants. Overall, the simplest one, \ref{eqn:wjleqsumcolor}, seems to be the fastest one to execute, although taking slightly more cuts iterations in non-medium density graphs.
+Results on table \ref{table:models:colorbound} show that there is very little difference between the three variants. Overall, the simplest one, \ref{eqn:wjleqsumcolor}, seems to be the fastest one to execute, although taking slightly more cuts iterations in non-medium density graphs. The graphics \ref{fig:models:colorbound} \TODO{Explain them}.
 
 \begin{table}
 \label{table:models:colorbound}
@@ -150,10 +164,20 @@ HK 40\% & 0.048 &  5.2 & \b{0.416} & 0.048 &  4.0 & 0.398 & 0.048 &  5.2 & 0.438
 
 \end{table}
 
+\begin{figure}
+\centering
+\subfloat[EW 100 Nodes 20\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew20-n100-cb.png}}
+\subfloat[EW 100 Nodes 40\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew40-n100-cb.png}}
+\\
+\subfloat[EW 100 Nodes 60\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew60-n100-cb.png}}
+\subfloat[EW 100 Nodes 80\% Density]{\includegraphics[width=0.6\textwidth]{plots/modelsgap-ew80-n100-cb.png}}
+\caption{Comparison of the inclusion of model strengthening constraints in the model, visualizing evolution of the gap during time in a cutting planes algorithm. Compared constraints are: (\ref{eqn:wjleqsumcolor}) which ensures that variable $w_j$ is set only if a node uses color $j$, and (\ref{eqn:wjgeqsumnode}) and (\ref{eqn:wjgeqsumpart}) which eliminate certain fractional constraints, adding over all colors of node and of a partition, respectively.}
+\label{fig:models:colorbound}
+\end{figure}
 
 \subsubsection{Symmetry breaking}
 
-Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}. The evolution of the obtained gap in time for different densities is shown in figure \ref{fig:models:sym}. \TODO{Analyze thos graphs}
+Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}. The evolution of the obtained gap in time for different densities is shown in figure \ref{fig:models:sym}. \TODO{Analyze those graphs}
 
 \begin{align*}
 & w_j \geq w_{j+1} \sumheight \quad &\forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
