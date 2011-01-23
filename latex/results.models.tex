@@ -29,7 +29,7 @@ The different adjacency constraints being tested in this experiment are the foll
 
 Results are displayed on table \ref{table:modelsadj}. Differences between gaps are almost non existent, whereas time required changes greatly between graphs with different densities. On higher density graphs, constraints \ref{eqn:adjsneighb} using a clique coverage of the neighbourhood report a better running time than the others; while on lower density \ref{eqn:adjscolorpone} works better than \ref{eqn:adjscolorp}, even though the former uses $n \times c$ additional constraints \ref{eqn:nodelessthanwj}.
 
-Graphics \ref{fig:models:adj} \TODO{Explain these graphics}
+Graphics \ref{fig:models:adj} show the evolution of the gap for four particular representative instances, one for each of the evaluated densities in binomial graphs. Gap evolution is very similar among different configurations, except for \ref{eqn:adjsneighb} which is remarkably slower to achieve the same gap in low density graphs. At $40\%$ and $60\%$ densities, \ref{eqn:adjscolorpone} not only works better than \ref{eqn:adjscolorp} as reported in table \ref{table:modelsadj}, but also achieves the same gap slightly faster.
 
 \begin{sidewaystable}
 \centering
@@ -81,10 +81,7 @@ Graphics \ref{fig:models:adj} \TODO{Explain these graphics}
 
 A quick test we also ran in parallel was to determine whether to paint exactly one node per partition (\ref{eqn:partsum}), or to relax this constraint and allow for painting more than a single node (\ref{eqn:partsumgeq}). 
 
-Results on table \ref{table:models:partsum} confirm our expectations: while the former has a slightly larger running time, it also reports a slightly lower gap than the latter in some cases. The simplicity provided by \ref{eqn:partsum} when extracting solutions from the model (when constructing the the partial solutions to be processed during the primal heuristic, or during the branching process) makes us choose this option in our formulation.
-
 \begin{table}
-\label{table:models:partsum}
 \centering
 
 \begin{tabular}{|c|cc|cc|}
@@ -115,8 +112,10 @@ HK 40\% & 0.076 & 0.398 & 0.048 & 0.416
  \end{tabular}
 
 \caption{Comparison of constraints specifying whether exactly one node must be assigned one color in the partition, or at least one node should be painted with at least one color.}
-
+\label{table:models:partsum}
 \end{table}
+
+Results on table \ref{table:models:partsum} confirm our expectations: while the former has a slightly larger running time, it also reports a slightly lower gap than the latter in some cases. The simplicity provided by \ref{eqn:partsum} when extracting solutions from the model (when constructing the the partial solutions to be processed during the primal heuristic, or during the branching process) makes us choose this option in our formulation.
 
 \subsubsection{Model strengthening}
 
@@ -127,10 +126,7 @@ We also compared applying only constraint \ref{eqn:wjleqsumcolor}, which ensures
 \sum_{j \in C} w_j \geq \sum_{j \in C} \sum_{i \in P_k} j x_{ij} \quad \forall P_k \in P \tag{\ref{eqn:wjgeqsumpart}}
 \end{align*}
 
-Results on table \ref{table:models:colorbound} show that there is very little difference between the three variants. Overall, the simplest one, \ref{eqn:wjleqsumcolor}, seems to be the fastest one to execute, although taking slightly more cuts iterations in non-medium density graphs. The graphics \ref{fig:models:colorbound} \TODO{Explain them}.
-
 \begin{table}
-\label{table:models:colorbound}
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|}
@@ -162,6 +158,8 @@ HK 40\% & 0.048 &  5.2 & \b{0.416} & 0.048 &  4.0 & 0.398 & 0.048 &  5.2 & 0.438
 
 \caption{Comparison of different model strengthening constraints: (\ref{eqn:wjleqsumcolor}) which ensures that variable $w_j$ is set only if a node uses color $j$, and (\ref{eqn:wjgeqsumnode}) and (\ref{eqn:wjgeqsumpart}) which eliminate certain fractional constraints, adding over all colors of node and of a partition, respectively.}
 
+\label{table:models:colorbound}
+
 \end{table}
 
 \begin{figure}
@@ -174,6 +172,10 @@ HK 40\% & 0.048 &  5.2 & \b{0.416} & 0.048 &  4.0 & 0.398 & 0.048 &  5.2 & 0.438
 \caption{Comparison of the inclusion of model strengthening constraints in the model, visualizing evolution of the gap during time in a cutting planes algorithm. Compared constraints are: (\ref{eqn:wjleqsumcolor}) which ensures that variable $w_j$ is set only if a node uses color $j$, and (\ref{eqn:wjgeqsumnode}) and (\ref{eqn:wjgeqsumpart}) which eliminate certain fractional constraints, adding over all colors of node and of a partition, respectively.}
 \label{fig:models:colorbound}
 \end{figure}
+
+Results on table \ref{table:models:colorbound} show that there is very little difference between the three variants. Overall, the simplest one, \ref{eqn:wjleqsumcolor}, seems to be the fastest one to execute, although taking slightly more cuts iterations in non-medium density graphs. 
+
+The graphics \ref{fig:models:colorbound} present, as before, the evolution of the gap for these different configurations on a representative binomial instance for each tested density. Configuration \ref{eqn:wjleqsumcolor} is shown to be not only the one returning the best gap (even for very little difference with the others), but also the fastest one.
 
 \subsubsection{Symmetry breaking}
 
@@ -188,7 +190,7 @@ Results obtained from comparing no symmetry breaking constraints whatsoever with
 
 It is with these constraints that significative changes in solution gaps are found. While there is little difference between applying or not the simplest restrictions \ref{eqn:lowerlabel} (although they are required for the validity of other inequalities and bounds), stricter restrictions that further eliminate symmetrical solutions report much lower gaps, in some cases even reaching optimality at this stage. 
 
-Minimum partition index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) have the best gaps, require fewer cutting planes iterations, and run within acceptable times (in some cases even faster than its counterparts).
+Minimum partition index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) have the best gaps, require fewer cutting planes iterations, and run within acceptable times (in some cases even faster than its counterparts). The graphics in \ref{fig:models:sym} support this, showing that \ref{eqn:minlabel} either reaches a better gap faster than the others, or simply returns a better gap when solving the first relaxation (without obtaining a big improvement when applying cutting planes).
 
 \begin{sidewaystable}
 \label{table:models:sym}
