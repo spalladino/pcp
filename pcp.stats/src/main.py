@@ -350,6 +350,43 @@ def models_graphs_colorbound():
         aggr= aggregate.concat
     )
     
+def models_new_bnb_latextable():
+    
+    files = ['20101015MODELBNB70', '20101015MODELBNB80', '20101015MODELBNB85', '20101015MODELBNB90', '20101015MODELBNBNOINIT60', '20101015MODELBNBNOINIT70', '20101015MODELBNBNOINIT80']
+    for file in files:
+        LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.time', 'solution.gap'], 
+                series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
+        print "\n\n\\clearpage\n\n"
+        
+def model_new_bnb_latextable():
+    
+    LatexProcessor('20101015MODELBNBNOINIT60').process(
+            ids=[metrics.FileName()],
+            datas=['solution.time'], 
+            series=['strategy.partition', 'strategy.adjacency', 'strategy.symmetry', 'strategy.colorBound', 'strategy.objective'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.avg
+            )
+        
+    
+def branch_static_manual_latextable():    
+    file = '20101215BRANCHSTATIC3'
+    
+    LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=['solution.gap', 'solution.gapfound', 'solution.nnodes'], 
+            series=['branch.prios.enabled', 'branch.prios.psadjacent', 'branch.prios.colorindex'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.avg
+            )
     
 def test_simple():
     SimpleProcessor('20100629MODELS').process(
@@ -358,7 +395,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    models_graphs_colorbound()
+    branch_static_manual_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

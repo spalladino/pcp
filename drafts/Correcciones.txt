@@ -2,46 +2,54 @@ Implementacion
 --------------
 
 - Ver de correr heuristica primal en despues de cada round de cortes y no solamente una vez por nodo
+	Pendiente
 
 
 Tablas modelo: 611, 612, 613, 614
 --------------
 
-- Correr con cutting planes y reportar grafico de evolucion del gap, para justificar tiempos tan parecidos.
-	Cutting planes listos, hacer un aggregator que se encargue de esto y un outputter que dibuje un grafico en algo como gnuplot o matplotlib.
-	20100629MODELS.7z
-- Correr un branch and bound puro, sin cortes, con primal solo de cplex. Correr solo instancias que terminen y reportar tiempo de cada uno. Copiar de figura 7.7 de la tesis de Isa. 
-	Listo, ver 20101015MODELBNB70 y cia.
-	Falta hacer la tabla nomas
+- Correr las distintas configuraciones con cutting planes y reportar grafico de evolucion del gap, en lugar de usar solo los tiempos finales que quedaron demasiado parecidos. Copiar de figura 7.7 de la tesis de Isa. 
+	Usar las corridas 20100629MODELS que ya tienen esa informacion
+	Listos los graficos, quedaron 4 por cada configuracion a determinar, uno por cada densidad
+	Hace falta agrandarlos para que se vean mejor?
+- Correr un branch and bound puro, sin cortes, con primal solo de cplex. Correr solo instancias que terminen y reportar tiempo de cada uno.
+	Las corridas son 20101015MODELBNB70, 80, 85 y 90; tambien 20101015MODELBNBNOINIT60, 70 y 80, que no usan solucion inicial.
+	La que mejor resultado presenta es 20101015MODELBNBNOINIT60.
+	Se agregaron nuevas combinaciones pero usando otra estrategia de rompimiento de simetria, que dio buenos resultados en la tabla 6.1.6.
+	Se renombraron las configuraciones para que queden consecutivas al menos, los nombres originales estan como comentarios en el latex.
 - Falta la tabla de la seccion 6.1.6. Aunque haga el B&B anterior, poner este que hay distintas combinaciones.
-	Ver cual es la tabla
+	Agregada, y se agregaron algunas combinaciones nuevas para comparar contra las corridas 20101015MODELBNBNOINIT60.
+	Estas corridas se corresponden a 20100820MODELBNB.
 
 DSatur: 621, 622
 -------
 
 - Agregar a las tablas en cuantas instancias gano cada estrategia; poner TIEMPO (GANO). En caso de empate, contarle a las dos instancias.
-Armar metric y aggregator que levanten este dato tambien
+	Pendiente
 
 Branch: 
 -------
 
-- Agregar a 631 que pasa a las static prios cuando hay un callback vacio, ver si suben los tiempos. Seteo manual de branch?
-La corrida fue 20100706BRANCHSTATIC original, tomar los datos de esa corrida para hacer una nueva
-Ya estaban con el callback vacio puesto y dieron esos valores, armar corrida donde se hace seteo manual de las default
-La corrida es 20101215BRANCHSTATIC3, falta armar tabla y ver valores
+- Agregar a 631 que pasa a las static prios cuando hay un callback vacio, ver si suben los tiempos. Seteo manual de branch.
+	La corrida fue 20100706BRANCHSTATIC original, tomar los datos de esa corrida para hacer una nueva
+	Ya estaban con el callback vacio puesto y dieron esos valores, armar corrida donde se hace seteo manual de las default, que es lo que se hace al incluir una estrategia distinta.
+	La corrida es 20101215BRANCHSTATIC3, falta armar tabla y analizar los valores.
+	La corrida dio valores demasiado diferentes y con CPLEX ganando. Ver que cambio respecto de la original y rearmar la corrida. Chequear constraint de rompimiento de simetria.
 
 
 Primal:
 -------
 
-- La 641 tiene un typo en el header (nodes)
-- En 641 y 642 comparar contra un callback vacio de CPLEX
-- Cambiar conclusion del final para echarle la culpa al callback y no a la heuristica q toma solo 200 ms
-La 641 es 20100723PRIMALSTATIC2, la 642 es 20100720PRIMAL
-Ya usan un callback vacio :(
+- Estan mal los subtitulos en la tabla 6.4.1, ver found y nodes
+	Corregido
+- En 6.4.1 y 6.4.2 comparar contra un callback vacio de CPLEX. Cambiar conclusion del final para echarle la culpa al callback y no a la heuristica q toma solo 200 ms
+	La 641 es 20100723PRIMALSTATIC2, la 642 es 20100720PRIMAL
+	Las dos ya usan un callback vacio para testear, no le podemos echar la culpa a cplex aca :(
 
 Cuts:
 -----
 
 - Rechequear como funciona tener eclique+bcolor prendido y usar las otras solo como fallback.
+	Implementacion lista, pendiente hacer las corridas
 - Falta E en clique en tabla 652
+	Corregido

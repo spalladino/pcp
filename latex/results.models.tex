@@ -179,7 +179,7 @@ The graphics \ref{fig:models:colorbound} present, as before, the evolution of th
 
 \subsubsection{Symmetry breaking}
 
-Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}. The evolution of the obtained gap in time for different densities is shown in figure \ref{fig:models:sym}. \TODO{Analyze those graphs}
+Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}. The evolution of the obtained gap in time for different densities is shown in figure \ref{fig:models:sym}.
 
 \begin{align*}
 & w_j \geq w_{j+1} \sumheight \quad &\forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
@@ -263,32 +263,22 @@ While the previous formulation was chosen for working on a cutting planes algori
 
 We tested many variations to the chosen model in a branch and bound algorithm, bound to $1800$ seconds, with graphs with $90$ nodes, partition size $2$ and different densities. The branch and bound uses default \textsc{cplex} settings, no custom callbacks were yet applied.
 
-We present in table \ref{table:models:bnb} the following configurations, chosen based on their results:
-
-\begin{itemize}
-\defitem{M4}{Chosen model from cutting planes experimentation phase.}
-\defitem{M1}{Relaxes that exactly one node must be painted per partition (\ref{eqn:partsum}) by replacing it with at least one painted per partition (\ref{eqn:partsumgeq}).}
-\defitem{M8}{Strengthens the model using not only \ref{eqn:wjleqsumcolor} restrictions but also applying \ref{eqn:wjgeqsumpart}.}
-\defitem{M3}{Uses simple color conflict constraints, requiring that two adjacent nodes cannot use the same color (\ref{eqn:adjscolorpone}).}
-\defitem{M10}{Bases symmetry breaking on the number of nodes of each color class (\ref{eqn:symnodecount}).}
-\end{itemize}
-
 \begin{table}
 \label{table:models:bnb}
 \centering
 
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{M4} & \multicolumn{1}{|c|}{M1} & \multicolumn{1}{|c|}{M3}  & \multicolumn{1}{|c|}{M8} 
+\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{C1} & \multicolumn{1}{|c|}{C2} & \multicolumn{1}{|c|}{C3}  & \multicolumn{1}{|c|}{C4} & \multicolumn{1}{|c|}{C5} & \multicolumn{1}{|c|}{C6} & \multicolumn{1}{|c|}{C7} 
 \\
 \hline
-EW 20 N=90 & \textbf{0.00} & \textbf{0.00} & 0.25  & \textbf{0.00}  
+EW 20 N=90 & \textbf{0.00} & \textbf{0.00} & 0.25  & \textbf{0.00} & 0.43 & 0.25 & 0.25
 \\
-EW 40 N=90 & 0.33 & \textbf{0.22} & 0.33 & 0.33 
+EW 40 N=90 & 0.33 & \textbf{0.22} & 0.33 & 0.33 & 0.33 & 0.28 & 0.35
 \\
-EW 60 N=90 & 0.39 & \textbf{0.37} & 0.41 & \textbf{0.37}
+EW 60 N=90 & 0.39 & 0.37 & 0.41 & 0.37 & 0.48 & \textbf{0.15} & 0.38
 \\
-EW 80 N=90 & 0.38 & 0.43 & \textbf{0.31} & 0.39
+EW 80 N=90 & 0.38 & 0.43 & 0.31 & 0.39 & 0.41 & \textbf{0.10} & 0.38
 \\
 \hline 
  \end{tabular}
@@ -297,13 +287,63 @@ EW 80 N=90 & 0.38 & 0.43 & \textbf{0.31} & 0.39
 
 \end{table}
 
-Results were most interesting. The formulation chosen for the cutting planes algorithm yielded good results only for lowest density graphs. In other cases, using different models returned better results:
+We present in table \ref{table:models:bnb} the following configurations, chosen based on their results:
+
 \begin{itemize}
-\item In graphs with $40\%$ density, relaxing the \ref{eqn:partsum} constraint on painting one node per partition greatly reduces the obtained gap, as can be seen in the results for $M1$.
-\item In the most dense graphs, using tighter model strengthening constraints yields better results, as $M8$ has a much lower gap than the chosen model.
-\item In the highest density graphs, using simple color conflict constraints returned a better result.
+\defitem{C1}{Chosen model from cutting planes experimentation phase.} %S4
+\defitem{C2}{Relaxes that exactly one node must be painted per partition (\ref{eqn:partsum}) by replacing it with at least one painted per partition (\ref{eqn:partsumgeq}).} %S1
+\defitem{C3}{Uses simple color conflict constraints, requiring that two adjacent nodes cannot use the same color (\ref{eqn:adjscolorpone}).} %S3
+\defitem{C4}{Strengthens the model using not only \ref{eqn:wjleqsumcolor} restrictions but also applying \ref{eqn:wjgeqsumpart}.} %S8
+\defitem{C5}{Uses no symmetry breaking constraints whatsoever.} %S9
+\defitem{C6}{Bases symmetry breaking on the number of nodes of each color class (\ref{eqn:symnodecount}).} %S10
+\defitem{C7}{Applies constraints \ref{eqn:adjsperpart} for color conflict.} %S11
 \end{itemize}
 
-Although we will be using the previous formulation for fixing different settings throughout the following experimentations, we will reuse the results exposed here as alternative models for the final branch and cut algorithm, in order to pick the best performing model for the final version of the algorithm.
+Results were most interesting. The formulation chosen for the cutting planes algorithm yielded good results only for lowest density graphs. In other cases, using different models returned better results:
+\begin{itemize}
+\item In graphs with $40\%$ density, relaxing the \ref{eqn:partsum} constraint on painting one node per partition greatly reduces the obtained gap, as can be seen in the results for $C2$.
+\item In the most dense graphs, varying the strategy for color conflicts to use constraint \ref{eqn:symnodecount} yields much better results.
+\end{itemize}
+
+Considering the results returned by using constraint \ref{eqn:symnodecount}, we re-tested all of the previous configurations changing the default symmetry breaking strategy from \ref{eqn:minlabel} to \ref{eqn:symnodecount}, except for C1 which kept the original settings. This time, we executed a branch and bound algorithm on much smaller graphs (60 nodes), restricting ourselves to 10-minute runs and \textbf{not} providing the algorithm with any initial solution, in order to obtain zero gap and compare running times.
+
+\begin{table}
+\centering
+
+\begin{tabular}{|c|c|c|}
+\hline
+\textit{Strategy} & {$40\%$} & {$60\%$}
+\\
+\hline
+C1 & 17.41 & 151.12
+\\
+C2 & 15.42 & 55.51
+\\
+C4 & 4.47 & 30.30
+\\
+C3 & \textbf{0.37} & 30.06
+\\
+C6 & 4.48 & 30.50
+\\
+C5 & \textbf{0.78} & 56.68
+\\
+C7 & 51.47 & \textbf{15.22}
+\\
+\hline 
+ \end{tabular}
+
+\caption{Running time until resolution obtained in a standard branch and bound algorithm for different models, in binomial graphs with 60 nodes, without providing an initial heuristic solution.}
+\label{table:models:bnb60}
+
+\end{table}
+
+The most interesting results are found in $40\%$ and $60\%$ density graphs, and are displayed in table \ref{table:models:bnb60}. It is also worth noting that C7 was the only one to solve all $80\%$ density graphs to optimality.
+
+This time, using a simpler model, both regarding color conflict and symmetry breaking, yielded very good results in low density graphs. In higher densities, applying constraints \ref{eqn:adjsperpart} for color conflicts produces excellent results, which is surprising as the efectiveness of these constraints was highly related to partition sizes, not densities.
+
+\spacedhrule
+Throughout this chapter we have tested a significant number of different models, which were obtained by combining different constraints, and tested them in different scenarios by using different algorithms. Results changed greatly between those scenarios.
+
+Although we will be using the formulation devised in \ref{subsubsec:results:model:chosen} for testing other settings throughout the following experimentations, we will reuse all the results exposed here as alternative models for the final branch and cut algorithm, in order to pick the best performing model for the final version of the algorithm.
 
 \clearpage

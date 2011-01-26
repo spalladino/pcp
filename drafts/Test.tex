@@ -21,6 +21,408 @@
 
 \begin{document}
 
+\section{Branch static prios but using manual setting}
+
+
+Processing Runid 20101215BRANCHSTATIC3
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.gapfound
+\item solution.nnodes
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: branch.prios.enabled: false, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
+\item S2: branch.prios.enabled: true, branch.prios.psadjacent: -10, branch.prios.colorindex: -1
+\item S3: branch.prios.enabled: true, branch.prios.psadjacent: -10, branch.prios.colorindex: 1
+\item S4: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
+\item S5: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: 1
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\\
+ & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
+\\
+\hline
+EW 20 N=90 & 0.25 & 197267.67 & 462544.83 & 0.48 & 136967.50 & 136983.00 & 0.49 & 106095.67 & 106106.50 & 0.25 & 194493.33 & 214928.50 & 0.38 & 71811.50 & 71819.50
+\\
+EW 40 N=100 & 0.35 & 108392.67 & 122680.17 & 0.51 & 72136.33 & 72173.33 & 0.51 & 54120.50 & 54144.33 & 0.45 & 56938.17 & 56950.00 & 0.46 & 44299.17 & 44311.83
+\\
+EW 60 N=80 & 0.34 & 167041.33 & 167047.83 & 0.43 & 130405.67 & 130438.83 & 0.45 & 100831.50 & 100854.33 & 0.39 & 119052.83 & 120669.17 & 0.41 & 100042.50 & 100053.67
+\\
+EW 80 N=100 & 0.46 & 9806.00 & 11692.00 & 0.51 & 21346.00 & 25726.50 & 0.51 & 19000.67 & 22921.17 & 0.50 & 22666.33 & 24867.67 & 0.50 & 19298.00 & 19567.67
+\\
+\hline 
+ \end{tabular}
+ 
+ \begin{tabular}{|c|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{Cplex} & \multicolumn{3}{|c|}{Custom}
+\\
+ & gap & found & nodes & gap & found & nodes 
+\\
+\hline
+EW 20 N=90 & 0.25 & 197 & 462 & 0.25 & 194 & 214
+\\
+EW 40 N=100 & 0.35 & 108 & 122 & 0.45 & 56 & 569
+\\
+EW 60 N=80 & 0.34 & 167 & 167 & 0.39 & 119 & 120 
+\\
+EW 80 N=100 & 0.46 & 98 & 116 & 0.51 & 22 & 24
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+\section{Rerunning models with branch and bound}
+
+Processing Runid 20101015MODELBNBNOINIT60
+ 
+Data:
+\begin{itemize}
+\item solution.time
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{1}{|c|}{S1} & \multicolumn{1}{|c|}{S2} & \multicolumn{1}{|c|}{S3} & \multicolumn{1}{|c|}{S4} & \multicolumn{1}{|c|}{S5} & \multicolumn{1}{|c|}{S6} & \multicolumn{1}{|c|}{S7} & \multicolumn{1}{|c|}{S8} & \multicolumn{1}{|c|}{S9} & \multicolumn{1}{|c|}{S10} & \multicolumn{1}{|c|}{S11}
+\\
+ & solution.time & solution.time & solution.time & solution.time & solution.time & solution.time & solution.time & solution.time & solution.time & solution.time & solution.time
+\\
+\hline
+EW 20 N=60 & 0.73 & 1.02 & 0.93 & 0.21 & 0.26 & 1.41 & 0.69 & 0.71 & 0.56 & 0.49 & 0.87
+\\
+EW 40 N=60 & 15.42 & 98.08 & 0.37 & 17.41 & 19.98 & 62.01 & 13.39 & 4.47 & 0.78 & 4.48 & 51.47
+\\
+EW 60 N=60 & 55.51 & 200.36 & 30.06 & 151.12 & 100.38 & 54.82 & 50.34 & 30.30 & 56.68 & 30.50 & 15.22
+\\
+EW 80 N=60 & 600.02 & 600.02 & 495.98 & 600.02 & 600.02 & 600.02 & 600.02 & 600.02 & 600.02 & 600.02 & 353.55
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
+Processing Runid 20101015MODELBNB70
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=70 & 1.26 & 0.00 & 1.33 & 0.00 & 1.27 & 0.00 & 0.43 & 0.00 & 0.45 & 0.00 & 2.25 & 0.00 & 1.67 & 0.00 & 1.05 & 0.00 & 4.85 & 0.00 & 0.97 & 0.00 & 1.04 & 0.00
+\\
+EW 40 N=70 & 124.90 & 0.00 & 600.02 & 0.21 & 600.02 & 0.22 & 590.50 & 0.16 & 600.02 & 0.20 & 482.86 & 0.20 & 183.69 & 0.00 & 149.32 & 0.00 & 229.44 & 0.00 & 149.41 & 0.00 & 600.02 & 0.20
+\\
+EW 60 N=70 & 600.02 & 0.20 & 600.02 & 0.24 & 600.02 & 0.24 & 600.02 & 0.23 & 600.02 & 0.29 & 600.02 & 0.20 & 600.02 & 0.23 & 600.02 & 0.27 & 600.02 & 0.22 & 600.02 & 0.27 & 600.02 & 0.18
+\\
+EW 80 N=70 & 600.02 & 0.20 & 600.02 & 0.22 & 600.02 & 0.22 & 600.02 & 0.18 & 600.02 & 0.17 & 600.02 & 0.25 & 600.02 & 0.23 & 600.02 & 0.23 & 600.02 & 0.18 & 600.02 & 0.23 & 600.02 & 0.19
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+Processing Runid 20101015MODELBNB80
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=80 & 3.72 & 0.00 & 0.25 & 0.00 & 0.20 & 0.00 & 0.60 & 0.00 & 0.71 & 0.00 & 5.77 & 0.00 & 1.16 & 0.00 & 1.13 & 0.00 & 1.32 & 0.00 & 1.29 & 0.00 & 0.30 & 0.00
+\\
+EW 40 N=80 & 531.31 & 0.16 & 600.02 & 0.21 & 600.02 & 0.20 & 600.02 & 0.20 & 600.02 & 0.20 & 600.02 & 0.32 & 467.38 & 0.13 & 346.30 & 0.00 & 504.42 & 0.16 & 346.72 & 0.00 & 600.02 & 0.20
+\\
+EW 60 N=80 & 600.02 & 0.27 & 600.03 & 0.29 & 600.02 & 0.30 & 600.02 & 0.32 & 600.02 & 0.26 & 600.02 & 0.37 & 600.02 & 0.34 & 600.02 & 0.32 & 600.02 & 0.27 & 600.02 & 0.32 & 600.03 & 0.25
+\\
+EW 80 N=80 & 600.02 & 0.29 & 600.03 & 0.31 & 600.03 & 0.25 & 600.02 & 0.28 & 600.02 & 0.28 & 600.02 & 0.29 & 600.02 & 0.30 & 600.02 & 0.31 & 600.02 & 0.30 & 600.02 & 0.31 & 600.03 & 0.27
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+Processing Runid 20101015MODELBNB85
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=85 & 53.36 & 0.00 & 240.65 & 0.10 & 75.93 & 0.00 & 218.68 & 0.00 & 195.88 & 0.00 & 94.51 & 0.00 & 62.80 & 0.00 & 86.32 & 0.00 & 80.34 & 0.00 & 86.43 & 0.00 & 213.68 & 0.00
+\\
+EW 40 N=85 & 312.48 & 0.07 & 600.02 & 0.19 & 425.17 & 0.03 & 600.02 & 0.19 & 600.02 & 0.19 & 516.04 & 0.07 & 512.99 & 0.07 & 566.97 & 0.03 & 600.02 & 0.19 & 559.83 & 0.03 & 600.02 & 0.23
+\\
+EW 60 N=85 & 600.02 & 0.37 & 600.03 & 0.37 & 600.03 & 0.32 & 600.02 & 0.35 & 600.02 & 0.35 & 600.02 & 0.41 & 600.02 & 0.35 & 600.02 & 0.44 & 600.02 & 0.35 & 600.02 & 0.36 & 600.02 & 0.35
+\\
+EW 80 N=85 & 600.02 & 0.36 & 600.04 & 0.32 & 600.03 & 0.35 & 600.02 & 0.31 & 600.03 & 0.31 & 600.02 & 0.32 & 600.02 & 0.35 & 600.03 & 0.33 & 600.02 & 0.33 & 600.02 & 0.33 & 600.03 & 0.35
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+Processing Runid 20101015MODELBNB90
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=90 & 366.52 & 0.22 & 360.44 & 0.19 & 360.14 & 0.15 & 360.34 & 0.15 & 360.34 & 0.15 & 353.41 & 0.14 & 360.60 & 0.18 & 360.57 & 0.15 & 360.62 & 0.15 & 361.60 & 0.15 & 361.68 & 0.15
+\\
+EW 40 N=90 & 600.02 & 0.35 & 600.02 & 0.41 & 600.02 & 0.38 & 600.02 & 0.35 & 600.02 & 0.33 & 600.02 & 0.33 & 600.02 & 0.42 & 600.02 & 0.44 & 600.02 & 0.33 & 600.02 & 0.33 & 600.02 & 0.33
+\\
+EW 60 N=90 & 600.02 & 0.35 & 600.03 & 0.46 & 600.03 & 0.41 & 600.03 & 0.46 & 600.02 & 0.46 & 600.02 & 0.45 & 600.02 & 0.44 & 600.02 & 0.45 & 600.02 & 0.44 & 600.02 & 0.46 & 600.04 & 0.44
+\\
+EW 80 N=90 & 600.02 & 0.43 & 600.04 & 0.44 & 600.03 & 0.41 & 600.02 & 0.39 & 600.02 & 0.39 & 600.02 & 0.39 & 600.02 & 0.44 & 600.02 & 0.40 & 600.02 & 0.39 & 600.02 & 0.40 & 600.04 & 0.41
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+Processing Runid 20101015MODELBNBNOINIT60
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=60 & 0.73 & 0.00 & 1.02 & 0.00 & 0.93 & 0.00 & 0.21 & 0.00 & 0.26 & 0.00 & 1.41 & 0.00 & 0.69 & 0.00 & 0.71 & 0.00 & 0.56 & 0.00 & 0.49 & 0.00 & 0.87 & 0.00
+\\
+EW 40 N=60 & 15.42 & 0.00 & 98.08 & 0.00 & 0.37 & 0.00 & 17.41 & 0.00 & 19.98 & 0.00 & 62.01 & 0.00 & 13.39 & 0.00 & 4.47 & 0.00 & 0.78 & 0.00 & 4.48 & 0.00 & 51.47 & 0.00
+\\
+EW 60 N=60 & 55.51 & 0.00 & 200.36 & 0.00 & 30.06 & 0.00 & 151.12 & 0.00 & 100.38 & 0.00 & 54.82 & 0.00 & 50.34 & 0.00 & 30.30 & 0.00 & 56.68 & 0.00 & 30.50 & 0.00 & 15.22 & 0.00
+\\
+EW 80 N=60 & 600.02 & 0.04 & 600.02 & 0.07 & 495.98 & 0.04 & 600.02 & 0.07 & 600.02 & 0.11 & 600.02 & 0.17 & 600.02 & 0.07 & 600.02 & 0.11 & 600.02 & 0.14 & 600.02 & 0.11 & 353.55 & 0.00
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+Processing Runid 20101015MODELBNBNOINIT70
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=70 & 1.47 & 0.00 & 1.24 & 0.00 & 1.35 & 0.00 & 0.48 & 0.00 & 0.49 & 0.00 & 2.23 & 0.00 & 1.51 & 0.00 & 1.12 & 0.00 & 4.75 & 0.00 & 1.04 & 0.00 & 1.16 & 0.00
+\\
+EW 40 N=70 & 194.68 & 0.00 & 600.02 & 0.16 & 600.02 & 0.21 & 477.10 & 0.08 & 448.02 & 0.08 & 183.00 & 0.00 & 219.31 & 0.00 & 218.30 & 0.00 & 193.13 & 0.00 & 217.50 & 0.00 & 600.02 & 0.20
+\\
+EW 60 N=70 & 600.02 & 0.08 & 600.03 & 0.09 & 600.02 & 0.13 & 600.02 & 0.11 & 600.02 & 0.11 & 600.03 & 0.23 & 600.02 & 0.09 & 600.02 & 0.20 & 600.02 & 0.11 & 600.02 & 0.20 & 600.02 & 0.10
+\\
+EW 80 N=70 & 600.02 & 0.15 & 600.02 & 0.18 & 600.02 & 0.07 & 600.02 & 0.13 & 600.02 & 0.09 & 600.02 & 0.21 & 600.02 & 0.15 & 600.02 & 0.11 & 600.02 & 0.09 & 600.02 & 0.11 & 600.03 & 0.11
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+Processing Runid 20101015MODELBNBNOINIT80
+
+Data:
+\begin{itemize}
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S4: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: None, strategy.objective: Equal
+\item S5: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S6: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: None, strategy.colorBound: None, strategy.objective: Equal
+\item S7: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\item S8: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSum, strategy.objective: Equal
+\item S9: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSum, strategy.objective: Equal
+\item S10: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal
+\item S11: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber, strategy.colorBound: None, strategy.objective: Equal
+\end{itemize}
+\begin{tabular}{|c|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1} & \multicolumn{2}{|c|}{S2} & \multicolumn{2}{|c|}{S3} & \multicolumn{2}{|c|}{S4} & \multicolumn{2}{|c|}{S5} & \multicolumn{2}{|c|}{S6} & \multicolumn{2}{|c|}{S7} & \multicolumn{2}{|c|}{S8} & \multicolumn{2}{|c|}{S9} & \multicolumn{2}{|c|}{S10} & \multicolumn{2}{|c|}{S11}
+\\
+ & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap & solution.time & solution.gap
+\\
+\hline
+EW 20 N=80 & 16.86 & 0.00 & 15.10 & 0.00 & 104.04 & 0.00 & 12.04 & 0.00 & 20.62 & 0.00 & 8.21 & 0.00 & 27.08 & 0.00 & 28.35 & 0.00 & 27.96 & 0.00 & 14.72 & 0.00 & 0.86 & 0.00
+\\
+EW 40 N=80 & 235.35 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.16 & 520.76 & 0.00 & 600.02 & 0.04 & 280.02 & 0.00 & 520.30 & 0.00 & 250.65 & 0.00 & 518.47 & 0.00 & 600.03 & 0.16
+\\
+EW 60 N=80 & 600.02 & 0.25 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.37 & 600.02 & 0.16 & 600.02 & 0.30 & 600.02 & 0.23 & 600.02 & 0.30 & 600.02 & 0.30 & 600.02 & 0.30 & 600.02 & 0.10
+\\
+EW 80 N=80 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00 & 600.03 & 0.11 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00 & 600.02 & 0.00
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
+
+
 \section{Rerunning models}
 
 

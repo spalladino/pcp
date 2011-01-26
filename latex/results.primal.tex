@@ -17,7 +17,7 @@ We first tested the primal heuristic using the simple priorities branching schem
 \hline
 \multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{\textsc{cplex}} & \multicolumn{3}{|c|}{Custom} & \multicolumn{3}{|c|}{Custom + \textsc{cplex}}
 \\
- & gap & found & nodes & gap & found & gap & gap & nodes & nodes
+ & gap & found & nodes & gap & found & nodes & gap & found & nodes
 \\
 \hline
 EW 20\% N=90 & 0.00 & 63.33 & 63.33 & 0.00 & 62.33 & 62.33 & 0.00 & 63.33 & 63.33
@@ -30,7 +30,7 @@ EW 80\% N=100 & 0.45 & 13.00 & 13.00 & 0.41 & 2.67 & 3.33 & 0.41 & 3.33 & 3.33
 \\
 \hline 
  \end{tabular}
-
+ 
 \caption{Obtained gap, node number (in thousands) in which the gap was obtained and total number of nodes explored (in thousands) for different primal heuristics in a branch and bound using priorities branching.}
 
 \end{table}
