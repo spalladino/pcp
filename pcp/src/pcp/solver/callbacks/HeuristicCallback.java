@@ -13,6 +13,7 @@ import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
+import pcp.interfaces.IPrimalSolutionProvider;
 import pcp.interfaces.IColorAssigner.DSaturAssignment;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
@@ -36,27 +37,29 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	private static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	private static final int everynodes = Settings.get().getInteger("primal.everynodes");
 	private static final boolean useUB = Settings.get().getBoolean("pruning.useub");
-		
+	private static final boolean runOnCutCallback = Settings.get().getBoolean("primal.runoncutcallback");
+	
 	private static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
 	private static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
 	private static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
 	
 	private static final DSaturAssignment assignment = Settings.get().getEnum("primal.dsatur.assign", DSaturAssignment.class);
 	
-	
 	IPartitionedGraph graph;
 	Model model;
 	
 	HeuristicMetrics metrics;
+	IPrimalSolutionProvider primalProvider;
 	
 	public HeuristicCallback() {
 		metrics = new HeuristicMetrics();
 	}
 	
-	public HeuristicCallback(Model model) {
+	public HeuristicCallback(Model model, IPrimalSolutionProvider primalProvider) {
 		this();
 		this.graph = model.getGraph();
 		this.model = model;
+		this.primalProvider = primalProvider;
 	}
 	
 	public HeuristicMetrics getMetrics() {
@@ -71,11 +74,17 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		int nodesSet = countNodesEqualOne();
 		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			setSolution(nodesSet);
+		} else if (runOnCutCallback && primalProvider != null) {
+			if (primalProvider.getPrimalChi() != null) {
+				System.out.println("Assigning primal with chi " + primalProvider.getPrimalChi() + " in heuristic callback");
+				super.setSolution(primalProvider.getPrimalVars(), primalProvider.getPrimalVals());
+			}
 		} else if (primalEnabled && super.getNnodes() > 1 && (
 				(!onlyOnUp && super.getNnodes() % everynodes == 0) ||
 				(onlyOnUp && NodeData.getDirection(super.getNodeData()) == 1))) {
 			setPrimal(nodesSet);
 		}
+		
 	}
 
 	private void logBounds() throws IloException {

@@ -233,12 +233,17 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 		
 		if (useHeuristicCallback) {
 			System.out.println("Using custom heuristic callback");
-			cplex.use(this.heurCallback = new HeuristicCallback(model));
+			cplex.use(this.heurCallback = createHeuristicCallback());
 		}
 		
 		new BranchingPrioritizer(cplex, model).setPriorities();
 		new BranchingDirectioner(cplex, model).setDirection();
 		new BranchingSelector(cplex, model).setSelection();
+	}
+	
+
+	protected HeuristicCallback createHeuristicCallback() {
+		return new HeuristicCallback(model, null);
 	}
 
 	protected void addInitialCuts() {

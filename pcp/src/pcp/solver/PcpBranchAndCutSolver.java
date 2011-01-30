@@ -6,6 +6,7 @@ import exceptions.AlgorithmException;
 import ilog.concert.IloException;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
+import pcp.solver.callbacks.HeuristicCallback;
 import props.Settings;
 
 public class PcpBranchAndCutSolver extends Solver {
@@ -61,5 +62,10 @@ public class PcpBranchAndCutSolver extends Solver {
 	public void fillData(Map<String, Object> data) {
 		super.fillData(data);
 		callback.fillData(data);
+	}
+	
+	@Override
+	protected HeuristicCallback createHeuristicCallback() {
+		return new HeuristicCallback(model, callback);
 	}
 }

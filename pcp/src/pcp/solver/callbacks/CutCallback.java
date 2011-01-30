@@ -1,19 +1,27 @@
 package pcp.solver.callbacks;
 
 import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
 import ilog.concert.IloLinearIntExpr;
 import ilog.concert.IloMPModeler;
 import ilog.concert.IloNumExpr;
+import ilog.concert.IloNumVar;
 import ilog.concert.IloRange;
 import ilog.cplex.IloCplex;
+import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.AlgorithmException;
+
+import pcp.Factory;
 import pcp.algorithms.block.BlockColorCuts;
 import pcp.algorithms.bounding.IBoundedAlgorithm;
+import pcp.algorithms.bounding.SolutionsBounder;
 import pcp.algorithms.clique.ExtendedCliqueCutter;
+import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.algorithms.holes.ComponentHolesCuts;
 import pcp.algorithms.holes.HolesCuts;
 import pcp.algorithms.iset.ComponentPathDetector;
@@ -26,19 +34,26 @@ import pcp.entities.partitioned.Partition;
 import pcp.interfaces.ICutBuilder;
 import pcp.interfaces.IExecutionDataProvider;
 import pcp.interfaces.IModelData;
+import pcp.interfaces.IPrimalSolutionProvider;
+import pcp.interfaces.IColorAssigner.DSaturAssignment;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.strategy.Coloring;
 import pcp.model.strategy.Objective;
 import pcp.solver.cuts.CutFamily;
 import pcp.solver.cuts.CutsMetrics;
 import pcp.solver.data.Iteration;
 import pcp.solver.data.NodeData;
+import pcp.solver.helpers.PruneEvaluator;
+import pcp.solver.heur.HeuristicMetrics;
 import pcp.solver.io.IterationPrinter;
+import pcp.utils.DoubleUtils;
 import pcp.utils.IntUtils;
+import pcp.utils.ModelUtils;
 import props.Settings;
 
 
-public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData, IExecutionDataProvider {
+public class CutCallback extends IloCplex.CutCallback implements Comparisons, ICutBuilder, IModelData, IExecutionDataProvider, IPrimalSolutionProvider {
 
 	final static Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
@@ -61,6 +76,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 	final static boolean onlyOnUp = Settings.get().getBoolean("cuts.onlyonup");
 	
 	final static boolean enabled = Settings.get().getBoolean("cuts.enabled");
+	private static final boolean runPrimalOnCutCallback = Settings.get().getBoolean("primal.runoncutcallback");
 	
 	Iteration iteration;
 	Model model;
@@ -105,12 +121,25 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			doneFirst = true;
 			return;
 		}
-		
+
+		// Reset iter count on node change
+		if (lastNnodes != super.getNnodes()) {
+			lastNnodes = super.getNnodes();
+			clearPrimal();
+			iters = 0;
+		}	
+	
+		if (cut() && runPrimalOnCutCallback)
+			primal();
+	}
+
+	private boolean cut() throws IloException {
+	
 		// Only cuts on initial node if specified
 		if (onlyRoot && isInternalNode()) {
-			return;
+			return false;
 		}
-
+	
 		// Do not add cuts on every node
 		if (isInternalNode() && (
 				(!onlyOnUp && super.getNnodes() % cutEvery != 0) || 
@@ -118,7 +147,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			if (logCallback) {
 				if (!onlyOnUp) System.out.println("Skipping cuts for node " + super.getNnodes() + " not divisible by " + cutEvery);
 				else System.out.println("Skipping cuts for node " + super.getNnodes() + " with direction " + NodeData.getDirection(super.getNodeData()));
-			} return;
+			} return false;
 		}
 		
 		// On certain depth, don't make any more cuts
@@ -127,7 +156,7 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			Integer depth = NodeData.getDepth(getNodeData());
 			if (depth != null && maxCutsDepth < depth) {
 				if (logCallback) System.out.println("Skipping cuts for node " + super.getNnodes() + " of depth " + depth);
-				return;
+				return false;
 			}
 		}
 		
@@ -138,29 +167,23 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 			//rootTimes[iters] //TODO: Fill root times
 		}
 		
-		// Reset iter count on node change
-		if (!onlyRoot && lastNnodes != super.getNnodes()) {
-			lastNnodes = super.getNnodes();
-			iters = 0;
-		}
-		
 		// Run a maximum number of times on each node
 		int maxIters = super.getNnodes() == 0 ? maxItersRoot : maxItersNodes;
 		if (maxIters > 0 && maxIters <= iters) {
 			if (onlyRoot || logCallback) System.out.println("Ended cut callback execution after " + iters + " iterations.");
-			return;
+			return false;
 		} metrics.newIter(); iters++;
 		
 		// Create whatever data is needed for this iteration
 		setupIterationData();
-
+	
 		// Log what needs to be logged on current iteration
 		logIteration();
 		
 		// Cut initial families
 		if (logCallback) System.out.println("Initiating clique cuts");
 		cliques = new ExtendedCliqueCutter(iteration.clone()).run();
-
+	
 		if (logCallback) System.out.println("Initiating block color cuts");
 		blocks = new BlockColorCuts(iteration.clone()).run();
 		
@@ -188,6 +211,9 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		holes = null;
 		blocks = null;
 		gholes = null;
+		
+		return true;
+	
 	}
 
 	@Override
@@ -380,5 +406,252 @@ public class CutCallback extends IloCplex.CutCallback implements Comparisons, IC
 		
 		this.iteration = new Iteration(model, this, this);
 	}
+	
+//************************************************************************************
+// DUPLICATE CODE FROM HEURISTIC CALLBACK
+// Copied from heuristic callback to invoke primal heuristic here
+//************************************************************************************
+	
+	private static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
+	
+	private static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
+	private static final boolean primalOnlyOnUp = Settings.get().getBoolean("primal.onlyonup");
+	private static final double nodeLB = Settings.get().getDouble("primal.nodelb");
+	private static final int everynodes = Settings.get().getInteger("primal.everynodes");
+	
+	private static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
+	
+	private static final DSaturAssignment assignment = Settings.get().getEnum("primal.dsatur.assign", DSaturAssignment.class);
+	
+	private HeuristicMetrics primalMetrics = new HeuristicMetrics();
+	
+	private double[] primalVals;
+	private IloNumVar[] primalVars;
+	private Integer primalChi; 
+	
+	private void primal() throws IloException {
+		int nodesSet = countNodesEqualOne();
+		if (!PruneEvaluator.shouldPrune(model, nodesSet) && primalEnabled && super.getNnodes() > 1 && (
+				(!primalOnlyOnUp && super.getNnodes() % everynodes == 0) ||
+				(primalOnlyOnUp && NodeData.getDirection(super.getNodeData()) == 1))) {
+			setPrimal(nodesSet);
+		}
+	}
+	
+	public Integer getPrimalChi() {
+		return primalChi;
+	}
+	
+	public double[] getPrimalVals() {
+		return primalVals;
+	}
+	
+	public IloNumVar[] getPrimalVars() {
+		return primalVars;
+	}
+	
+	public void clearPrimal() {
+		this.primalVals = null;
+		this.primalVars = null;
+		this.primalChi = null;
+	}
+	
+	private void storeSolution(Integer chi, double[] vals, IloNumVar[] vars) {
+		if (chi != null && (primalChi == null || primalChi > chi)) {
+			if (logCallback) System.out.println("Storing solution in cut callback with chi " + chi);
+			this.primalChi = chi;
+			this.primalVals = vals;
+			this.primalVars = vars;
+		}
+	}
+	
+	private void setPrimal(int nodesSet) {
+		ColoringAlgorithm coloring = Factory.get()
+			.coloring(coloringStrategy, graph)
+			.withBounder(new SolutionsBounder("coloring.primal"));
+		
+		try {
+			int fixed = assignColorsFromSolution(coloring);
+			setLowerBound(coloring);
+			createSolution(coloring);
+			primalMetrics.primalHeur(coloring, super.getNnodes(), fixed, nodesSet);
+		} catch (Exception ex) {
+			pcp.Logger.error("Exception in heuristic callback", ex);
+		}
+	}
+
+	private void setLowerBound(ColoringAlgorithm coloring) throws IloException {
+		// Set lower bound as objective value of current relaxation
+		double lower = objectiveStrategy.equals(Objective.Equal) 
+			? super.getObjValue()
+			: super.getValue(model.getColorSum());
+		if (!Double.isNaN(lower) && lower != 0.0) {
+			coloring.setLowerBound(DoubleUtils.ceil(lower));
+		}
+	}
+
+	private void createSolution(ColoringAlgorithm coloring) throws AlgorithmException, IloException {
+		int n = model.getNodeCount();
+		int c = model.getColorCount();
+		
+		Integer chi = coloring.getChi();
+		if (chi == null || !coloring.hasSolution()) return;
+		
+		double[] vals = new double[n * c + c];
+		IloNumVar[] vars = new IloNumVar[n * c + c];
+		
+		int idx = 0;
+		for (int j = 0; j < c; j++) {
+			// Set w variable value
+			vars[idx] = model.getWs()[j];
+			vals[idx] = j < chi ? 1 : 0;
+			idx++;
+			for (int i = 0; i < n; i++) {
+				// Set x variable value
+				vars[idx] = model.getXs()[i][j];
+				vals[idx] = coloring.getIntColor(i) == j ? 1 : 0;
+				idx++;
+			}
+		}
+
+		if (validateSolutions) validateSolution(vars, vals);
+		storeSolution(chi, vals, vars);
+	}
+	
+	private void validateSolution(IloNumVar[] vars, double[] vals) throws IloException, AlgorithmException {
+		for (int i = 0; i < vars.length; i++) {
+			IloNumVar var = vars[i];
+			double d = vals[i];
+			
+			if (d < var.getLB() || d > var.getUB()) {
+				throw new AlgorithmException("Invalid solution " + d + " for variable " + var + " bounds [" + var.getLB() + "," + var.getUB() + "] with relaxation value " + super.getValue(var));
+			}
+		}
+	}
+
+	private int assignColorsFromSolution(ColoringAlgorithm coloring)
+		throws IloException, AlgorithmException {
+		
+		switch(assignment) {
+			case CheckAdjs: return assignColorsFromSolutionCheckingAdjs(coloring);
+			case Fast: return assignColorsFromSolutionFast(coloring);
+			case Safe: return assignColorsFromSolutionSafe(coloring);
+			default: throw new AlgorithmException("Unknown dsatur assignment enum " + assignment);
+		}
+	}
+	
+	private int assignColorsFromSolutionCheckingAdjs(ColoringAlgorithm saturs)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		for (Partition p : graph.getPartitions()) {
+			part: for (Node n : graph.getNodes(p)) {
+				int i = n.index;
+				color: for (int j = 0; j < model.getColorCount(); j++) {
+					IloIntVar x = model.x(i, j);
+					double xval = super.getValue(x);
+					if (xval > nodeLB) {
+						for (Node adj : graph.getNeighbours(n)) {
+							if (super.getValue(model.x(adj.index, j)) > xval) {
+								continue color;
+							}
+						}
+						
+						fixedCount++;
+						saturs.useColor(i, j);
+						break part;
+					} else if (super.getUB(x) == 0.0) {
+						saturs.forbidColor(i, j);
+					}
+				}				
+			}
+		}
+		return fixedCount;
+	}
+	
+	private int assignColorsFromSolutionSafe(ColoringAlgorithm coloring)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		boolean[] colored = new boolean[graph.P()];
+		
+		// Iterate over nodes and colors checking for highest value among neighbours
+		for (Node node : graph.getNodes()) {
+			
+			// Paint each partition only once regardless of the model
+			if (colored[node.getPartition().index]) {
+				continue;
+			}
+			
+			for (int j = 0; j < model.getColorCount(); j++) {
+				
+				// Forbid color if it must
+				if (super.getUB(model.x(node.index, j)) == 0.0) {
+					coloring.forbidColor(node.index, j);
+					continue;
+				}
+				
+				// Check if value is high enough to pass the lower bound
+				double val = super.getValue(model.x(node.index, j));
+				if (val < nodeLB) continue;
+				boolean isCandidate = true;
+				
+				// Check if it has the highest value among neighbours
+				for (Node adj : graph.getNeighbours(node)) {
+					if (val <= super.getValue(model.x(adj.index, j))
+					|| (val == super.getValue(model.x(adj.index, j)) && node.index > adj.index)) {
+						isCandidate = false;
+						break;
+					}
+				}
+				
+				if (!isCandidate) {
+					continue;
+				}
+				
+				// Same for copartition
+				for (Node adj : graph.getNodes(node.getPartition())) {
+					if (adj.index != node.index && 
+						((val <= super.getValue(model.x(adj.index, j)))
+						|| (val == super.getValue(model.x(adj.index, j)) && node.index > adj.index))) {
+						isCandidate = false;
+						break;
+					}
+				}
+				
+				if (!isCandidate) {
+					continue;
+				}
+				
+				// Use that color for the node
+				coloring.useColor(node.index, j);
+				colored[node.getPartition().index] = true;
+				fixedCount++;
+				break;
+			}
+		}
+		
+		return fixedCount;
+	}
+
+	private int assignColorsFromSolutionFast(ColoringAlgorithm coloring)
+			throws IloException, AlgorithmException {
+		int fixedCount = 0;
+		for (int j = 0; j < model.getColorCount(); j++) {
+			for (int i = 0; i < model.getNodeCount(); i++) {
+				IloIntVar x = model.x(i, j);
+				if (super.getValue(x) > nodeLB) {
+					fixedCount++;
+					coloring.useColor(i, j);
+				}
+			}
+		} return fixedCount;
+	}
+
+	
+	private int countNodesEqualOne() throws IloException {
+		IntegerFeasibilityStatus[] feasibilities = super.getFeasibilities(model.getAllXs());
+		double[] lbs = super.getLBs(model.getAllXs());
+		return ModelUtils.countNodesFixedToOne(feasibilities, lbs);
+	}
+
 
 }
