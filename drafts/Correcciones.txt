@@ -2,7 +2,8 @@ Implementacion:
 ---------------
 
 - Ver de correr heuristica primal en despues de cada round de cortes y no solamente una vez por nodo
-	Pendiente
+	Implementado, pendiente testear.
+	Hacer nueva corrida en 6.4 probando distintas frecuencias (todos los nodos, solo en los nodos que vienen de setear una variable en 1, varias veces por nodo ejecutando en cut callback) y reportar valores.
 
 
 Tablas modelo: 611, 612, 613, 614
@@ -52,7 +53,7 @@ Cuts:
 -----
 
 - Rechequear como funciona tener eclique+bcolor prendido y usar las otras solo como fallback.
-	Implementacion lista, pendiente hacer las corridas
+	Implementacion lista, pendiente hacer las corridas.
 - Falta E en clique en tabla 652
 	Corregido
 	
