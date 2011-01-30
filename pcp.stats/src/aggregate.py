@@ -5,7 +5,7 @@ class Avg:
     def __call__(self, list):
         try:
             if len(list) == 0: return 0.0
-            return "{0:.2f}".format(float(sum(filter(self.__gtminval,map(tryfloat,list)))) / float(len(list)))
+            return "{0:.3f}".format(float(sum(filter(self.__gtminval,map(tryfloat,list)))) / float(len(list)))
         except:
             "ERR"
             
@@ -22,7 +22,14 @@ def first(list):
 def avg(list):
     try:
         if len(list) == 0: return 0.0
-        return "{0:.2f}".format(float(sum(map(tryfloat,list))) / float(len(list)))
+        return "{0:.3f}".format(float(sum(map(tryfloat,list))) / float(len(list)))
+    except:
+        "ERR"
+        
+def avgconcat(list):
+    try:
+        if len(list) == 0: return 0.0
+        return "{0:.3f}".format(float(sum(map(tryfloat,list))) / float(len(list))) + " " + str(list)
     except:
         "ERR"
         

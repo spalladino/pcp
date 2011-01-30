@@ -25,10 +25,10 @@ def model_latextable(p):
                 aggr= aggregate.avg
                     )
 
-def dsatur_latextable(p):    
-        p.process(
+def dsatur_latextable():    
+        LatexProcessor('20100701DSATURS1M').process(
                 ids=[metrics.FileName()],
-                datas=['solution.chi','solution.found', 'solution.nnodes'], 
+                datas=[metrics.FloatMetric('solution.chi', "{0:.1f}"), metrics.FloatMetric('solution.found', "{0:.3f}")], 
                 series=['strategy.coloring', 'dsatur.partition.weight.size', 'dsatur.partition.weight.colorCount', 'dsatur.partition.weight.uncolored'],
                 datafilter= {'dsatur.partition.weight.size':'1', 'dsatur.partition.weight.colorCount':'10000', 'dsatur.partition.weight.uncolored':'100'},
                 runfilter= None,
@@ -395,7 +395,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    branch_static_manual_latextable()
+    dsatur_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

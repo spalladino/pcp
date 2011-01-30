@@ -5,7 +5,7 @@ def format_output(str):
         return '-'
     try:
         f = float(str) 
-        return "{0:.2f}".format(f) if int(f) != f else str
+        return "{0:.3f}".format(f) if int(f) != f else str
     except: 
         return str
 
@@ -131,6 +131,30 @@ class Ks:
     
     def type(self):
         return "real"
+    
+class FloatMetric:
+    
+    def __init__(self, prop, format="{0:.2f}"):
+        self.prop = prop
+        self.format = format
+    
+    def __call__(self, dict):
+        return self.format_output(dict.get(self.prop)) or '-'
+    
+    def __str__(self):
+        return self.prop
+    
+    def type(self):
+        return "real"
+    
+    def format_output(self, str):
+        if not str: 
+            return '-'
+        try:
+            f = float(str) 
+            return self.format.format(f)
+        except: 
+            return str
 
 class TypedMetric:
     def __init__(self, prop):
