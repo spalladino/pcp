@@ -1,0 +1,140 @@
+\subsection{Comparison with CPLEX}
+
+Pendiente analisis de los resultados, pasar en limpio las tablas, armar corridas version 1 (que salieron mejor) para DIMACS. Verificar si efectivamente para el algoritmo propio se esta usando la mejor configuracion a partir de los ultimos experimentos, ver 6.6.4.
+
+\begin{itemize}
+
+\item S1: Cplex sin mejoras en el modelo ni fijando clique inicial
+\item S1: Cplex con mejoras en el modelo y fijando clique inicial
+\item S3: Version propia del branch and cut
+
+\end{itemize}
+
+\clearpage
+
+\subsubsection{Cplex usando branch and cut}
+
+\begin{sidewaystable}[h] \begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & chi & nnodes & time & gap & chi & nnodes & time & gap & chi & nnodes & time & gap
+\\
+\hline
+EW 20 N=90 & 3.00 & 161.00 & 1.49 & 0.00 & 3.00 & 161.00 & 1.48 & 0.00 & 3.00 & 0.00 & 0.34 & 0.00
+\\
+\hline 
+ \end{tabular} 
+ 
+ 
+ \begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & chi & nnodes & time & gap & chi & nnodes & time & gap & chi & nnodes & time & gap
+\\
+\hline
+EW 40 N=90 & 6.00 & 239628.00 & 7200.02 & 0.17 & 6.00 & 74407.00 & 7200.02 & 0.17 & 6.00 & 33385.50 & 7200.02 & 0.17
+\\
+\hline 
+ \end{tabular} 
+ 
+ \begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & chi & nnodes & time & gap & chi & nnodes & time & gap & chi & nnodes & time & gap
+\\
+\hline
+EW 60 N=90 & 9.00 & 55567.00 & 7200.02 & 0.33 & 9.00 & 96855.50 & 7200.02 & 0.36 & 9.00 & 10794.00 & 7200.03 & 0.22
+\\
+EW 80 N=90 & 12.50 & 51981.50 & 7200.04 & 0.26 & 12.50 & 36921.50 & 7200.03 & 0.23 & 12.50 & 1803.00 & 7200.08 & 0.11
+\\
+\hline 
+ \end{tabular} \end{sidewaystable}
+
+\clearpage
+
+\subsubsection{Cplex usando dynamic search}
+
+
+\begin{sidewaystable}[h] \begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & chi & nnodes & time & gap & chi & nnodes & time & gap & chi & nnodes & time & gap
+\\
+\hline
+EW 20 N=90 & 3.000 & 132.000 & 0.758 & 0.000 & 3.000 & 132.000 & 0.758 & 0.000 & 3.000 & 0.000 & 0.172 & 0.000
+\\
+\hline 
+ \end{tabular}
+
+ \begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & chi & nnodes & time & gap & chi & nnodes & time & gap & chi & nnodes & time & gap
+\\
+\hline
+EW 40 N=90 & 6.000 & 197188.000 & 7200.016 & 0.167 & 6.000 & 204815.000 & 7200.016 & 0.167 & 6.000 & 33382.000 & 7200.016 & 0.167
+\\
+\hline 
+ \end{tabular} 
+
+ \begin{tabular}{|c|cccc|cccc|cccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{4}{|c|}{S1} & \multicolumn{4}{|c|}{S2} & \multicolumn{4}{|c|}{S3}
+\\
+ & chi & nnodes & time & gap & chi & nnodes & time & gap & chi & nnodes & time & gap
+\\
+\hline
+EW 60 N=90 & 9.000 & 138406.500 & 7200.023 & 0.222 & 9.000 & 216065.000 & 7200.023 & 0.222 & 9.000 & 6518.500 & 7200.047 & 0.222
+\\
+EW 80 N=90 & 12.500 & 11104.500 & 7200.039 & 0.118 & 12.500 & 9796.500 & 7200.031 & 0.120 & 12.500 & 1859.000 & 7200.070 & 0.118
+\\
+\hline 
+ \end{tabular} \end{sidewaystable}
+
+
+\begin{sidewaystable}[h] \begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\\
+ & nnodes & time & gap & nnodes & time & gap & nnodes & time & gap
+\\
+\hline
+dimacs1-FullIns\_5 & 93278.000 & 7200.016 & 0.167 & 93620.000 & 7200.031 & 0.167 & 2717.000 & 7200.078 & 0.167
+\\
+dimacs1-Insertions\_5 & 88000.000 & 7200.047 & 0.333 & 87869.000 & 7200.016 & 0.333 & 803.000 & 7200.078 & 0.333
+\\
+dimacs1-Insertions\_6 & 0.000 & 7200.203 & 0.670 & 0.000 & 7200.188 & 0.670 & 0.000 & 7200.313 & 0.571
+\\
+dimacs2-FullIns\_4 & 14565.000 & 452.094 & 0.000 & 14565.000 & 452.156 & 0.000 & 11087.000 & 7200.063 & 0.167
+\\
+dimacs2-FullIns\_5 & 519.000 & 7200.297 & 0.286 & 521.000 & 7200.141 & 0.286 & 0.000 & 7200.141 & 0.393
+\\
+dimacs2-Insertions\_4 & 3913737.000 & 7200.016 & 0.200 & 3911745.000 & 7200.016 & 0.200
+\\
+dimacs2-Insertions\_5 & 79.000 & 7200.172 & 0.500 & 79.000 & 7200.141 & 0.500 & 0.000 & 7200.391 & 0.500
+\\
+dimacs3-FullIns\_4 & 91738.000 & 7200.047 & 0.143 & 91743.000 & 7200.016 & 0.143 & 2281.000 & 7200.063 & 0.143
+\\
+dimacs3-Insertions\_4 & 352362.000 & 7200.031 & 0.400 & 352189.000 & 7200.047 & 0.400 & 13.000 & 7200.094 & 0.400
+\\
+dimacs4-FullIns\_4 & 17700.000 & 7200.156 & 0.125 & 18788.000 & 7200.063 & 0.125 & 1600.000 & 7200.094 & 0.125
+\\
+dimacs4-Insertions\_3 & 9577289.000 & 3090.094 & 0.000 & 9577289.000 & 3084.859 & 0.000 & 96913.000 & 638.484 & 0.000
+\\
+dimacs4-Insertions\_4 & 19070.000 & 7200.016 & 0.400 & 19087.000 & 7200.016 & 0.400 & 0.000 & 7200.266 & 0.400
+\\
+dimacsDSJC125 & 456.000 & 7200.132 & 0.328 & 456.500 & 7200.110 & 0.328 & 28.500 & 7200.188 & 0.229
+\\
+dimacsDSJC250 & 155.667 & 7200.792 & 3.79e+72 & 155.667 & 7200.750 & 3.79e+72 & 29.667 & 7200.974 & 3.79e+72
+\\
+dimacsmyciel6 & 251972.000 & 7200.016 & 0.286 & 251206.000 & 7200.031 & 0.286 & 26985.000 & 7200.047 & 0.286
+\\
+dimacsmyciel7 & 4593.000 & 7200.078 & 0.500 & 4593.000 & 7200.016 & 0.500 & 251.000 & 7200.031 & 0.487
+\\
+\hline 
+ \end{tabular} \end{sidewaystable}

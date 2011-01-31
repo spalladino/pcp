@@ -1,33 +1,132 @@
-Processing Runid 20101215BRANCHSTATIC3
+Processing Runid 20101006BNC90VLOW2
  Successfully loaded
 Data:
 \begin{itemize}
-\item solution.gap
-\item solution.gapfound
 \item solution.nnodes
+\item solution.time
+\item solution.gap
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: branch.prios.enabled: false, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
-\item S2: branch.prios.enabled: true, branch.prios.psadjacent: -10, branch.prios.colorindex: -1
-\item S3: branch.prios.enabled: true, branch.prios.psadjacent: -10, branch.prios.colorindex: 1
-\item S4: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: -1
-\item S5: branch.prios.enabled: true, branch.prios.psadjacent: 10, branch.prios.colorindex: 1
+\item S1: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|}
+\begin{tabular}{|c|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
 \\
- & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes & solution.gap & solution.gapfound & solution.nnodes
+ & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
 \\
 \hline
-EW 20 N=90 & 0.25 & 197267.67 & 462544.83 & 0.48 & 136967.50 & 136983.00 & 0.49 & 106095.67 & 106106.50 & 0.25 & 194493.33 & 214928.50 & 0.38 & 71811.50 & 71819.50
+EW 20 N=90 & 132.000 & 0.758 & 0.000 & 132.000 & 0.758 & 0.000 & 0.000 & 0.172 & 0.000
 \\
-EW 40 N=100 & 0.35 & 108392.67 & 122680.17 & 0.51 & 72136.33 & 72173.33 & 0.51 & 54120.50 & 54144.33 & 0.45 & 56938.17 & 56950.00 & 0.46 & 44299.17 & 44311.83
+\hline 
+ \end{tabular}
+Processing Runid 20101006BNC90LOW2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
 \\
-EW 60 N=80 & 0.34 & 167041.33 & 167047.83 & 0.43 & 130405.67 & 130438.83 & 0.45 & 100831.50 & 100854.33 & 0.39 & 119052.83 & 120669.17 & 0.41 & 100042.50 & 100053.67
+ & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
 \\
-EW 80 N=100 & 0.46 & 9806.00 & 11692.00 & 0.51 & 21346.00 & 25726.50 & 0.51 & 19000.67 & 22921.17 & 0.50 & 22666.33 & 24867.67 & 0.50 & 19298.00 & 19567.67
+\hline
+EW 40 N=90 & 197188.000 & 7200.016 & 0.167 & 204815.000 & 7200.016 & 0.167 & 33382.000 & 7200.016 & 0.167
+\\
+\hline 
+ \end{tabular}
+Processing Runid 20101006BNC90HIGH2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\\
+ & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+EW 60 N=90 & 138406.500 & 7200.023 & 0.222 & 216065.000 & 7200.023 & 0.222 & 6518.500 & 7200.047 & 0.222
+\\
+EW 80 N=90 & 11104.500 & 7200.039 & 0.118 & 9796.500 & 7200.031 & 0.120 & 1859.000 & 7200.070 & 0.118
+\\
+\hline 
+ \end{tabular}
+Processing Runid 20101008BNCDIMACS2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.nnodes
+\item solution.time
+\item solution.gap
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+\item S2: solver.kind: CplexDynamicSearch, solver.useCplexPrimalHeuristic: true, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: true, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S3: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\\
+ & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap & solution.nnodes & solution.time & solution.gap
+\\
+\hline
+dimacs1-FullIns_5 & 93278.000 & 7200.016 & 0.167 & 93620.000 & 7200.031 & 0.167 & 2717.000 & 7200.078 & 0.167
+\\
+dimacs1-Insertions_5 & 88000.000 & 7200.047 & 0.333 & 87869.000 & 7200.016 & 0.333 & 803.000 & 7200.078 & 0.333
+\\
+dimacs1-Insertions_6 & 0.000 & 7200.203 & 0.670 & 0.000 & 7200.188 & 0.670 & 0.000 & 7200.313 & 0.571
+\\
+dimacs2-FullIns_4 & 14565.000 & 452.094 & 0.000 & 14565.000 & 452.156 & 0.000 & 11087.000 & 7200.063 & 0.167
+\\
+dimacs2-FullIns_5 & 519.000 & 7200.297 & 0.286 & 521.000 & 7200.141 & 0.286 & 0.000 & 7200.141 & 0.393
+\\
+dimacs2-Insertions_4 & 3913737.000 & 7200.016 & 0.200 & 3911745.000 & 7200.016 & 0.200
+\\
+dimacs2-Insertions_5 & 79.000 & 7200.172 & 0.500 & 79.000 & 7200.141 & 0.500 & 0.000 & 7200.391 & 0.500
+\\
+dimacs3-FullIns_4 & 91738.000 & 7200.047 & 0.143 & 91743.000 & 7200.016 & 0.143 & 2281.000 & 7200.063 & 0.143
+\\
+dimacs3-Insertions_4 & 352362.000 & 7200.031 & 0.400 & 352189.000 & 7200.047 & 0.400 & 13.000 & 7200.094 & 0.400
+\\
+dimacs4-FullIns_4 & 17700.000 & 7200.156 & 0.125 & 18788.000 & 7200.063 & 0.125 & 1600.000 & 7200.094 & 0.125
+\\
+dimacs4-Insertions_3 & 9577289.000 & 3090.094 & 0.000 & 9577289.000 & 3084.859 & 0.000 & 96913.000 & 638.484 & 0.000
+\\
+dimacs4-Insertions_4 & 19070.000 & 7200.016 & 0.400 & 19087.000 & 7200.016 & 0.400 & 0.000 & 7200.266 & 0.400
+\\
+dimacsDSJC125 & 456.000 & 7200.132 & 0.328 & 456.500 & 7200.110 & 0.328 & 28.500 & 7200.188 & 0.229
+\\
+dimacsDSJC250 & 155.667 & 7200.792 & 3.79e+72 & 155.667 & 7200.750 & 3.79e+72 & 29.667 & 7200.974 & 3.79e+72
+\\
+dimacsmyciel6 & 251972.000 & 7200.016 & 0.286 & 251206.000 & 7200.031 & 0.286 & 26985.000 & 7200.047 & 0.286
+\\
+dimacsmyciel7 & 4593.000 & 7200.078 & 0.500 & 4593.000 & 7200.016 & 0.500 & 251.000 & 7200.031 & 0.487
 \\
 \hline 
  \end{tabular}

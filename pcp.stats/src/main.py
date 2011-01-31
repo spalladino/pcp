@@ -283,12 +283,13 @@ def final_2_latextable():
                     aggr= aggregate.avg 
                     )
 
-def final_90_latextable():
+def final_cplex_latextable():
     
         series = ['solver.kind', 'solver.useCplexPrimalHeuristic', 'solver.useCplexPreprocess', 'solver.useCplexCuttingPlanes', 'model.variables.boundOnDegree', 'model.variables.boundOnPartitionIndex', 'model.variables.fixClique',]
-        datas=['solution.chi','solution.nnodes','solution.time','solution.gap']
+        datas=['solution.nnodes','solution.time','solution.gap']
         
-        files = ['20100920BNC90VLOW', '20100920BNC90LOW', '20100920BNC90HIGH']
+        #files = ['20100920BNC90VLOW', '20100920BNC90LOW', '20100920BNC90HIGH']
+        files = ['20101006BNC90VLOW2', '20101006BNC90LOW2', '20101006BNC90HIGH2', '20101008BNCDIMACS2']
         
         for file in files:
             LatexProcessor(file).process(
@@ -395,7 +396,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    dsatur_latextable()
+    final_cplex_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

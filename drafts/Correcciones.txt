@@ -64,9 +64,11 @@ Comparaciones:
 --------------
 
 - Poner comparacion contra CPLEX MIP en DIMACS y en grafos al azar.
-	Grafos al azar son 20100920BNC90VLOW, LOW y HIGH; ver tambien 20101006BNC90VLOW2 y cia. Gana PCP a CPLEX.
-	Las DIMACS son 20101008BNCDIMACS2. Armar tablas para ver como anduvimos contra cplex.
-	Pendiente: incluir en informe.
+	Grafos al azar son 20100920BNC90VLOW, LOW y HIGH para branch and cut de cplex; las 20101006BNC90VLOW2 y cia son dynamic search.
+	Las DIMACS son 20101008BNCDIMACS2, solo hay version dynamic search, falta hacer la de branch and cut. 
+	Casi no hay diferencia con cplex en dynamic search, sí hay contra el branch and cut. Ponemos el branch and cut de cplex, o reviso si cambiando algun otro parametro de configuracion sacamos mejor resultado (ej corriendo primal en cada round de cortes)?
+	La seccion tiene las tablas pero le falta pasarla en limpio y el analisis.
+	
 	
 	
 Conclusiones:
