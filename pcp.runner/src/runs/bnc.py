@@ -334,6 +334,53 @@ hopefully_final_runs_high_2 = create_runs(baseprops, [
                            ])
 
 hopefully_final_runs_dimacs = create_runs(baseprops, [
+                           # inserted from vlow, low and high
+                            {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintAtLeastOne',               
+                            },
+                            {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '1',
+                            'solver.mipEmphasis': '3',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                           {
+                            'solver.maxTime': '7200',
+                            'pruning.enabled': 'true',
+                            'pruning.remaining': '20',
+                            'pruning.useub': 'true',
+                            'primal.useub': 'true',
+                            'solver.probing': '-1',
+                            'solver.mipEmphasis': '0',
+                            'cuts.iterations.root.max': '300',
+                            
+                            'strategy.colorBound': 'UpperNodesSumLowerSumPartition',
+                            'strategy.adjacency': 'AdjacentsNeighbourhood',
+                            'strategy.symmetry': 'MinimumNodeLabel',    
+                            'strategy.partition': 'PaintExactlyOne',               
+                            },
+                           # the previous ones
                            {
                             'solver.maxTime': '7200',
                             'pruning.enabled': 'true',
@@ -467,5 +514,37 @@ prob_runs = create_runs(baseprops, [
                 },
                 {
                     'solver.probing': '3',
+                },
+                ])
+
+primal_runs = create_runs(baseprops, [
+                {
+                 'primal.onlyonup': 'true',
+                 'primal.runoncutcallback': 'true'
+                },
+                {
+                 'primal.onlyonup': 'true',
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '1',
+                 'primal.onlyonup': 'false',
+                 'primal.runoncutcallback': 'true',
+                 'cuts.onlyonup':'false'
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '1',
+                 'primal.onlyonup': 'false'
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '2',
+                 'primal.onlyonup': 'false'
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '4',
+                 'primal.onlyonup': 'false'
                 },
                 ])

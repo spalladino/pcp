@@ -179,3 +179,55 @@ primalsettingsruns = create_runs({
                  'primal.onlyonup': 'false'
                 },
                 ])
+
+primalfreqsruns = create_runs({
+                 'solver.kind': 'PcpBranchAndCut',
+                 
+                 'solver.useCutCallback': 'true',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'true',
+                 'branch.enabled': 'true',
+                 'cuts.enabled': 'false',
+                  
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'solver.maxTime': '900',
+                 
+                 'branch.selection': '1',
+                 'branch.direction': '0',
+
+                 'branch.prios.enabled': 'true',
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.dynamic.dsatur.nodelb': '0.7',
+                 'branch.dynamic.fractional': 'false',
+                 'branch.dynamic.dsatur': 'true',
+                 'branch.dynamic.dsatur.conseccolors': 'true',
+                 'primal.enabled': 'true'
+               }, [
+                {
+                 'primal.onlyonup': 'true',
+                 'branch.direction': '0'
+                },
+                {
+                 'primal.onlyonup': 'true',
+                 'branch.direction': '1'
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '1',
+                 'primal.onlyonup': 'false'
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '2',
+                 'primal.onlyonup': 'false'
+                },
+                {
+                 'primal.enabled': 'true',
+                 'primal.everynodes': '4',
+                 'primal.onlyonup': 'false'
+                },
+                ])

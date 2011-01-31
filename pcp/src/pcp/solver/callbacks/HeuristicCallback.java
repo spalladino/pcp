@@ -76,7 +76,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			setSolution(nodesSet);
 		} else if (runOnCutCallback && primalProvider != null) {
 			if (primalProvider.getPrimalChi() != null) {
-				System.out.println("Assigning primal with chi " + primalProvider.getPrimalChi() + " in heuristic callback");
+				//System.out.println("Assigning primal with chi " + primalProvider.getPrimalChi() + " in heuristic callback");
 				super.setSolution(primalProvider.getPrimalVars(), primalProvider.getPrimalVals());
 			}
 		} else if (primalEnabled && super.getNnodes() > 1 && (
