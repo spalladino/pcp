@@ -1,3 +1,8 @@
+Introduccion:
+-------------
+
+- Seccion 1.2 Antes de describir el WDM yo pondria un parrafo diciendo algo del estilo: "Como ya mencionmos, el problema de asignacion de frecuencias es una de las aplicaciones mas frecuentes de coloreo sobre la cual hay muchas variantes que dan lugar a diferentes generalizaciones de coloreo.  En esta tesis consideraremos el WDM". Despues de previous work, pondria la seccion "Resolution of min-RWA usando una generalizacion de coloreo" Cuando decis "This phase can be transformed...." ahi mezclaria la definicion que das en 1.3 y el tema de la complejidad. Despues seguiria con el previous work de PCP de pag 8.
+
 Implementacion:
 ---------------
 
