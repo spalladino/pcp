@@ -10,7 +10,6 @@ In this section we evaluate the effectiveness of the devised primal heuristic, i
 We first tested the primal heuristic using the simple priorities branching scheme, which offered a good performance according to the results presented in table \ref{table:branch:static}. We ran our branch and bound using \textsc{cplex}'s default heuristic, our custom degree of saturation primal heuristic, and a combination of both. Executions for the regular graphs used were bounded to 15 minutes each, and we executed three instances of each kind. Results are presented in table \ref{table:primal:prios}.
 
 \begin{table}[h]
-\label{table:primal:prios}
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|}
@@ -32,6 +31,7 @@ EW 80\% N=100 & 0.45 & 13.00 & 13.00 & 0.41 & 2.67 & 3.33 & 0.41 & 3.33 & 3.33
  \end{tabular}
  
 \caption{Obtained gap, node number (in thousands) in which the gap was obtained and total number of nodes explored (in thousands) for different primal heuristics in a branch and bound using priorities branching.}
+\label{table:primal:prios}
 
 \end{table}
 
@@ -44,7 +44,6 @@ The most noticeable difference is in the total number of nodes generated in the 
 Next, we used the \textsc{dsatur-(C+1)} branching criteria instead of the priorities branching strategy. Again, the tests compare the obtained gap, the node number in which that gap was obtained and the total number of nodes explored, for both the \textsc{cplex} engine's primal heuristic and our degree of saturation heuristic presented in \ref{subsec:alg:primal}. Results are presented in table \ref{table:primal:dsatur}.
 
 \begin{table}[h]
-\label{table:primal:dsatur}
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|}
@@ -66,6 +65,7 @@ EW 80\% N=100 & 0.42 & 1.33 & 2.67 & 0.38 & 2.33 & 2.33 & 0.41 & 1.67 & 2.33
 \end{tabular}
 
 \caption{Obtained gap, node number (in thousands) in which the gap was obtained and total number of nodes explored (in thousands) for different primal heuristics in a branch and bound using \textsc{dsatur-(C+1)} branching.}
+\label{table:primal:dsatur}
 
 \end{table}
 

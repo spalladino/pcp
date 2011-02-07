@@ -18,7 +18,6 @@ On the other hand, making the exact \textsc{dsatur} start earlier caused the alg
 As a result of these experiments, we will be enabling exhaustive implicit enumeration only for very low thresholds ($20$ partitions pending) in order to avoid any problems caused by running the exact algorithm for long periods. Although this setting may cause the algorithm to never be triggered, in other cases such as larger graphs with a greater time bound there is a possibility for this algorithm to actually be effective. 
 
 \begin{sidewaystable}[h]
-\label{table:bnc:prune}
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|}
@@ -40,6 +39,7 @@ EW 80 N=100 & 0.00 & 307.67 & 0.19 & 2.00 & 313.67 & 0.19 & 28.00 & 119.00 & 0.2
  \end{tabular}
 
 \caption{Average number of times the enumeration was triggered, number of nodes in the tree and resulting gap, for different number of uncolored partitions for triggering the exhaustive enumeration. The execution marked with a (*) indicate that the execution of the enumeration algorithm took an unacceptable amount of time for the imposed bounds.}
+\label{table:bnc:prune}
 
 \end{sidewaystable}
 
@@ -62,7 +62,6 @@ On the other hand, greater densities seems to benefit more from disabling probin
 Therefore, we will be using moderate probing settings for low density graphs, and disabling probing altogether for higher densities.
 
 \begin{sidewaystable}[h]
-\label{table:bnc:probing}
 \centering
 
 \begin{tabular}{|c|cc|cc|cc|cc|}
@@ -84,6 +83,7 @@ EW 80 N=100 & \textbf{347.00} & \textbf{0.15} & 346.00 & 0.19 & 308.33 & 0.19 & 
  \end{tabular}
  
 \caption{Average number of nodes in the tree and resulting gap, for different MIP probing levels.}
+\label{table:bnc:probing}
 
 \end{sidewaystable}
 
@@ -104,7 +104,6 @@ We evaluated these different configurations in the usual set of binomial graphs,
 For low density graphs, emphasizing the best bound yielded the highest number of nodes explored within the same time frame, while in higher density graphs a balanced approach managed to explore more nodes. These configurations will be used for further experimentation, depending on the processed graph's density.
 
 \begin{sidewaystable}[h]
-\label{table:bnc:emph}
 \centering
 
 \begin{tabular}{|c|cc|cc|cc|cc|cc|}
@@ -125,8 +124,8 @@ EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 
 \hline 
 \end{tabular}
 
- 
 \caption{Average number of nodes in the tree and resulting gap, for different MIP emphasis settings.}
+\label{table:bnc:emph}
 
 \end{sidewaystable}
 
@@ -157,7 +156,6 @@ As for higher density graphs, $60\%$ and $80\%$, we tested the following three d
 \end{itemize}
 
 \begin{table}[h]
-\label{table:bnc:modellow}
 \centering
 %\begin{itemize}
 %\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
@@ -179,11 +177,11 @@ EW 40 N=90 & 9387 & 2400.06 & 0.17 & 13978 & 2400.05 & 0.17 & 8405 & 2400.03 & 0
  \end{tabular}
 
 \caption{Average number of nodes in the tree, running time and resulting gap, for three different model strategies for low density binomial graphs.}
+\label{table:bnc:modellow}
 
 \end{table}
 
 \begin{table}[h]
-\label{table:bnc:modelhigh}
 \centering
 
 %\begin{itemize}
@@ -206,6 +204,7 @@ EW 80 N=90 & 477 & 0.16 & 1133 & 0.15 & 644 &0.16
  \end{tabular}
  
  \caption{Average number of nodes in the tree and resulting gap, for three different model strategies for high density binomial graphs. Running time is not reported as all runs hit the $2400$ seconds time bound.}
+\label{table:bnc:modelhigh}
 
 \end{table}
 
