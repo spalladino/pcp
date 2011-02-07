@@ -9,6 +9,7 @@ Implementacion:
 - Ver de correr heuristica primal en despues de cada round de cortes y no solamente una vez por nodo
 	Implementado, pendiente testear.
 	Hacer nueva corrida en 6.4 probando distintas frecuencias (todos los nodos, solo en los nodos que vienen de setear una variable en 1, varias veces por nodo ejecutando en cut callback) y reportar valores.
+	No puede ir en 6.4 porq necesita cortes, agregada en seccion de branch and cut, la corrida es 20110131BNCPRIMALFREQ
 
 
 Tablas modelo: 611, 612, 613, 614
@@ -44,6 +45,7 @@ Branch:
 	Ya estaban con el callback vacio puesto y dieron esos valores, armar corrida donde se hace seteo manual de las default, que es lo que se hace al incluir una estrategia distinta.
 	La corrida es 20101215BRANCHSTATIC3, falta armar tabla y analizar los valores.
 	La corrida dio valores demasiado diferentes y con CPLEX ganando. Pendiente ver que cambio respecto de la original y rearmar la corrida. Chequear modelos usados (en particular constraint de rompimiento de simetria).
+	Corriendo 20110131BRANCHSTATIC4. Distinguir por manual true/false al hacer las tablas. El problema era efectivamente modelo distinto.
 	
 
 Primal:
@@ -73,6 +75,7 @@ Comparaciones:
 	Las DIMACS son 20101008BNCDIMACS2, solo hay version dynamic search, falta hacer la de branch and cut. 
 	Casi no hay diferencia con cplex en dynamic search, sí hay contra el branch and cut. Ponemos el branch and cut de cplex, o reviso si cambiando algun otro parametro de configuracion sacamos mejor resultado (ej corriendo primal en cada round de cortes)?
 	La seccion tiene las tablas pero le falta pasarla en limpio y el analisis.
+	Las de DIMACS con distintos PCP corriendo contra CPLEX branch and cut es 20110131BNCDIMACSPCPVSCPLEX.
 	
 	
 	
