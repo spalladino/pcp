@@ -10,6 +10,7 @@ Implementacion:
 	Implementado, pendiente testear.
 	Hacer nueva corrida en 6.4 probando distintas frecuencias (todos los nodos, solo en los nodos que vienen de setear una variable en 1, varias veces por nodo ejecutando en cut callback) y reportar valores.
 	No puede ir en 6.4 porq necesita cortes, agregada en seccion de branch and cut, la corrida es 20110131BNCPRIMALFREQ
+	No hay casi ningun cambio entre las distintas configuraciones :(
 
 
 Tablas modelo: 611, 612, 613, 614

@@ -389,6 +389,18 @@ def branch_static_manual_latextable():
             aggr= aggregate.avg
             )
     
+def bnc_primal_freq_latextable():    
+    file = '20110131BNCPRIMALFREQ'
+    
+    LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=['solution.gap', 'solution.time', 'solution.nnodes'], 
+            series=['primal.enabled', 'primal.everynodes', 'primal.onlyonup', 'primal.runoncutcallback', 'cuts.onlyonup'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.avg
+            )
+    
 def test_simple():
     SimpleProcessor('20100629MODELS').process(
         datas=[metrics.FileName(), 'data.filename', 'solution.gap','cuts.niters','solution.time'], 
@@ -396,7 +408,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    final_cplex_latextable()
+    bnc_primal_freq_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

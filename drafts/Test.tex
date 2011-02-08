@@ -21,6 +21,45 @@
 
 \begin{document}
 
+\section{Primal frequency in a branch and cut}
+
+Processing Runid 20110131BNCPRIMALFREQ
+
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: false, primal.runoncutcallback: false, cuts.onlyonup: true
+\item S2: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: false, primal.runoncutcallback: true, cuts.onlyonup: false
+\item S3: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: true, primal.runoncutcallback: false, cuts.onlyonup: true
+\item S4: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: true, primal.runoncutcallback: true, cuts.onlyonup: true
+\item S5: primal.enabled: true, primal.everynodes: 2, primal.onlyonup: false, primal.runoncutcallback: false, cuts.onlyonup: true
+\item S6: primal.enabled: true, primal.everynodes: 4, primal.onlyonup: false, primal.runoncutcallback: false, cuts.onlyonup: true
+\end{itemize}
+\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes
+\\
+\hline
+EW 20 N=90 & 0.167 & 1736.599 & 14487.000 & 0.167 & 1757.089 & 9051.333 & 0.167 & 1684.391 & 15554.333 & 0.167 & 1686.250 & 15487.667 & 0.167 & 1703.823 & 15144.667 & 0.167 & 1688.099 & 15493.667
+\\
+EW 40 N=90 & 0.333 & 1800.052 & 3921.000 & 0.311 & 1800.156 & 2679.333 & 0.333 & 1800.052 & 4083.000 & 0.333 & 1800.078 & 4083.667 & 0.333 & 1800.063 & 4063.000 & 0.333 & 1800.036 & 4140.000
+\\
+EW 60 N=90 & 0.231 & 1800.037 & 1169.333 & 0.259 & 1800.057 & 923.000 & 0.231 & 1800.058 & 1274.333 & 0.259 & 1800.058 & 1336.000 & 0.231 & 1800.036 & 1220.000 & 0.231 & 1800.036 & 1245.333
+\\
+EW 80 N=90 & 0.154 & 1800.078 & 540.000 & 0.154 & 1800.084 & 338.667 & 0.154 & 1800.068 & 556.000 & 0.154 & 1800.063 & 555.000 & 0.154 & 1800.088 & 551.333 & 0.154 & 1800.088 & 557.667
+\\
+\hline 
+ \end{tabular}
+
+\clearpage
+
 \section{Comparing to CPLEX}
 
 Processing Runid 20101006BNC90VLOW2
