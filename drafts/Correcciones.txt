@@ -1,3 +1,14 @@
+Algoritmo:
+----------
+
+- Analizar por que toma tanto tiempo la primal, 200 ms por 3 nodos no cierran los tiempos
+- Pruning deberia andar mejor, hacer corridas de mas tiempo o de 1 nodo por particion
+
+Informe:
+--------
+
+- Definir que es el poliedro de PCP
+
 Introduccion:
 -------------
 
