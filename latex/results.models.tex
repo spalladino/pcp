@@ -193,7 +193,7 @@ It is with these constraints that significative changes in solution gaps are fou
 Minimum partition index constraints (\ref{eqn:nodeszero},\ref{eqn:minlabel}) have the best gaps, require fewer cutting planes iterations, and run within acceptable times (in some cases even faster than its counterparts). The graphics in \ref{fig:models:sym} support this, showing that \ref{eqn:minlabel} either reaches a better gap faster than the others, or simply returns a better gap when solving the first relaxation (without obtaining a big improvement when applying cutting planes).
 
 \begin{sidewaystable}
-\label{table:models:sym}
+
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|ccc|}
@@ -224,6 +224,7 @@ HK 40\% & 0.048 &  3.8 & 0.316 & 0.05 &  6.2 & 0.494 & 0.048 &  5.2 & 0.416 & \b
  \end{tabular}
 
 \caption{Comparison of the inclusion of different symmetry breaking constraints in the model: assigning the lowest color label to the color class with the lowest node index \eqref{eqn:minlabel}, applying no constraint whatsoever, forcing lower labels to be used first \eqref{eqn:lowerlabel} and assigning the lowest color label to the color class with the greatest number of nodes \eqref{eqn:symnodecount}.}
+\label{table:models:sym}
 
 \end{sidewaystable}
 
@@ -287,7 +288,7 @@ EW 80 N=90 & 0.38 & 0.43 & 0.31 & 0.39 & 0.41 & \textbf{0.10} & 0.38
 
 \end{table}
 
-We present in table \ref{table:models:bnb} the following configurations, chosen based on their results:
+We present in table \ref{table:models:bnb60} the following configurations, chosen based on their results:
 
 \begin{itemize}
 \defitem{C1}{Chosen model from cutting planes experimentation phase.} %S4

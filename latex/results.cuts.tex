@@ -22,7 +22,6 @@ As for partitions graph independent set cuts, they are considerably difficult to
 Given these observations, our strategy for the branch and cut algorithm will be to aggressively apply block color and extended clique cuts until no more than a number $K$ is generated in a round, in which case we also enable component independent set cuts in an attempt to remove the fractional solution. Therefore, most of the computational effort will be centered around cliques, which are the ones that provide the best cuts, and only fall back to the rest when these family fails to find a valid cut.
 
 \begin{sidewaystable}[h]
-\label{table:cuts:times}
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|ccc|}
@@ -53,11 +52,11 @@ EW 80 N=100 & & & & 0.25 & 157.80 & 166.97 & 0.25 & 127.00 & 150.30 & 0.25 & 127
  \end{tabular}
 
 \caption{Gap, total number of cutting planes rounds in the root, and total time for different cutting planes families enabled in the cut and branch algorithm. The first group has \textsc{cplex} default cuts enabled as well, while the second one does not.}
+\label{table:cuts:times}
 
 \end{sidewaystable}
 
 \begin{sidewaystable}[h]
-\label{table:cuts:counts}
 \centering
 
 \begin{tabular}{|c|cccccc|cccccc|}
@@ -125,5 +124,6 @@ EW 80 N=100 & 106.00 & 11362.00 & 26.60 & 20.40 & 0.00 & 0.00 & 93.60 & 11561.60
  \end{tabular}
 
 \caption{Number of cuts generated in the cutting planes algorithm for each kind with different configurations enabled.}	
+\label{table:cuts:counts}
 
 \end{sidewaystable}

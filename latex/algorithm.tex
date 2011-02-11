@@ -18,8 +18,6 @@ Recall that valid inequalities have the property of being satisfied by all integ
 The algorithm consists in repeating this process, re-solving the relaxation with all added cuts in each iteration, until an integer-feasible solution is obtained, no more violated inequalities can be found or any defined stopping criteria is achieved.
 
 \begin{algorithm}
-\caption{General scheme for a cutting planes algorithm}
-\label{alg:cuttingplanes}
 
 \begin{algorithmic}
 
@@ -33,6 +31,9 @@ The algorithm consists in repeating this process, re-solving the relaxation with
 		\RETURN failure
 	\ENDIF	
 \ENDLOOP
+
+\caption{General scheme for a cutting planes algorithm}
+\label{alg:cuttingplanes}
 
 \end{algorithmic}
 \end{algorithm}
@@ -50,9 +51,6 @@ Each subproblem is then solved using the same strategy until the relaxation's so
 Besides the \textit{branching} behaviour of the algorithm, both upper and lower \textit{bounds} for each node are considered. A global upper bound (in case of a minimization problem) is updated whenever a new integer feasible solution is found, keeping the one with the lowest objective value. This upper bound is compared with each node's lower bound provided by the relaxation's solution. Since the integer solution will always be greater than the relaxation's, when the lower bound of the node is larger than the global upper bound, the node can be fathomed.
 
 \begin{algorithm}
-\caption{General scheme for a branch and bound algorithm}
-\label{alg:branchnbound}
-
 \begin{algorithmic}
 
 \STATE initialize \textit{tree} with the problem's formulation
@@ -75,6 +73,10 @@ Besides the \textit{branching} behaviour of the algorithm, both upper and lower 
 \RETURN best integer solution $x_M$
 
 \end{algorithmic}
+
+\caption{General scheme for a branch and bound algorithm}
+\label{alg:branchnbound}
+
 \end{algorithm}
 
 The branch and bound scheme does not specify which node to select on each iteration, or how to generate the subproblems on each node. The node selection strategy and the branching strategy are chosen depending on the problem to solve.
@@ -161,8 +163,6 @@ In case the time bound is reached, the best solution found so far is returned. A
 Starting with an initial node, the algorithm keeps a list of valid candidates for the clique, which is updated on each iteration by removing all nodes that are not adjacent to the clique. Keeping both the candidates list and all adjacency lists sorted by degree makes computing the intersection between these lists faster, and produces better initial solutions that can be used to prune other solutions later.
 
 \begin{algorithm}
-\caption{Finding a maximum clique in a simple graph $G=<V,E>$}
-\label{alg:gpclique}
 
 \begin{algorithmic}
 
@@ -190,6 +190,10 @@ Starting with an initial node, the algorithm keeps a list of valid candidates fo
 \ENDPROC
 
 \end{algorithmic}
+
+\caption{Finding a maximum clique in a simple graph $G=<V,E>$}
+\label{alg:gpclique}
+
 \end{algorithm} 
 
 \subsection{Initial heuristic}
@@ -235,8 +239,6 @@ For each initial node, a clique is constructed until the corresponding inequalit
 In order to avoid exploring the same solution space multiple times for different initial nodes, restrictions on how many times a node or an edge can be visited are applied. The resulting algorithm is presented in \ref{alg:sep:extclique}.
 
 \begin{algorithm}
-\label{alg:sep:extclique}
-
 \begin{algorithmic}
 
 \FORALL{color $j$ such that $w_j \geq \mu$}
@@ -264,6 +266,7 @@ In order to avoid exploring the same solution space multiple times for different
 \ENDFOR
 
 \caption{Separation algorithm for extended clique cuts}
+\label{alg:sep:extclique}
 
 \end{algorithmic}
 \end{algorithm} 
@@ -275,7 +278,6 @@ Component hole \ref{ineq:chole} and component path \ref{ineq:cpath} inequalities
 On every iteration the most promising node is added to the path being built. In case this node is adjacent to a node already in the path (thus generating a hole), it is added only if it violates the corresponding inequality, otherwise, the next candidate is picked, and so forth. Algorithm \ref{alg:sep:ciset} resumes this process.
 
 \begin{algorithm}
-\label{alg:sep:ciset}
 
 \begin{algorithmic}
 
@@ -306,6 +308,7 @@ On every iteration the most promising node is added to the path being built. In 
 \ENDFOR
 
 \caption{Separation algorithm for component independent set cuts}
+\label{alg:sep:ciset}
 
 \end{algorithmic}
 \end{algorithm}
