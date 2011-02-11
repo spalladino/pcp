@@ -17,13 +17,13 @@ import os
  
 def main():
     
-    files = bnc.files90()
-    print 'Processing primal frequency on BNC: ', files
+    files = branch.files()
+    print 'Processing Branch Static 4: ', files
     Fixture().newrun(
-                bnc.primal_runs, 
+                branch.branchstaticmanualruns, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110131BNCPRIMALFREQ')
+                runid = '20110131BRANCHSTATIC4')
     
     files = f.dimacs
     print 'Processing dimacs with cplex using branch and cut standard and multiple configs for PCP: ', files
@@ -33,15 +33,16 @@ def main():
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20110131BNCDIMACSPCPVSCPLEX')
     
-    files = branch.files()
-    print 'Processing Branch Static 4: ', files
-    Fixture().newrun(
-                branch.branchstaticmanualruns, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20110131BRANCHSTATIC4')
  
 def old():
+    
+    files = bnc.files90()
+    print 'Processing primal frequency on BNC: ', files
+    Fixture().newrun(
+                bnc.primal_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110131BNCPRIMALFREQ')
     
     files = branch.files()
     print 'Processing Branch Static 3: ', files
