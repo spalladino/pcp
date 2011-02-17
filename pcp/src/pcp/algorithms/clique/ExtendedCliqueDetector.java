@@ -23,7 +23,7 @@ import props.Settings;
  * or in the same partition. 
  */
 public abstract class ExtendedCliqueDetector extends Algorithm implements Constants, Sorting {
-	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
+	static final boolean checkClique = Settings.get().getBoolean("validate.clique");
 	
 	protected SortedPartitionedGraph graph;
 

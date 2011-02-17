@@ -8,7 +8,8 @@ import java.util.Properties;
 public class Settings {
 
 	static Settings instance;
-		
+	private final static boolean safe = true;
+	
 	public static void load(String name) throws Exception {
 		instance = new Settings(name);
 	}
@@ -56,22 +57,22 @@ public class Settings {
 	
 	public Boolean getBoolean(String name) {
 		try { return Boolean.valueOf(getProperty(name)); }
-		catch (Exception ex) { return null; }
+		catch (Exception ex) { if (safe) throw new RuntimeException("Invalid setting " + name); else return null; }
 	}
 	
 	public Double getDouble(String name) {
 		try { return Double.valueOf(getProperty(name)); }
-		catch (Exception ex) { return null; }
+		catch (Exception ex)  { if (safe) throw new RuntimeException("Invalid setting " + name); else return null; }
 	}
 
 	public Long getLong(String name) {
 		try { return Long.valueOf(getProperty(name)); }
-		catch (Exception ex) { return null; }
+		catch (Exception ex)  { if (safe) throw new RuntimeException("Invalid setting " + name); else return null; }
 	}
 	
 	public Integer getInteger(String name) {
 		try { return Integer.valueOf(getProperty(name)); }
-		catch (Exception ex) { return null; }
+		catch (Exception ex)  { if (safe) throw new RuntimeException("Invalid setting " + name); else return null; }
 	}
 	
 	public Properties getProps() {
@@ -84,7 +85,9 @@ public class Settings {
 	}
 	
 	private String getProperty(String name) {
-		return props.getProperty(name);
+		String property = props.getProperty(name);
+		if (safe && property == null) throw new RuntimeException("Invalid setting " + name);
+		else return property;
 	}
 
 	

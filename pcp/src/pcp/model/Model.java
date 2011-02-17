@@ -3,6 +3,7 @@ package pcp.model;
 import ilog.concert.IloIntExpr;
 import ilog.concert.IloIntVar;
 import ilog.concert.IloMPModeler;
+import ilog.concert.IloModel;
 import ilog.concert.IloObjective;
 import pcp.entities.partitioned.PartitionedGraph;
 
@@ -16,10 +17,12 @@ public class Model {
 	
 	protected PartitionedGraph graph;
 	protected IloMPModeler modeler;
+	protected IloModel model;
 	
 	protected int colors;
 	
 	protected BuilderStrategy strategy;
+	
 	
 	public Model(PartitionedGraph graph) {
 		this.graph = graph;
@@ -32,6 +35,10 @@ public class Model {
 
 	public boolean isTrivial() {
 		return graph.getNodes().length == 0;
+	}
+	
+	public IloModel getIloModel() {
+		return model;
 	}
 	
 	public IloIntVar[] getAllXs() {

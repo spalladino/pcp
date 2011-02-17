@@ -41,7 +41,7 @@ public class BranchCallback extends ilog.cplex.IloCplex.BranchCallback implement
 	private static final boolean mostFrac = Settings.get().getBoolean("branch.dynamic.fractional.most");
 	private static final double fracTol = 0.05;
 	private static final double branchLB = 0.1;
-	
+
 	private static final boolean dynamicDSaturStrategy = Settings.get().getBoolean("branch.dynamic.dsatur");
 	private static final double nodeLB = Settings.get().getDouble("branch.dynamic.dsatur.nodelb");
 	private static final boolean consecColors = Settings.get().getBoolean("branch.dynamic.dsatur.conseccolors");

@@ -145,9 +145,7 @@ public class ModelBuilder {
 		}
 		
 		// Copy all vars and objective to model
-		fillModel(model);
-		
-		return model;
+		return fillModel(model);
 	}
 
 	/**
@@ -184,12 +182,14 @@ public class ModelBuilder {
 		}
 	}
 
-	private void fillModel(Model model) {
+	private Model fillModel(Model model) throws IloException {
 		model.xs = xs;
 		model.allxs = allxs;
 		model.ws = ws;
 		model.objective = objective;
 		model.colorsum = colorsum;
+		model.model = modeler.getModel();
+		return model;
 	}
 	
 	/**

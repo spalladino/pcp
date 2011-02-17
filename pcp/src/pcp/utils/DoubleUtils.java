@@ -29,4 +29,12 @@ public class DoubleUtils {
 		} return sum;
 	}
 	
+	public static boolean greaterThan(double d1, double d2) {
+		return d1 > d2 + eps;
+	}
+	
+	public static boolean lessThan(double d1, double d2) {
+		return d1 < d2 - eps;
+	}
+	
 }

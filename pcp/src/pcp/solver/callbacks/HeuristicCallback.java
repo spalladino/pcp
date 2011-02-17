@@ -17,6 +17,7 @@ import pcp.interfaces.IPrimalSolutionProvider;
 import pcp.interfaces.IColorAssigner.DSaturAssignment;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
+import pcp.model.ModelVerifier;
 import pcp.model.strategy.Coloring;
 import pcp.model.strategy.Objective;
 import pcp.solver.data.NodeData;
@@ -36,17 +37,20 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	private static final boolean onlyOnUp = Settings.get().getBoolean("primal.onlyonup");
 	private static final double nodeLB = Settings.get().getDouble("primal.nodelb");
 	private static final int everynodes = Settings.get().getInteger("primal.everynodes");
-	private static final boolean useUB = Settings.get().getBoolean("pruning.useub");
+	private static final boolean pruneUseUB = Settings.get().getBoolean("pruning.useub");
+	private static final boolean primalUseUB = Settings.get().getBoolean("primal.useub");
 	private static final boolean runOnCutCallback = Settings.get().getBoolean("primal.runoncutcallback");
 	
 	private static final boolean validateSolutions = Settings.get().getBoolean("validate.heuristics");
 	private static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
+	private static final boolean logHeur = Settings.get().getBoolean("logging.callback.heuristic");
 	private static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
 	
 	private static final DSaturAssignment assignment = Settings.get().getEnum("primal.dsatur.assign", DSaturAssignment.class);
 	
 	IPartitionedGraph graph;
 	Model model;
+	ModelVerifier verifier;
 	
 	HeuristicMetrics metrics;
 	IPrimalSolutionProvider primalProvider;
@@ -60,6 +64,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		this.graph = model.getGraph();
 		this.model = model;
 		this.primalProvider = primalProvider;
+		this.verifier = new ModelVerifier(model.getIloModel());
 	}
 	
 	public HeuristicMetrics getMetrics() {
@@ -76,7 +81,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			setSolution(nodesSet);
 		} else if (runOnCutCallback && primalProvider != null) {
 			if (primalProvider.getPrimalChi() != null) {
-				//System.out.println("Assigning primal with chi " + primalProvider.getPrimalChi() + " in heuristic callback");
+				if (logHeur) System.out.println("Assigning primal with chi " + primalProvider.getPrimalChi() + " in heuristic callback obtained during cut callback");
 				super.setSolution(primalProvider.getPrimalVars(), primalProvider.getPrimalVals());
 			}
 		} else if (primalEnabled && super.getNnodes() > 1 && (
@@ -98,7 +103,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		try {
 			fillLeafColoring(coloring);
 			setLowerBound(coloring);
-			setUpperBound(coloring);
+			if (pruneUseUB) setUpperBound(coloring);
 			createSolution(coloring);
 			metrics.leafHeur(coloring, nodesSet);
 			if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring");
@@ -115,8 +120,10 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		try {
 			int fixed = assignColorsFromSolution(coloring);
 			setLowerBound(coloring);
+			if (primalUseUB) setUpperBound(coloring);
 			createSolution(coloring);
 			metrics.primalHeur(coloring, super.getNnodes(), fixed, nodesSet);
+			//if (logHeur) System.out.println("Executed primal heuristic having fixed " + fixed + " nodes and obtained solution of chi " + (chi == null ? "none" : chi));
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
 		}
@@ -129,26 +136,27 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			: super.getValue(model.getColorSum());
 		if (!Double.isNaN(lower) && lower != 0.0) {
 			coloring.setLowerBound(DoubleUtils.ceil(lower));
+			if (logHeur) System.out.println("Using lower bound: " + DoubleUtils.ceil(lower));
 		}
 	}
 
 	private void setUpperBound(ColoringAlgorithm coloring) throws IloException {
 		// Set upper bound as objective value of incumbent
-		if (!useUB) return;
 		double upper = objectiveStrategy.equals(Objective.Equal) 
 			? super.getIncumbentObjValue()
 			: DoubleUtils.sum(super.getIncumbentValues(model.getWs()));
 		if (!Double.isNaN(upper) && upper != 0.0) {
 			coloring.setUpperBound(DoubleUtils.ceil(upper));
+			if (logHeur) System.out.println("Using upper bound: " + DoubleUtils.ceil(upper));
 		}
 	}
 
-	private void createSolution(ColoringAlgorithm coloring) throws AlgorithmException, IloException {
+	private Integer createSolution(ColoringAlgorithm coloring) throws AlgorithmException, IloException {
 		int n = model.getNodeCount();
 		int c = model.getColorCount();
 		
 		Integer chi = coloring.getChi();
-		if (chi == null || !coloring.hasSolution()) return;
+		if (chi == null || !coloring.hasSolution()) return null;
 		
 		double[] vals = new double[n * c + c];
 		IloNumVar[] vars = new IloNumVar[n * c + c];
@@ -167,8 +175,13 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			}
 		}
 
-		if (validateSolutions) validateSolution(vars, vals);
+		if (validateSolutions) {
+			verifier.verify(vars, vals);
+			validateSolution(vars, vals);
+		}
+		
 		super.setSolution(vars, vals);
+		return chi;
 	}
 	
 	private void validateSolution(IloNumVar[] vars, double[] vals) throws IloException, AlgorithmException {

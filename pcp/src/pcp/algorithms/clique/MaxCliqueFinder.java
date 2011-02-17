@@ -25,7 +25,7 @@ import props.Settings;
  */
 public class MaxCliqueFinder implements Constants, Sorting, IBoundedAlgorithm {
 	
-	static final boolean checkClique = Settings.get().getBoolean("validate.cliques");
+	static final boolean checkClique = Settings.get().getBoolean("validate.clique");
 	static final boolean log = false;
 	static final int minInitialDegree = 2;
 	

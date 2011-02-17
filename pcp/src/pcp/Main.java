@@ -53,7 +53,8 @@ public class Main {
 	private static Model model;
 	private static ColoringAlgorithm coloring;
 	
-	private static void solve(String filename, String runId) throws Exception {
+	public static void solve(String filename, String runId) throws Exception {
+		validateSettings();
 		IFactory factory = Factory.get();
 		BuilderStrategy strategy = BuilderStrategy.fromSettings();
 		ExecutionData execution = new ExecutionData().withProblemSettings();
@@ -153,6 +154,13 @@ public class Main {
 	private static void exportModel(Solver solver, String filename) throws IloException {
 		System.out.println("Exporting model to " + filename + ".lps");
 		solver.getCplex().exportModel(filename + ".lps");
+	}
+
+	private static void validateSettings() {
+		if ((Settings.get().getBoolean("primal.onlyonup") || Settings.get().getBoolean("cuts.onlyonup"))
+				&& !(Settings.get().getBoolean("branch.dynamic.fractional") || Settings.get().getBoolean("branch.dynamic.dsatur"))) {
+			throw new RuntimeException("Cannot use only on up settings without a dynamic branch strategy");
+		}
 	}
 
 }
