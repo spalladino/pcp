@@ -109,10 +109,14 @@ public abstract class ColoringAlgorithm implements IBoundedAlgorithm {
 	
 	public abstract void forbidColor(int node, int color) throws AlgorithmException;
 
+	public abstract boolean isOptimalSolution();
+	
 	public void setUpperBound(int bound) { }
 	
 	public void setLowerBound(int bound) { }
 	
 	public boolean hasSolution() { return true; }
+	
+	
 
 }

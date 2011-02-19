@@ -86,6 +86,7 @@ public class Main {
 		
 		solver.getCplex().setParam(IntParam.MIPDisplay, Settings.get().getInteger("logging.mipdisplay"));
 		solver.getCplex().setParam(IntParam.MIPInterval, Settings.get().getInteger("logging.mipinterval"));
+		solver.getCplex().setParam(IntParam.ClockType, 1);
 		
 		solver.solve();
 		solver.fillData(execution.getData());

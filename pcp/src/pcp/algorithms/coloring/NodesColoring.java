@@ -40,5 +40,10 @@ public class NodesColoring extends ColoringAlgorithm {
 	public void forbidColor(int node, int color) throws AlgorithmException {
 		throw new AlgorithmException("Forbidding nodes not supported for " + this.getClass().getName());
 	}
+
+	@Override
+	public boolean isOptimalSolution() {
+		return false;
+	}
 	
 }

@@ -8,12 +8,14 @@ import ilog.cplex.IloCplex.IntegerFeasibilityStatus;
 import java.util.Arrays;
 
 import pcp.Factory;
+import pcp.algorithms.bounding.RemainingTimeBounder;
 import pcp.algorithms.bounding.SolutionsBounder;
 import pcp.algorithms.coloring.ColoringAlgorithm;
 import pcp.entities.IPartitionedGraph;
 import pcp.entities.partitioned.Node;
 import pcp.entities.partitioned.Partition;
 import pcp.interfaces.IPrimalSolutionProvider;
+import pcp.interfaces.ITimeProvider;
 import pcp.interfaces.IColorAssigner.DSaturAssignment;
 import pcp.model.BuilderStrategy;
 import pcp.model.Model;
@@ -44,6 +46,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	private static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
 	private static final boolean logHeur = Settings.get().getBoolean("logging.callback.heuristic");
 	private static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
+	private static final boolean logNodesSet = Settings.get().getBoolean("logging.nodesset");
 
 	private static final Coloring primalColoringStrategy = Settings.get().getEnum("primal.dsatur.coloring", Coloring.class);
 	private static final Coloring pruningColoringStrategy = Settings.get().getEnum("pruning.coloring", Coloring.class);
@@ -55,17 +58,19 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	
 	HeuristicMetrics metrics;
 	IPrimalSolutionProvider primalProvider;
+	ITimeProvider time;
 	
 	public HeuristicCallback() {
 		metrics = new HeuristicMetrics();
 	}
 	
-	public HeuristicCallback(Model model, IPrimalSolutionProvider primalProvider) {
+	public HeuristicCallback(Model model, IPrimalSolutionProvider primalProvider, ITimeProvider time) {
 		this();
 		this.graph = model.getGraph();
 		this.model = model;
 		this.primalProvider = primalProvider;
 		this.verifier = new ModelVerifier(model.getIloModel());
+		this.time = time;
 	}
 	
 	public HeuristicMetrics getMetrics() {
@@ -78,6 +83,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
 		// Full run using current information if enough depth, or primal if frequency
 		int nodesSet = countNodesEqualOne();
+		if (logNodesSet) System.out.println("Nodes set: " + nodesSet);
 		if (PruneEvaluator.shouldPrune(model, nodesSet)) {
 			setSolution(nodesSet);
 		} else if (runOnCutCallback && primalProvider != null) {
@@ -98,17 +104,23 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 		System.out.println("UBs: " + Arrays.toString(super.getUBs(model.getAllXs())));
 	}
 	
-	private void setSolution(int nodesSet) {
+	private void setSolution(int nodesSet) throws IloException {
 		ColoringAlgorithm coloring = Factory.get()
-			.coloring(pruningColoringStrategy, graph);
-		
+			.coloring(pruningColoringStrategy, graph)
+			.withBounder(new RemainingTimeBounder(this.time, getEndTime()));
+
 		try {
 			fillLeafColoring(coloring);
 			setLowerBound(coloring);
 			if (pruneUseUB) setUpperBound(coloring);
-			createSolution(coloring);
-			metrics.leafHeur(coloring, nodesSet);
-			if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring");
+			if (coloring.isOptimalSolution()) {
+				createSolution(coloring);
+				metrics.leafHeur(coloring, nodesSet);
+				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring");
+			} else {
+				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring did not finish");
+			}
+			
 		} catch (Exception ex) {
 			pcp.Logger.error("Exception in heuristic callback", ex);
 		}

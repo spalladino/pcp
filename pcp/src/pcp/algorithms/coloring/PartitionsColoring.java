@@ -57,6 +57,11 @@ public class PartitionsColoring extends ColoringAlgorithm {
 		throw new AlgorithmException("Forbidding nodes not supported for " + this.getClass().getName());
 	}
 
+	@Override
+	public boolean isOptimalSolution() {
+		return false;
+	}
+
 	private int assignColors() {
 		int color = 0;
 		for (Partition p : graph.getPartitions()) {

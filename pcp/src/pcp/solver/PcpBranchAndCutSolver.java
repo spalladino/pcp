@@ -4,6 +4,7 @@ import java.util.Map;
 
 import exceptions.AlgorithmException;
 import ilog.concert.IloException;
+import pcp.algorithms.bounding.CplexTimeProvider;
 import pcp.model.Model;
 import pcp.solver.callbacks.CutCallback;
 import pcp.solver.callbacks.HeuristicCallback;
@@ -66,6 +67,6 @@ public class PcpBranchAndCutSolver extends Solver {
 	
 	@Override
 	protected HeuristicCallback createHeuristicCallback() {
-		return new HeuristicCallback(model, callback);
+		return new HeuristicCallback(model, callback, new CplexTimeProvider(cplex));
 	}
 }

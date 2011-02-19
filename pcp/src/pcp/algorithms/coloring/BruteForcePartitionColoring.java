@@ -119,4 +119,9 @@ public class BruteForcePartitionColoring extends ColoringAlgorithm {
 		throw new AlgorithmException("Forbidding nodes not supported for " + this.getClass().getName());
 	}
 
+	@Override
+	public boolean isOptimalSolution() {
+		return true;
+	}
+
 }

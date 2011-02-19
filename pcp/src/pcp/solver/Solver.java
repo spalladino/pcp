@@ -11,6 +11,7 @@ import ilog.cplex.IloCplex.IntParam;
 import java.util.Map;
 
 import pcp.Logger;
+import pcp.algorithms.bounding.CplexTimeProvider;
 import pcp.definitions.Constants;
 import pcp.entities.IPartitionedGraph;
 import pcp.interfaces.IExecutionDataProvider;
@@ -243,7 +244,7 @@ public class Solver extends AbstractSolutionData implements IExecutionDataProvid
 	
 
 	protected HeuristicCallback createHeuristicCallback() {
-		return new HeuristicCallback(model, null);
+		return new HeuristicCallback(model, null, new CplexTimeProvider(cplex));
 	}
 
 	protected void addInitialCuts() {

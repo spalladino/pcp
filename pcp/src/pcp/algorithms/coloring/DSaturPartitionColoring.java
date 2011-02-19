@@ -71,6 +71,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	protected int fixed = 0;
 	protected int fixedColors = 0;
 	
+	private boolean optimal = false;
 	private boolean hasrun = false;
 	private int spaces = 0;
 	
@@ -86,6 +87,7 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 		
 		bounder.start();
 		solution = partitions(fixed, fixedColors);
+		optimal = bounder.check();
 		bounder.end();
 		hasrun = true;
 		
@@ -115,6 +117,11 @@ public abstract class DSaturPartitionColoring extends ColoringAlgorithm implemen
 	@Override
 	public boolean hasSolution() {
 		return bestColorClass != null;
+	}
+	
+	@Override
+	public boolean isOptimalSolution() {
+		return optimal;
 	}
 	
 	@Override

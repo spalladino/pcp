@@ -8,6 +8,9 @@ from common import update_copy
 def files():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((100))\\.00(0|1|2)\\.in')     
 
+def files80():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((80))\\.00(0|1|2)\\.in')
+
 def files90():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((90))\\.00(0|1|2)\\.in')
 
@@ -69,8 +72,8 @@ baseprops = {
 			'cuts.minCliques': '100',
 			
             'pruning.enabled': 'false',
-            'pruning.minset': '5',
-            'pruning.remaining': '10',
+            'pruning.minset': '1',
+            'pruning.remaining': '1000',
             'pruning.frac': '1.0',
 
 			'clique.enabled': 'true',
@@ -447,40 +450,11 @@ pruning_runs = create_runs(baseprops, [
 				},
 				{
 					'pruning.enabled': 'true',
-		            'pruning.remaining': '20',
+		            'pruning.remaining': '1000',
                     'pruning.useub': 'true',
                     'primal.useub': 'true',
 				},
-				{
-					'pruning.enabled': 'true',
-		            'pruning.remaining': '30',
-                    'pruning.useub': 'true',
-                    'primal.useub': 'true',
-				},
-				{
-					'pruning.enabled': 'true',
-		            'pruning.remaining': '40',
-                    'pruning.useub': 'true',
-                    'primal.useub': 'true',
-				},
-                 {
-                    'pruning.useub': 'false',
-                    'primal.useub': 'false',
-                    'pruning.enabled': 'true',
-                    'pruning.remaining': '20',
-                },
-                {
-                    'pruning.useub': 'false',
-                    'primal.useub': 'false',
-                    'pruning.enabled': 'true',
-                    'pruning.remaining': '30',
-                },
-                {
-                    'pruning.useub': 'false',
-                    'primal.useub': 'false',
-                    'pruning.enabled': 'true',
-                    'pruning.remaining': '40',
-                },
+
 				])
 
 emph_runs = create_runs(baseprops, [

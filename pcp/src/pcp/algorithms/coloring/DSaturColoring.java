@@ -27,6 +27,7 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	private int lowerBound;
 	private int solution;
 	
+	boolean optimal = false;
 	boolean hasrun = false;
 	
 	public DSaturColoring(IPartitionedGraph graph) {
@@ -52,6 +53,7 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 		colorClique();
 		
 		solution = color(clique.size(), clique.size());
+		optimal = bounder.check();
 		bounder.end();
 		hasrun = true;
 		
@@ -231,6 +233,11 @@ public class DSaturColoring extends ColoringAlgorithm implements IBoundedAlgorit
 	@Override
 	public void forbidColor(int node, int color) throws AlgorithmException {
 		throw new AlgorithmException("Forbidding nodes not supported for " + this.getClass().getName());
+	}
+
+	@Override
+	public boolean isOptimalSolution() {
+		return optimal;
 	}
 	
 }
