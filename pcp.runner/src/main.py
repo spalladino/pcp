@@ -16,7 +16,15 @@ import files as f
 import os
  
 def main():
-    
+    files = primal.files()
+    print 'Processing Primal Static Runs: ', files
+    Fixture().newrun(
+                primal.primalstaticruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110219PRIMALSTATIC3')
+
+def old():    
     files = branch.files()
     print 'Processing Branch Static 4: ', files
     Fixture().newrun(
@@ -34,7 +42,6 @@ def main():
                 runid = '20110131BNCDIMACSPCPVSCPLEX')
     
  
-def old():
     
     files = bnc.files90()
     print 'Processing primal frequency on BNC: ', files

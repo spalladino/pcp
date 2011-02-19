@@ -30,7 +30,6 @@ import exceptions.AlgorithmException;
 
 public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 
-	private static final Coloring coloringStrategy = BuilderStrategy.fromSettings().getColoring();
 	private static final Objective objectiveStrategy = BuilderStrategy.fromSettings().getObjective();
 	
 	private static final boolean primalEnabled = Settings.get().getBoolean("primal.enabled");
@@ -45,7 +44,9 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	private static final boolean logLeaf = Settings.get().getBoolean("logging.callback.leaf");
 	private static final boolean logHeur = Settings.get().getBoolean("logging.callback.heuristic");
 	private static final boolean logBounds = Settings.get().getBoolean("logging.bounds");
-	
+
+	private static final Coloring primalColoringStrategy = Settings.get().getEnum("primal.dsatur.coloring", Coloring.class);
+	private static final Coloring pruningColoringStrategy = Settings.get().getEnum("pruning.coloring", Coloring.class);
 	private static final DSaturAssignment assignment = Settings.get().getEnum("primal.dsatur.assign", DSaturAssignment.class);
 	
 	IPartitionedGraph graph;
@@ -98,7 +99,8 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	}
 	
 	private void setSolution(int nodesSet) {
-		ColoringAlgorithm coloring = Factory.get().coloring(coloringStrategy, graph);
+		ColoringAlgorithm coloring = Factory.get()
+			.coloring(pruningColoringStrategy, graph);
 		
 		try {
 			fillLeafColoring(coloring);
@@ -114,7 +116,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 	
 	private void setPrimal(int nodesSet) {
 		ColoringAlgorithm coloring = Factory.get()
-			.coloring(coloringStrategy, graph)
+			.coloring(primalColoringStrategy, graph)
 			.withBounder(new SolutionsBounder("coloring.primal"));
 		
 		try {

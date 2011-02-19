@@ -3,6 +3,8 @@ import fetcher
 from config import datadir
 from common import create_runs
 
+def files90():
+    return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2)\\.in')
 
 def files():
     #return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n90\\.00(0|1|2)\\.in')
@@ -86,6 +88,7 @@ primalstaticruns = create_runs({
                  'primal.enabled': 'true',
                  'branch.enabled': 'true',
                  'cuts.enabled': 'false',
+                 'cuts.onlyonup': 'false',
                   
                  'solver.maxTime': '900',
                  
@@ -103,8 +106,26 @@ primalstaticruns = create_runs({
                  'branch.dynamic.dsatur': 'false',
                  'primal.onlyonup': 'false',
                  'primal.everynodes': '1',
+                 'primal.dsatur.coloring': 'DSaturEasyNode',
                }, [
-
+                 {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'primal.dsatur.coloring': 'DSaturEasyNodeRandomized',
+                 'coloring.primal.maxTime': '500',
+                 'coloring.primal.maxSolutions': '100'
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'primal.dsatur.coloring': 'DSaturEasyNodeRandomized',
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '500',
+                 'coloring.primal.maxSolutions': '100'
+                }, 
                 {
                  'primal.enabled': 'true',
                  'solver.useCplexPrimalHeuristic': 'false',
