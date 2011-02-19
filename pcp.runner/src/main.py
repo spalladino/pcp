@@ -23,7 +23,23 @@ def main():
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20110219PRIMALSTATIC3')
-
+    
+    files = bnc.files()
+    print 'Processing BNC Pruning Runs: ', files
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110219PRUNING2')
+    
+    files = bnc.filesp1()
+    print 'Processing BNC Pruning Runs P1: ', files
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110219PRUNINGP1')
+    
 def old():    
     files = branch.files()
     print 'Processing Branch Static 4: ', files

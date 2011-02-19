@@ -90,7 +90,7 @@ primalstaticruns = create_runs({
                  'cuts.enabled': 'false',
                  'cuts.onlyonup': 'false',
                   
-                 'solver.maxTime': '900',
+                 'solver.maxTime': '1800',
                  
                  'branch.selection': '1',
                  'branch.direction': '0',

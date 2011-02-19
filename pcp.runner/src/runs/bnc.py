@@ -8,6 +8,9 @@ from common import update_copy
 def files():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((100))\\.00(0|1|2)\\.in')     
 
+def filesp1():
+    return fetcher.Fetcher(datadir).fetch_files('singlepart', 'e0(2|4|6|8)n((100))p1\\.00(0|1|2)\\.in')     
+
 def files80():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(2|4|6|8)n((80))\\.00(0|1|2)\\.in')
 
@@ -58,6 +61,7 @@ baseprops = {
              
              'primal.enabled': 'true',
              'primal.onlyonup': 'true',
+             'primal.useub': 'true',
              'branch.enabled': 'true',
              
             'clique.colorsAsc': 'false',
@@ -75,6 +79,7 @@ baseprops = {
             'pruning.minset': '1',
             'pruning.remaining': '1000',
             'pruning.frac': '1.0',
+            'pruning.useub': 'true',
 
 			'clique.enabled': 'true',
 			'path.enabled': 'true',
@@ -450,11 +455,24 @@ pruning_runs = create_runs(baseprops, [
 				},
 				{
 					'pruning.enabled': 'true',
-		            'pruning.remaining': '1000',
-                    'pruning.useub': 'true',
-                    'primal.useub': 'true',
+                    'pruning.frac': '0.4'
 				},
-
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.5'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.6'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.7'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.8'
+                }
 				])
 
 emph_runs = create_runs(baseprops, [

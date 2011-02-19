@@ -10,7 +10,7 @@ In this section we will present various binary integer programming formulations 
 
 Let $G = <V,E,P>$ a partitioned graph, being $V$ the set of nodes numbered from $1$ to $n$, $E$ the set of $m$ edges, and $P$ the set of partitions numbered from $1$ to $q$; and let $C$ be the set of color labels numbered from $1$ to $n$.
 
-The standard coloring problem formulation, SCP, uses the following $(n + 1) \times c$ binary variables, where $i \in V$ and $j \in C$:
+The standard coloring problem formulation, SCP, uses the following $(n + 1) c$ binary variables, where $i \in V$ and $j \in C$:
 \begin{itemize}
 \item $x_{ij}$ equals $1$ if and only if the node $i$ is colored with label $j$
 \item $w_j$ equals $1$ if there is at least one node in the graph which uses color $j$
@@ -36,7 +36,7 @@ Restriction \ref{eqn:vertexsum} requires that every node is assigned exactly one
 & x_{ij}, w_{j} \in \{0,1\} \quad \forall i \in V, \; \forall j \in C \sumheight \nonumber
 \end{align}
 
-This model has $(n + 1) \times c$ variables as well, $q$ restrictions \ref{eqn:partsum} and $m \times c$ \ref{eqn:adjscolorp} restrictions, plus all integrality constraints.
+This model has $(n + 1) c$ variables as well, $q$ restrictions \ref{eqn:partsum} and $m.c$ \ref{eqn:adjscolorp} restrictions, plus all integrality constraints.
 
 \subsection{Variants}
 
@@ -137,7 +137,7 @@ Another way of reducing the number of symmetric solutions is to prefer lower-lab
 
 \begin{equation}
 \label{eqn:objlinear}
-\text{\textsc{minimize}} \quad \sum_{j \in C} j \times w_j 
+\text{\textsc{minimize}} \quad \sum_{j \in C} j.w_j 
 \end{equation}
 
 However, early tests showed that this objective function offers poor computational results, so it was early discarded from the set of possible formulations.
