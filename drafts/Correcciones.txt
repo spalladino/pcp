@@ -7,7 +7,9 @@ Algoritmo:
 Informe:
 --------
 
-- Definir que es el poliedro de PCP
+- Seccion 3 comparar con Brasileros
+- Correcciones introduccion
+- Falta seccion 6
 
 Introduccion:
 -------------

@@ -1,6 +1,6 @@
 %!TEX root = pcp.tex
 
-\subsection{Models comparison}
+\section{Models comparison}
 
 We executed a test suite for determining which inequalities to use in the formulation of the problem. Recall from section \ref{sec:model} that there are several restrictions that can be applied to define the model, as well as additional ones that may strengthen the model or reduce the number of symmetrical solutions.
 
@@ -8,7 +8,7 @@ In order to test the effectiveness of the different formulations, we applied a f
 
 For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition, and powerlaw cluster graphs with the same size, changing only the density of the graphs. All graphs were preprocessed beforehand.
 
-\subsubsection{Adjacency constraints}
+\subsection{Adjacency constraints}
 
 We first tested the four different adjacency (or color conflict) constraints we had proposed, using arbitrarily chosen constraints \ref{eqn:partsum}, \ref{eqn:lowerlabel} and \ref{eqn:wjleqsumcolor} to complete the model:
 
@@ -23,7 +23,7 @@ The different adjacency constraints being tested in this experiment are the foll
 \begin{align*}
 &x_{ij} + x_{kj} \leq w_j \sumheight &\quad \forall (i,k) \in E, \; \forall j \in C \tag{\ref{eqn:adjscolorp}} \\
 &x_{ij} + x_{kj} \leq 1 \sumheight &\quad \forall (i,k) \in E, \; \forall j \in C \tag{\ref{eqn:adjscolorpone}} \\
-&\sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j &\quad \forall j \in C, \; \forall i_0 \in V \tag{\ref{eqn:adjsneighb}} \\
+&\sum_{i \in N(i_0)} x_{i_0j} + r x_{i_0j} \leq r w_j &\quad \forall j \in C, \; \forall i_0 \in V \tag{\ref{eqn:adjsneighb}} \\
 &\sum_{i \in P_k \cap N(i_0)} x_{ij} + x_{i_0j} \leq w_j &\quad \forall j \in C, \; \forall P_k \in P, \; \forall i_0 \in V \tag{\ref{eqn:adjsperpart}} 
 \end{align*}
 
@@ -77,7 +77,7 @@ Graphics \ref{fig:models:adj} show the evolution of the gap for four particular 
 \label{fig:models:adj}
 \end{figure}
 
-\subsubsection{Colored nodes per partition}
+\subsection{Colored nodes per partition}
 
 A quick test we also ran in parallel was to determine whether to paint exactly one node per partition (\ref{eqn:partsum}), or to relax this constraint and allow for painting more than a single node (\ref{eqn:partsumgeq}). 
 
@@ -117,7 +117,7 @@ HK 40\% & 0.076 & 0.398 & 0.048 & 0.416
 
 Results on table \ref{table:models:partsum} confirm our expectations: while the former has a slightly larger running time, it also reports a slightly lower gap than the latter in some cases. The simplicity provided by \ref{eqn:partsum} when extracting solutions from the model (when constructing the the partial solutions to be processed during the primal heuristic, or during the branching process) makes us choose this option in our formulation.
 
-\subsubsection{Model strengthening}
+\subsection{Model strengthening}
 
 We also compared applying only constraint \ref{eqn:wjleqsumcolor}, which ensures that variable $w_j$ is set only if a node uses color $j$ (regardless of the objective function), to adding restrictions \ref{eqn:wjgeqsumnode} and \ref{eqn:wjgeqsumpart}:
 
@@ -177,7 +177,7 @@ Results on table \ref{table:models:colorbound} show that there is very little di
 
 The graphics \ref{fig:models:colorbound} present, as before, the evolution of the gap for these different configurations on a representative binomial instance for each tested density. Configuration \ref{eqn:wjleqsumcolor} is shown to be not only the one returning the best gap (even for very little difference with the others), but also the fastest one.
 
-\subsubsection{Symmetry breaking}
+\subsection{Symmetry breaking}
 
 Results obtained from comparing no symmetry breaking constraints whatsoever with color label (\ref{eqn:lowerlabel}), node count (\ref{eqn:symnodecount}) and minimum node label (\ref{eqn:nodeszero},\ref{eqn:minlabel}) ordering restrictions are shown on table \ref{table:models:sym}. The evolution of the obtained gap in time for different densities is shown in figure \ref{fig:models:sym}.
 
@@ -240,14 +240,14 @@ HK 40\% & 0.048 &  3.8 & 0.316 & 0.05 &  6.2 & 0.494 & 0.048 &  5.2 & 0.416 & \b
 \end{figure}
 
 
-\subsubsection{Chosen formulation from cutting planes}
+\subsection{Chosen formulation from cutting planes}
 \label{subsubsec:results:model:chosen}
 
 Taking into account all previous results in a cutting planes algorithm, the set of constraints that we will use in the \PCP{} formulation for subsequent computational experiments will be the following:
 
 \begin{align}
 \sum_{i \in P_k} \sum_{j \in C} x_{ij} = 1 \quad &\forall P_k \in P \tag{\ref{eqn:partsum}} \\
- \sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j \quad &\forall j \in C, \; \forall i_0 \in V \tag{\ref{eqn:adjsneighb}} \\
+ \sum_{i \in N(i_0)} x_{i_0j} + r x_{i_0j} \leq r w_j \quad &\forall j \in C, \; \forall i_0 \in V \tag{\ref{eqn:adjsneighb}} \\
  w_j \leq \sum_{i \in V} x_{ij} \quad &\forall j \in C \tag{\ref{eqn:wjleqsumcolor}} \\
  x_{ij} \leq \sum_{l = j-1}^{k-1} \sum_{u \in P_l} x_{uj-1} \quad &\forall 1 < k \leq q, \; \forall i \in P_k, \; \forall 1 < j \leq k \tag{\ref{eqn:minlabel}} \\
  %w_j \geq w_{j+1} \sumheight \quad &\forall 1 \leq j < c \tag{\ref{eqn:lowerlabel}} \\
@@ -258,7 +258,7 @@ First two constraints define the problem itself, by specifying that a node must 
 
 Note that while adjacency restrictions \ref{eqn:adjscolorpone} reported better results than the chosen ones (\ref{eqn:adjsneighb}) in most cases, the latter worked better in dense graphs, which are the ones that, due to a larger problem size, take longer to solve their linear relaxation. Therefore, we opt for improving the resolution of the hardest graphs instead of getting slightly better results in the rest. 
 
-\subsubsection{Branch and bound testing}
+\subsection{Branch and bound testing}
 
 While the previous formulation was chosen for working on a cutting planes algorithm, we are also interested in the behaviour of different models in standard branch and bound algorithms. 
 

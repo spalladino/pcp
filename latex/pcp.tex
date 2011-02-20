@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt]{report}
 
 \usepackage[ansinew]{inputenc}
 \usepackage{amsmath}
@@ -22,7 +22,7 @@
 \addtolength{\textheight}{2cm}
 
 % LPs
-\newenvironment{lpmodel}{\subsubsection{Model:} }{ }
+\newenvironment{lpmodel}{\subsection{Model:} }{ }
 \newcommand{\lpobjective}[2]{\textsc{Objective:} #1 \[ #2 \]}
 \newcommand{\lprestriction}[3]{\textsc{Subject to:} #1 \[ #2 \qquad #3 \]}
 
@@ -57,11 +57,11 @@
 
 % Configs
 \newtheorem{theorem}{Theorem}
-\numberwithin{equation}{section}
-\numberwithin{table}{subsection}
-\numberwithin{algorithm}{section}
-\numberwithin{figure}{section}
-\setcounter{tocdepth}{2}
+\numberwithin{equation}{chapter}
+\numberwithin{table}{section}
+\numberwithin{algorithm}{chapter}
+\numberwithin{figure}{chapter}
+\setcounter{tocdepth}{1}
 
 %\includeonly{results.dsatur}
 

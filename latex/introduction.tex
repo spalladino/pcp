@@ -1,9 +1,9 @@
 %!TEX root = pcp.tex
 
-\section{Introduction}
+\chapter{Introduction}
 \label{sec:introduction}
 
-\subsection{Coloring}
+\section{Coloring}
 
 Needless to say, graphs are widely used for modeling different scenarios in multiple areas of expertise, as well as for solving problems on those scenarios by translating them into well-known problems. 
 
@@ -43,7 +43,7 @@ The coloring of a graph is defined formally as a function that, given an input g
 
 This problem has been proved to be \textit{NP-Complete}, and has been widely studied in the literature, being approached both by heuristic and exact methods for its resolution.
 
-\subsubsection*{Previous Work}
+\subsection*{Previous Work}
 
 Simplest heuristic approaches consist in greedy algorithms, using different criteria such as \textit{largest-first} \cite{welsh1967upper}, \textit{smallest-last} \cite{matula1972graph} or \textit{degree of saturation} \cite{brelaz1979new}. While the first two rely on a static ordering based on the degree of each node, the last one uses a dynamic ordering based on the number of different colors being used in the neighbourhood of each vertex.
 
@@ -61,7 +61,7 @@ There is also extensive work using integer linear programming formulations for t
 \item{In \cite{mendez2006branch,mendez2008cutting} both branch-and-cut and cutting planes algorithms were developed for a standard formulation of the problem, using $x_{ij}$ variables to specify whether node $i$ used color $j$, and $w_j$ variables as witnesses to whether color $j$ was in use. Several symmetry breaking constraints were added to the model to ensure a fast resolution.}
 \end{itemize}
 
-\subsection{Routing and Wavelength Assignment in WDM Networks}
+\section{Routing and Wavelength Assignment in WDM Networks}
 
 A Wavelength Division Multiplexed (WDM) optical network consists in a network in which links are optical fibers capable of transmitting a specified number of different wavelengths. The Routing and Wavelength Assignment (RWA) problem consists in, given a desired set of connections between pairs of nodes, establish routes between those nodes using the network's links.
 
@@ -73,7 +73,7 @@ In the offline or static version of the RWA problem, the set of connections to b
 
 The goal of the min-RWA is to minimize the number of different wavelengths required to establish all the routes desired. Note that there are multiple criteria that can be used to evaluate the quality of a set of routes, such as the number of lightpaths used for each route, or generating particular traffic patterns. In this work we will be focusing only in optimizing the number of wavelengths.
 
-\subsection*{Previous Work}
+\section*{Previous Work}
 
 Initial techniques to solve the min-RWA problem as a two-stage problem, such as \cite{hyytia14wavelength}, pick a single route for every connection using shortest-path algorithms and then use different heuristics to solve a standard coloring problem in the assignment stage. In \cite{manohar2002routing} the shortest-path routing solution is replaced by a maximum edge disjoint path solution in order to reduce conflicts between routes.
 
@@ -81,7 +81,7 @@ Other approaches to the problem tackle the routing and wavelength assignment as 
 
 An exact approach using an integer programming formulation with column generation is used in \cite{lee2002optimization}, which solves both the routing and the wavelength assignment problems in the same formulation.
 
-\subsection{Partitioned graph coloring problem}
+\section{Partitioned graph coloring problem}
 
 A \textit{partitioned graph} is defined as a tuple $G = <V,E,P>$ of $n$ vertices, $m$ edges and $q$ partitions respectively. The set $P$ contains $P_1, \ldots ,P_q$ sets of nodes which constitute a partition of $V$. Therefore, for every node $v \in V$, there is exactly one $P_k \in P$ such that $v \in P_k$, and every $P_i \in P$ is nonempty.
 
@@ -118,7 +118,7 @@ The partitioned coloring problem is defined as an assignment of colors to the no
 	\label{fig:samplepartitionedcoloring}
 \end{figure}
 
-\subsubsection*{Complexity}
+\subsection*{Complexity}
 
 It is easy to see that when $|P_i| = 1\ \forall P_i \in P$, this is, there is a single node per partition, the partitioned coloring problem is equivalent to the standard graph coloring problem previously mentioned. In terms of complexity classes, PCP belongs to the same class as the standard coloring problem.
 
@@ -160,7 +160,7 @@ We will prove NP-Completeness by proving both belonging to NP and NP-Hard classe
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection*{Resolution of min-RWA using PCP}
+\subsection*{Resolution of min-RWA using PCP}
 
 There are multiple methods, both heuristic and exact, for solving the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{Li00thepartition}, use a two-phase approach: a routing phase and an assignment phase.
 
@@ -323,7 +323,7 @@ An example is shown in figures \ref{fig:samplerouting}, \ref{fig:solvedsamplerou
 
 In this work we will focus on finding an exact solution for the partitioned coloring problem, using a branch and cut algorithm based on a generalization of the coloring model proposed in \cite{mendez2006branch,mendez2008cutting}.
 
-\subsubsection*{Previous work}
+\subsection*{Previous work}
 
 In \cite{Li00thepartition}, two groups of heuristics were developed for solving the \PCP{}: one-step and two-step. The former consists in picking the easiest node to color in every partition, and then picking the hardest one from that set using different criteria (largest-first, smallest-last, color-degree); the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
 
@@ -331,7 +331,7 @@ In \cite{noronha2006routing} the one-step color-degree constructive heuristic is
 
 Due to the complexity of the problem, most of the work on PCP is composed by heuristic approaches. However, in \cite{frota2010branch}, a branch and cut algorithm is devised, using an integer linear programming model based on the asymmetric representatives formulation for the standard coloring problem, presented in \cite{campelo2004cliques} and \cite{campelo2008asymmetric}.
 
-\subsection{Objective of this work}
+\section{Objective of this work}
 
 A common approach for obtaining exact solutions to complex combinatorial optimization problems is to model them as integer linear programming problems, and solve them using branch and bound, cutting planes or branch and cut algorithms, among others. 
 
@@ -351,7 +351,7 @@ This implementation is then tested in chapter \ref{sec:results}. Given a test su
 
 Finally, in chapter \ref{sec:conclusions}, we sum up the work achieved, draw conclusions from it and present possible future research lines.
 
-\subsection{Definitions}
+\section{Definitions}
 \label{subsec:intro:definitions}
 
 In this section we will define all concepts and conventions to be used throughout this work: 

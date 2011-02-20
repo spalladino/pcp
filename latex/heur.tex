@@ -1,11 +1,11 @@
 %!TEX root = pcp.tex
 
-\section{Enumeration algorithms}
+\chapter{Enumeration algorithms}
 \label{sec:heur}
 
-Implicit enumeration algorithms walk through all possible colorings for the graph, restricting the solution set as much as possible and pruning non-optimal solutions using known bounds. In this section we will review implicit enumeration techniques for the classical coloring problem and discuss different generalizations for \PCP{}.
+Implicit enumeration algorithms walk through all possible colorings for the graph, restricting the solution set as much as possible and pruning non-optimal solutions using known bounds. In this chapter we will review implicit enumeration techniques for the classical coloring problem and discuss different generalizations for \PCP{}.
 
-\subsection{Classical scheme}
+\section{Classical scheme}
 
 A classical scheme for enumeration algorithms is presented in \ref{alg:enumeration}.
 
@@ -50,7 +50,7 @@ Another algorithm, which is one of the most widely used for the coloring problem
 
 For an implementation of the \textsc{dsatur} algorithm, we used the code provided by Trick in \cite{trickdsatur}, which we ported to Java and adapted for partitioned coloring as described in \ref{subsec:heur:enumpcp}.
 
-\subsection{Enumerating partitioned colorings}
+\section{Enumerating partitioned colorings}
 \label{subsec:heur:enumpcp}
 
 The previous scheme must be modified in order to generate valid partitioned colorings. A simple modification would be to simply pick a new partition instead of a new node on each recursive call, and iterate over all nodes in the partition using all candidate labels. This modification is presented in algorithm \ref{alg:pcpenumerationwrong}. 
@@ -123,14 +123,14 @@ Therefore, we propose another modification, presented in algorithm \ref{alg:pcpe
 
 It is within this scheme that we embedded our two different strategies based on degree of saturation for partition coloring.
 
-\subsection{Partitioned \textsc{dsatur}}
+\section{Partitioned \textsc{dsatur}}
 \label{subsec:heur:pdsatur}
 
 Classical \textsc{dsatur} picks the node with the highest color degree on each iteration, based on the assumption that nodes difficult to color should be handled first, which usually works well for most heuristics. In the case of partition coloring, as suggested in \cite{Li00thepartition}, nodes with lower degree are easier to color and should be preferred within a partition; also, it is better to color larger partitions first in order to reduce the problem size as early as possible.
 
 Based on these assumptions, we generalized two different versions for partitioned \textsc{dsatur}: \textit{easiest node} and \textit{hardest partition}.
 
-\subsubsection{Easiest node}
+\subsection{Easiest node}
 
 The easiest node variant is based on the \textit{onestepCD} heuristic proposed in \cite{Li00thepartition}. In order to pick the node to color, the easiest node is chosen from every uncolored partition, where \textit{easiest} is defined in terms of lowest color degree, with tie breaking on lowest number of uncolored neighbours. From the resulting set, the node with the highest color degree is chosen, as in classic \textsc{dsatur}. 
 
@@ -138,7 +138,7 @@ In other words, this algorithm picks the hardest node from the set of the easies
 
 Also, in an attempt to explore different solutions earlier to obtain better upper bounds, we also implemented a randomized version of the algorithm. From the set of the easiest nodes in every partition, only half of the time the hardest node is chosen, the other half another candidate is chosen with probability decreasing as its color degree decreases.
 
-\subsubsection{Hardest partition}
+\subsection{Hardest partition}
 
 Instead of choosing the easiest node from each partition and then picking the hardest one to color, this algorithm first chooses the hardest partition to handle, and then picks the easiest node from that partition. While the easiest node is picked using the usual color degree criteria, choosing the hardest partition requires a new strategy. 
 
@@ -149,11 +149,11 @@ Therefore, in order to determine the hardest partition to color, we experimented
 	\item{Number of uncolored partitions adjacent to the partition, equivalent to the tie breaking criteria used for classic \textsc{dsatur}} 
 \end{itemize}
 
-Different combinations of these criteria, as well as the different variants of the algorithm, will be compared in section \ref{subsec:resultspdsatur}.
+Different combinations of these criteria, as well as the different variants of the algorithm, will be compared in chapter \ref{subsec:resultspdsatur}.
 
-\subsubsection{Ad-hoc modifications}
+\subsection{Ad-hoc modifications}
 
-As will be presented in section \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
+As will be presented in chapter \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
 
 Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. Since we still have to determine which node to color in each partition, we have to try every possible way of picking a single node from each partition to be colored. Therefore, the algorithm colors $P_{K_1},\ldots,P_{K_\omega}$ first, trying all possible node combinations, before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
 

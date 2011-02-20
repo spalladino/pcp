@@ -1,11 +1,11 @@
 %!TEX root = pcp.tex
 
-\section{Model}
+\chapter{Model}
 \label{sec:model}
 
-In this section we will present various binary integer programming formulations for the \PCP{}, generalized from the CP model presented in \cite{mendez2008cutting}, which will be used in the branch and cut algorithm.
+In this chapter we will present various binary integer programming formulations for the \PCP{}, generalized from the CP model presented in \cite{mendez2008cutting}, which will be used in the branch and cut algorithm.
 
-\subsection{Formulation}
+\section{Formulation}
 \label{subsec:model:formulation}
 
 Let $G = <V,E,P>$ a partitioned graph, being $V$ the set of nodes numbered from $1$ to $n$, $E$ the set of $m$ edges, and $P$ the set of partitions numbered from $1$ to $q$; and let $C$ be the set of color labels numbered from $1$ to $n$.
@@ -38,11 +38,11 @@ Restriction \ref{eqn:vertexsum} requires that every node is assigned exactly one
 
 This model has $(n + 1) c$ variables as well, $q$ restrictions \ref{eqn:partsum} and $m.c$ \ref{eqn:adjscolorp} restrictions, plus all integrality constraints.
 
-\subsection{Variants}
+\section{Variants}
 
-There are several variants for the previously presented model for \PCP{}, all of which provide valid partition colorings. We will explore different alternatives to the basic formulation (\ref{eqn:obj},\ref{eqn:partsum},\ref{eqn:adjscolorp}).
+There are several variants for the previously presented model for \PCP{}, all of which provide valid partition colorings. We will explore different alternatives to the basic formulation composed by restrictions \ref{eqn:obj}, \ref{eqn:partsum} and \ref{eqn:adjscolorp}, presented in section \ref{subsec:model:formulation}.
 
-\subsubsection{Color a single node per partition}
+\subsection{Color a single node per partition}
 
 Restriction \ref{eqn:partsum} can be relaxed by requiring that at least one node is colored per partition, instead of requiring that exactly one node is colored. Even more, we may also accept colorings in which a single node is assigned more than one color. 
 
@@ -53,7 +53,7 @@ Restriction \ref{eqn:partsum} can be relaxed by requiring that at least one node
 
 The minimization of the total number of colors used will ensure that no additional colors will be used, and a valid coloring can be extracted from the resulting solution by picking any color from any node on every partition, as no color conflicts will occur since restriction \ref{eqn:adjscolorp} is still in place.
 
-\subsubsection{Color conflicts}
+\subsection{Color conflicts}
 
 An alternative to restriction \ref{eqn:adjscolorp}, for both preventing color conflicts and set $w_j$ variables upon usage of color $j$, is to decouple this two concepts into different restrictions. Therefore, instead of restricting $x_{ij} + x_{kj} \leq w_j$ for every edge, we may require:
 
@@ -75,7 +75,7 @@ Another variant that further reduces the number of restrictions makes heavy use 
 
 \begin{equation}
 \label{eqn:adjsneighb}
-\sum_{i \in N(i_0)} x_{i_0j} + r * x_{i_0j} \leq r * w_j \quad \forall j \in C, \; \forall i_0 \in V 
+\sum_{i \in N(i_0)} x_{i_0j} + r x_{i_0j} \leq r w_j \quad \forall j \in C, \; \forall i_0 \in V 
 \end{equation}
 
 A simple value for $r$ could be the number of different partitions in the neighbourhood of node $i_0$. In that case, the restriction implies that either node $i_0$ uses color $j$, or at most $r$ nodes in its neighbourhood may use it simultaneously.
@@ -84,7 +84,7 @@ However, we may tighten the restriction by replacing $r$ by the number of compon
 
 This restriction generates a much lower number of equations in dense graphs, as it requires just $c$ restrictions per node instead of per edge.
 
-\subsection{Breaking symmetry}
+\section{Breaking symmetry}
 \label{subsec:model:symmetry}
 
 One of the main issues with the model presented is that it allows for multiple symmetric solutions; the same happens with the standard coloring model SCP. 
@@ -130,19 +130,19 @@ k = 3, i = 6, j = 3 \qquad & x_{6,3} \leq \sum_{u \in P_2} x_{u,2} = x_{3,2} + x
 \vdots \qquad & \vdots
 \end{align*}
 
-\subsection{Objective function}
+\section{Objective function}
 \label{subsec:model:obj}
 
-Another way of reducing the number of symmetric solutions is to prefer lower-label colors in the objective function, therefore choosing the lowest labels possible in each coloring. To achieve this we simply add higher coefficients to lower $w_j$ variables in the objective:
+Another way of reducing the number of symmetric solutions is to prefer lower-label colors in the objective function, therefore choosing the lowest labels possible in each coloring. To achieve this, we simply multiply $w_j$ variables with a lower index $j$ by a lower coefficient in the objective function; since we are minimizing, the variables multiplied by the lowest factors should be chosen first.
 
 \begin{equation}
 \label{eqn:objlinear}
-\text{\textsc{minimize}} \quad \sum_{j \in C} j.w_j 
+\text{\textsc{minimize}} \quad \sum_{j \in C} j w_j 
 \end{equation}
 
 However, early tests showed that this objective function offers poor computational results, so it was early discarded from the set of possible formulations.
 
-\subsection{Strengthening the model}
+\section{Strengthening the model}
 
 There are other inequalities, besides the already mentioned symmetry breaking ones, that are not necessary for the formulation of a valid coloring, yet they strengthen the model relaxation, helping during the branch and cut process. These inequalities are entirely optional in the formulation, their inclusion depends strictly in the tradeoff between building a more complex model that takes more time to solve and strengthening its relaxation so the algorithm's overall performance is increased.
 

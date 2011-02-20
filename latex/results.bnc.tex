@@ -1,11 +1,11 @@
 %!TEX root = pcp.tex
 
-\subsection{Branch and cut}
+\section{Branch and cut}
 \label{subsec:resultsbnc}
 
 Last but not least, in determining the best configuration for the different components of a branch and cut algorithm, we evaluated the algorithm's performance with different settings relative to the whole branch and cut process. We evaluated different criteria for running the exhaustive implicit enumeration in subtrees, as described in \ref{subsec:alg:implicit}, and also different MIP relative parameters in the underlying \textsc{cplex} framework we used.
 
-\subsubsection{Exhaustive implicit enumeration}
+\subsection{Exhaustive implicit enumeration}
 
 Our first test, once most parameters in the branch and cut algorithm were fixed, was to determine the threshold to run a full \textsc{dsatur} on a node once enough partitions' colors had been fixed during the branching process. Since the algorithm considered only non-fixed partitions for its execution, we experimented with values within acceptable ranges for an exhaustive enumeration: we chose 20, 40 and 60 as the number of remaining partitions to color which triggered the enumeration.
 
@@ -43,7 +43,7 @@ EW 80 N=100 & 0.00 & 307.67 & 0.19 & 2.00 & 313.67 & 0.19 & 28.00 & 119.00 & 0.2
 
 \end{sidewaystable}
 
-\subsubsection{Probing}
+\subsection{Probing}
 
 An available setting in the \textsc{cplex} framework is the probing level. This controls how much processing is invested in a preprocessing stage to derive logical implications from setting binary variables to a fixed value. As \textsc{cplex}'s manual \cite{cplex121} explains:
 
@@ -87,7 +87,7 @@ EW 80 N=100 & \textbf{347.00} & \textbf{0.15} & 346.00 & 0.19 & 308.33 & 0.19 & 
 
 \end{sidewaystable}
 
-\subsubsection{Emphasizing feasibility and optimality}
+\subsection{Emphasizing feasibility and optimality}
 
 Arriving to an optimal solution in a branch and cut algorithm requires both (1) obtaining integral feasible solutions of decreasing objective value, and (2) generate a proof that the best integral solution obtained is actually an optimum. The emphasis the framework puts on these two parts of the algorithm is controlled by a \textit{MIP emphasis} parameter, which can be given the following values:
 
@@ -135,7 +135,7 @@ EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 
 
 
 
-\subsubsection{Alternative models in branch and cut}
+\subsection{Alternative models in branch and cut}
 
 After fixing all of the parameters involved in the different components of the branch and cut algorithm, we decided to revisit the first step and re-evaluate alternative model formulations, this time using the full branch and cut algorithm for comparing the different configurations.
 

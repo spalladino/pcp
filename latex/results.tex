@@ -1,19 +1,19 @@
 %!TEX root = pcp.tex
 
-\section{Computational results}
+\chapter{Computational results}
 \label{sec:results}
 
-This section contains all the results obtained from the computational experiments executed. We devised a test suite for each algorithm or strategy to parametrize, and picked the configuration with the best results for each subsequent test. Tested components include the model formulation, \textsc{dsatur} strategy, branch criteria, primal heuristic, separation algorithms, etc.
+This chapter contains all the results obtained from the computational experiments executed. We devised a test suite for each algorithm or strategy to parametrize, and picked the configuration with the best results for each subsequent test. Tested components include the model formulation, \textsc{dsatur} strategy, branch criteria, primal heuristic, separation algorithms, etc.
 
-\subsubsection{Testing environment}
+\subsection{Testing environment}
 
 We executed all tests on an Intel Core 2 Duo E7400 ($2.80$GHz each) with $3.5$ GB RAM, running Windows XP SP3, with a JVM version 1.6.0 update 16. In most experiments execution was confined to a single core, in order to eliminate distortions in measures caused by parallelization.
 
 We used \textsc{IBM Ilog Cplex} version $12.1$ as a branch and cut framework, using its Java libraries for programming custom routines.
 
-\subsubsection{Graphs instances}
+\subsection{Graphs instances}
 
-We used different types of instances on each test depending on the focus of the test itself. Overall, we used mostly random graphs, as well as certain \textsc{dimacs} challenge instances\cite{dimacs} for our last tests. In the case of random graphs, we used multiple instances (between three and five, depending on running times) for each parameterization and reported the average results.  
+We used different types of instances on each test depending on the focus of the test itself. Overall, we used mostly random graphs, as well as certain \textsc{dimacs} challenge instances\cite{dimacs} for our last tests. In the case of random graphs, we used multiple instances (between three and five, depending on running times) for each different value of number of nodes, density and partition size; and reported the average results.
 
 Random graphs were built according to two different schemes:
 \begin{itemize}

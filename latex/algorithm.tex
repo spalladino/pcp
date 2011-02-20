@@ -1,15 +1,15 @@
 %!TEX root = pcp.tex
 
-\section{Branch and Cut}
+\chapter{Branch and Cut}
 \label{sec:bnc}
 
-In this section we will present the implemented branch-and-cut algorithm, including all the components that compose the branch and cut structure, such as initial heuristic, branching strategies, separation algorithms and primal heuristics.
+In this chapter we will present the implemented branch-and-cut algorithm, including all the components that compose the branch and cut structure, such as initial heuristic, branching strategies, separation algorithms and primal heuristics.
 
-\subsection{Algorithm structure}
+\section{Algorithm structure}
 
 The structure of a branch and cut algorithm can be considered a combination of cutting planes and branch and bound schemes, which we describe below.
 
-\subsubsection{Cutting planes}
+\subsection{Cutting planes}
 
 Cutting planes algorithms rely solely on valid inequalities for solving the problem. Given a solution of the model's linear relaxation \footnote{The linear relaxation of an integer linear programming consists in removing all integrality constraints on the variables.}, cutting planes are added to the formulation in order to remove the fractional solution obtained. 
 
@@ -40,9 +40,9 @@ The algorithm consists in repeating this process, re-solving the relaxation with
 
 The algorithm depends on having an adequate set of cutting planes families, along with good separation heuristics, in order to find valid inequalities that cut off the relaxation's fractional solution on every iteration. Excessive generation of cutting planes may have the drawback that the relaxation becomes larger and larger on every iteration, requiring a greater computational effort to solve. Even worse, the cutting planes families chosen may be such that the algorithm requires an infinite number of iterations to converge to the integer solution, which forces the addition of an algorithm stopping condition based on elapsed time, number of iterations or relative improvement in the solution, among others.
 
-Note that, besides the valid inequalities specific to each problem, such as the ones we have presented for \PCP{} in section \ref{sec:ineqs}, there are generic families of cutting planes that can be applied to any problem, like Gomory cuts \cite{gomory1958outline}, disjunctive cuts \cite{balas1993lift}, clique cuts, cover cuts, etc. However, problem-specific cuts usually have better performance than generic ones.
+Note that, besides the valid inequalities specific to each problem, such as the ones we have presented for \PCP{} in chapter \ref{sec:ineqs}, there are generic families of cutting planes that can be applied to any problem, like Gomory cuts \cite{gomory1958outline}, disjunctive cuts \cite{balas1993lift}, clique cuts, cover cuts, etc. However, problem-specific cuts usually have better performance than generic ones.
 
-\subsubsection{Branch and bound}
+\subsection{Branch and bound}
 
 The branch and bound scheme explores different solutions by setting bounds on fractional variables on every partial solution. The algorithm starts by solving the relaxation, like cutting planes, but instead of removing the fractional solution by adding a valid inequality, it creates two subproblems, usually by fixing a particular variable with a fractional value to either zero or one, in the case of binary integer programming problems in which variables are restricted to these two possible values. 
 
@@ -81,7 +81,7 @@ Besides the \textit{branching} behaviour of the algorithm, both upper and lower 
 
 The branch and bound scheme does not specify which node to select on each iteration, or how to generate the subproblems on each node. The node selection strategy and the branching strategy are chosen depending on the problem to solve.
 
-\subsubsection{Cut and branch}
+\subsection{Cut and branch}
 
 The cut and branch scheme is simply an execution of the cutting plane algorithm until a certain threshold is reached (expressed in running time, number of cuts iterations or mip gap). Then the generation of cutting planes is stopped and a branch and bound algorithm is executed, using the initial formulation augmented with all the generated cutting planes.
 
@@ -89,7 +89,7 @@ This algorithm usually yields better results than the previous ones, as a cuttin
 
 It is worth noting that, since the cut and branch algorithm is ultimately reduced to a branch and bound scheme, this scheme always arrives to an optimal solution, unlike a pure cutting planes algorithm which may fail to obtain an integer solution.
 
-\subsubsection{Branch and cut}
+\subsection{Branch and cut}
 
 While the cut and branch algorithm applies cutting planes only at the root of the branch and bound tree, the branch and cut version uses cutting planes throughout the whole tree. Although cuts are applied more aggressively at the root, on certain internal nodes more iterations of cuts are executed. 
 
@@ -101,7 +101,7 @@ As with all previously mentioned algorithms, branch and cut schemes have a numbe
 
 Throughout this section we will go over all these missing pieces in the branch and cut structure, and point out how we filled them in the context of the partitioned coloring problem.
 
-\subsection{Preprocessing}
+\section{Preprocessing}
 
 The first step in solving a \PCP{} instance consists in preprocessing the graph, applying all the following rules until no more modifications are made to the graph:
 
@@ -154,7 +154,7 @@ Last 3 steps are performed until no more changes are made to the graph. The resu
 
 Every step is processed by brute force, since their running time is polynomial in the size of the graph, except for step 4 for which we use the algorithm presented below.
 
-\subsubsection{Partition graph clique detection}
+\subsection{Partition graph clique detection}
 
 To find the maximum clique in the partition graph we use a simple backtracking algorithm. Since the running time of this algorithm can be excessive for a preprocessing step, we bound the running time of this algorithm to five seconds; however, the algorithm usually ends much sooner, as the partition graph is not only smaller but also much less dense than the original graph. 
 
@@ -196,13 +196,13 @@ Starting with an initial node, the algorithm keeps a list of valid candidates fo
 
 \end{algorithm} 
 
-\subsection{Initial heuristic}
+\section{Initial heuristic}
 
 A good initial heuristic solution gives an upper bound on the solution, eliminates a large number of variables and restrictions in the model, and can be used as an initial incumbent solution for the branch and cut algorithm. 
 
 In order to generate this solution, we use the modification of the \textsc{dsatur} algorithm for partitioned graphs presented in \ref{sec:heur}. Since the algorithm generates an implicit enumeration of all possible colorings, which might take too long to compute, its running time is bounded to five seconds. The coloring of the partitions in the clique $K$ is fixed to labels $1, \ldots, \omega$ in order to reduce the solutions set.
 
-\subsection{Initialization}
+\section{Initialization}
 
 Using the initial solution as an upper bound $\hat{\chi}$ for the chromatic number, it is possible to eliminate all $x_{ij}$ and $w_j$ variables with $j > \hat{\chi}$, thus greatly reducing the number of involved variables and restrictions in the model.
 
@@ -216,7 +216,7 @@ Also, in case the partition being fixed to a color $j_k$ has a single node in it
 
 Another bound based on nodes degree is imposed. A node $v$ of partition degree $\delta_P(v)$ can always be colored with a label $j_k$ such that $1 \leq j_k \leq \delta_P(v) + 1$, since it will be neighbour to at most $\delta_P(v)$ different colors, therefore any set of $\delta_P(v) + 1$ colors contains at least one valid label that does not generate color conflicts.  
 \begin{equation*}
-x_{ij} = 0 \quad \forall i \in V,\ \forall 1 \leq j \leq \delta_P(v) + 1 \\
+x_{ij} = 0 \quad \forall i \in V,\ \forall j > \delta_P(v) + 1 \\
 \end{equation*}
 
 Finally, in case minimum partition index breaking symmetry restrictions (\ref{eqn:minlabel}) are being used, this is, the color with the lowest label is assigned to the color class containing the partition with the lowest index, another bound can be imposed on $x_{ij}$ variables. Since in the worst case all partitions will have a different color, then a partition with index $k$ will never be colored with label greater than $k$. Therefore, the following bound is imposed:
@@ -224,13 +224,13 @@ Finally, in case minimum partition index breaking symmetry restrictions (\ref{eq
 x_{ij} = 0 \quad \forall P_k \in P,\ \forall i \in P_k,\ \forall j > k \\
 \end{equation*}
 
-\subsection{Cuts separation}
+\section{Cuts separation}
 
-For each family of valid inequalities listed in \ref{sec:ineqs}, an heuristic is implemented to find a set of valid inequalities being violated in a given linear relaxation of the model. Note that in most cases, finding all violated inequalities in a solution is NP, so heuristic procedures must be applied. 
+For each family of valid inequalities listed in \ref{sec:ineqs}, an heuristic is implemented to find a set of valid inequalities being violated by a solution of the linear relaxation of the model. Note that finding a violated inequality in a solution is NP, so heuristic procedures must be applied. 
 
 Since these algorithms are applied frequently during the branch and cut tree, it is imperative that their running time is as fast as possible, in order to minimize the added overhead to the whole algorithm.
 
-\subsubsection{Extended clique cuts}
+\subsection{Extended clique cuts}
 
 Separation of extended clique cuts (\ref{ineq:extendedclique}) is done using a very similar algorithm to \ref{alg:gpclique}, adapted to partitioned graphs and without backtracking, so running time is acceptable for a separation algorithm. This algorithm is executed once for each color, and nodes are sorted based not on their degree but on their $x_{ij}$ value in the current solution.
 
@@ -271,7 +271,7 @@ In order to avoid exploring the same solution space multiple times for different
 \end{algorithmic}
 \end{algorithm} 
 
-\subsubsection{Component independent set inequalities}
+\subsection{Component independent set inequalities}
 
 Component hole \ref{ineq:chole} and component path \ref{ineq:cpath} inequalities are separated within the same procedure using a greedy heuristic. In a similar fashion to algorithm \ref{alg:sep:extclique}, for every color the graph is sorted according to $x_{ij}$ values, and for each initial node a component path or hole is greedily constructed. Once again, bounds for a maximum number of visits on each node are imposed, thus rejecting nodes with a certain number of visits or belonging to a partition already in the path, since this would violate the \textit{component} property.
 
@@ -315,32 +315,32 @@ On every iteration the most promising node is added to the path being built. In 
 
 As an alternative to the previous algorithm, we also implemented the hole detection algorithm presented in \cite{nikolopoulos2004hole}. We adapted the algorithm presented in the paper to reject a node if it belongs to a partition already in the path, therefore exploring only component holes; testing this implementation against the previous one showed that our custom algorithm performed slightly better, and generated path as well as hole inequalities.
 
-\subsubsection{Partition graph independent set inequalities}
+\subsection{Partition graph independent set inequalities}
 
 For both path and hole inequalities (\ref{ineq:gpiset}) over the partition graph $G'$, algorithms equivalent to the ones used for component independent sets are applied as separation heuristics.
 
 Graph $G'$ is constructed once at the beginning of the branch and cut and is then used as input for these heuristics. Since there are no $x_{ij}$ variables to use for sorting the nodes of the graph, the value $\sum_{i \in P_k} x_{ij}$ is used for each partition $P_k$, this is, the sum of the values of the partition's nodes.
 
-\subsubsection{Block color inequalities}
+\subsection{Block color inequalities}
 
 Block color inequalities (\ref{ineq:blockcp}) are explored using brute force, since there are no more than $c.q$ of them, and checking whether they are violated or not can be performed fast enough.
 
 Alternatively, they can be added initially to the cut pool provided by the branch and cut framework, instead of manually checking them at each cuts iteration.
 
-\subsection{Node selection strategies}
+\section{Node selection strategies}
 
 On each iteration of the branch and cut algorithm, an unprocessed node must be chosen to be solved. Determining which node will be handled next is known as the \textit{node selection} strategy.
 
-There are different standard node selection strategies, all of them implemented by the branch-and-cut framework we used. In section \ref{sec:results} we experiment with the behaviour of the algorithm under different strategies:
+There are different standard node selection strategies, all of them implemented by the branch-and-cut framework we used. In chapter \ref{sec:results} we experiment with the behaviour of the algorithm under different strategies:
 \begin{itemize}
 	\defitem{DFS}{Depth-first search, picks the last node opened, attempting to generate an integral solution by diving to the bottom of the tree as fast as possible. This strategy has low memory consumption as relatively few nodes are left unprocessed on every iteration.}
-	\defitem{BFS}{Breadth-first search, picks the first node opened; this strategy solves every open node with at the same depth before proceeding to the following depth level. It usually has memory issues, as a large number of nodes tend to be left open, thus making this a poor choice in most cases.}
+	\defitem{BFS}{Breadth-first search, picks the first node opened; this strategy solves every open node at the same depth before proceeding to the following depth level. It usually has memory issues, as a large number of nodes tend to be left open, thus making this a poor choice in most cases.}
 	\defitem{BestBound}{Best-bound, picks the open node with best objective function available, which tends to be near the root of the branch and bound tree. This strategy usually reports the best results.}
 	\defitem{BestEstimate}{Best-estimate uses \textit{an estimate of a given node's progress toward integer feasibility relative to its degradation of the objective function}\cite{cplex121}; it improves the chance of finding feasible solutions when they are difficult to generate.}
 \end{itemize}
 
 
-\subsection{Branching strategies}
+\section{Branching strategies}
 \label{subsec:alg:branching}
 
 After each node in the branch and cut tree is processed, new child nodes are created by subdividing the problem into two easier subproblems; this is usually done by \textit{branching} on a certain variable. Usually, in the case of binary variables, a variable $x$ with a fractional value in the relaxation is chosen, and the two subproblems are created by fixing $x = 0$ and $x = 1$ and re-processing. Alternatively, bounds on expressions, instead of on variables, can be set.
@@ -367,7 +367,7 @@ Whichever method of branching is chosen, it requires that the solutions represen
 
 Choosing which variable to branch on, and what bounds are implied within each branch, is part of what is called the branching strategy. 
 
-\subsubsection{Static priorities}
+\subsection{Static priorities}
 
 The simplest way to choose which variable to branch on is to assign a priority to each $x_{ij}$, which will be used to pick the branching variable when necessary: the integer infeasible variable with the highest priority is picked on every branching. 
 
@@ -375,7 +375,7 @@ We experimented in section \ref{subsec:resultsbranching} with different criteria
 
 Using this criteria has the huge drawback that no information regarding the actual value of the $x_{ij}$ variable is used, so these priorities work best as a tie-breaker for another strategy.
 
-\subsubsection{Fractional values}
+\subsection{Fractional values}
 \label{subsubsec:alg:branch:frac}
 
 A common practice is to pick the most fractional variable to branch on. We determine such variable as:
@@ -387,7 +387,7 @@ In case of a tie, we use the static priority set for the variables to determine 
 
 This is a common branching technique, but does not exploit any particular feature of the problem being studied, unlike the one described below.
 
-\subsubsection{Degree of saturation}
+\subsection{Degree of saturation}
 \label{subsubsec:alg:branch:dsatur}
 
 A branching strategy specifically related to the partitioned coloring problem is to branch on a node with the highest degree of saturation. Since these nodes are usually the most difficult ones to handle, it is reasonable to fix their values as early as possible in the branch and cut tree.
@@ -407,7 +407,7 @@ Having chosen a node $v_i$ for branching, we must choose which variable $x_{i^*j
 	\defitem{\textsc{dsatur-(C+1)}}{Create up to $C+1$ subproblems, one for each possible coloring of the node, branching on $x_{i^*j_0} = 1, \ldots, x_{i^*j_c} = 1$, plus another child which sets all $x_{i^*j_0}$ variables to zero, in case the node is not colored within its partition.}
 \end{itemize}
 
-\subsubsection{Implied bounds}
+\subsection{Implied bounds}
 \label{subsubsec:alg:branch:bounds}
 
 When manually specifying the branching variable and creating the subproblems, it is also possible to fix more variables that would be affected by the value assigned to the first one.
@@ -430,7 +430,7 @@ x_{ij^*} = 0 \quad \forall i \in N(i^*)
 \]
 \end{itemize}
 
-\subsection{Primal heuristic}
+\section{Primal heuristic}
 \label{subsec:alg:primal}
 
 The algorithm used to create an integer feasible solution from the relaxation's solution is called the \textit{primal heuristic}. A typical primal heuristic consists in rounding the values of every fractional variable to the nearest integer value, as long as this process satisfies all the restrictions imposed by the model.
@@ -447,16 +447,16 @@ Having all these values fixed, an extremely short run of \textsc{dsatur} is exec
 
 The best coloring obtained by the algorithm is then used as an incumbent solution for the node. In case certain symmetry breaking restrictions are in place, a reordering of the labels assigned to each color class might have to be performed.
 
-\subsection{Implicit enumeration}
+\section{Implicit enumeration}
 \label{subsec:alg:implicit}
 
 Early experimentation with the branch and cut algorithm and with the \textsc{dsatur} algorithm has shown that, for relatively small instances, the latter explores all possible solutions much faster than the former, since it does not have all the overhead imposed by the different artifacts present in a full branch and cut.
 
 Therefore, when we have reduced the problem size to a relatively small one by fixing node-color assignments during the branching process, instead of proceeding with the traditional branch and cut algorithm, we execute a full run of \textsc{dsatur}. Since most partitions are already colored, the number of possible solutions is reasonably small to be fully explored.
 
-In section \ref{sec:results} we experiment with different values for the number of uncolored partitions in the branch and cut tree to be used as the threshold for stopping the branch and cut and starting an unbounded execution of \textsc{dsatur}.
+In chapter \ref{sec:results} we experiment with different values for the number of uncolored partitions in the branch and cut tree to be used as the threshold for stopping the branch and cut and starting an unbounded execution of \textsc{dsatur}.
 
-\subsection{Implementation details}
+\section{Implementation details}
 
 The branch and cut algorithm was implemented in Java 1.6 using CPLEX version 12.1 both as a branch-and-cut framework and a linear programming solver for relaxations. 
 
