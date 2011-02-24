@@ -475,6 +475,38 @@ pruning_runs = create_runs(baseprops, [
                 }
 				])
 
+pruning_primalnoub_runs = create_runs(baseprops, [
+                {
+                    'pruning.enabled': 'false',
+                    'primal.useub': 'false'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.4',
+                    'primal.useub': 'false'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.5',
+                    'primal.useub': 'false'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.6',
+                    'primal.useub': 'false'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.7',
+                    'primal.useub': 'false'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.8',
+                    'primal.useub': 'false'
+                }
+                ])
+
 emph_runs = create_runs(baseprops, [
                 {
                     'solver.mipEmphasis': '0',

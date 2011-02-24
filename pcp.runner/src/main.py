@@ -16,13 +16,15 @@ import files as f
 import os
  
 def main():
-    files = primal.files()
-    print 'Processing Primal Static Runs: ', files
+    Fixture().resume()
+    
+    files = bnc.filesp1()
+    print 'Processing BNC Pruning Runs P1: ', files
     Fixture().newrun(
-                primal.primalstaticruns, 
+                bnc.pruning_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110219PRIMALSTATIC3')
+                runid = '20110219PRUNINGP1')
     
     files = bnc.files()
     print 'Processing BNC Pruning Runs: ', files
@@ -33,14 +35,32 @@ def main():
                 runid = '20110219PRUNING2')
     
     files = bnc.filesp1()
-    print 'Processing BNC Pruning Runs P1: ', files
+    print 'Processing BNC NoUB Pruning Runs P1: ', files
     Fixture().newrun(
                 bnc.pruning_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110219PRUNINGP1')
+                runid = '20110219PRUNINGPRIMALNOUBP1')
+    
+    files = bnc.files()
+    print 'Processing BNC NoUB Pruning Runs: ', files
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110219PRUNINGPRIMALNOUB2')
+    
+    
     
 def old():    
+    files = primal.files()
+    print 'Processing Primal Static Runs: ', files
+    Fixture().newrun(
+                primal.primalstaticruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110219PRIMALSTATIC3')
+    
     files = branch.files()
     print 'Processing Branch Static 4: ', files
     Fixture().newrun(

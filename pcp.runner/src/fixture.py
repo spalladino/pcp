@@ -84,7 +84,7 @@ class Fixture:
             self.runs = yaml.load(current)
         
         with open(curr_path, 'r') as current:
-            self.runid = current.readline()
+            self.runid = current.readline().strip()
             while (current.readline() == 'OK\n'):
                 self.successful += 1
             

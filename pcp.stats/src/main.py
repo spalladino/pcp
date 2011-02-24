@@ -400,6 +400,29 @@ def bnc_primal_freq_latextable():
             runfilter= None,
             aggr= aggregate.avg
             )
+
+def primal_static_3_ub():
+     file = '20110219PRIMALSTATIC3'
+     LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=['solution.gap', 'solution.time', 'solution.nnodes', 'solution.primalheur.time', 'solution.primalheur.success.count', 'solution.primalheur.unsuccess.count' ], 
+            series=['primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.dsatur.coloring', 'coloring.primal.maxTime'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.avg
+            )
+     
+def bnc_pruning():
+     file = '20110219PRUNING2'
+     LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=['solution.gap', 'solution.time', 'solution.nnodes', 'solution.leafheur.count','solution.primalheur.success.count', 'solution.primalheur.unsuccess.count' ], 
+            series=['pruning.enabled', 'pruning.frac'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.avg
+            )
+
     
 def test_simple():
     SimpleProcessor('20100629MODELS').process(
@@ -408,7 +431,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    bnc_primal_freq_latextable()
+    bnc_pruning()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

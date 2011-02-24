@@ -1,34 +1,37 @@
-Processing Runid 20110131BNCPRIMALFREQ
+Processing Runid 20110219PRUNING2
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  Successfully created and stored
 Data:
 \begin{itemize}
 \item solution.gap
 \item solution.time
 \item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: false, primal.runoncutcallback: false, cuts.onlyonup: true
-\item S2: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: false, primal.runoncutcallback: true, cuts.onlyonup: false
-\item S3: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: true, primal.runoncutcallback: false, cuts.onlyonup: true
-\item S4: primal.enabled: true, primal.everynodes: 1, primal.onlyonup: true, primal.runoncutcallback: true, cuts.onlyonup: true
-\item S5: primal.enabled: true, primal.everynodes: 2, primal.onlyonup: false, primal.runoncutcallback: false, cuts.onlyonup: true
-\item S6: primal.enabled: true, primal.everynodes: 4, primal.onlyonup: false, primal.runoncutcallback: false, cuts.onlyonup: true
+\item S1: pruning.enabled: false, pruning.frac: 1.0
+\item S2: pruning.enabled: true, pruning.frac: 0.400
+\item S3: pruning.enabled: true, pruning.frac: 0.500
+\item S4: pruning.enabled: true, pruning.frac: 0.600
+\item S5: pruning.enabled: true, pruning.frac: 0.700
+\item S6: pruning.enabled: true, pruning.frac: 0.800
 \end{itemize}
-\begin{tabular}{|c|ccc|ccc|ccc|ccc|ccc|ccc|}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3} & \multicolumn{3}{|c|}{S4} & \multicolumn{3}{|c|}{S5} & \multicolumn{3}{|c|}{S6}
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
 \\
- & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
 \\
 \hline
-EW 20 N=90 & 0.167 & 1736.599 & 14487.000 & 0.167 & 1757.089 & 9051.333 & 0.167 & 1684.391 & 15554.333 & 0.167 & 1686.250 & 15487.667 & 0.167 & 1703.823 & 15144.667 & 0.167 & 1688.099 & 15493.667
+EW 20 N=100 & 0.250 & 1800.036 & 6917.333 & 0.000 & 0.000 & 562.000 & 0.000 & 41.276 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.271 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.250 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.260 & 93.000 & 0.000 & 0.000 & 0.000 & 0.000 & 41.302 & 93.000 & 0.000 & 0.000 & 0.000
 \\
-EW 40 N=90 & 0.333 & 1800.052 & 3921.000 & 0.311 & 1800.156 & 2679.333 & 0.333 & 1800.052 & 4083.000 & 0.333 & 1800.078 & 4083.667 & 0.333 & 1800.063 & 4063.000 & 0.333 & 1800.036 & 4140.000
+EW 40 N=100 & 0.222 & 1800.052 & 1326.333 & 0.000 & 0.000 & 214.000 & 0.000 & 340.214 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.224 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.307 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.313 & 153.000 & 0.000 & 0.000 & 0.000 & 0.000 & 340.271 & 153.000 & 0.000 & 0.000 & 0.000
 \\
-EW 60 N=90 & 0.231 & 1800.037 & 1169.333 & 0.259 & 1800.057 & 923.000 & 0.231 & 1800.058 & 1274.333 & 0.259 & 1800.058 & 1336.000 & 0.231 & 1800.036 & 1220.000 & 0.231 & 1800.036 & 1245.333
+EW 60 N=100 & 0.270 & 1800.068 & 650.000 & 0.000 & 0.000 & 122.000 & 0.000 & 1390.136 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1391.562 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1390.651 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1392.646 & 255.000 & 0.000 & 0.000 & 0.000 & 0.000 & 1389.729 & 255.000 & 0.000 & 0.000 & 0.000
 \\
-EW 80 N=90 & 0.154 & 1800.078 & 540.000 & 0.154 & 1800.084 & 338.667 & 0.154 & 1800.068 & 556.000 & 0.154 & 1800.063 & 555.000 & 0.154 & 1800.088 & 551.333 & 0.154 & 1800.088 & 557.667
+EW 80 N=100 & 0.211 & 1800.078 & 107.667 & 0.000 & 0.667 & 13.000 & 0.204 & 1800.177 & 83.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 83.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 81.000 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.109 & 82.667 & 0.000 & 0.000 & 0.000 & 0.204 & 1800.141 & 83.333 & 0.000 & 0.000 & 0.000
 \\
 \hline 
  \end{tabular}
