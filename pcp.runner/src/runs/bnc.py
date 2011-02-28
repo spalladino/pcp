@@ -77,7 +77,7 @@ baseprops = {
 			
             'pruning.enabled': 'false',
             'pruning.minset': '1',
-            'pruning.remaining': '1000',
+            'pruning.remaining': '1',
             'pruning.frac': '1.0',
             'pruning.useub': 'true',
 
@@ -453,21 +453,17 @@ pruning_runs = create_runs(baseprops, [
 				{
 					'pruning.enabled': 'false',
 				},
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.frac': '0.2'
+                },
 				{
 					'pruning.enabled': 'true',
                     'pruning.frac': '0.4'
 				},
                 {
                     'pruning.enabled': 'true',
-                    'pruning.frac': '0.5'
-                },
-                {
-                    'pruning.enabled': 'true',
                     'pruning.frac': '0.6'
-                },
-                {
-                    'pruning.enabled': 'true',
-                    'pruning.frac': '0.7'
                 },
                 {
                     'pruning.enabled': 'true',

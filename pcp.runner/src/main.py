@@ -24,7 +24,7 @@ def main():
                 bnc.pruning_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110219PRUNINGP1')
+                runid = '20110228PRUNINGP1')
     
     files = bnc.files()
     print 'Processing BNC Pruning Runs: ', files
@@ -32,7 +32,7 @@ def main():
                 bnc.pruning_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110219PRUNING2')
+                runid = '20110228PRUNING2')
     
     files = bnc.filesp1()
     print 'Processing BNC NoUB Pruning Runs P1: ', files
@@ -40,7 +40,7 @@ def main():
                 bnc.pruning_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110219PRUNINGPRIMALNOUBP1')
+                runid = '20110228PRUNINGPRIMALNOUBP1')
     
     files = bnc.files()
     print 'Processing BNC NoUB Pruning Runs: ', files
@@ -48,7 +48,7 @@ def main():
                 bnc.pruning_runs, 
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
-                runid = '20110219PRUNINGPRIMALNOUB2')
+                runid = '20110228PRUNINGPRIMALNOUB2')
     
     
     

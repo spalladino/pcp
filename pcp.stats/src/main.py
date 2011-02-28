@@ -413,7 +413,7 @@ def primal_static_3_ub():
             )
      
 def bnc_pruning():
-     file = '20110219PRUNING2'
+     file = '20110219PRUNINGPRIMALNOUBP1'
      LatexProcessor(file).process(
             ids=[metrics.FileName()],
             datas=['solution.gap', 'solution.time', 'solution.nnodes', 'solution.leafheur.count','solution.primalheur.success.count', 'solution.primalheur.unsuccess.count' ], 

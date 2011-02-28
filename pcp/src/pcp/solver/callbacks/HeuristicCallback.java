@@ -118,7 +118,7 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 				metrics.leafHeur(coloring, nodesSet);
 				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring");
 			} else {
-				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring did not finish");
+				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring did not finish or failed to improve bound");
 			}
 			
 		} catch (Exception ex) {
