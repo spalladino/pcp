@@ -50,13 +50,13 @@ Graphics \ref{fig:models:adj} show the evolution of the gap for four particular 
 	EW 80\% & 0.292 & 193.0 & 449.054 & 0.296 & 181.2 & 469.844 & 0.292 & 192.4 & \b{349.557} & 0.294 & 160.0 & 451.126
 	\\
 	\hline
-	HK 10\% &  0.2 &  0.8 & 0.156 &  0.2 &  0.8 & 0.128 &  0.2 &  0.8 & 0.106 &  0.2 &  0.8 & 0.168
+	HK 10\% &  0.2 &  0.8 & 0.156 &  0.2 &  0.8 & 0.128 &  0.2 &  0.8 & \b{0.106} &  0.2 &  0.8 & 0.168
 	\\
-	HK 20\% & 0.12 &  0.6 & 0.278 & 0.12 &  0.6 & 0.324 &  0.2 &  1.0 & 0.181 & 0.12 &  0.6 & 0.306
+	HK 20\% & 0.12 &  0.6 & 0.278 & 0.12 &  0.6 & 0.324 &  0.2 &  1.0 & \b{0.181} & 0.12 &  0.6 & 0.306
 	\\
-	HK 30\% &  0.0 &  0.8 & 0.308 &  0.0 &  0.8 & 0.276 &  0.0 &  3.2 & 0.489 &  0.0 &  0.8 & 0.318
+	HK 30\% &  0.0 &  0.8 & 0.308 &  0.0 &  0.8 & \b{0.276} &  0.0 &  3.2 & 0.489 &  0.0 &  0.8 & 0.318
 	\\
-	HK 40\% & 0.048 &  2.2 & 0.28 & 0.048 &  3.0 & 0.312 & 0.048 &  5.2 & 0.416 & 0.048 &  2.6 & 0.292
+	HK 40\% & 0.048 &  2.2 & \b{0.28} & 0.048 &  3.0 & 0.312 & 0.048 &  5.2 & 0.416 & 0.048 &  2.6 & 0.292
 	\\
 	\hline 
 	 \end{tabular}
@@ -259,6 +259,7 @@ First two constraints define the problem itself, by specifying that a node must 
 Note that while adjacency restrictions \ref{eqn:adjscolorpone} reported better results than the chosen ones (\ref{eqn:adjsneighb}) in most cases, the latter worked better in dense graphs, which are the ones that, due to a larger problem size, take longer to solve their linear relaxation. Therefore, we opt for improving the resolution of the hardest graphs instead of getting slightly better results in the rest. 
 
 \subsection{Branch and bound testing}
+\label{subsec:results:models:bnbtesting}
 
 While the previous formulation was chosen for working on a cutting planes algorithm, we are also interested in the behaviour of different models in standard branch and bound algorithms. 
 
@@ -303,7 +304,7 @@ We present in table \ref{table:models:bnb60} the following configurations, chose
 Results were most interesting. The formulation chosen for the cutting planes algorithm yielded good results only for lowest density graphs. In other cases, using different models returned better results:
 \begin{itemize}
 \item In graphs with $40\%$ density, relaxing the \ref{eqn:partsum} constraint on painting one node per partition greatly reduces the obtained gap, as can be seen in the results for $C2$.
-\item In the most dense graphs, varying the strategy for color conflicts to use constraint \ref{eqn:symnodecount} yields much better results.
+\item In the most dense graphs, varying the strategy for symmetry breaking to use constraint \ref{eqn:symnodecount} yields much better results.
 \end{itemize}
 
 Considering the results returned by using constraint \ref{eqn:symnodecount}, we re-tested all of the previous configurations changing the default symmetry breaking strategy from \ref{eqn:minlabel} to \ref{eqn:symnodecount}, except for C1 which kept the original settings. This time, we executed a branch and bound algorithm on much smaller graphs (60 nodes), restricting ourselves to 10-minute runs and \textbf{not} providing the algorithm with any initial solution, in order to obtain zero gap and compare running times.
@@ -345,6 +346,8 @@ This time, using a simpler model, both regarding color conflict and symmetry bre
 \spacedhrule
 Throughout this chapter we have tested a significant number of different models, which were obtained by combining different constraints, and tested them in different scenarios by using different algorithms. Results changed greatly between those scenarios.
 
-Although we will be using the formulation devised in \ref{subsubsec:results:model:chosen} for testing other settings throughout the following experimentations, we will reuse all the results exposed here as alternative models for the final branch and cut algorithm, in order to pick the best performing model for the final version of the algorithm.
+We arrived to a formulation in \ref{subsubsec:results:model:chosen} based in data reported by a cutting planes algorithm, which will be used throughout the following sections when testing other components of the algorithm. 
+
+However, experimentation in \label{subsec:results:models:bnbtesting} with branch and bound algorithms showed that that formulation may not be the best choice for all scenarios. Although we will stick to the \ref{subsubsec:results:model:chosen} formulation for the following sections, all the data obtained in this last subsection will be used to know which alternative models should be tested under the branch and cut algorithm, once primal heuristic, separation heuristics and branching strategies have been properly set.
 
 \clearpage

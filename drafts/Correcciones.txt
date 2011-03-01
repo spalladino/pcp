@@ -7,9 +7,8 @@ Algoritmo:
 Informe:
 --------
 
-- Seccion 3 comparar con Brasileros
 - Correcciones introduccion
-- Falta seccion 6
+- Volver a correr 6.6.4 con menos nodos o mas tiempo una vez definido primal y pruning
 
 Introduccion:
 -------------

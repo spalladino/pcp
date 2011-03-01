@@ -37,7 +37,7 @@ EW 80\% N=100 & 0.45 & 13.00 & 13.00 & 0.41 & 2.67 & 3.33 & 0.41 & 3.33 & 3.33
 
 Using the engine's heuristic in conjunction with the custom heuristic does not report any benefit from using just the custom one. As for using the custom primal heuristic or \textsc{cplex}'s default, the former reports a lower gap on denser graphs, although this trend is reversed in medium-density graphs.
 
-The most noticeable difference is in the total number of nodes generated in the tree within the running time. The processing required by the custom primal heuristic in each step (with running time bounded to 200 ms) is much greater than the built-in heuristic, and this causes that the number of nodes that can be explored in the same time window is much smaller. This shows that the custom heuristic is much more effective, as it obtains similar or even better gaps by exploring only a fraction of the nodes.
+The most noticeable difference is in the total number of nodes generated in the tree within the running time. The processing required by the custom primal heuristic in each step (with running time bounded to 200 ms) is much greater than the built-in heuristic, and this causes that the number of nodes that can be explored in the same time window is much smaller. The custom primal heuristic, however, achieves a very similar gap (if not better, in high density graphs) than the built-in one.
 
 \subsection{Using \textsc{dsatur-(C+1)} branching}
 
