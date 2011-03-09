@@ -16,7 +16,35 @@ import files as f
 import os
  
 def main():
-    Fixture().resume()
+    
+    files = bnc.files90()
+    print 'Processing BNC Pruning Runs: ', files
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110308PRUNINGREMAINING')
+    
+def old():    
+    
+    files = bnc.files()
+    print 'Processing BNC NoUB Pruning Runs: ', files
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110228PRUNINGPRIMALNOUB2')
+    
+    
+    
+    
+    files = bnc.filesp1()
+    print 'Processing BNC NoUB Pruning Runs P1: ', files
+    Fixture().newrun(
+                bnc.pruning_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110228PRUNINGPRIMALNOUBP1')
     
     files = bnc.filesp1()
     print 'Processing BNC Pruning Runs P1: ', files
@@ -34,25 +62,6 @@ def main():
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20110228PRUNING2')
     
-    files = bnc.filesp1()
-    print 'Processing BNC NoUB Pruning Runs P1: ', files
-    Fixture().newrun(
-                bnc.pruning_runs, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20110228PRUNINGPRIMALNOUBP1')
-    
-    files = bnc.files()
-    print 'Processing BNC NoUB Pruning Runs: ', files
-    Fixture().newrun(
-                bnc.pruning_runs, 
-                files = files,
-                dirs = [ ".\\..\\data\\" ],
-                runid = '20110228PRUNINGPRIMALNOUB2')
-    
-    
-    
-def old():    
     files = primal.files()
     print 'Processing Primal Static Runs: ', files
     Fixture().newrun(

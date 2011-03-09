@@ -1,5 +1,8 @@
-Processing Runid 20110219PRUNINGPRIMALNOUBP1
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  Successfully created and stored
+
+
+
+Processing Runid 20110228PRUNINGPRIMALNOUBP1
+ Successfully loaded
 Data:
 \begin{itemize}
 \item solution.gap
@@ -11,27 +14,143 @@ Data:
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: pruning.enabled: false, pruning.frac: 1.0
-\item S2: pruning.enabled: true, pruning.frac: 0.400
-\item S3: pruning.enabled: true, pruning.frac: 0.500
-\item S4: pruning.enabled: true, pruning.frac: 0.600
-\item S5: pruning.enabled: true, pruning.frac: 0.700
-\item S6: pruning.enabled: true, pruning.frac: 0.800
+\item S1: pruning.enabled: false, pruning.frac: 1.0, pruning.useub: true, primal.useub: true
+\item S2: pruning.enabled: true, pruning.frac: 0.200, pruning.useub: true, primal.useub: true
+\item S3: pruning.enabled: true, pruning.frac: 0.400, pruning.useub: true, primal.useub: true
+\item S4: pruning.enabled: true, pruning.frac: 0.600, pruning.useub: true, primal.useub: true
+\item S5: pruning.enabled: true, pruning.frac: 0.800, pruning.useub: true, primal.useub: true
 \end{itemize}
-\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5} & \multicolumn{6}{|c|}{S6}
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5}
 \\
- & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
 \\
 \hline
-singleparte02n100p1 & 0.143 & 1800.037 & 1499.667 & 0.000 & 0.333 & 281.000 & 0.000 & 12.953 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.922 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.844 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 12.885 & 1.000 & 0.000 & 0.000 & 0.000
+singleparte02n100p1 & 0.143 & 1800.036 & 1523.333 & 0.000 & 0.333 & 284.333 & 0.143 & 1800.047 & 1525.667 & 0.000 & 0.333 & 282.333 & 0.143 & 1800.037 & 1523.667 & 0.000 & 0.333 & 284.333 & 0.143 & 1800.047 & 1524.000 & 0.000 & 0.333 & 284.333 & 0.143 & 1800.047 & 1524.000 & 0.000 & 0.333 & 284.000
 \\
-singleparte04n100p1 & 0.289 & 1800.068 & 282.667 & 0.000 & 0.333 & 224.000 & 0.000 & 50.281 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.333 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.271 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.302 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 50.297 & 1.000 & 0.000 & 0.000 & 0.000
+singleparte04n100p1 & 0.289 & 1800.099 & 285.000 & 0.000 & 0.333 & 225.667 & 0.289 & 1800.052 & 170.000 & 0.000 & 0.333 & 45.000 & 0.289 & 1800.068 & 285.000 & 0.000 & 0.333 & 225.667 & 0.289 & 1800.068 & 284.667 & 0.000 & 0.333 & 225.333 & 0.289 & 1800.099 & 285.000 & 0.000 & 0.333 & 225.667
 \\
-singleparte06n100p1 & 0.250 & 1800.156 & 35.333 & 0.000 & 0.333 & 20.667 & 0.000 & 382.927 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 381.156 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.958 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.708 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 380.818 & 1.000 & 0.000 & 0.000 & 0.000
+singleparte06n100p1 & 0.250 & 1800.151 & 36.000 & 0.000 & 0.333 & 21.333 & 0.298 & 1800.094 & 10.000 & 0.000 & 0.000 & 7.000 & 0.250 & 1800.203 & 36.000 & 0.000 & 0.333 & 21.333 & 0.250 & 1800.120 & 36.000 & 0.000 & 0.333 & 21.333 & 0.250 & 1800.167 & 36.000 & 0.000 & 0.333 & 21.333
 \\
-singleparte08n100p1 & 0.185 & 1800.130 & 18.000 & 0.000 & 0.667 & 9.333 & 0.000 & 541.000 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 541.177 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 540.802 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 542.354 & 1.000 & 0.000 & 0.000 & 0.000 & 0.000 & 540.281 & 1.000 & 0.000 & 0.000 & 0.000
+singleparte08n100p1 & 0.185 & 1800.151 & 18.333 & 0.000 & 0.667 & 9.667 & 0.212 & 1800.187 & 3.000 & 0.000 & 0.000 & 0.333 & 0.185 & 1800.198 & 18.000 & 0.000 & 0.667 & 9.667 & 0.185 & 1800.172 & 18.000 & 0.000 & 0.667 & 9.667 & 0.189 & 1800.258 & 16.000 & 0.000 & 1.000 & 8.000
+\\
+\hline 
+ \end{tabular}
+
+
+
+Processing Runid 20110228PRUNINGPRIMALNOUB2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0, pruning.useub: true, primal.useub: true
+\item S2: pruning.enabled: true, pruning.frac: 0.200, pruning.useub: true, primal.useub: true
+\item S3: pruning.enabled: true, pruning.frac: 0.400, pruning.useub: true, primal.useub: true
+\item S4: pruning.enabled: true, pruning.frac: 0.600, pruning.useub: true, primal.useub: true
+\item S5: pruning.enabled: true, pruning.frac: 0.800, pruning.useub: true, primal.useub: true
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=100 & 0.250 & 1800.031 & 6878.667 & 0.000 & 0.000 & 559.333 & 0.250 & 1800.036 & 6875.333 & 0.000 & 0.000 & 558.333 & 0.250 & 1800.047 & 6897.000 & 0.000 & 0.000 & 561.000 & 0.250 & 1800.036 & 6956.667 & 0.000 & 0.000 & 564.333 & 0.250 & 1800.021 & 6892.333 & 0.000 & 0.000 & 561.000
+\\
+EW 40 N=100 & 0.222 & 1800.058 & 1342.333 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.037 & 1342.667 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.036 & 1341.000 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.063 & 1343.333 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.026 & 1343.333 & 0.000 & 0.000 & 214.000
+\\
+EW 60 N=100 & 0.270 & 1800.063 & 656.333 & 0.000 & 0.000 & 122.000 & 0.270 & 1800.084 & 658.333 & 0.000 & 0.000 & 122.000 & 0.270 & 1800.078 & 657.667 & 0.000 & 0.000 & 122.000 & 0.270 & 1800.052 & 658.333 & 0.000 & 0.000 & 122.000 & 0.270 & 1800.036 & 655.333 & 0.000 & 0.000 & 122.000
+\\
+EW 80 N=100 & 0.211 & 1800.094 & 107.667 & 0.000 & 0.667 & 13.000 & 0.211 & 1800.089 & 106.333 & 0.000 & 0.667 & 12.667 & 0.211 & 1800.109 & 106.667 & 0.000 & 0.667 & 12.667 & 0.211 & 1800.083 & 107.333 & 0.000 & 0.667 & 13.000 & 0.211 & 1800.089 & 107.667 & 0.000 & 0.667 & 13.000
+\\
+\hline 
+ \end{tabular}
+
+
+
+Processing Runid 20110228PRUNINGP1
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0, pruning.useub: true, primal.useub: true
+\item S2: pruning.enabled: true, pruning.frac: 0.200, pruning.useub: true, primal.useub: true
+\item S3: pruning.enabled: true, pruning.frac: 0.400, pruning.useub: true, primal.useub: true
+\item S4: pruning.enabled: true, pruning.frac: 0.600, pruning.useub: true, primal.useub: true
+\item S5: pruning.enabled: true, pruning.frac: 0.800, pruning.useub: true, primal.useub: true
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+singleparte02n100p1 & 0.143 & 1800.047 & 1524.000 & 0.000 & 0.333 & 284.333 & 0.143 & 1800.052 & 1527.000 & 0.000 & 0.333 & 282.333 & 0.143 & 1800.057 & 1523.667 & 0.000 & 0.333 & 284.333 & 0.143 & 1800.052 & 1524.333 & 0.000 & 0.333 & 284.333 & 0.143 & 1800.047 & 1524.000 & 0.000 & 0.333 & 284.333
+\\
+singleparte04n100p1 & 0.289 & 1800.083 & 285.000 & 0.000 & 0.333 & 225.667 & 0.289 & 1800.057 & 169.667 & 0.000 & 0.333 & 45.333 & 0.289 & 1800.089 & 285.333 & 0.000 & 0.333 & 226.000 & 0.289 & 1800.094 & 285.000 & 0.000 & 0.333 & 225.667 & 0.289 & 1800.052 & 285.000 & 0.000 & 0.333 & 225.667
+\\
+singleparte06n100p1 & 0.250 & 1800.193 & 35.667 & 0.000 & 0.333 & 21.000 & 0.298 & 1800.073 & 10.000 & 0.000 & 0.000 & 7.000 & 0.262 & 1800.198 & 32.000 & 0.000 & 0.333 & 20.333 & 0.262 & 1800.151 & 34.000 & 0.000 & 0.333 & 20.333 & 0.250 & 1800.115 & 35.333 & 0.000 & 0.333 & 20.667
+\\
+singleparte08n100p1 & 0.193 & 1800.151 & 18.000 & 0.000 & 0.333 & 9.333 & 0.212 & 1800.192 & 3.000 & 0.000 & 0.000 & 0.333 & 0.185 & 1800.167 & 18.667 & 0.000 & 0.667 & 9.667 & 0.185 & 1800.208 & 18.667 & 0.000 & 0.667 & 9.667 & 0.185 & 1800.130 & 18.667 & 0.000 & 0.667 & 9.667
+\\
+\hline 
+ \end{tabular}
+
+
+
+Processing Runid 20110228PRUNING2
+ Successfully loaded
+Data:
+\begin{itemize}
+\item solution.gap
+\item solution.time
+\item solution.nnodes
+\item solution.leafheur.count
+\item solution.primalheur.success.count
+\item solution.primalheur.unsuccess.count
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0, pruning.useub: true, primal.useub: true
+\item S2: pruning.enabled: true, pruning.frac: 0.200, pruning.useub: true, primal.useub: true
+\item S3: pruning.enabled: true, pruning.frac: 0.400, pruning.useub: true, primal.useub: true
+\item S4: pruning.enabled: true, pruning.frac: 0.600, pruning.useub: true, primal.useub: true
+\item S5: pruning.enabled: true, pruning.frac: 0.800, pruning.useub: true, primal.useub: true
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5}
+\\
+ & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count & solution.gap & solution.time & solution.nnodes & solution.leafheur.count & solution.primalheur.success.count & solution.primalheur.unsuccess.count
+\\
+\hline
+EW 20 N=100 & 0.250 & 1800.031 & 6990.667 & 0.000 & 0.000 & 566.333 & 0.250 & 1800.031 & 6990.000 & 0.000 & 0.000 & 565.667 & 0.250 & 1800.026 & 6987.667 & 0.000 & 0.000 & 566.000 & 0.250 & 1800.026 & 6991.667 & 0.000 & 0.000 & 566.000 & 0.250 & 1800.042 & 6990.667 & 0.000 & 0.000 & 566.000
+\\
+EW 40 N=100 & 0.222 & 1800.057 & 1347.333 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.063 & 1334.333 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.047 & 1329.333 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.047 & 1327.000 & 0.000 & 0.000 & 214.000 & 0.222 & 1800.047 & 1295.333 & 0.000 & 0.000 & 211.667
+\\
+EW 60 N=100 & 0.270 & 1800.083 & 638.667 & 0.000 & 0.000 & 117.333 & 0.270 & 1800.057 & 656.333 & 0.000 & 0.000 & 121.333 & 0.270 & 1800.036 & 656.333 & 0.000 & 0.000 & 121.667 & 0.270 & 1800.068 & 663.000 & 0.000 & 0.000 & 122.000 & 0.270 & 1800.084 & 661.667 & 0.000 & 0.000 & 122.000
+\\
+EW 80 N=100 & 0.211 & 1800.099 & 108.667 & 0.000 & 0.667 & 13.000 & 0.211 & 1800.099 & 108.333 & 0.000 & 0.667 & 13.000 & 0.211 & 1800.099 & 108.667 & 0.000 & 0.667 & 13.000 & 0.211 & 1800.089 & 108.667 & 0.000 & 0.667 & 13.000 & 0.197 & 1800.055 & 140.500 & 0.000 & 0.500 & 17.000
 \\
 \hline 
  \end{tabular}

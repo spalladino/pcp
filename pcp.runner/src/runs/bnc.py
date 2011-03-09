@@ -448,6 +448,27 @@ hopefully_final_runs_dimacs = create_runs(baseprops, [
                              }
                            ])
 
+pruning_runs_on_remaining = create_runs(baseprops, [
+                {
+                    'pruning.enabled': 'false',
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '10'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '20'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '30'
+                },
+                {
+                    'pruning.enabled': 'true',
+                    'pruning.remaining': '40'
+                }
+                ])
 
 pruning_runs = create_runs(baseprops, [
 				{

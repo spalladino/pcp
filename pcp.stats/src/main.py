@@ -413,15 +413,17 @@ def primal_static_3_ub():
             )
      
 def bnc_pruning():
-     file = '20110219PRUNINGPRIMALNOUBP1'
-     LatexProcessor(file).process(
-            ids=[metrics.FileName()],
-            datas=['solution.gap', 'solution.time', 'solution.nnodes', 'solution.leafheur.count','solution.primalheur.success.count', 'solution.primalheur.unsuccess.count' ], 
-            series=['pruning.enabled', 'pruning.frac'],
-            datafilter= None,
-            runfilter= None,
-            aggr= aggregate.avg
-            )
+     files = ['20110228PRUNINGPRIMALNOUBP1', '20110228PRUNINGPRIMALNOUB2', '20110228PRUNINGP1', '20110228PRUNING2' ] 
+     for file in files:
+         print "\n\n"
+         LatexProcessor(file).process(
+                ids=[metrics.FileName()],
+                datas=['solution.gap', 'solution.time', 'solution.nnodes', 'solution.leafheur.count','solution.primalheur.success.count', 'solution.primalheur.unsuccess.count' ], 
+                series=['pruning.enabled', 'pruning.frac', 'pruning.useub', 'primal.useub'],
+                datafilter= None,
+                runfilter= None,
+                aggr= aggregate.avg
+                )
 
     
 def test_simple():

@@ -23,7 +23,11 @@ public class HeuristicMetrics implements IExecutionDataProvider {
 	long unsuccessfulPrimalHeursTime = 0;
 	
 	public void leafHeur(ColoringAlgorithm coloring, int nodesSet) throws AlgorithmException {
-		if (coloring.hasSolution()) {
+		leafHeur(coloring, nodesSet, coloring.hasSolution());
+	}
+	
+	public void leafHeur(ColoringAlgorithm coloring, int nodesSet, boolean success) throws AlgorithmException {
+		if (success) {
 			successfulLeafHeurs++;
 			successfulLeafHeursTime += coloring.getBounder().getMillis();
 			if (log) System.out.println("Used brute force at " + nodesSet + " nodes set returning coloring of " + coloring.getChi());

@@ -115,9 +115,10 @@ public class HeuristicCallback extends ilog.cplex.IloCplex.HeuristicCallback {
 			if (pruneUseUB) setUpperBound(coloring);
 			if (coloring.isOptimalSolution()) {
 				createSolution(coloring);
-				metrics.leafHeur(coloring, nodesSet);
+				metrics.leafHeur(coloring, nodesSet, true);
 				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring");
 			} else {
+				metrics.leafHeur(coloring, nodesSet, false);
 				if (logLeaf) System.out.println("Pruning at " + nodesSet + " nodes set with " + coloring.getChi() + " coloring did not finish or failed to improve bound");
 			}
 			
