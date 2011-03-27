@@ -21,6 +21,48 @@
 
 \begin{document}
 
+\section{New pruning runs on smaller graphs}
+
+Processing Runid 20110308PRUNINGREMAINING
+
+Data:
+\begin{itemize}
+\item gap
+\item time
+\item nnodes
+\item lh.\#
+\item ph.success.\#
+\item ph.unsuccess.\#
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: pruning.enabled: false, pruning.frac: 1.0, pruning.useub: true, primal.useub: true
+\item S2: pruning.enabled: true, pruning.frac: 0.200, pruning.useub: true, primal.useub: true
+\item S3: pruning.enabled: true, pruning.frac: 0.400, pruning.useub: true, primal.useub: true
+\item S4: pruning.enabled: true, pruning.frac: 0.600, pruning.useub: true, primal.useub: true
+\item S5: pruning.enabled: true, pruning.frac: 0.800, pruning.useub: true, primal.useub: true
+\end{itemize}
+\begin{tabular}{|c|cccccc|cccccc|cccccc|cccccc|cccccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{6}{|c|}{S1} & \multicolumn{6}{|c|}{S2} & \multicolumn{6}{|c|}{S3} & \multicolumn{6}{|c|}{S4} & \multicolumn{6}{|c|}{S5}
+\\
+ & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\# & gap & time & nnodes & lh.\# & ph.success.\# & ph.unsuccess.\#
+\\
+\hline
+EW 20 N=90 & 0.250 & 1800.031 & 11718.000 & 0.000 & 0.000 & 873.000 & 0.250 & 1800.036 & 11689.333 & 0.000 & 0.000 & 871.667 & 0.250 & 1800.036 & 11488.667 & 0.000 & 0.000 & 857.333 & 0.250 & 1800.031 & 11596.000 & 0.000 & 0.000 & 865.667 & 0.250 & 1800.026 & 11745.667 & 0.000 & 0.000 & 875.667
+\\
+EW 40 N=90 & 0.333 & 1800.068 & 2913.000 & 0.000 & 0.000 & 648.333 & 0.333 & 1800.042 & 2911.667 & 0.000 & 0.000 & 648.333 & 0.333 & 1800.042 & 2911.667 & 0.000 & 0.000 & 648.333 & 0.333 & 1800.058 & 2911.000 & 0.000 & 0.000 & 648.000 & 0.333 & 1800.036 & 2912.333 & 0.000 & 0.000 & 648.333
+\\
+EW 60 N=90 & 0.231 & 1800.078 & 922.333 & 0.000 & 0.333 & 197.000 & 0.259 & 1800.068 & 947.667 & 6.000 & 0.000 & 204.000 & 0.231 & 1800.063 & 922.000 & 0.000 & 0.333 & 197.000 & 0.259 & 1800.078 & 935.333 & 0.000 & 0.000 & 207.000 & 0.259 & 1800.068 & 937.333 & 0.000 & 0.000 & 207.000
+\\
+EW 80 N=90 & 0.154 & 1800.063 & 370.667 & 0.000 & 0.000 & 62.333 & 0.154 & 1800.078 & 376.333 & 2.333 & 0.000 & 50.333 & 0.154 & 1800.063 & 365.667 & 0.000 & 0.000 & 61.667 & 0.154 & 1800.063 & 353.333 & 0.000 & 0.000 & 60.000 & 0.154 & 1800.117 & 406.500 & 0.000 & 0.000 & 69.000
+\\
+\hline 
+ \end{tabular}
+
+
+\clearpage
+
 \section{Pruning runs with primal no upper bounded partition size 1}
 
 Processing Runid 20110228PRUNINGPRIMALNOUBP1

@@ -77,6 +77,180 @@ primalruns = create_runs({
                 
                 ])
 
+primaldsaturbranchruns = create_runs({
+                 'solver.kind': 'PcpBranchAndCut',
+                 
+                 'solver.useCutCallback': 'true',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'true',
+                 'branch.enabled': 'true',
+                 'cuts.enabled': 'false',
+                 'cuts.onlyonup': 'false',
+                  
+                 'solver.maxTime': '1800',
+                 
+                 'branch.selection': '1',
+                 'branch.direction': '0',
+
+                 'branch.prios.enabled': 'true',
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.dynamic.dsatur.nodelb': '0.7',
+                 'branch.dynamic.dsatur.conseccolors': 'true',
+                 
+                 'branch.dynamic.fractional': 'false',
+                 'branch.dynamic.dsatur': 'true',
+                 'primal.onlyonup': 'false',
+                 'primal.everynodes': '1',
+                 'primal.dsatur.coloring': 'DSaturEasyNode',
+               }, [
+                 {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'primal.dsatur.coloring': 'DSaturEasyNodeRandomized',
+                 'coloring.primal.maxTime': '500',
+                 'coloring.primal.maxSolutions': '100'
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'primal.dsatur.coloring': 'DSaturEasyNodeRandomized',
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '500',
+                 'coloring.primal.maxSolutions': '100'
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'true',
+                },
+                {
+                 'primal.enabled': 'false',
+                 'solver.useCplexPrimalHeuristic': 'true',
+                },
+                ])
+
+primaldsaturbranchruns_lessfreq = create_runs({
+                 'solver.kind': 'PcpBranchAndCut',
+                 
+                 'solver.useCutCallback': 'true',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'true',
+                 'branch.enabled': 'true',
+                 'cuts.enabled': 'false',
+                 'cuts.onlyonup': 'false',
+                  
+                 'solver.maxTime': '1800',
+                 
+                 'branch.selection': '1',
+                 'branch.direction': '0',
+
+                 'branch.prios.enabled': 'true',
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.dynamic.dsatur.nodelb': '0.7',
+                 'branch.dynamic.dsatur.conseccolors': 'true',
+                 
+                 'branch.dynamic.fractional': 'false',
+                 'branch.dynamic.dsatur': 'true',
+                 'primal.onlyonup': 'false',
+                 'primal.everynodes': '1',
+                 'primal.dsatur.coloring': 'DSaturEasyNode',
+               }, [
+                 {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '1000',
+                 'coloring.primal.maxSolutions': '100',
+                 'primal.onlyonup': 'true',
+                 'primal.everynodes': '10',
+                }, 
+               {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '2000',
+                 'coloring.primal.maxSolutions': '1000',
+                 'primal.onlyonup': 'true',
+                 'primal.everynodes': '100',
+                }, {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '5000',
+                 'coloring.primal.maxSolutions': '1000',
+                 'primal.onlyonup': 'true',
+                 'primal.everynodes': '500',
+                }, 
+                ])
+
+primaldsaturbranchruns_lesstime = create_runs({
+                 'solver.kind': 'PcpBranchAndCut',
+                 
+                 'solver.useCutCallback': 'true',
+                 'solver.useHeuristicCallback': 'true',
+                 'solver.useBranchingCallback': 'true',
+                 'pruning.enabled': 'false',
+                 'primal.enabled': 'true',
+                 'branch.enabled': 'true',
+                 'cuts.enabled': 'false',
+                 'cuts.onlyonup': 'false',
+                  
+                 'solver.maxTime': '1800',
+                 
+                 'branch.selection': '1',
+                 'branch.direction': '0',
+
+                 'branch.prios.enabled': 'true',
+                 'branch.prios.psize': '0',
+                 'branch.prios.psadjacent': '10',
+                 'branch.prios.colorindex': '-1',
+                 'branch.dynamic.dsatur.nodelb': '0.7',
+                 'branch.dynamic.dsatur.conseccolors': 'true',
+                 
+                 'branch.dynamic.fractional': 'false',
+                 'branch.dynamic.dsatur': 'true',
+                 'primal.onlyonup': 'false',
+                 'primal.everynodes': '1',
+                 'primal.dsatur.coloring': 'DSaturEasyNode',
+               }, [
+                 {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '100',
+                 'coloring.primal.maxSolutions': '20',
+                 'primal.onlyonup': 'true',
+                 'primal.everynodes': '10',
+                }, 
+                {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '100',
+                 'coloring.primal.maxSolutions': '10',
+                 'primal.onlyonup': 'true',
+                 'primal.everynodes': '20',
+                }, 
+               {
+                 'primal.enabled': 'true',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'coloring.primal.maxTime': '50',
+                 'coloring.primal.maxSolutions': '10',
+                 'primal.onlyonup': 'true',
+                 'primal.everynodes': '20',
+                },
+                
+                ])
+
 
 primalstaticruns = create_runs({
                  'solver.kind': 'PcpBranchAndCut',

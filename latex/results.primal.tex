@@ -7,72 +7,89 @@ In this section we evaluate the effectiveness of the devised primal heuristic, i
 
 \subsection{Using priorities branching}
 
-We first tested the primal heuristic using the simple priorities branching scheme, which offered a good performance according to the results presented in table \ref{table:branch:static}. We ran our branch and bound using \textsc{cplex}'s default heuristic, our custom degree of saturation primal heuristic, and a combination of both. Executions for the regular graphs used were bounded to 15 minutes each, and we executed three instances of each kind. Results are presented in table \ref{table:primal:prios}.
+We first tested the primal heuristic using the simple priorities branching scheme, which offered a good performance according to the results presented in table \ref{table:branch:static}. We ran our branch and bound using \textsc{cplex}'s default heuristic, our custom degree-of-saturation primal heuristic, and a combination of both. Executions were bounded to 30 minutes each, and we executed three instances of each graph kind. Results are presented in table \ref{table:primal:prios}; for these tests we evaluated not only the resulting gap, but also the improvement in the upper bound from the initial solution (obtained by the initial heuristic) to the final solution returned by the algorithm.
 
 \begin{table}[h]
 \centering
-
-\begin{tabular}{|c|ccc|ccc|ccc|}
+%20110219PRIMALSTATIC3
+%\begin{itemize}
+%\item S1: primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+%\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+%\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+%\end{itemize}
+\begin{tabular}{|l|cc|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{\textsc{cplex}} & \multicolumn{3}{|c|}{Custom} & \multicolumn{3}{|c|}{Custom + \textsc{cplex}}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{\textsc{cplex}} & \multicolumn{2}{|c|}{\textsc{dsatur}} & \multicolumn{2}{|c|}{\textsc{dsatur}+\textsc{cplex}}
 \\
- & gap & found & nodes & gap & found & nodes & gap & found & nodes
-\\
+& Initial (impr) & Gap & Initial (impr) & Gap & Initial (impr) & Gap\\
 \hline
-EW 20\% N=90 & 0.00 & 63.33 & 63.33 & 0.00 & 62.33 & 62.33 & 0.00 & 63.33 & 63.33
+EW 20 N=90 & 4.0 & 0.000 & 4.0 & 0.000 & 4.0 & 0.000
 \\
-EW 40\% N=100 & 0.44 & 55.33 & 55.33 & 0.46 & 26.00 & 26.00 & 0.46 & 25.33 & 25.33
+EW 40 N=100 & 6.0  & 0.448 & 6.0  & 0.456 & 6.0  & 0.456
 \\
-EW 60\% N=80 & 0.38 & 96.67 & 98.67 & 0.40 & 27.67 & 28.33 & 0.40 & 27.67 & 27.67
+EW 60 N=80 & 8.0  & 0.387 & 8.0  & 0.393 & 8.0  & 0.393
 \\
-EW 80\% N=100 & 0.45 & 13.00 & 13.00 & 0.41 & 2.67 & 3.33 & 0.41 & 3.33 & 3.33
+EW 80 N=100 & 14.3 (0/3) & 0.459 & 14.3 (2/3) & 0.438 & 14.3 (2/3) & 0.437
 \\
 \hline 
  \end{tabular}
- 
-\caption{Obtained gap, node number (in thousands) in which the gap was obtained and total number of nodes explored (in thousands) for different primal heuristics in a branch and bound using priorities branching.}
+
+\caption{Number of colors obtained in the initial heuristic, number of instances in which this upper bound was improved by the primal heuristic and resulting gap, for different primal heuristics in a branch and bound using priorities branching.}
 \label{table:primal:prios}
 
 \end{table}
 
-Using the engine's heuristic in conjunction with the custom heuristic does not report any benefit from using just the custom one. As for using the custom primal heuristic or \textsc{cplex}'s default, the former reports a lower gap on denser graphs, although this trend is reversed in medium-density graphs.
+These results show that the solution obtained initally is very difficult to be improved during the branch and bound process, as it is very close to (or effectively is) the optimal solution. Only in the most dense graphs a coloring better than the initial one was found, and it occured in two of three instances, and in both cases the difference was just a single color. It is worth noting that it is the \textsc{dsatur} heuristic that improves the initial solution, whereas the default one provided by \textsc{cplex} does not.
 
-The most noticeable difference is in the total number of nodes generated in the tree within the running time. The processing required by the custom primal heuristic in each step (with running time bounded to 200 ms) is much greater than the built-in heuristic, and this causes that the number of nodes that can be explored in the same time window is much smaller. The custom primal heuristic, however, achieves a very similar gap (if not better, in high density graphs) than the built-in one.
+However, in graphs other than the 80\%-density ones, the resulting gap is better when the custom \textsc{dsatur} primal heuristic is turned off. This is because the time spent executing the heuristic is invested in walking the branch and bound tree, this improving the lower bound and reducing the gap.
+
+It is important to note thet we also tried alternative configurations, in which the primal heuristic was applied much more aggressively, or for a longer period of time each time it was invoked, obtaining exactly the same improvements in the upper bound as the ones just presented.
+
 
 \subsection{Using \textsc{dsatur-(C+1)} branching}
 
-Next, we used the \textsc{dsatur-(C+1)} branching criteria instead of the priorities branching strategy. Again, the tests compare the obtained gap, the node number in which that gap was obtained and the total number of nodes explored, for both the \textsc{cplex} engine's primal heuristic and our degree of saturation heuristic presented in \ref{subsec:alg:primal}. Results are presented in table \ref{table:primal:dsatur}.
+Next, we used the \textsc{dsatur-(C+1)} branching criteria instead of the priorities branching strategy. We analyze the same results as before for the same three settings: using only \textsc{cplex} default primal heuristic, using only our custom \textsc{dsatur} primal heuristic, and using both at the same time. Results are presented in table \ref{table:primal:dsatur}.
+
 
 \begin{table}[h]
 \centering
-
-\begin{tabular}{|c|ccc|ccc|ccc|}
+%20110313PRIMALDSATURBRANCH
+%\begin{itemize}
+%\item S1: primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+%\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+%\item S4: primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200, coloring.primal.maxSolutions: 5
+%\end{itemize}
+\begin{tabular}{|l|cc|cc|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{\textsc{cplex}} & \multicolumn{3}{|c|}{\textsc{dsatur}} & \multicolumn{3}{|c|}{\textsc{dsatur} + \textsc{cplex}}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{\textsc{cplex}} & \multicolumn{2}{|c|}{\textsc{dsatur}} & \multicolumn{2}{|c|}{\textsc{dsatur}+\textsc{cplex}}
 \\
- & gap & found & nodes & gap & found & nodes & gap & found & nodes 
+& Initial (impr) & Gap & Initial (impr) & Gap & Initial (impr) & Gap
 \\
 \hline
-EW 20\% N=90 & 0.17 & 76.67 & 95.67 & 0.17 & 83.00 & 93.67 & 0.17 & 76.67 & 90.00
+EW 20 N=90 & 4.0  & 0.167 & 4.0  & 0.167 & 4.0  & 0.167
 \\
-EW 40\% N=100 & 0.33 & 14.33 & 25.00 & 0.33 & 12.00 & 21.33 & 0.33 & 14.33 & 21.00
+EW 40 N=100 & 6.0  & 0.333 & 6.0  & 0.333 & 6.0  & 0.333
 \\
-EW 60\% N=80 & 0.37 & 17.33 & 19.00 & 0.37 & 8.33 & 16.67 & 0.37 & 15.33 & 16.00
+EW 60 N=80 & 8.0  & 0.372 & 8.0  & 0.375 & 8.0  & 0.375
 \\
-EW 80\% N=100 & 0.42 & 1.33 & 2.67 & 0.38 & 2.33 & 2.33 & 0.41 & 1.67 & 2.33
+EW 80 N=100 & 14.3 (0/3) & 0.414 & 14.3 (2/3) & 0.403 & 14.3 (2/3) & 0.389
 \\
 \hline 
-\end{tabular}
-
-\caption{Obtained gap, node number (in thousands) in which the gap was obtained and total number of nodes explored (in thousands) for different primal heuristics in a branch and bound using \textsc{dsatur-(C+1)} branching.}
+ \end{tabular}
+   
+\caption{Number of colors obtained in the initial heuristic, number of instances in which this upper bound was improved by the primal heuristic and resulting gap, for different primal heuristics in a branch and bound using \textsc{dsatur-(C+1)} branching.}
 \label{table:primal:dsatur}
 
 \end{table}
 
-Although there are differences in the gap only on higher density graphs, the custom primal heuristic finds a good solution earlier in the branch and bound tree, which reports more benefits in longer executions. The total number of nodes explored is only slightly larger when the engine's default primal heuristic is used in this case, unlike the previous one, as the cost of the branching strategy seems to amortize the primal heuristic. 
+The conclusions that can be drawn from these results are the same as the ones from the previous set, only that in this case the increase in the gap when the primal heuristic is turned on, is much smaller in 40\% and 60\% density graphs. The custom \textsc{dsatur} primal heuristic does find a better integral solution in the same two graphs, and \textsc{cplex} still does not. 
+
+What is worth noting is that there is a considerable reduction in the resulting gap when the default primal heuristic is used along with the custom one. Even though the upper bounds obtained in both cases is exactly the same, the gap becomes actually smaller when more effort is put into the primal heuristic, as \textit{the lower bound is increased when \textsc{cplex}'s primal heuristic is used}. We could not find a sensible explanation for this situation, and \textsc{cplex} not disclosing its internal behaviour regarding to default procedures was certainly not helpful.
 
 \subsection{Comparison}
 
-Even though the priorities branching scheme by itself generated better results than the degree of saturation branching strategy, when adding a primal heuristic the results changed. Except for low-density graphs, the best configuration is to use \textsc{dsatur-(C+1)} branching together with the custom primal heuristic, without relying on \textsc{cplex} for either branching strategy or primal heuristic. 
+Even though the priorities branching scheme by itself generated better results than the degree of saturation branching strategy, when adding a primal heuristic the results changed. Except for low-density graphs, in which the overhead generated by the branching strategy seems counter-productive, \textsc{dsatur-(C+1)} branching performed better than its counterpart.
 
-In the case of very low-density graphs, using the engine's default strategies works better, as the overhead generated by the custom algorithms is not compensated by the gain in the quality of incumbent solutions. 
+Regarding the primal heuristic itself, as long as the initial heuristic produces solutions very close to the optimum, any primal heuristic will not be able to improve the upper bound, and will end up reducing the time available for exploring the tree without producing any useful results. This seems to be the case for most graphs, except for the ones with the highest density.
+
+

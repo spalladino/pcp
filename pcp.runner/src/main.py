@@ -17,6 +17,61 @@ import os
  
 def main():
     
+    Fixture().resume() #20110321PRIMALDSATURBRANCHLESSTIME
+    
+  
+   
+
+def old():
+    
+    files = primal.files()
+    print 'Processing Primal DSatur branch Runs with less time: ', files
+    Fixture().newrun(
+                primal.primaldsaturbranchruns_lesstime, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110321PRIMALDSATURBRANCHLESSTIME')  
+    
+    files = bncm.files_highdens()
+    print 'Processing Alternative BNC Runs High density: ', files
+    Fixture().newrun(
+                bncm.highdens_runs_phlfreq, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110323BNCMODELHIGHPHLFREQ')
+    
+    files = bncm.files_lowdens()
+    print 'Processing Alternative BNC Runs Low density: ', files
+    Fixture().newrun(
+                bncm.lowdens_runs_phlfreq, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110323BNCMODELLOWPHLFREQ')
+    
+    files = bncm.files_highdens()
+    print 'Processing Alternative BNC Runs High density: ', files
+    Fixture().newrun(
+                bncm.highdens_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110313BNCMODELHIGH')
+    
+    files = bncm.files_lowdens()
+    print 'Processing Alternative BNC Runs Low density: ', files
+    Fixture().newrun(
+                bncm.lowdens_runs, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110313BNCMODELLOW')
+    
+    files = primal.files()
+    print 'Processing Primal DSatur branch Runs: ', files
+    Fixture().newrun(
+                primal.primaldsaturbranchruns, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110313PRIMALDSATURBRANCH')
+        
     files = bnc.files90()
     print 'Processing BNC Pruning Runs: ', files
     Fixture().newrun(
@@ -24,8 +79,6 @@ def main():
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20110308PRUNINGREMAINING')
-    
-def old():    
     
     files = bnc.files()
     print 'Processing BNC NoUB Pruning Runs: ', files

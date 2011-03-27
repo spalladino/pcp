@@ -405,6 +405,17 @@ def primal_static_3_ub():
      file = '20110219PRIMALSTATIC3'
      LatexProcessor(file).process(
             ids=[metrics.FileName()],
+            datas=['coloring.initial.chi',metrics.UbImprovement(), 'solution.gap'], 
+            series=['primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.dsatur.coloring', 'coloring.primal.maxTime'],
+            datafilter= {'primal.dsatur.coloring': 'DSaturEasyNode', 'coloring.primal.maxTime': '200'},
+            runfilter= None,
+            aggr= aggregate.concat
+            )
+     
+def primal_dsaturbranch_ub():
+     file = '20110313DSATURBRANCH'
+     LatexProcessor(file).process(
+            ids=[metrics.FileName()],
             datas=['solution.gap', 'solution.time', 'solution.nnodes', 'solution.primalheur.time', 'solution.primalheur.success.count', 'solution.primalheur.unsuccess.count' ], 
             series=['primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.dsatur.coloring', 'coloring.primal.maxTime'],
             datafilter= None,
@@ -413,7 +424,8 @@ def primal_static_3_ub():
             )
      
 def bnc_pruning():
-     files = ['20110228PRUNINGPRIMALNOUBP1', '20110228PRUNINGPRIMALNOUB2', '20110228PRUNINGP1', '20110228PRUNING2' ] 
+     #files = ['20110228PRUNINGPRIMALNOUBP1', '20110228PRUNINGPRIMALNOUB2', '20110228PRUNINGP1', '20110228PRUNING2' ] 
+     files = ['20110308PRUNINGREMAINING'] 
      for file in files:
          print "\n\n"
          LatexProcessor(file).process(
@@ -425,6 +437,16 @@ def bnc_pruning():
                 aggr= aggregate.avg
                 )
 
+def primal_dsatur_branch_runs():
+    file = '20110313PRIMALDSATURBRANCH'
+    LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=['coloring.initial.chi',metrics.UbImprovement(), 'solution.gap'], 
+            series=['primal.enabled', 'solver.useCplexPrimalHeuristic', 'primal.dsatur.coloring', 'coloring.primal.maxTime', 'coloring.primal.maxSolutions'],
+            datafilter= {'primal.dsatur.coloring': 'DSaturEasyNode'},
+            runfilter= None,
+            aggr= aggregate.concat
+            )
     
 def test_simple():
     SimpleProcessor('20100629MODELS').process(
@@ -433,7 +455,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    bnc_pruning()
+    primal_static_3_ub()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

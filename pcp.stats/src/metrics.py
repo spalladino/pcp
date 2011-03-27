@@ -9,6 +9,17 @@ def format_output(str):
     except: 
         return str
 
+class UbImprovement:
+    def __call__(self, dict):
+        return - int(dict["solution.chi"]) + int(dict["coloring.initial.chi"])
+        
+    def __str__(self):
+        return "ub.improvement"
+
+    def type(self):
+        return "real"
+
+
 class FileName:
     def __init__(self):
         pass
