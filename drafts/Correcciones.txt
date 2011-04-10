@@ -1,7 +1,7 @@
 Algoritmo:
 ----------
 
-- Poner 20110313PRIMALDSATURBRANCH mostrando que el improvement de ambas primales es casi nulo xq la inicial es muy buena. Explicar que la de CPLEX da menos gap xq se lleva menos tiempo y puede levantar mas la lower bound.
+- Evaluar los resultados de 20110313BNCMODELHIGH y LOW
 
 Informe:
 --------
