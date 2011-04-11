@@ -17,31 +17,31 @@ On the other hand, making the exact \textsc{dsatur} start earlier caused the alg
 
 As a result of these experiments, we will be enabling exhaustive implicit enumeration only for very low thresholds ($20$ partitions pending) in order to avoid any problems caused by running the exact algorithm for long periods. Although this setting may cause the algorithm to never be triggered, in other cases such as larger graphs with a greater time bound there is a possibility for this algorithm to actually be effective. 
 
-\begin{sidewaystable}[h]
+\begin{table}[h]
 \centering
 
 \begin{tabular}{|c|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{20} & \multicolumn{3}{|c|}{40} & \multicolumn{3}{|c|}{60}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{20} & \multicolumn{3}{|c|}{40} & \multicolumn{3}{|c|}{60}
 \\
  & \# times & nodes & gap & \# times & nodes & gap & \# times & nodes & gap
 \\
 \hline
-EW 20 N=100 & 0.00 & 11833.00 & 0.25 & 0.00 & 11834.00 & 0.25 & 115.33 & 11877.00 & 0.25
+EW 20\% & 0.00 & 11833 & 25\% & 0.00 & 11834 & 25\% & 115.33 & 11877 & 25\%
 \\
-EW 40 N=100 & 0.00 & 2341.00 & 0.22 & 0.00 & 2340.67 & 0.22 & 192.33 & 2367.67 & 0.30
+EW 40\%& 0.00 & 2341 & 22\% & 0.00 & 2341 & 22\% & 192.33 & 2368 & 30\%
 \\
-EW 60 N=100 & 0.00 & 1225.67 & 0.22 & 0.00 & 1225.67 & 0.22 & 345.00 & 1050.00 & 0.29
+EW 60\%& 0.00 & 1226 & 22\% & 0.00 & 1226 & 22\% & 345.00 & 1050 & 29\%
 \\
-EW 80 N=100 & 0.00 & 307.67 & 0.19 & 2.00 & 313.67 & 0.19 & 28.00 & 119.00 & 0.21 (*)
+EW 80\%& 0.00 & 308 & 19\% & 2.00 & 314 & 19\% & 28.00 & 119 & 21\% (*)
 \\
 \hline 
  \end{tabular}
 
-\caption{Average number of times the enumeration was triggered, number of nodes in the tree and resulting gap, for different number of uncolored partitions for triggering the exhaustive enumeration. The execution marked with a (*) indicate that the execution of the enumeration algorithm took an unacceptable amount of time for the imposed bounds.}
+\caption{Average number of times the enumeration was triggered, number of nodes in the tree and resulting gap, for different number of uncolored partitions for triggering the exhaustive enumeration; on graphs with 100 nodes and 2 nodes per partition. The execution marked with a (*) indicate that the execution of the enumeration algorithm took an unacceptable amount of time for the imposed bounds.}
 \label{table:bnc:prune}
 
-\end{sidewaystable}
+\end{table}
 
 \subsection{Probing}
 
@@ -61,31 +61,31 @@ On the other hand, greater densities seems to benefit more from disabling probin
 
 Therefore, we will be using moderate probing settings for low density graphs, and disabling probing altogether for higher densities.
 
-\begin{sidewaystable}[h]
+\begin{table}[h]
 \centering
 
 \begin{tabular}{|c|cc|cc|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{disabled} & \multicolumn{2}{|c|}{moderate} & \multicolumn{2}{|c|}{aggressive} & \multicolumn{2}{|c|}{very aggressive}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{disabled} & \multicolumn{2}{|c|}{moderate} & \multicolumn{2}{|c|}{aggressive} & \multicolumn{2}{|c|}{very aggressive}
 \\
  & nnodes & gap & nnodes & gap & nnodes & gap & nnodes & gap
 \\
 \hline
-EW 20 N=100 & 11319.00 & 0.25 & 23284.33 & 0.25 & 24523.67 & 0.25 & 24517.67 & 0.25
+EW 20\% & 11319.00 &25\% & 23284.33 &25\% & 24523.67 &25\% & 24517.67 &25\%
 \\
-EW 40 N=100 & 2366.67 & 0.22 & \textbf{5396.67} & \textbf{0.22} & 2348.00 & 0.22 & 2345.33 & 0.22
+EW 40\% & 2366.67 &22\% & \textbf{5396.67} & \textbf{22\%} & 2348.00 &22\% & 2345.33 &22\%
 \\
-EW 60 N=100 & 1227.67 & 0.22 & 1227.33 & 0.22 & 1171.67 & 0.22 & 1171.33 & 0.22
+EW 60\% & 1227.67 &22\% & 1227.33 &22\% & 1171.67 &22\% & 1171.33 &22\%
 \\
-EW 80 N=100 & \textbf{347.00} & \textbf{0.15} & 346.00 & 0.19 & 308.33 & 0.19 & 309.00 & 0.19
+EW 80\% & \textbf{347.00} & \textbf{15\%} & 346.00 &19\% & 308.33 &19\% & 309.00 &19\%
 \\
 \hline 
  \end{tabular}
  
-\caption{Average number of nodes in the tree and resulting gap, for different MIP probing levels.}
+\caption{Average number of nodes in the tree and resulting gap, for different MIP probing levels; on graphs with 100 nodes and 2 nodes per partition.}
 \label{table:bnc:probing}
 
-\end{sidewaystable}
+\end{table}
 
 \subsection{Emphasizing feasibility and optimality}
 
@@ -108,18 +108,18 @@ For low density graphs, emphasizing the best bound yielded the highest number of
 
 \begin{tabular}{|c|cc|cc|cc|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{balanced} & \multicolumn{2}{|c|}{feasibility} & \multicolumn{2}{|c|}{optimality} & \multicolumn{2}{|c|}{best bound} & \multicolumn{2}{|c|}{hidden}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{balanced} & \multicolumn{2}{|c|}{feasibility} & \multicolumn{2}{|c|}{optimality} & \multicolumn{2}{|c|}{best bound} & \multicolumn{2}{|c|}{hidden}
 \\
  & nodes & gap & nodes & gap & nodes & gap & nodes & gap & nodes & gap
 \\
 \hline
-EW 20 N=100 & 11840.00 & 0.25 & 11705.00 & 0.25 & 18266.33 & 0.25 & \textbf{20810.00} & 0.25 & 11841.33 & 0.25
+EW 20\% N=100 & 11840.00 &25\% & 11705.00 &25\% & 18266.33 &25\% & \textbf{20810.00} &25\% & 11841.33 &25\%
 \\
-EW 40 N=100 & 2343.33 & 0.22 & 2186.00 & 0.22 & 3055.33 & 0.17 & \textbf{3707.00} & \textbf{0.17} & 2342.67 & 0.22
+EW 40\% N=100 & 2343.33 &22\% & 2186.00 &22\% & 3055.33 &17\% & \textbf{3707.00} & \textbf{17\%} & 2342.67 &22\%
 \\
-EW 60 N=100 & \textbf{1226.00} & 0.22 & 1219.33 & 0.22 & 820.33 & 0.22 & 675.67 & 0.22 & 1225.33 & 0.22
+EW 60\% N=100 & \textbf{1226.00} &22\% & 1219.33 &22\% & 820.33 &22\% & 675.67 &22\% & 1225.33 &22\%
 \\
-EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 0.19 & 308.00 & 0.19
+EW 80\% N=100 & \textbf{308.67} &19\% & 305.33 &19\% & 188.67 &19\% & 104.67 &19\% & 308.00 &19\%
 \\
 \hline 
 \end{tabular}
@@ -131,81 +131,81 @@ EW 80 N=100 & \textbf{308.67} & 0.19 & 305.33 & 0.19 & 188.67 & 0.19 & 104.67 & 
 
 \clearpage
 
-
-
-
-
 \subsection{Alternative models in branch and cut}
 
-After fixing all of the parameters involved in the different components of the branch and cut algorithm, we decided to revisit the first step and re-evaluate alternative model formulations, this time using the full branch and cut algorithm for comparing the different configurations.
+After fixing all of the parameters involved in the different components of the branch and cut algorithm, we decided to revisit the first step and re-evaluate alternative model formulations, this time using the full branch and cut algorithm for comparing the different configurations in executions bounded to $90$ minutes.
 
-We tested separately low-density and high-density binomial graphs, with a fixed number of $90$ nodes and $2$ nodes per partition. For graphs with $20\%$ and $40\%$ density, we tested the following strategies:
+Most strategies tested are variations of the model chosen originally in section \ref{subsubsec:results:model:chosen}, usually motivated by the results obtained in \ref{subsec:results:models:bnbtesting}. Nevertheless, some of them include certain modifications to other artifacts such as primal heuristic, branching strategies or probing; the rationale being evaluating already obtained results in the context of the complete branch and cut algorithm.
 
+We tested separately low-density and high-density binomial graphs, with a fixed number of $90$ nodes and $2$ nodes per partition. For graphs with $20\%$ and $40\%$ density, the following strategies were proposed:
+
+% 20110313BNCMODELLOW
+%\item S1: solver.probing: -1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: UseLowerLabelFirst
+%\item S2: solver.probing: 1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintAtLeastOne, strategy.symmetry: MinimumNodeLabel
+%\item S3: solver.probing: 1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: MinimumNodeLabel
 \begin{itemize}
-\defitem{Strategy 1}{Relax the restriction that every partition must have exactly one node colored, and allow for more than a single node to have a single color; this is, replace restrictions \ref{eqn:partsum} for restrictions \ref{eqn:partsumgeq}.}
-\defitem{Strategy 2}{Default model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
-\defitem{Strategy 3}{Relaxed symmetry breaking constraints, using simple \ref{eqn:lowerlabel} instead of \ref{eqn:minlabel} and \ref{eqn:nodeszero}; also uses simpler \ref{eqn:wjgeqsumnode} instead of \ref{eqn:wjgeqsumpart} for eliminating fractional solutions.}
+\defitem{Strategy 1}{Relax symmetry breaking constraints, using simple \ref{eqn:lowerlabel} instead of \ref{eqn:minlabel} and \ref{eqn:nodeszero}; also disables \textsc{cplex} probing feature.}
+\defitem{Strategy 2}{Relax the restriction that every partition must have exactly one node colored, and allow for more than a single node to have a single color; this is, replace restrictions \ref{eqn:partsum} for restrictions \ref{eqn:partsumgeq}.}
+\defitem{Strategy 3}{Model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
 \end{itemize}
 
-As for higher density graphs, $60\%$ and $80\%$, we tested the following three different strategies:
+As for higher density graphs, $60\%$ and $80\%$, we tested the following five different strategies:
 
+% 20110313BNCMODELHIGH
+%\item S1: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst
+%\item S2: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel
+%\item S3: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: UseLowerLabelFirst
+%\item S4: strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber
+%\item S5: strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: VerticesNumber
 \begin{itemize}
-\defitem{Strategy 1}{Uses simpler \ref{eqn:wjgeqsumnode} instead of \ref{eqn:wjgeqsumpart} for eliminating fractional solutions; also uses traditional color conflict constraints \ref{eqn:adjscolorpone} and \ref{eqn:nodelessthanwj}.}
-\defitem{Strategy 2}{Default model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
-\defitem{Strategy 3}{Uses number of vertices in each color class as symmetry breaking constraint, this is, replaces constraints \ref{eqn:minlabel} with \ref{eqn:symnodecount}.}
+\defitem{Strategy 1}{Uses \ref{eqn:adjscolorpone} and \ref{eqn:nodelessthanwj} equations for color conflicts, this is, requires that the sum of two adjacent vertices for the same color is at most $1$, which are far more simple than the \ref{eqn:adjsneighb} constraints used in previous experiments. Also simplifies symmetry breaking by relying solely in using labels with a lower index first (\ref{eqn:lowerlabel}).}
+\defitem{Strategy 2}{Model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
+\defitem{Strategy 3}{Color conflicts are handled with constraints \ref{eqn:adjsperpart}, and uses symmetry breaking constraints \ref{eqn:lowerlabel} as strategy 1.}
+\defitem{Strategy 4}{Uses number of vertices in each color class as symmetry breaking constraint, this is, replaces constraints \ref{eqn:minlabel} with \ref{eqn:symnodecount}; and further strengthens the model by applying contraints \ref{eqn:wjgeqsumpart} instead of \ref{eqn:wjleqsumcolor}, which predicate over whole partitions instead of individual nodes.}
+\defitem{Strategy 5}{Same as the previous one, but color conflicts are handled with constraints \ref{eqn:adjsperpart} as in strategy 3.}
 \end{itemize}
 
-\begin{table}[h]
-\centering
-%\begin{itemize}
-%\item S1: strategy.partition: PaintAtLeastOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
-%\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: 1, solver.mipEmphasis: 3
-%\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 3
-%\end{itemize}
+\begin{table}
+% 20110313BNCMODELLOW
 \begin{tabular}{|c|ccc|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{Strategy 1} & \multicolumn{3}{|c|}{Strategy 2} & \multicolumn{3}{|c|}{Strategy 3}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
 \\
- & nodes & time & gap & nodes & time & gap & nodes & time & gap
+ & gap & time & nodes & gap & time & nodes & gap & time & nodes 
 \\
 \hline
-EW 20 N=90 & 23078 & 579.85 & 0.00 & 19959 & 1161.73 & 0.00 & 27248 & 1800.29 & 0.19
+EW 20 N=90\% & 16.7\% & 5295 & 56954 & 16.7\% & 4412 & 46356 & \b{0.0\%} & \b{3014} & 32668
 \\
-EW 40 N=90 & 9387 & 2400.06 & 0.17 & 13978 & 2400.05 & 0.17 & 8405 & 2400.03 & 0.17
+EW 40 N=90\% & 16.7\% & 5400 & 17160 & 16.7\% & 5400 & 17237 & 16.7\% & 5400 & \b{27439}
 \\
 \hline 
  \end{tabular}
-
-\caption{Average number of nodes in the tree, running time and resulting gap, for three different model strategies for low density binomial graphs.}
+ \caption{Average solution gap, running time and number of nodes in the tree, for different model strategies for low density binomial graphs. For each tested graph, all strategies obtained the same number of colors in the solution.}
 \label{table:bnc:modellow}
-
 \end{table}
+
 
 \begin{table}[h]
 \centering
-
-%\begin{itemize}
-%\item S1: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsLeqOne, strategy.symmetry: UseLowerLabelFirst, strategy.colorBound: UpperNodesSum, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-%\item S2: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-%\item S3: strategy.partition: PaintExactlyOne, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: VerticesNumber, strategy.colorBound: UpperNodesSumLowerSumPartition, strategy.objective: Equal, solver.probing: -1, solver.mipEmphasis: 0
-%\end{itemize}
-\begin{tabular}{|c|cc|cc|cc|}
+% 20110313BNCMODELHIGH
+\begin{tabular}{|cc|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Strategy 1} & \multicolumn{2}{|c|}{Strategy 2} & \multicolumn{2}{|c|}{Strategy 3}
-\\
- & nodes & gap & nodes & gap & nodes & gap
+\multicolumn{2}{|c|}{Graph} & \multicolumn{1}{|c|}{S1} & \multicolumn{1}{|c|}{S2} & \multicolumn{1}{|c|}{S3} & \multicolumn{1}{|c|}{S4} & \multicolumn{1}{|c|}{S5}
 \\
 \hline
-EW 60 N=90 & 1750& 0.23 & 2381 & 0.23 & 2200 & 0.23
+\multirow{2}{*}{EW 60\% N=90} & Gap \% & 23.1\%  & 23.1\% & 23.1\% & 23.1\% & 23.1\% \\
+& Solutions & [8,9,9] & [8,9,9] & [8,9,9] & [8,9,9] & [8,9,9]
 \\
-EW 80 N=90 & 477 & 0.16 & 1133 & 0.15 & 644 &0.16
+\hline
+\multirow{2}{*}{EW 80\% N=90} & Gap \% & 15.8\% & 15.4\%  & \b{11.1}\%  & 15.8\%  & \b{11.1}\%  \\
+& Solutions & [12,13,13] & [13,13,13] & \b{[12,12,12]} & [12,13,13] & \b{[12,12,12]}
 \\
 \hline 
- \end{tabular}
- 
- \caption{Average number of nodes in the tree and resulting gap, for three different model strategies for high density binomial graphs. Running time is not reported as all runs hit the $2400$ seconds time bound.}
+ \end{tabular} 
+ \caption{Average resulting gap and number of colors in the obtained solutions, for different model strategies for high density binomial graphs. Running time is not reported as all runs hit the $5400$ seconds time bound.}
 \label{table:bnc:modelhigh}
 
 \end{table}
 
-Results for both tests are presented in tables \ref{table:bnc:modellow} and \ref{table:bnc:modelhigh}. In the case of $20\%$ density graphs, the best performing strategy in terms of running time was the one using restrictions \ref{eqn:partsumgeq} for specifying that at least one node must have at least one color assigned in each partition. This was not the case for $40\%$ density graphs, in which the model we had been using for previous tests managed to explore the largest number of nodes in the same running time reporting the same gap. Higher density graphs also returned the best results with the strategy being used previously.
+\TODO{Revisar} Results for both tests are presented in tables \ref{table:bnc:modellow} and \ref{table:bnc:modelhigh}. In the case of $20\%$ density graphs, the best performing strategy in terms of running time was the one using restrictions \ref{eqn:partsumgeq} for specifying that at least one node must have at least one color assigned in each partition. This was not the case for $40\%$ density graphs, in which the model we had been using for previous tests managed to explore the largest number of nodes in the same running time reporting the same gap. Higher density graphs also returned the best results with the strategy being used previously.
+

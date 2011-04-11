@@ -89,6 +89,29 @@ lowdens_runs = create_runs(baseprops, [
                 },
                 ])
 
+lowdens_runs_ext = create_runs(baseprops, [
+                {
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '3',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.symmetry': 'UseLowerLabelFirst',
+                    'branch.dynamic.dsatur': 'false',
+                },
+                {
+                    'branch.dynamic.dsatur': 'false',  
+                    'pruning.enabled': 'false',
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '3',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.symmetry': 'UseLowerLabelFirst',
+                    
+                    'primal.enabled': 'false',
+                    'solver.useCplexPrimalHeuristic': 'true',
+                },
+                ])
+
+
 lowdens_runs_phlfreq = create_runs(baseprops, [
                 {
                     'pruning.enabled': 'false',

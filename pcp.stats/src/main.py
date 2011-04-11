@@ -447,7 +447,30 @@ def primal_dsatur_branch_runs():
             runfilter= None,
             aggr= aggregate.concat
             )
+
+def model_bnc_highdens_runs():
+    file = '20110313BNCMODELHIGH'
+    LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=[ 'solution.time'], 
+            series=['strategy.colorBound','strategy.adjacency','strategy.symmetry'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.avg
+            )    
     
+def model_bnc_lowdens_runs():
+    file = '20110313BNCMODELLOW'
+    LatexProcessor(file).process(
+            ids=[metrics.FileName()],
+            datas=['solution.gap','solution.time','solution.nnodes'], 
+            series=['solver.probing','strategy.colorBound','strategy.partition','strategy.symmetry'],
+            datafilter= None,
+            runfilter= None,
+            aggr= aggregate.concat
+            )    
+
+                        
 def test_simple():
     SimpleProcessor('20100629MODELS').process(
         datas=[metrics.FileName(), 'data.filename', 'solution.gap','cuts.niters','solution.time'], 
@@ -455,7 +478,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    primal_static_3_ub()
+    model_bnc_lowdens_runs()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

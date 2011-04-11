@@ -1,31 +1,27 @@
-Processing Runid 20110219PRIMALSTATIC3
+Processing Runid 20110313BNCMODELLOW
  Successfully loaded
 Data:
 \begin{itemize}
-\item coloring.initial.chi
-\item ub.improvement
 \item solution.gap
+\item solution.time
+\item solution.nnodes
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: primal.enabled: false, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
-\item S2: primal.enabled: true, solver.useCplexPrimalHeuristic: false, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
-\item S3: primal.enabled: true, solver.useCplexPrimalHeuristic: true, primal.dsatur.coloring: DSaturEasyNode, coloring.primal.maxTime: 200
+\item S1: solver.probing: -1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: UseLowerLabelFirst
+\item S2: solver.probing: 1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintAtLeastOne, strategy.symmetry: MinimumNodeLabel
+\item S3: solver.probing: 1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: MinimumNodeLabel
 \end{itemize}
 \begin{tabular}{|c|ccc|ccc|ccc|}
 \hline
 \multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
 \\
- & coloring.initial.chi & ub.improvement & solution.gap & coloring.initial.chi & ub.improvement & solution.gap & coloring.initial.chi & ub.improvement & solution.gap
+ & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes & solution.gap & solution.time & solution.nnodes
 \\
 \hline
-EW 20 N=90 & [4, 4, 4] & [0, 0, 0] & ['-', '-', '-'] & [4, 4, 4] & [0, 0, 0] & ['-', '-', '-'] & [4, 4, 4] & [0, 0, 0] & ['-', '-', '-']
+EW 20 N=90 & ['-', '0.250', '0.250'] & ['5085.984', '5400.031', '5400.031'] & [56203, 57301, 57359] & ['-', '0.250', '0.250'] & ['2436.813', '5400.031', '5400.016'] & [22887, 58112, 58069] & ['-', '-', '-'] & ['1725.078', '3669.188', '3647.859'] & [17795, 40105, 40105]
 \\
-EW 40 N=100 & [6, 6, 6] & [0, 0, 0] & ['0.479', '0.432', '0.432'] & [6, 6, 6] & [0, 0, 0] & ['0.485', '0.441', '0.441'] & [6, 6, 6] & [0, 0, 0] & ['0.486', '0.441', '0.441']
-\\
-EW 60 N=80 & [8, 8, 8] & [0, 0, 0] & ['0.410', '0.375', '0.375'] & [8, 8, 8] & [0, 0, 0] & ['0.428', '0.375', '0.375'] & [8, 8, 8] & [0, 0, 0] & ['0.429', '0.375', '0.375']
-\\
-EW 80 N=100 & [13, 15] & [0, 0] & ['0.386', '0.495'] & [13, 15, 15] & [0, 1, 1] & ['0.393', '0.460', '0.460'] & [13, 15, 15] & [0, 1, 1] & ['0.392', '0.460', '0.460']
+EW 40 N=90 & ['0.167', '0.167'] & ['5400.047', '5400.031'] & [15450, 18015] & ['0.167', '0.167', '0.167'] & ['5400.047', '5400.078', '5400.047'] & [22657, 14543, 14512] & ['0.167', '0.167', '0.167'] & ['5400.047', '5400.047', '5400.047'] & [48403, 16951, 16964]
 \\
 \hline 
  \end{tabular}

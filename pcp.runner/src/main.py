@@ -17,9 +17,13 @@ import os
  
 def main():
     
-    Fixture().resume() #20110321PRIMALDSATURBRANCHLESSTIME
-    
-  
+    files = bncm.files_lowdens()
+    print 'Processing additional bnc models for low dens: ', files
+    Fixture().newrun(
+                bncm.lowdens_runs_ext, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110410BNCMODELLOWEXT')
    
 
 def old():

@@ -1,3 +1,33 @@
+Modelo:
+-------
+partition 
+PaintExactlyOne				eqn:partsum
+PaintAtLeastOne 			eqn:partsumgeq
+
+adjacency
+AdjacentsLeqColor			eqn:adjscolorp
+AdjacentsLeqOne				eqn:adjscolorpone (+ eqn:nodelessthanwj)
+AdjacentsNeighbourhood		eqn:adjsneighb
+AdjacentsPartitionLeqColor	eqn:adjsperpart
+
+symmetry
+None
+UseLowerLabelFirst			eqn:lowerlabel
+VerticesNumber				eqn:symnodecount
+MinimumNodeLabel			eqn:minlabel (+eqn:nodeszero)	
+
+colorBound
+None
+UpperNodesSum					eqn:wjleqsumcolor
+UpperNodesSumLowerSum			eqn:wjgeqsumnode
+UpperNodesSumLowerSumPartition	eqn:wjgeqsumpart
+
+chosen 					subsubsec:results:model:chosen
+PaintExactlyOne			eqn:partsum
+AdjacentsNeighbourhood	eqn:adjsneighb
+UpperNodesSum			eqn:wjleqsumcolor
+MinimumNodeLabel		eqn:minlabel
+
 Algoritmo:
 ----------
 

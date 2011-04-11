@@ -19,17 +19,17 @@ We first tested the primal heuristic using the simple priorities branching schem
 %\end{itemize}
 \begin{tabular}{|l|cc|cc|cc|}
 \hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{\textsc{cplex}} & \multicolumn{2}{|c|}{\textsc{dsatur}} & \multicolumn{2}{|c|}{\textsc{dsatur}+\textsc{cplex}}
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{\textsc{cplex}} & \multicolumn{2}{|c|}{Priorities} & \multicolumn{2}{|c|}{Priorities+\textsc{cplex}}
 \\
 & Initial (impr) & Gap & Initial (impr) & Gap & Initial (impr) & Gap\\
 \hline
-EW 20 N=90 & 4.0 & 0.000 & 4.0 & 0.000 & 4.0 & 0.000
+EW 20 N=90 & 4.0 (0/3) & - & 4.0 (0/3)& - & 4.0 (0/3)& -
 \\
-EW 40 N=100 & 6.0  & 0.448 & 6.0  & 0.456 & 6.0  & 0.456
+EW 40 N=100 & 6.0 (0/3) & 44.8\% & 6.0 (0/3) & 45.6\% & 6.0 (0/3) & 45.6\%
 \\
-EW 60 N=80 & 8.0  & 0.387 & 8.0  & 0.393 & 8.0  & 0.393
+EW 60 N=80 & 8.0 (0/3) & 38.7\% & 8.0 (0/3) & 39.3\% & 8.0 (0/3) & 39.3\%
 \\
-EW 80 N=100 & 14.3 (0/3) & 0.459 & 14.3 (2/3) & 0.438 & 14.3 (2/3) & 0.437
+EW 80 N=100 & 14.3 (0/3) & 45.9\% & 14.3 (\textbf{2}/3) & 43.8\% & 14.3 (\textbf{2}/3) & 43.7\%
 \\
 \hline 
  \end{tabular}
@@ -66,13 +66,13 @@ Next, we used the \textsc{dsatur-(C+1)} branching criteria instead of the priori
 & Initial (impr) & Gap & Initial (impr) & Gap & Initial (impr) & Gap
 \\
 \hline
-EW 20 N=90 & 4.0  & 0.167 & 4.0  & 0.167 & 4.0  & 0.167
+EW 20 N=90 & 4.0 (0/3) & 16.7\% & 4.0 (0/3) & 16.7\% & 4.0 (0/3) & 16.7\%
 \\
-EW 40 N=100 & 6.0  & 0.333 & 6.0  & 0.333 & 6.0  & 0.333
+EW 40 N=100 & 6.0 (0/3) & 33.3\% & 6.0 (0/3) & 33.3\% & 6.0 (0/3) & 33.3\%
 \\
-EW 60 N=80 & 8.0  & 0.372 & 8.0  & 0.375 & 8.0  & 0.375
+EW 60 N=80 & 8.0 (0/3) & 37.2\% & 8.0 (0/3) & 37.5\% & 8.0 (0/3) & 37.5\%
 \\
-EW 80 N=100 & 14.3 (0/3) & 0.414 & 14.3 (2/3) & 0.403 & 14.3 (2/3) & 0.389
+EW 80 N=100 & 14.3 (0/3) & 41.4\% & 14.3 (\textbf{2}/3) & 40.3\% & 14.3 (\textbf{2}/3) & 38.9\%
 \\
 \hline 
  \end{tabular}
