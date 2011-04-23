@@ -131,13 +131,17 @@ EW 80\% N=100 & \textbf{308.67} &19\% & 305.33 &19\% & 188.67 &19\% & 104.67 &19
 
 \clearpage
 
-\subsection{Alternative models in branch and cut}
+\subsection{Alternative models}
 
 After fixing all of the parameters involved in the different components of the branch and cut algorithm, we decided to revisit the first step and re-evaluate alternative model formulations, this time using the full branch and cut algorithm for comparing the different configurations in executions bounded to $90$ minutes.
 
 Most strategies tested are variations of the model chosen originally in section \ref{subsubsec:results:model:chosen}, usually motivated by the results obtained in \ref{subsec:results:models:bnbtesting}. Nevertheless, some of them include certain modifications to other artifacts such as primal heuristic, branching strategies or probing; the rationale being evaluating already obtained results in the context of the complete branch and cut algorithm.
 
-We tested separately low-density and high-density binomial graphs, with a fixed number of $90$ nodes and $2$ nodes per partition. For graphs with $20\%$ and $40\%$ density, the following strategies were proposed:
+We tested separately low-density and high-density binomial graphs, with a fixed number of $90$ nodes and $2$ nodes per partition. 
+
+\subsubsection*{Low density graphs}
+
+For graphs with $20\%$ and $40\%$ density, the following strategies were proposed:
 
 % 20110313BNCMODELLOW
 %\item S1: solver.probing: -1, strategy.colorBound: UpperNodesSum, strategy.partition: PaintExactlyOne, strategy.symmetry: UseLowerLabelFirst
@@ -148,6 +152,27 @@ We tested separately low-density and high-density binomial graphs, with a fixed 
 \defitem{Strategy 2}{Relax the restriction that every partition must have exactly one node colored, and allow for more than a single node to have a single color; this is, replace restrictions \ref{eqn:partsum} for restrictions \ref{eqn:partsumgeq}.}
 \defitem{Strategy 3}{Model being executed in previous tests, as described in section \ref{subsubsec:results:model:chosen}.}
 \end{itemize}
+
+\begin{table}
+% 20110313BNCMODELLOW
+\begin{tabular}{|c|ccc|ccc|ccc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
+\\
+ & gap & time & nodes & gap & time & nodes & gap & time & nodes 
+\\
+\hline
+EW 20\% N=90 & 16.7\% & 5295 & 56954 & 16.7\% & 4412 & 46356 & \b{0.0\%} & \b{3014} & 32668
+\\
+EW 40\% N=90 & 16.7\% & 5400 & 17160 & 16.7\% & 5400 & 17237 & 16.7\% & 5400 & \b{27439}
+\\
+\hline 
+ \end{tabular}
+ \caption{Average solution gap, running time and number of nodes in the tree, for different model strategies for low density binomial graphs. For each tested graph, all strategies obtained the same number of colors in the solution.}
+\label{table:bnc:modellow}
+\end{table}
+
+\subsubsection*{High density graphs}
 
 As for higher density graphs, $60\%$ and $80\%$, we tested the following five different strategies:
 
@@ -164,26 +189,6 @@ As for higher density graphs, $60\%$ and $80\%$, we tested the following five di
 \defitem{Strategy 4}{Uses number of vertices in each color class as symmetry breaking constraint, this is, replaces constraints \ref{eqn:minlabel} with \ref{eqn:symnodecount}; and further strengthens the model by applying contraints \ref{eqn:wjgeqsumpart} instead of \ref{eqn:wjleqsumcolor}, which predicate over whole partitions instead of individual nodes.}
 \defitem{Strategy 5}{Same as the previous one, but color conflicts are handled with constraints \ref{eqn:adjsperpart} as in strategy 3.}
 \end{itemize}
-
-\begin{table}
-% 20110313BNCMODELLOW
-\begin{tabular}{|c|ccc|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{Graph} & \multicolumn{3}{|c|}{S1} & \multicolumn{3}{|c|}{S2} & \multicolumn{3}{|c|}{S3}
-\\
- & gap & time & nodes & gap & time & nodes & gap & time & nodes 
-\\
-\hline
-EW 20 N=90\% & 16.7\% & 5295 & 56954 & 16.7\% & 4412 & 46356 & \b{0.0\%} & \b{3014} & 32668
-\\
-EW 40 N=90\% & 16.7\% & 5400 & 17160 & 16.7\% & 5400 & 17237 & 16.7\% & 5400 & \b{27439}
-\\
-\hline 
- \end{tabular}
- \caption{Average solution gap, running time and number of nodes in the tree, for different model strategies for low density binomial graphs. For each tested graph, all strategies obtained the same number of colors in the solution.}
-\label{table:bnc:modellow}
-\end{table}
-
 
 \begin{table}[h]
 \centering
@@ -207,5 +212,63 @@ EW 40 N=90\% & 16.7\% & 5400 & 17160 & 16.7\% & 5400 & 17237 & 16.7\% & 5400 & \
 
 \end{table}
 
-\TODO{Revisar} Results for both tests are presented in tables \ref{table:bnc:modellow} and \ref{table:bnc:modelhigh}. In the case of $20\%$ density graphs, the best performing strategy in terms of running time was the one using restrictions \ref{eqn:partsumgeq} for specifying that at least one node must have at least one color assigned in each partition. This was not the case for $40\%$ density graphs, in which the model we had been using for previous tests managed to explore the largest number of nodes in the same running time reporting the same gap. Higher density graphs also returned the best results with the strategy being used previously.
+\subsubsection*{Results}
 
+Results for both low-density and high-density tests are presented in tables \ref{table:bnc:modellow} and \ref{table:bnc:modelhigh}. Even though graphs with $40\%$ and $60\%$ density exhibited little to no differences among the strategies (the only exception being the higher number of nodes explored in the branch and cut tree by strategy 3 on $40\%$-density graphs), there were remarkable differences in the most sparse and dense graphs.
+
+All graphs with $20\%$ density were solved to optimality when using the model exhibited in section \ref{subsubsec:results:model:chosen}, which was the original formulation derived from cutting planes experiments.
+
+$80\%$-density graphs, on the other hand, obtained better solutions on strategies 3 and 5, which are the ones that use \ref{eqn:adjsperpart} constraints for color conflicts. Recall from section \ref{subsec:model:colorconflicts} that this family is simpler than \ref{eqn:adjsneighb}, which relied on an extended clique coverage of each vertex's neighbourhood; also, in graphs with large partitions or high density, it spans less inequalities than the standard \ref{eqn:adjscolorp} constraints.
+
+\subsection{Primal heuristic and \textsc{DSatur} branching}
+
+We also wanted to test the impact of disabling dynamic branching strategies and custom primal heuristic in low density graphs, as these artifacts had proven to have a negative impact in branch and bound algorithms for graphs with very low density (see \ref{subsec:resultsbranching} and \ref{subsec:resultsprimal}).
+
+\begin{table}[h]
+\centering
+% 20110410BNCMODELLOWEXT
+\begin{tabular}{|cc|c|c|}
+\hline
+\textsc{DSatur} Branch & Primal Heuristic & \multicolumn{1}{|c|}{EW 20\% N=90} & \multicolumn{1}{|c|}{EW 40\% N=90}
+\\
+\hline
+Enabled & Enabled & 16.7\% & 16.7\%
+\\
+Disabled & Enabled & 25.0\% & 27.8\%
+\\
+Disabled & Disabled & 25.0\% & 27.8\%
+\\
+\hline 
+ \end{tabular}
+\caption{Average gap obtained in low density graphs for \textit{Strategy 1} when disabling \textsc{dsatur} dynamic branching strategy and custom primal heuristic on a branch and cut algorithm.}
+\label{table:bnc:disableprimalbranchlow}
+\end{table}
+
+However, in a branch and cut algorithm, the aforementioned results are reverted, as can be seen in table \ref{table:bnc:disableprimalbranchlow}
+
+\subsection{Cuts Iterations}
+
+We also wanted to evaluate the effect of changing how cuts are applied throughout the branch and cut tree. In section \ref{subsec:resultscuts} we tested how the addition of different cuts families improved the obtained results; now we check how varying the number of cuts rounds in each node affected the results.
+
+\begin{table}[h]
+\centering
+% 20110412LOWDENSCUTS 20110414HIGHDENSCUTSS3 20110414HIGHDENSCUTSS5
+\begin{tabular}{|ccc|c|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{Cuts settings} & \multicolumn{4}{|c|}{Graph density} \\
+\hline
+iters root / inner & locality & max depth & 20\% & 40\% & 60\% & 80\%
+\\
+\hline
+100/1 & local & unbounded & 0.0\% & 16.7\% & 23.1\% & 11.1\% \\ 
+100/20 & global & 10& 16.7\% & 16.7\% & 25.8\% & 16.9\%  \\
+100/20 & local & 10& 0.0\% & 16.7\% & 23.1\% & 13.4\%  \\
+100/5 & local & 15& 0.0\% & 16.7\% & 23.1\% & 13.4\%  \\
+500/1 & local & unbounded& 0.0\% & 16.7\% & 23.1\% & 11.1\%  \\
+\hline
+ \end{tabular}
+\caption{Average gap obtained for different cuts settings, varying the number of iterations in the root node and in internal nodes, whether cuts are applied globally to the whole branch and cut tree or only to the local subtree, and maximum tree depth at which cuts are still applied. All graphs are binomial with 90 nodes and 2 nodes per partition, and only density is changed.}
+\label{table:bnc:cutsiters}
+\end{table}
+ 
+Results in \ref{table:bnc:cutsiters} show that the configuration used so far (100 cut iterations in the root node, 1 iteration per internal node, and local cuts) yields the best results for all densities. As usual, the most noticeable differences appear in graphs with very low or high density.

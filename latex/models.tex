@@ -54,6 +54,7 @@ Restriction \ref{eqn:partsum} can be relaxed by requiring that at least one node
 The minimization of the total number of colors used will ensure that no additional colors will be used, and a valid coloring can be extracted from the resulting solution by picking any color from any node on every partition, as no color conflicts will occur since restriction \ref{eqn:adjscolorp} is still in place.
 
 \subsection{Color conflicts}
+\label{subsec:model:colorconflicts}
 
 An alternative to restriction \ref{eqn:adjscolorp}, for both preventing color conflicts and set $w_j$ variables upon usage of color $j$, is to decouple this two concepts into different restrictions. Therefore, instead of restricting $x_{ij} + x_{kj} \leq w_j$ for every edge, we may require:
 

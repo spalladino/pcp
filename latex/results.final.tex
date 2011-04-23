@@ -1,0 +1,65 @@
+\section{Final Results}
+
+Having fixed the best configurations of the algorithm for binomial random graphs in the previous sections, such as models, initial heuristic, branching strategies, primal heuristic and cuts, we now compare our branch and cut algorithm for \PCP{} against other solutions.
+
+\subsection{Comparison with CPLEX}
+
+The first evaluation to perform is to analyze the improvement introduced by the custom modifications we made on top of the \textsc{cplex} engine, by comparing our results to those returned by an unmodified execution of \textsc{cplex}\footnote{All tests were performed against version 12.1 of \textsc{cplex}.}. 
+
+We used binomial random graphs with 90 nodes, 2 nodes per partition, and picked 2 instances for each node-density pair; with running time of 2 hours.
+
+First, we compared our algorithm to \textsc{cplex}'s default branch and cut, both with and without fixing an initial clique and performing other simplifications to the model (described in section \ref{sec:bnc}). In all cases we provided the same initial solution $\chi_0$, which considerably reduced the number of variables in the model by eliminating those $x_{ij}$ and $w_j$ with $j > \chi_0$.
+
+Then, we performed the same tests, but this time using \textsc{cplex} dynamic search algorithm, instead of the traditional branch and cut we were using. This algorithm, introduced in version 11 of \textsc{cplex} and improved in version 12, uses the same building blocks as traditional branch and cut, but does not allow for user customization via callbacks, therefore working as a black box solver, often yielding better results than its counterpart.
+
+\begin{table}[h]
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex branch and cut} & \multicolumn{2}{|c|}{Cplex branch and cut} & \multicolumn{2}{|c|}{Custom \PCP{}}
+\\
+\multicolumn{1}{|c|}{} & \multicolumn{2}{|c|}{w/o initial clique} & \multicolumn{2}{|c|}{with initial clique} & \multicolumn{2}{|c|}{branch and cut}
+\\
+\hline
+& gap & time & gap & time & gap & time
+\\
+\hline
+EW 20\% N=90 & 0.0\% & 1.49 & 0.0\% & 1.48 & 0.0\% & 0.141
+\\
+EW 40\% N=90 & 16.7\% & 7200 & 16.7\% & 7200 & 16.7\% & 7200
+\\
+EW 60\% N=90 & 33.3\% & 7200 & 36.7\% & 7200 & 22.2\% & 7200
+\\
+EW 80\% N=90 & 26.7\% & 7200 & 23.3\% & 7200 & 11.3\% & 7200
+\\
+\hline 
+\end{tabular} 
+\caption{Average gap and running time in seconds for graphs with different densities, comparing our custom \PCP{} branch and cut algorithm with \textsc{cplex}'s default branch and cut, with and without fixing an initial clique for the resolution.}
+\label{table:final:cplexbnc}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex Dynamic Search} & \multicolumn{2}{|c|}{Cplex Dynamic Search} & \multicolumn{2}{|c|}{Custom \PCP{}}
+\\
+\multicolumn{1}{|c|}{} & \multicolumn{2}{|c|}{w/o initial clique} & \multicolumn{2}{|c|}{with initial clique} & \multicolumn{2}{|c|}{branch and cut}
+\\
+\hline
+& gap & time & gap & time & gap & time
+\\
+\hline
+EW 20\% N=90 & 0.0\% & 0.758 & 0.0\% & 0.758 & 0.0\% & 0.141
+\\
+EW 40\% N=90 & 16.7\% & 7200 & 16.7\% & 7200 & 16.7\% & 7200
+\\
+EW 60\% N=90 & 22.2\% & 7200 & 22.2\% & 7200 & 22.2\% & 7200
+\\
+EW 80\% N=90 & 11.8\% & 7200 & 12.0\% & 7200 & 11.3\% & 7200
+\\
+\hline 
+\end{tabular} 
+\caption{Average gap and running time in seconds for graphs with different densities, comparing our custom \PCP{} branch and cut algorithm with \textsc{cplex}'s dynamic search, with and without fixing an initial clique for the resolution.}
+\label{table:final:cplexdynamicsearch}
+\end{table}
+
+\TODO{Analisis de resultados de cplex, comparacion con brasil}
