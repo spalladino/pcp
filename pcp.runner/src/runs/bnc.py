@@ -32,6 +32,9 @@ def fileslow90():
 def fileshigh90():
     return fetcher.Fetcher(datadir).fetch_files('benchdens', 'e0(6|8)n((90))\\.00(0|1|2|3|4)\\.in')
 
+def filesn90d60fixedpart():
+    return fetcher.Fetcher(datadir).fetch_files('fixedpart', 'p(\d)n90d0(6)\\.00(0|1)\\.in')
+
 def fileslowhk90():
     return fetcher.Fetcher(datadir).fetch_files('holmefinal', 'n90d(2|4)0p(\\d\\d)\\.00(0|1|2|3|4)\\.in')
 def fileshighhk90():
@@ -146,6 +149,37 @@ highdens_final = create_runs(update_copy(baseprops, {
                     'cuts.iterations.nodes.max':'1',
                     'cuts.maxdepth':'0',
                 }])
+
+highdens_final_vs_cplex = create_runs(update_copy(baseprops, {
+                    'pruning.enabled': 'false',
+                    'strategy.colorBound': 'UpperNodesSum',
+                    'strategy.adjacency': 'AdjacentsPartitionLeqColor',
+                    'strategy.symmetry': 'UseLowerLabelFirst',                         
+                 }), [
+                {
+                    'solver.probing': '-1',
+                    'solver.mipEmphasis': '0',
+                    'cuts.iterations.root.max': '500',
+                    'cuts.iterations.nodes.max':'1',
+                    'cuts.maxdepth':'0',
+                },
+                {
+                 'solver.kind': 'CplexBranchAndCutSearch',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'solver.useCplexPreprocess': 'true',
+                 'solver.useCplexCuttingPlanes': 'false',
+                 },
+                  {
+                 'solver.kind': 'CplexBranchAndCutSearch',
+                 'solver.useCplexPrimalHeuristic': 'false',
+                 'solver.useCplexPreprocess': 'true',
+                 'solver.useCplexCuttingPlanes': 'false',
+                 'model.variables.boundOnDegree': 'false',
+                 'model.variables.boundOnPartitionIndex': 'false',
+                 'model.variables.fixClique': 'false',
+                 }
+               ])
+
 
 highdens_final_pruning = create_runs(update_copy(baseprops, {
                     'pruning.enabled': 'false',

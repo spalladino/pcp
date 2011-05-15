@@ -1,80 +1,53 @@
-Processing Runid 20110427LOWDENSFINALHK
-. . . . . . . . . .  Successfully created and stored
+Processing Runid 20110427HIGHDENSDIMACS
+ Successfully loaded
 Data:
 \begin{itemize}
 \item solution.chi
-\item solution.lb
+\item solution.time
+\item solution.gap
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsNeighbourhood, strategy.symmetry: MinimumNodeLabel
+\item S1: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
 \end{itemize}
-\begin{tabular}{|c|cc|}
+\begin{tabular}{|c|ccc|}
 \hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1}
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1}
 \\
- & solution.chi & solution.lb
-\\
-\hline
-holmefinaln90d20p00 &  [4] & [4.0]
-\\
-holmefinaln90d20p02 &  [4] & [4.0]
-\\
-holmefinaln90d20p04 &  [4] & [4.0]
-\\
-holmefinaln90d20p06 &  [4] & [4.0]
-\\
-holmefinaln90d20p08 &  [4] & [4.0]
-\\
-holmefinaln90d40p00 &  [7] & [7.0]
-\\
-holmefinaln90d40p02 &  [6] & [6.0]
-\\
-holmefinaln90d40p04 &  [6] & [6.0]
-\\
-holmefinaln90d40p06 &  [6] & [6.0]
-\\
-holmefinaln90d40p08 &  [7] & [7.0]
-\\
-\hline 
- \end{tabular}
-Processing Runid 20110427HIGHDENSFINALHK
-. . . . . . . . . .  Successfully created and stored
-Data:
-\begin{itemize}
-\item solution.chi
-\item solution.lb
-\end{itemize}
-Series:
-\begin{itemize}
-\item S1: strategy.colorBound: UpperNodesSum, strategy.adjacency: AdjacentsPartitionLeqColor, strategy.symmetry: UseLowerLabelFirst
-\end{itemize}
-\begin{tabular}{|c|cc|}
-\hline
-\multicolumn{1}{|c|}{Id} & \multicolumn{2}{|c|}{S1}
-\\
- & solution.chi & solution.lb
+ & solution.chi & solution.time & solution.gap
 \\
 \hline
-holmefinaln90d60p00 & [10] & [10.0]
+dimacs1-FullIns_5 &  [6] & ['7200.031'] & ['0.333']
 \\
-holmefinaln90d60p02 &  [8] & [7.0]
+dimacs1-Insertions_5 &  [6] & ['7200.047'] & ['0.333']
 \\
-holmefinaln90d60p04 &  [8] & [7.0]
+dimacs1-Insertions_6 &  [7] & ['7200.172'] & ['0.623']
 \\
-holmefinaln90d60p06 &  [8] & [8.0]
+dimacs2-FullIns_4 &  [6] & ['7200.094'] & ['0.167']
 \\
-holmefinaln90d60p08 &  [8] & [8.0]
+dimacs2-FullIns_5 &  [7] & ['7200.219'] & ['0.393']
 \\
-holmefinaln90d80p00 & [14] & [13.0]
+dimacs2-Insertions_4 &  [5] & ['7200.031'] & ['0.200']
 \\
-holmefinaln90d80p02 & [11] & [10.0]
+dimacs2-Insertions_5 &  [6] & ['7200.266'] & ['0.567']
 \\
-holmefinaln90d80p04 & [12] & [10.0]
+dimacs3-FullIns_4 &  [7] & ['7200.125'] & ['0.143']
 \\
-holmefinaln90d80p06 & [12] & [11.0]
+dimacs3-Insertions_4 &  [5] & ['7200.047'] & ['0.400']
 \\
-holmefinaln90d80p08 & [12] & [11.0]
+dimacs4-FullIns_4 &  [8] & ['7200.172'] & ['0.125']
+\\
+dimacs4-Insertions_3 &  [4] & ['774.313'] & ['-']
+\\
+dimacs4-Insertions_4 &  [5] & ['7200.188'] & ['0.486']
+\\
+dimacsDSJC125 & [20, 45] & ['7200.172', '7200.328'] & ['0.400', '0.145']
+\\
+dimacsDSJC250 &  [9] & ['7200.141'] & ['0.494']
+\\
+dimacsmyciel6 &  [7] & ['7200.031'] & ['0.286']
+\\
+dimacsmyciel7 &  [8] & ['7200.578'] & ['0.500']
 \\
 \hline 
  \end{tabular}

@@ -46,6 +46,9 @@ class FileName:
         holme = re.match('holme\\\\n([\\d]+)d([\\d]+)', fname)
         if holme: return "HK {0} N={1}".format(int(holme.group(2)) * 10, int(holme.group(1)))
         
+        fixedparts = re.match('fixedpart\\\\p([\\d]+)n([\\d]+)d([\\d]+)', fname)
+        if fixedparts: return "EW {0} N={1} P={2}".format(int(fixedparts.group(3)) * 10, int(fixedparts.group(2)), int(fixedparts.group(1)))
+        
         return fname
 
 class PreprocessRemoved:

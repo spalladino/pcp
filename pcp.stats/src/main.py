@@ -284,12 +284,12 @@ def final_2_latextable():
                     )
 
 def final_cplex_latextable():
-    
-        series = ['solver.kind', 'solver.useCplexPrimalHeuristic', 'solver.useCplexPreprocess', 'solver.useCplexCuttingPlanes', 'model.variables.boundOnDegree', 'model.variables.boundOnPartitionIndex', 'model.variables.fixClique',]
-        datas=['solution.nnodes','solution.time','solution.gap']
+        series = ['solver.kind', 'model.variables.boundOnDegree', 'model.variables.boundOnPartitionIndex', 'model.variables.fixClique',]
+        datas=['solution.gap', 'solution.time']
         
         #files = ['20100920BNC90VLOW', '20100920BNC90LOW', '20100920BNC90HIGH']
-        files = ['20101006BNC90VLOW2', '20101006BNC90LOW2', '20101006BNC90HIGH2', '20101008BNCDIMACS2']
+        #files = ['20101006BNC90VLOW2', '20101006BNC90LOW2', '20101006BNC90HIGH2', '20101008BNCDIMACS2']
+        files = ['20110512D60FIXEDPARTS']
         
         for file in files:
             LatexProcessor(file).process(
@@ -304,9 +304,10 @@ def final_cplex_latextable():
 def final_dimacs_latextable():
     
         series = ['solver.kind', 'solver.useCplexPrimalHeuristic', 'solver.useCplexPreprocess', 'solver.useCplexCuttingPlanes', 'model.variables.boundOnDegree', 'model.variables.boundOnPartitionIndex', 'model.variables.fixClique']
-        datas=['solution.chi','solution.nnodes','solution.time','solution.gap']
+        datas=['solution.chi','solution.time','solution.gap']
         
-        files = ['20100910DIMACSFINAL2PARTIAL']
+        files = ['20110427LOWDENSDIMACS','20110427LOWDENSDIMACSCONT']
+        files = ['20110427HIGHDENSDIMACS']
         
         for file in files:
             LatexProcessor(file).process(
@@ -510,7 +511,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    final_bnc_runs()
+    final_dimacs_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

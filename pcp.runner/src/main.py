@@ -16,6 +16,16 @@ import files as f
 import os
  
 def main():
+    
+    files = bnc.filesn90d60fixedpart()
+    print 'Processing fixed parts 60 Density: ', files
+    Fixture().newrun(
+                bnc.highdens_final_vs_cplex, 
+                files = files,
+                dirs = [ ".\\..\\data\\" ],
+                runid = '20110512D60FIXEDPARTS')
+
+def old():
 
     files = f.dimacs
     print 'Processing Final DIMACS Low Density: ', files
@@ -32,8 +42,6 @@ def main():
                 files = files,
                 dirs = [ ".\\..\\data\\" ],
                 runid = '20110427HIGHDENSDIMACS')
-
-def old():
     
     files = bnc.fileslowhk90()
     print 'Processing Final Holme Kim BNC Low Density: ', files

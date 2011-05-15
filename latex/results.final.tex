@@ -70,6 +70,102 @@ As for \textsc{CPLEX} dynamic search, it is clear that it performs much better t
 
 Something interesting to notice is that fixing the initial clique does not always report a benefit when running \textsc{CPLEX} algorithms, even though it did report a significative improvement on our customized algorithm.
 
+\subsection{Alternative partition sizes}
+
+Since we used $2$ as the \textit{de facto} partition size for most of our tests, it was pending to analyze how the algorithm performed when varying the size of the partitions. Using binomial random graphs, with $90$ nodes, $60\%$ density and partition sizes ranging from $1$ to $6$, we executed our branch and cut algorithm, as well as \textsc{CPLEX}'s branch and cut, and reported gap and running time.
+
+% 20110512D60FIXEDPARTS
+%\item S1: solver.kind: CplexBranchAndCutSearch, model.variables.boundOnDegree: false, model.variables.boundOnPartitionIndex: false, model.variables.fixClique: false
+%\item S2: solver.kind: CplexBranchAndCutSearch, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+%\item S3: solver.kind: PcpBranchAndCut, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex branch and cut} & \multicolumn{2}{|c|}{Cplex branch and cut} & \multicolumn{2}{|c|}{Custom \PCP{}}
+\\
+\multicolumn{1}{|c|}{} & \multicolumn{2}{|c|}{w/o initial clique} & \multicolumn{2}{|c|}{with initial clique} & \multicolumn{2}{|c|}{branch and cut}
+\\
+\hline
+& gap & time & gap & time & gap & time
+\\
+\hline
+EW P=1 & 37.1\% & 7200 & 19.8\% & 7200 & \b{17.6\%} & 7200
+\\
+EW P=2 & 45.2\% & 7200 & 24.0\% & 7200 & \b{18.8\%} & 7200
+\\
+EW P=3 & 26.7\% & 7200 & 26.7\% & 7200 & 26.7\% & 7200
+\\
+EW P=4 & - & 2880 & - & 2878 & - & 5119
+\\
+EW P=5 & - & 16 & - & 16 & - & 86
+\\
+EW P=6 & - & 20 & - & 20 & - & 255
+\\
+\hline 
+\end{tabular} 
+\caption{Average gap and running time in seconds for graphs with different partition sizes, comparing our custom \PCP{} branch and cut algorithm with \textsc{cplex}'s branch and cut, with and without fixing an initial clique for the resolution. All graphs are random binomial graphs, have $60\%$ density and $90$ nodes.}
+\label{table:final:partitionsizes}
+\end{table}
+ 
+Results in table \ref{table:final:partitionsizes} show that the most difficult graphs to solve are those with partition sizes equal to $1$, $2$ and $3$, regardless of which algorithm is being used. In all those cases, the implemented branch and cut algorithm performed better (or same as) \textsc{CPLEX}'s branch and cut. Note that a partition size equal to $1$ makes this problem equivalent to standard graph coloring, which is known to be difficult to solve.
+
+Larger partition sizes, such as $4$, and specially $5$ and $6$, are much easier to solve. All instances were solved to optimality by all the algorithms, although our branch and cut required slightly more time than \textsc{CPLEX}'s. This was an expected result, as we fine-tuned all the parameters of our algorithm in order to excel at dealing with small partition sizes (which are the most difficult to handle); therefore, in other scenarios for which we did not customize it, it can be outperformed by generic solvers.
+
+\subsection{DIMACS instances}
+
+To check the performance of our algorithm on particularly difficult graphs, we chose a few graphs from the \textsc{dimacs} \cite{dimacs} graph coloring challenge, and arbitrarily partitioned them in partitions of $2$ nodes. We once again compared our algorithm to \textsc{CPLEX}'s branch and cut, and reported running time and solution gap.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{Graph} & \multicolumn{2}{|c|}{Cplex B\&C} & \multicolumn{2}{|c|}{Custom \PCP{}}
+\\
+ & time & gap & time & gap
+\\
+\hline
+dimacs1-FullIns\_5 & 7200 & \b{16.7\%} & 7200 & 31.7\% 
+\\
+dimacs1-Insertions\_5 & 7200 & 33.3\% & 7200 & 33.3\% 
+\\
+dimacs1-Insertions\_6 & 7200 & 67.0\% & 7200 & \b{57.1\%} 
+\\
+dimacs2-FullIns\_4 & \b{452} & \b{0.0\%} & 7200 & 16.7\%
+\\
+dimacs2-FullIns\_5 & 7200 & \b{28.6\%} & 7200 & 39.3\%
+\\
+dimacs2-Insertions\_5 & 7200 & \b{50.0\%} & 7200 & 56.7\%
+\\
+dimacs3-FullIns\_4 & 7200 & 14.3\% & 7200 & 14.3\%
+\\
+dimacs3-Insertions\_4 & 7200 & 40.0\% & 7200 & 40.0\%
+\\
+dimacs4-FullIns\_4 & 7200 & 12.5\% & 7200 & 12.5\%
+\\
+dimacs4-Insertions\_3 & 3084 & 0.0\% & 774 & 0.0\%
+\\
+dimacs4-Insertions\_4 & 7200 & 40.0\% & 7200 & 40.0\%
+\\
+dimacsDSJC125 & 7200 & 32.8\% & 7200 & \b{22.9\%}
+\\
+dimacsDSJC250 & 7200 & N/A & 7200 & \b{49.4\%}
+\\
+dimacsmyciel6 & 7200 & 28.6\% & 7200 & 26.8\%
+\\
+dimacsmyciel7 & 7200 & 50.0\% & 7200 & \b{49.7\%}
+\\
+\hline 
+ \end{tabular} 
+\caption{Average gap and running time in seconds for certain \textsc{dimacs} challenge graphs, with arbitrary partitions of size $2$, comparing our custom \PCP{} branch and cut algorithm with \textsc{cplex}'s branch and cut.}
+\label{table:final:dimacs}
+\end{table}
+ 
+The results in table \ref{table:final:dimacs} report only one value for \textsc{CPLEX}'s branch and cut, even though we executed it with and without fixing the values for an initial clique. The reason for this is that fixing those values did not report any modification on the obtained results; this could be due to the particular nature of the graphs being tested, since some of them, such as Mycielski's, have no relation between the clique and the chromatic number.
+
+The obtained gaps show there is no winner between both algorithms: depending on the structure of the graph, the custom branch and cut algorithm implemented for \PCP{} performs better than \textsc{CPLEX}'s, or vice-versa. In most cases, obtained gaps were far from zero both algorithms, showing the difficult nature of this graphs for the coloring problem, which is clearly extended to partitioned coloring.
+ 
 \subsection{Comparison with Asymmetric Representatives Branch and Cut}
 
 We also compared our algorithm to the other branch and cut algorithm designed specifically for the \PCP{} we found in the literature: the one devised by Frota, Maculan, Noronha and Ribeiro in \cite{frota2010branch}, based on the asymmetric representatives formulation for traditional coloring, (\cite{campelo2004cliques},\cite{campelo2008asymmetric}).
