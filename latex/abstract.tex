@@ -1,0 +1,11 @@
+\begin{abstract}
+
+The partitioned graph coloring problem, \PCP{}, is a generalization of the classic graph coloring problem. In this variant the set of the input graph's nodes is partitioned, and the problem relies in coloring exactly one node per partition using the lowest possible number of different colors, maintaining the constraint that two adjacent nodes can not use the same color.
+
+This problem was first stated by Li and Simha in the context of the \textit{routing and wavelength assignment} (RWA) problem in \textit{wavelength division multiplexed} (WDM) networks. The authors propose a two-stage resolution: a first stage in which possible \textit{lightpaths} are generated, which are feasible solutions to the routing problem, and a second stage where the lightpaths to be used are selected and each of them is assigned a wavelength, looking to minimize the number of different wavelengths. This last stage can be modelled as an instance of the \PCP{}.
+
+The \PCP{}, like traditional graph coloring, is an NP complete problem, which means that there are no polynomial algorithms known for its resolution. Therefore, most of the work on this problem in the literature is targeted towards heuristic approaches, with only a few efforts for developing exact algorithms.
+
+In this work we modelled the \PCP{} as an integer linear programming problem, generalizing the model proposed by Méndez-Díaz and Zabala for graph coloring, which can be solved via \textit{branch and cut} algorithms. In order to develop such an algorithm, we implemented an initial heuristic, a primal heuristic, branching strategies and separation algorithms for the families of valid inequalities we found; these components were the building blocks for our \textit{branch and cut} algorithm for solving the \PCP{}.
+
+\end{abstract}

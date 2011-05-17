@@ -1,0 +1,13 @@
+\begin{otherlanguage}{spanish}
+\begin{abstract}
+
+El problema de coloreo particionado, \PCP{}, es una generalización del clásico problema de coloreo de grafos. En esta variante el conjunto de nodos del grafo de entrada se encuentra particionado, y el problema consiste en colorear un solo nodo por partición utilizando la menor cantidad de colores posible, manteniendo la restricción de que dos nodos adyacentes no pueden compartir color.
+
+Este problema fue propuesto por Li y Simha en el contexto del problema de \textit{ruteo y asignación de longitudes de onda} (RWA) en redes \textit{multiplexadas por división de longitud de onda} (WDM). Dichos autores proponen una resolución en dos etapas: una primera en la que se generan posibles caminos como soluciones factibles para el problema de ruteo, y una segunda en la que se determinan los caminos a usar y se les asignan longitudes de onda, buscando minimizar la cantidad de longitudes de onda usadas. Esta última etapa se corresponde con una instancia del \PCP{}.
+
+El \PCP{}, al igual que coloreo tradicional de grafos, es un problema NP completo, con lo que no se conoce un algoritmo que pueda resolverlo en tiempo polinomial. Por este motivo, la mayoría de los enfoques para resolver este problema se basan en técnicas heurísticas, dejando poco lugar a algoritmos exactos para la resolución del mismo.
+
+En este trabajo modelamos el \PCP{} como un problema de programación lineal entera, generalizando el modelo propuesto por Méndez-Díaz y Zabala para coloreo de grafos, lo que nos permite resolverlo mediante la técnica de \textit{branch and cut}. Para ello, desarrollamos una heurística inicial, una heurística primal, estrategias de branching, y algoritmos de separación para distintas familias de desigualdades válidas que caracterizamos para el poliedro. A partir de estos componentes implementamos el algoritmo de \textit{branch and cut} para la resolución del \PCP{}.
+
+\end{abstract}
+\end{otherlanguage}
