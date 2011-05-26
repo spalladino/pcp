@@ -1,0 +1,132 @@
+
+\section{Programación lineal}
+
+\subsection{Programación lineal}
+
+\begin{frame} 
+\frametitle{Programación lineal}
+
+Buscamos maximizar/minimizar una función objetivo sujeta a un conjunto de restricciones lineales sobre las variables.
+
+Por ejemplo, dadas $x, y \in \Re$...
+
+\begin{align*}
+\text{{maximizar}} \quad & x + y \\
+\text{{sujeto a}} \quad & x + 4y \leq 16 \\
+& 3x + y \leq 15 \\
+& x, y \in \Re^{\geq 0}
+\end{align*}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal}
+
+Las restricciones determinan una región factible sobre la que se busca el óptimo que maximiza la función objetivo.
+
+\begin{figure}[h]
+	\centering
+	\alt<1>{\includegraphics[scale=0.5]{lpsample1.png}}{\includegraphics[scale=0.5]{lpsample2.png}}
+\end{figure}
+
+\uncover<2>{}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Modelado}
+
+Podemos usar programación lineal para modelar múltiples escenarios, sean de economía, planificación, etc.
+
+Intentemos usarlo para modelar implicaciones lógicas: cada variable toma valores $0$ si es falsa o $1$ si es verdadera:
+
+\begin{align*}
+\text{maximizar} \quad & x + y + z\\
+\alt<1>
+{\text{sujeto a} \quad & x \xor y \\
+& x \xor z \\
+& y \xor z \\
+& x, y, z \quad \text{bool} \\}
+{\text{sujeto a} \quad & x + y \leq 1 \\
+& x + z \leq 1 \\
+& y + z \leq 1 \\
+& 0 \leq x, y, z \leq 1 \\}
+\end{align*}
+
+\uncover<3>{El óptimo de este problema está en \alert{$<x,y,z> = <\frac{1}{2},\frac{1}{2},\frac{1}{2}>$.}}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+Necesitamos restringir a que las variables tomen solamente valores enteros para evitar casos como el anterior.
+
+Al problema resultante se lo llama de programación lineal \textbf{entera}.
+
+\begin{align*}
+\text{maximizar} \quad & x + y + z\\
+\text{sujeto a} \quad & x + y \leq 1 \\
+& x + z \leq 1 \\
+& y + z \leq 1 \\
+& \alert{x, y, z \in \{0,1\}} \\
+\end{align*}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample0.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample1.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample2.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Programación lineal entera}
+
+La búsqueda del óptimo ya no debe hacerse sobre los vértices del poliedro, sino sobre los puntos enteros contenidos en él.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{ilpsample3.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame}
+\frametitle{Programación lineal entera}
+
+A diferencia de programación lineal con variables continuas, no se conoce algoritmo \textit{polinomial} para lineal entera.
+
+Entre las técnicas para resolver este tipo de problemas se encuentran los algoritmos de \textit{branch and cut}, como el que aplicamos en este trabajo.
+
+\end{frame}

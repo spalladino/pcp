@@ -1,0 +1,132 @@
+\section{Resolución}
+\begin{frame}{Resolución}
+
+Una manera de resolver un problema de programación lineal entera consiste en aplicar un algoritmo de \textit{branch and cut}, el cual es una combinación de las técnicas de \alert<2>{planos de corte} y de \alert<3>{branch and bound}.
+\vskip 5pt
+\uncover<2->{La primera se basa en resolver el problema de programación lineal \textbf{sin} las restricciones de integralidad, eliminar la solucción fraccionaria con algún criterio, y repetir el proceso hasta llegar a una solución óptima entera.}
+\vskip 5pt
+\uncover<3->{La segunda subdivide el problema sucesivamente en otros más pequeños, eliminando ciertas soluciones fraccionarias, y manteniendo durante el recorrido del árbol generado una cota superior y otra inferior para el óptimo buscado.}
+
+\end{frame} 
+
+\begin{frame}{Componentes}
+
+Un algoritmo de branch and cut consta entonces, de los siguientes componentes:
+
+\begin{itemize}
+\item<2->{\textbf{Algoritmos de separación}, para remover soluciones fraccionales aplicando planos de corte construidos a partir de desigualdades válidas}
+\item<3->{\textbf{Estrategias de branching}, para decidir con qué criterio se subdivide el problema a cada nodo del árbol}
+\item<4->{\textbf{Heurísticas inicial y primal}, para contar con soluciones enteras factibles durante el recorrido del árbol, que actúan como cotas superiores para el óptimo.}
+\end{itemize}
+
+\end{frame} 
+
+\subsection{Planos de corte}
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{En una clique extendida, cada nodo debe tener un color distinto.
+\lpineq{\sum_{i \in K} x_{ij_0} \leq w_{j_0}}{\forall j_0 \in C}
+\extclique
+\uncover<2>{Usamos un algoritmo goloso basado en los valores de las variables y los grados de los nodos para construir los planos de corte correspondientes.}
+}
+
+\end{itemize}
+
+\end{frame} 
+
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Una partición no puede colorearse con el color $j_0$ a menos que todos los anteriores ya hayan sido usados.
+\lpineq{\sum_{i \in p_0}\sum_{j \geq j_0} x_{ij} \leq w_{j_0}}{\forall p_0 \in P, j_0 \in C}}
+
+\uncover<2->{
+Hay solamente $|P| \times |C|$, con lo que pueden resolverse mediante simple enumeración.
+}
+
+\end{itemize}
+
+\uncover<3->{
+\begin{centerblock}{}
+Estas desigualdades válidas, junto a las de clique extendida, fueron las que más contribuyeron al algoritmo de planos de corte implementado.
+\end{centerblock}
+}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item{Dado un conjunto independiente máximo $I$ de tamaño $\alpha$ tal que cada nodo está en una partición distinta, a lo sumo $\alpha$ nodos pueden tener el mismo color.
+\lpineq{\sum _{i \in I} x_{ij_0} \leq \alpha w_{j_0}}{\forall j_0 \in C}
+
+\uncover<2->{
+Especializamos esta desigualdad tomando subgrafos cuyos conjunto independientes máximos son fáciles de calcular.
+
+\begin{itemize}
+\item{Component paths}
+\item{Component holes}
+\end{itemize}
+}
+
+\uncover<3->{Nuevamente usamos un algoritmo goloso para construir estos planos de corte, acotando la cantidad de veces que cada nodo y cada eje puede ser visitado.}}
+
+\end{itemize}
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Desigualdades válidas para PCP}
+
+\begin{itemize}
+
+\item Dado un grafo, definimos su \textit{grafo de particiones} como un grafo que tiene un nodo por cada partición del original, y dos nodos son adyacentes sii todos los nodos de las dos particiones eran adyacentes entre sí:
+\uncover<2->{
+	\alt<2>
+	{\togprime}
+	{\gprime}
+}
+
+\uncover<4->{Las desigualdades de conjunto independiente se pueden aplicar sobre el grafo de particiones y llevarse al grafo original.}
+\vfill
+\end{itemize}
+
+\end{frame} 
+
+\subsection{Estrategia de branching}
+
+\begin{frame}{Estrategia de Branching}
+
+Lo siguiente es definir una estrategia de branching, que determina cómo generar los subproblemas a partir de un nodo del árbol.
+\vskip 5pt
+\uncover<2->{La estrategia típica es tomar una variable con valor fraccionario en la solución de la relajación, y forzar a que tome valor $0$ o $1$ en cada hijo.
+\vskip 5pt
+
+\begin{figure}[h]
+	\centering
+	\branchingtree
+\end{figure}
+}
+
+\end{frame} 
+
+\begin{frame}{Estrategia de Branching en PCP}
+
+En PCP usamos como criterio de branching seleccionar un nodo de una partición sin colorear y asignarle un color distinto entre todos los posibles en los subproblemas:
+
+\begin{figure}[h]
+	\centering
+	\pcpbranchingtree
+\end{figure}
+
+\uncover<2->{El nodo elegido a colorear es el que tiene mayor grado de saturación, es decir, distintos colores usados para sus vecinos.}
+
+\end{frame} 

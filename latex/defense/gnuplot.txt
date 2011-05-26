@@ -1,0 +1,66 @@
+cd 'D:\Tesis\Workspace\latex\slides'
+
+set xrange [0:6]
+set yrange [0:6]
+set terminal 'png'
+
+g(x)=(-3*x + 14)
+f(x)=(-.25*x+5.25)
+
+set output 'lpsample1.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', (-x + 2) t 'objective'
+
+set output 'lpsample2.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', (-x + 7.63636) t 'objective'
+
+unset output
+set terminal 'window'
+
+
+set xrange [0:6]
+set yrange [0:6]
+set terminal 'png' 
+set grid
+
+g(x)=(-3*x + 14)
+f(x)=(-.25*x+5.25)
+
+set output 'ilpsample0.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14'
+
+set output 'ilpsample1.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t ''
+
+set output 'ilpsample2.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', 'hull.dat' t 'hull' w lines lc 3 
+
+set output 'ilpsample3.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', 'hull.dat' t 'hull' w lines lc 3, (-x + 7) t 'objective'
+
+set output 'ilpsample4.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7.63636) t 'objective' lc 5
+
+set output 'ilpsample5cut.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-x + 7.63636) t 'objective' lc 5
+
+set output 'ilpsample6cut.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-x + 7.285) t 'objective' lc 5
+
+set output 'ilpsample7cut2.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-0.5*x+5.5) t 'cut' lc 4, (-x + 7.285) t 'objective' lc 5
+
+set output 'ilpsample8cut2.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-2*x+10) t 'cut' lc 4, (-0.5*x+5.5) t 'cut' lc 4, (-x + 7) t 'objective' lc 5
+
+set output 'ilpsample10.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7.5) t 'objective' lc 5
+
+set output 'ilpsample11.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7) t 'objective' lc 5
+
+set output 'ilpsample12.png'
+plot f(x) title 'x + 4y = 21', g(x) t '3x + y = 14', 'ints.dat' pt 6 t '', (-x + 7.5) t 'objective' lc 5
+
+
+unset output
+set terminal 'window'
