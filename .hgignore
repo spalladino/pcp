@@ -27,4 +27,5 @@ data/runs/**.pkl
 data/runs/**.runs
 data/runs/**.cfgs
 data/runs/**.txt
+*.7z
 *.DS_Store
