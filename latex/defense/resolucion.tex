@@ -1,7 +1,7 @@
-\section{Resolución}
+\section{Algoritmo}
 \begin{frame}{Resolución}
 
-Una manera de resolver un problema de programación lineal entera consiste en aplicar un algoritmo de \textit{branch and cut}, el cual es una combinación de las técnicas de \alert<2>{planos de corte} y de \alert<3>{branch and bound}.
+Una vez fijado el modelo, una manera de resolver un problema de programación lineal entera consiste en aplicar un algoritmo de \textit{branch and cut}, el cual es una combinación de las técnicas de \alert<2>{planos de corte} y de \alert<3>{branch and bound}.
 \vskip 5pt
 \uncover<2->{La primera se basa en resolver el problema de programación lineal \textbf{sin} las restricciones de integralidad, eliminar la solucción fraccionaria con algún criterio, y repetir el proceso hasta llegar a una solución óptima entera.}
 \vskip 5pt
@@ -53,12 +53,6 @@ Hay solamente $|P| \times |C|$, con lo que pueden resolverse mediante simple enu
 
 \end{itemize}
 
-\uncover<3->{
-\begin{centerblock}{}
-Estas desigualdades válidas, junto a las de clique extendida, fueron las que más contribuyeron al algoritmo de planos de corte implementado.
-\end{centerblock}
-}
-
 \end{frame} 
 
 \begin{frame} 
@@ -101,13 +95,22 @@ Especializamos esta desigualdad tomando subgrafos cuyos conjunto independientes 
 
 \end{frame} 
 
+\begin{frame} 
+\frametitle{Planos de corte}
+
+Analizamos el gap en grafos de distinta densidad al aplicar distintas familias de corte sobre los ya provistos por \textsc{cplex} en un algoritmo de planos de corte:
+
+\includechart{chartcuts.png}
+
+\end{frame} 
+
 \subsection{Estrategia de branching}
 
 \begin{frame}{Estrategia de Branching}
 
 Lo siguiente es definir una estrategia de branching, que determina cómo generar los subproblemas a partir de un nodo del árbol.
-\vskip 5pt
-\uncover<2->{La estrategia típica es tomar una variable con valor fraccionario en la solución de la relajación, y forzar a que tome valor $0$ o $1$ en cada hijo.
+\vskip 3pt
+\uncover<2->{Las estrategias típicas son tomar la variable con valor más fraccionario o menos fraccionario en la solución de la relajación, y forzar a que tome valor $0$ o $1$ en cada hijo.
 \vskip 5pt
 
 \begin{figure}[h]
@@ -130,3 +133,101 @@ En PCP usamos como criterio de branching seleccionar un nodo de una partición si
 \uncover<2->{El nodo elegido a colorear es el que tiene mayor grado de saturación, es decir, distintos colores usados para sus vecinos.}
 
 \end{frame} 
+
+\begin{frame}{Estrategia de Branching en PCP}
+
+Comparando contra las otras estrategias en grafos de distinta densidad en un branch and bound:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{chartbranchingstrategy.png}
+\end{figure}
+
+\end{frame} 
+
+\subsection{Heurísticas Primal e Inicial}
+
+\begin{frame}{Heurísticas}
+
+La heurística primal se utiliza para generar soluciones enteras a lo largo del algoritmo, que actúan como cota superior para el óptimo.
+
+Una heurística usual consiste en redondear las variables de acuerdo a su valor fraccionario en la relajación para llegar a una solución entera.
+
+\uncover<2>{Nosotros adaptamos algoritmos existentes de coloreo a este problema para utilizar como heurísticas.}
+
+\end{frame}
+
+\begin{frame}{Algoritmos de enumeración}
+
+En coloreo, un algoritmo de enumeración recorre posibles coloreos, eliminando gran cantidad de soluciones simétricas y podando aquellos que no logran un valor mejor al alcanzado hasta el momento.
+
+En cada iteración, se elige un nodo y se intenta colorearlo con los colores disponibles.
+
+\uncover<2->{Distintos criterios para elegir el nodo a colorear dan lugar a distintos algoritmos:
+\begin{itemize}
+\item{Mayor grado del nodo}
+\item{Menor grado del nodo}
+\alert<3>{\item{Mayor grado de saturación}}
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}{DSatur}
+
+La variante que utiliza el mayor grado de saturación, \textsc{DSatur}, es una de las que mejores tiempos logra. 
+
+\uncover<2->{Si bien es un algoritmo exacto, limitamos su ejecución a una determinada cantidad de tiempo para usarlo como heurística, pues arroja soluciones muy buenas en poco tiempo.}
+
+\uncover<3->{Puede generalizarse para coloreo particionado según distintos criterios:
+\begin{itemize}
+\alert<4>{\item{\textbf{Nodo más sencillo:} de cada partición sin colorear, se toma el nodo de menor grado de saturación, luego se elige entre ellos el de mayor grado.}}
+\alert<5>{\item{\textbf{Partición más difícil:} se determina cuál es la partición aún no coloreada más difícil según distintos criterios, y de ella se elige el nodo de menor grado de saturación.}}
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}{DSatur Particionado}
+
+Comparamos estos criterios en corridas de un minuto sobre grafos de distinta densidad:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{chartdsatur.png}
+\end{figure}
+
+\end{frame} 
+
+\begin{frame}{Heurística inicial}
+
+Teniendo definida la variante de DSatur a utilizar, la aplicamos como heurística inicial, ejecutando por 5 segundos.
+\vskip 10pt
+Esto no sólo provee una solución inicial para el algoritmo, que actúa como cota superior desde el principio del árbol, sino que también acota considerablemente la cantidad de variables y restricciones. 
+\vskip 10pt
+\uncover<2->{
+Sea $\alert<3>{\chi_0}$ la solución de la heurística inicial,
+
+\begin{align*}
+x_{ij} \quad &1 \leq i \leq |V|,\; 1 \leq j \leq \alt<2>{|P|}{\alert{\chi_0}} \\
+w_{j} \quad &1 \leq j \leq \alt<2>{|P|}{\alert{\chi_0}}
+\end{align*}
+}
+
+\uncover<3->{
+Por cada color que no se utilice en la solución inicial, se tienen $|V|+1$ variables menos.
+}
+
+\end{frame}
+
+\begin{frame}{Heurística primal}
+
+Dada una solución fraccionaria, fijamos en $1$ aquellas variables $x_{ij}$ mayores a determinado valor. A partir de ese coloreo parcial, utilizamos DSatur para construir una solución entera válida.
+
+\uncover<2->{
+\begin{block}{}
+Si bien la heurística primal funciona correctamente, la inicial arroja un resultado demasiado cerca del óptimo, lo cual hace que la heurística primal sea incapaz de mejorar el resultado inicial en la mayoría de los casos. Sólo en grafos muy densos logra una mejora respecto de la solución inicial.
+\end{block}
+}
+
+\end{frame}

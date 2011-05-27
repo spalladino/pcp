@@ -15,7 +15,8 @@
 \usepackage{tikz}
 \usetikzlibrary{backgrounds,fit,arrows} 
 
-\usetheme{warsaw}
+\usetheme{paloalto}
+%\usecolortheme{seagull}
 
 \newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
 \newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
@@ -24,13 +25,16 @@
 \newcommand{\lprestriction}[3]{#1 \[ #2 \qquad #3 \]}
 \newcommand{\lpineq}[2]{\[ #1 \qquad #2 \]}
 \newcommand{\xor}{\veebar}
+\newcommand{\includechart}[1]{\begin{figure}[h]\centering\includegraphics[scale=0.5]{#1}\end{figure}}
 
 \newenvironment{centerblock}[1]{\begin{block}{#1}\center}{\end{block}}
 
 \definecolor{briancolor}{rgb}{0.2,0.2,0.7}
 
 \input{graphs.tex}
-%\includeonly{resolucion}
+\input{titles.tex}
+
+%\includeonly{resultados}
 
 \begin{document}
 
@@ -38,28 +42,8 @@
 \include{introduccion}
 \include{modelo}
 \include{resolucion}
-
-\begin{frame}
-\frametitle{Branch and Bound}
-
-Otro componente del branch and bound es la \textit{heurística primal}: consiste en derivar una solución entera a partir de un óptimo de la relajación.
-
-Un esquema típico consiste en tomar las variables con valor fraccionario y redondearlas al valor entero más cercano.
-
-\uncover<2->{En PCP fijamos las variables con valor suficientemente grande y corremos un algoritmo de coloreo secuencial basado en el grado de saturación de los nodos}.
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Branch and Cut}
-
-Un algoritmo de \textit{branch and cut} es una combinación de branch and bound y planos de corte.
-
-Sobre un esquema de branch and bound, se ejecutan planos de corte cada cierta cantidad de nodos para eliminar aún más soluciones fraccionarias.
-
-\uncover<2->{Esta técnica es la que suele dar los mejores resultados prácticos a la hora de resolver un problema de estas características.}
-
-\end{frame}
+\include{resultados}
+\include{conclusiones}
 
 \end{document}
 
