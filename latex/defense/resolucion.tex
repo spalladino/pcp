@@ -111,14 +111,11 @@ Analizamos el gap en grafos de distinta densidad al aplicar distintas familias d
 Lo siguiente es definir una estrategia de branching, que determina cómo generar los subproblemas a partir de un nodo del árbol.
 \vskip 3pt
 \uncover<2->{Las estrategias típicas son tomar la variable con valor más fraccionario o menos fraccionario en la solución de la relajación, y forzar a que tome valor $0$ o $1$ en cada hijo.
-\vskip 5pt
-
 \begin{figure}[h]
 	\centering
 	\branchingtree
 \end{figure}
 }
-
 \end{frame} 
 
 \begin{frame}{Estrategia de Branching en PCP}
@@ -138,10 +135,7 @@ En PCP usamos como criterio de branching seleccionar un nodo de una partición si
 
 Comparando contra las otras estrategias en grafos de distinta densidad en un branch and bound:
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.5]{chartbranchingstrategy.png}
-\end{figure}
+\includechart{chartbranchingstrategy.png}
 
 \end{frame} 
 
@@ -191,32 +185,23 @@ La variante que utiliza el mayor grado de saturación, \textsc{DSatur}, es una de
 \begin{frame}{DSatur Particionado}
 
 Comparamos estos criterios en corridas de un minuto sobre grafos de distinta densidad:
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.5]{chartdsatur.png}
-\end{figure}
+\includechart{chartdsatur.png}
 
 \end{frame} 
 
 \begin{frame}{Heurística inicial}
 
 Teniendo definida la variante de DSatur a utilizar, la aplicamos como heurística inicial, ejecutando por 5 segundos.
-\vskip 10pt
+\vskip 3pt
 Esto no sólo provee una solución inicial para el algoritmo, que actúa como cota superior desde el principio del árbol, sino que también acota considerablemente la cantidad de variables y restricciones. 
-\vskip 10pt
+\vskip 3pt
 \uncover<2->{
 Sea $\alert<3>{\chi_0}$ la solución de la heurística inicial,
-
 \begin{align*}
 x_{ij} \quad &1 \leq i \leq |V|,\; 1 \leq j \leq \alt<2>{|P|}{\alert{\chi_0}} \\
 w_{j} \quad &1 \leq j \leq \alt<2>{|P|}{\alert{\chi_0}}
-\end{align*}
-}
-
-\uncover<3->{
-Por cada color que no se utilice en la solución inicial, se tienen $|V|+1$ variables menos.
-}
+\end{align*}}
+\uncover<3->{Por cada color que no se utilice en la solución inicial, se tienen $|V|+1$ variables menos.}
 
 \end{frame}
 
