@@ -57,6 +57,56 @@
 	{\newcommand{\ENDPROC}{\end{ALC@proc}}}
 	{\newcommand{\ENDPROC}{\end{ALC@proc}\ALC@it\algorithmicendprocedure}}
 
+% Graphs
+\newcommand{\tikzparams}{}
+
+\newenvironment{samplegraphpicture}{
+	\begin{tikzpicture}
+		[n/.style= {minimum size=3mm,thick,circle,draw=black},
+		 b/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 g/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=black!40},
+		 nhl/.style= {minimum size=3mm,thick,circle,draw=red,fill=red},
+		 nred/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=red!60},
+		 nblue/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=blue!60},
+		 ngreen/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=green!60},
+		 nyellow/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=yellow!60},
+		 part/.style={fill=gray!10,circle},
+		 llpart/.style={fill=gray!5,circle},
+		 hlpart/.style={fill=gray!20,circle}] 
+}{
+	\end{tikzpicture}
+}	
+
+\newenvironment{scaledsamplegraphpicture}[1]{
+	\begin{tikzpicture}
+		[scale=#1, transform shape,
+		 n/.style= {minimum size=3mm,thick,circle,draw=black},
+		 b/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		 g/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=black!40},
+		 nhl/.style= {minimum size=3mm,thick,circle,draw=red,fill=red},
+		 nred/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=red!60},
+		 nblue/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=blue!60},
+		 ngreen/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=green!60},
+		 nyellow/.style= {minimum size=3mm,thick,circle,draw=black!40,fill=yellow!60},
+		 part/.style={fill=gray!10,circle},
+		 llpart/.style={fill=gray!5,circle},
+		 hlpart/.style={fill=gray!20,circle}] 
+}{
+	\end{tikzpicture}
+}	
+
+\newcommand{\samplegraphcaption}{}
+\newenvironment{samplegraph}[2]{
+	\begin{figure}[h]
+	\renewcommand{\samplegraphcaption}{\caption{\label{#1} #2}}
+	\centering
+	\begin{samplegraphpicture}
+}{
+	\end{samplegraphpicture}
+	\samplegraphcaption
+	\end{figure}
+}
+
 % Configs
 \newtheorem{theorem}{Theorem}
 \numberwithin{equation}{chapter}
@@ -65,7 +115,7 @@
 \numberwithin{figure}{chapter}
 \setcounter{tocdepth}{1}
 
-%\includeonly{resumen}
+\includeonly{heur}
 
 % Document start
 \begin{document}

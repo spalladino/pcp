@@ -1,14 +1,204 @@
-%!TEX root = pcp.tex
+%!TEX root 
+= pcp.tex
 
 \chapter{Introduction}
 \label{sec:introduction}
 
 % Commands
 
+% Sample graphs
+\newcommand{\sampleeclique}{
+	\begin{samplegraph}{fig:sampleeclique}{Example of an extended clique.}
+		\node[b] (n0) at (0,0) {};
+
+		\node[b] (n1) at (1,0) {};
+		
+		\node[b] (n2) at (4,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1);
+		
+		\node[b] (n3) at (5,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1);
+
+		\node[b] (n4) at (-3,4) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3);
+		
+		\node[b] (n5) at (-4,3) {}
+			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3);
+
+		\begin{pgfonlayer}{background} 
+			\node [part,fit=(n0) (n1)] {}; 
+			\node [part,fit=(n2) (n3)] {}; 
+			\node [part,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+	\end{samplegraph}
+}
+
+\newcommand{\sampleiset}{
+	\begin{samplegraph}{fig:sampleiset}{Nodes highlighted in red form a component independent set.}
+		\node[b] (n0) at (0,1) {};
+		\node[nhl] (n1) at (1,0) {};
+		
+		\node[nhl] (n2) at (0,5) {}
+			edge [-]	(n0);
+		\node[b] (n3) at (1,4) {};
+			
+		
+		\node[b] (n4) at (3,2) {}
+			edge [-]	(n0);
+			edge [-]	(n1);
+		\node[nhl] (n5) at (4,3) {}
+			edge [-]	(n3);
+
+		\begin{pgfonlayer}{background} 
+			\node [part,fit=(n0) (n1)] {}; 
+			\node [part,fit=(n2) (n3)] {}; 
+			\node [part,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+	\end{samplegraph}
+}
+
+\newcommand{\samplepath}{
+	\begin{samplegraph}{fig:samplepath}{Nodes highlighted in red form a path.}
+		\node[nhl] (n0) at (0,0) {};
+		\node[nhl] (n1) at (1,0) {}
+			edge [-] (n0);
+		\node[nhl] (n2) at (2,0) {}
+			edge [-] (n1);
+		\node[nhl] (n3) at (3,0) {}
+			edge [-] (n2);
+		\node[nhl] (n4) at (4,0) {}
+			edge [-] (n3);
+		\node[nhl] (n5) at (5,0) {}
+			edge [-] (n4);
+		\node[b]	 (n6) at (4,1) {}
+			edge [-] (n4);
+		\node[b]	 (n7) at (3,-1) {}
+			edge [-] (n3);
+		\node[b]	 (n8) at (4,-1) {}
+			edge [-] (n7)
+			edge [-] (n4);
+	\end{samplegraph}
+}
+
+\newcommand{\samplehole}{
+	\begin{samplegraph}{fig:samplehole}{Nodes highlighted in red form a hole.}
+		\node[nhl] (n0) at (0,0) {};
+		\node[nhl] (n1) at (2,0) {}
+			edge [-] (n0);
+		\node[nhl] (n2) at (2,2) {}
+			edge [-] (n1);
+		\node[nhl] (n3) at (0,2) {}
+			edge [-] (n2)
+			edge [-] (n0);
+		\node[b] (n4) at (1,1) {}
+			edge [-] (n3)
+			edge [-] (n2);
+	\end{samplegraph}
+}
+
+\newcommand{\sampledsatur}{
+	\begin{samplegraph}{fig:sampledsatur}{Node $v_0$ has degree of saturation 3.}
+		\node[n] (n0) at (0,0) {$v_0$};
+
+		\node[nred] (n1) at (-2,0) {}
+			edge [-]	(n0);
+		
+		\node[nblue] (n2) at (-1,1) {}
+			edge [-]	(n0);
+		
+		\node[ngreen] (n3) at (0,2) {}
+			edge [-]	(n0);
+
+		\node[ngreen] (n4) at (1,1) {}
+			edge [-]	(n0);
+		
+		\node[nblue] (n5) at (1,2) {}
+			edge [-]	(n0);
+	\end{samplegraph}
+}
+
+\newcommand{\samplegprime}{
+\begin{figure}[h]
+	\center
+	\subfloat[Partitioned graph]{
+		\begin{scaledsamplegraphpicture}{0.5}
+			\node[b] (n0) at (0,0) {};
+			\node[b] (n1) at (1,0) {};
+			\node[b] (n2) at (4,4) {}
+				edge [-]	(n0)
+				edge [-]	(n1)
+			;
+			\node[b] (n3) at (5,3) {}
+				edge [-]	(n0)
+				edge [-]	(n1)
+			;
+			\node[b] (n4) at (-3,4) {}
+				edge [-]	(n0)
+			;
+			\node[b] (n5) at (-4,3) {}
+				edge [-]	(n1)
+				edge [-]	(n2)
+			;
+	
+			\begin{pgfonlayer}{background} 
+				\node [n,fill=yellow!30,circle,minimum size=10mm,fit=(n0) (n1),label=210:$P_1$ ] {}; 
+				\node [n,fill=blue!30,circle,minimum size=10mm,fit=(n2) (n3),label=10:$P_2$] {}; 
+				\node [n,fill=green!30,circle,minimum size=10mm,fit=(n4) (n5),label=170:$P_3$] {}; 
+			\end{pgfonlayer}
+		\end{scaledsamplegraphpicture}
+	}
+	\subfloat[Partition graph]{
+		\begin{scaledsamplegraphpicture}{0.5}
+			\node[n,fill=yellow!40] (n0) at (0,0) {$v_{P_1}$};
+			\node[n,fill=blue!40] (n2) at (4,4) {$v_{P_2}$}
+				edge [-]	(n0);
+			\node[n,fill=green!40] (n5) at (-4,4) {$v_{P_3}$};
+		\end{scaledsamplegraphpicture}
+	}
+	\caption{\label{fig:samplegprime} Sample partitioned graph along with its partition graph.}
+\end{figure}
+}
+
+\newcommand{\samplepdegree}{
+\begin{samplegraph}{fig:samplepdegree}{Node $v_0$ has partition degree $\delta_P(v_0) = 2$.}
+		\node[n] (n0) at (0,0) {$v_0$};
+
+		\node[b] (n1) at (3,1) {}
+			edge [-]	(n0);
+		
+		\node[b] (n2) at (3,0) {}
+			edge [-]	(n0);
+		
+		\node[b] (n3) at (3,-1) {};
+
+		\node[b] (n4) at (-3,1) {}
+			edge [-]	(n0);
+		
+		\node[b] (n5) at (-3,0) {};
+		
+		\node[b] (n6) at (-3,-1) {}
+			edge [-]	(n0);
+			
+		\begin{pgfonlayer}{background} 
+			\node [part,fit=(n0)] {}; 
+			\node [part,fit=(n1) (n2) (n3)] {}; 
+			\node [part,fit=(n4) (n5) (n6)] {}; 
+		\end{pgfonlayer}
+	\end{samplegraph} 
+}
+
+% Sample routing
 \newcommand{\samplerouting}{
 
 \begin{figure}[h]
-	
 	\centering
 	\begin{tikzpicture} 
 		[bend angle=40,
@@ -17,46 +207,37 @@
 		\node[n] (n0) at ( 0,0) {$s_1$}; 
 		
 		\node[n] (n1) at ( 0,2) {}
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 
 		\node[n] (n2) at ( 2,4) {}
-			edge [-]	(n1)
-		;
+			edge [-]	(n1);
 		
 		\node[n] (n4) at ( 2,0) {}
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 		
 		\node[n] (n5) at ( 4,2) {}
-			edge [-]	(n4)
-		;
+			edge [-]	(n4);
 		
 		\node[n] (n3) at ( 4,4) {$t_1$}
 			edge [-]	(n2)
 			edge [-]	(n5)
 			edge [<-, bend right, draw=black!50] node[auto] {\textcolor{black!50}{$R_1$}} 	(n0)
-			edge [<-, bend left, draw=black!50] node[auto,swap] {\textcolor{black!50}{$R_2$}} (n0)
-		;
+			edge [<-, bend left, draw=black!50] node[auto,swap] {\textcolor{black!50}{$R_2$}} (n0);
 		
 		\node[n] (n6) at ( 2,-2) {$s_2$}
-			edge [-]	(n4)
-		;
+			edge [-]	(n4);
 		
 		\node[n] (n7) at ( 6,2) {$t_2$}
 			edge [-]	(n5)
 			edge [<-, bend right, draw=black!50] node[auto] {\textcolor{black!50}{$R_3$}}  (n6)
-			edge [<-, bend left, draw=black!50]	node[auto,swap] {\textcolor{black!50}{$R_4$}} (n6) 
-		;
+			edge [<-, bend left, draw=black!50]	node[auto,swap] {\textcolor{black!50}{$R_4$}} (n6);
 		
 		\node[n] (n8) at ( 4,-2) {}
-			edge [-]	(n6)
-		;
+			edge [-]	(n6);
 
 		\node[n] (n9) at ( 6,0) {}
 			edge [-]	(n8)
-			edge [-]	(n7)
-		;
+			edge [-]	(n7);
 		
 	\end{tikzpicture} 
 
@@ -162,7 +343,7 @@ One of the most famous real life problems which led to the graph coloring proble
 
 Graph coloring is widely used in multiple applications, such as schedule assignment to solve time incompatibilities, assignment of radio frequencies to prevent interference between neighboring radios, or even assigning variables to registers during the flow of a program.
 
-The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns each node $v \in V$ to a natural number which represents a color, such that no two adjacent nodes have the same color. A \textit{k-coloring} is an assignment which uses exactly $k$ different colors.
+The coloring of a graph is defined formally as a function that, given an input graph $G = <V,E>$, being $V$ the set of nodes and $E$ the set of undirected edges, assigns a natural number which represents a color to each node $v \in V$, such that no two adjacent nodes have the same color. A \textit{k-coloring} is an assignment which uses exactly $k$ different colors.
 
 \begin{figure}[h]
 	\centering
@@ -194,11 +375,11 @@ This problem has been proved to be \textit{NP-Complete}, and has been widely stu
 
 \subsection*{Previous Work}
 
-Simplest heuristic approaches consist in greedy algorithms, using different criteria such as \textit{largest-first} \cite{welsh1967upper}, \textit{smallest-last} \cite{matula1972graph} or \textit{degree of saturation} \cite{brelaz1979new}. While the first two rely on a static ordering based on the degree of each node, the last one uses a dynamic ordering based on the number of different colors being used in the neighbourhood of each vertex.
+Simplest heuristic approaches consist in greedy algorithms, using different criteria such as \textit{largest-first} \cite{welsh1967upper}, \textit{smallest-last} \cite{matula1972graph} or \textit{degree of saturation}\footnote{The degree of saturation of a node is defined as the number of different colors being used to color its neighbourhood.} \cite{brelaz1979new}. While the first two rely on a static ordering based on the degree of each node, the last one uses a dynamic ordering based on the number of different colors being used in the neighbourhood of each vertex.
 
-These criteria may also be used in implicit enumeration techniques, which enumerate the possible colorings in the order determined by the chosen criteria. Using a good strategy is vital for finding good solutions as soon as possible, therefore pruning a great number of colorings. The implicit solution tree may be traversed in a BFS, DFS or best bound fashion. All these algorithms eventually find the optimal solution for the problem.
+These criteria may also be used in implicit enumeration techniques for choosing the ordering of the nodes. These techniques enumerate all possible colorings by constructing a decision tree: each node of the tree represents a node of the original graph, and each decision consists in which color is to be assigned to the current node. Using a good strategy for deciding the order for picking the next node to be colored is vital for finding good solutions as soon as possible, therefore pruning a great number of possible colorings. The implicit decision tree may be traversed in a BFS, DFS or best bound fashion. All of these algorithms eventually find the optimal solution for the problem.
 
-The \textsc{dsatur} enumeration algorithm proposed in \cite{brelaz1979new} has proven to be one of the most efficient implicit enumeration methods for the coloring problem, having several improvements such as \cite{sewell1996improved}.
+The \textsc{dsatur} enumeration algorithm (proposed in \cite{brelaz1979new}), which uses degree of saturation criteria for picking the next node to be colored, has proven to be one of the most efficient implicit enumeration methods for the coloring problem; having several improvements such as \cite{sewell1996improved}.
 
 More complex heuristic algorithms, using different metaheuristics, have also been used for the coloring problem.
 
@@ -212,7 +393,7 @@ There is also extensive work using integer linear programming formulations for t
 
 \subsection*{Application to Frequency Assignment}
 
-As it has already been mentioned, the graph colouring problem has multiple applications, amongst which is the problem of assigning frequencies to a given set of nodes in order to establish communications between, considering availability of frequencies, interference, etc. This problem, called the \textit{frequency assignment problem}, has multiple variants, which lead to different generalizations of the graph coloring problem.
+As it has already been mentioned, the graph colouring problem has multiple applications, amongst which is the problem of assigning frequencies to a given set of nodes in order to establish communications between them, considering availability of frequencies, interference, etc. This problem, called the \textit{frequency assignment problem}, has multiple variants, which lead to different generalizations of the graph coloring problem.
 
 In this work we will consider its application to routing and wavelength assignment in WDM networks, which gives rise to the \textit{partitioned coloring problem}.
 
@@ -238,9 +419,7 @@ An exact approach using an integer programming formulation with column generatio
 
 \subsection*{Resolution of min-RWA using graph coloring}
 
-There are multiple methods, both heuristic and exact, for solving the min-RWA problem. Some of them handle both the routing and the wavelength assignment as the same problem, whereas other methods, such as the one proposed in \cite{Li00thepartition}, use a two-phase approach: a routing phase and an assignment phase.
-
-In the routing phase, a set of candidate routes is generated for every pair of nodes to be connected, mostly using shortest-path or edge-disjoint criteria.
+In \cite{Li00thepartition}, Li and Simha proposed a two-phase approach for solving the min-RWA problem: a routing phase and an assignment phase. In the routing phase, a set of candidate routes is generated for every pair of nodes to be connected, mostly using shortest-path or edge-disjoint criteria.
 
 The assignment phase, before actually asigning a wavelength to each route, must pick a single route from the set of candidates for each connection. Each selected route is then assigned a wavelength, ensuring that no two routes sharing any physical link have the same wavelength assigned. These two processes that compose the assignment phase can be solved simultaneously through the \textit{partitioned graph coloring problem} (\PCP{}).
 
@@ -338,7 +517,7 @@ We will prove NP-Completeness by proving both belonging to NP and NP-Hard classe
 
 \subsection*{Previous work}
 
-In \cite{Li00thepartition}, two groups of heuristics were developed for solving the \PCP{}: one-step and two-step. The former consists in picking the easiest node to color in every partition, and then picking the hardest one from that set using different criteria (largest-first, smallest-last, color-degree); the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
+In \cite{Li00thepartition}, two groups of heuristics were developed for solving the \PCP{}: one-step and two-step. The former iteratively picks the easiest node in every partition, and then picks the hardest one from that set using different criteria (largest-first, smallest-last, color-degree) in order to color it with the lowest-label available color, and then proceeds to the next node; the latter makes an initial pass picking the easiest nodes in every partition and inducing a non-partitioned graph, onto which a standard heuristic is applied in a second stage.
 
 In \cite{noronha2006routing} the one-step color-degree constructive heuristic is used in a tabu search approach, TS-PCP. Routes are generated in an initial stage using a $k$-EDR constructive procedure, based on the maximum edge disjoint path heuristic by \cite{kleinberg1996approximation}, and the resulting partitioned coloring problem is solved with TS-PCP.
 
@@ -352,17 +531,17 @@ Therefore, the objective of this work will be to develop a branch and cut algori
 
 We will be using \textsc{cplex} as a branch and cut framework and introduce custom initial heuristics, cutting planes, primal heuristics and branching strategies, designed specifically for this problem, and evaluate their performance against the default implementation provided by \textsc{cplex}.
 
-This work is structured in seven chapters. In chapter \ref{sec:model} we present different models for representing an instance of \PCP{}, starting with a basic model that captures all necessary restrictions, for later strengthening it by modifying the constraints with stronger ones or introducing new ones, such as symmetry breaking constraints.
+This work is structured in seven chapters. In chapter~\ref{sec:model} we present different models for representing an instance of \PCP{}, starting with a basic model that captures all necessary restrictions, for later strengthening it by modifying the constraints with stronger ones or introducing new ones, such as symmetry breaking constraints.
 
 Chapter \ref{sec:ineqs} dwelves deeper into the polyhedron defined in the previous chapter by presenting valid inequalities derived for \PCP{}. These inequalities will be later applied as cutting planes in both cutting planes and branch and cut algorithms.
 
-Alternative algorithms for solving the problem are presented in chapter \ref{sec:heur}. We present enumeration algorithms for solving the standard coloring problem, and generalize them for partition coloring, focusing in the \textsc{dsatur} algorithm \cite{brelaz1979new} and its generalization. These algorithms will be adapted to be used as initial and primal heuristics during the branch and cut process.
+Alternative algorithms for solving the problem are presented in chapter~\ref{sec:heur}. We present enumeration algorithms for solving the standard coloring problem, and generalize them for partition coloring, focusing in the \textsc{dsatur} algorithm~\cite{brelaz1979new} and its generalization. These algorithms will be adapted to be used as initial and primal heuristics during the branch and cut process.
 
-The implemented branch and cut algorithm is presented in chapter \ref{sec:bnc}, where we present the general structure for cutting plane, branch and bound and branch and cut algorithms, as well as different components of a branch and cut (separation heuristics, initial heuristics, primal heuristics, branching strategies, node selection strategies) and how we implemented them for dealing with the \PCP{}.
+The implemented branch and cut algorithm is presented in chapter~\ref{sec:bnc}, where we present the general structure for cutting plane, branch and bound and branch and cut algorithms, as well as different components of a branch and cut (separation heuristics, initial heuristics, primal heuristics, branching strategies, node selection strategies) and how we implemented them for dealing with the \PCP{}.
 
-This implementation is then tested in chapter \ref{sec:results}. Given a test suite of binomial, powerlaw cluster and \textsc{dimacs} challange graphs, we first evaluated multiple configurations for all of the different components, starting by choosing a model to be used in the algorithm, and testing the effectiveness of the different heuristics and strategies with different parameterizations. We then test the performance of the algorithm, once we have all parameters fixed, against a fresh test suite and report the obtained MIP gap.
+This implementation is then tested in chapter~\ref{sec:results}. Given a test suite of binomial, powerlaw cluster and \textsc{dimacs} challange graphs, we first evaluated multiple configurations for all of the different components, starting by choosing a model to be used in the algorithm, and testing the effectiveness of the different heuristics and strategies with different parameterizations. We then test the performance of the algorithm, once we have all parameters fixed, against a fresh test suite and report the obtained MIP gap.
 
-Finally, in chapter \ref{sec:conclusions}, we sum up the work achieved, draw conclusions from it and present possible future research lines.
+Finally, in chapter~\ref{sec:conclusions}, we sum up the work achieved, draw conclusions from it and present possible future research lines.
 
 \section{Definitions}
 \label{subsec:intro:definitions}
@@ -377,9 +556,11 @@ In this section we will define all concepts and conventions to be used throughou
 	\defitem{Neighbourhood}{$N(v)$ is the set of nodes in $V$ adjacent to node $v$.}
 	\defitem{Partition Neighbourhood}{$N_P(v)$ is the set of partitions that contain at least one node adjacent to $v$.}
 	\defitem{Degree}{$\delta(v)$ is the cardinal of the neighbourhood of $v$.}
-	\defitem{Partition Degree}{$\delta_P(v)$ is the cardinal of the partition neighbourhood of $v$.}
-	\defitem{Color Degree}{Number of different colors used in $N(v)$ for a node $v \in V$; also degree of saturation.}
-	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $u,v$, either $u$ is adjacent to $v$ or $u$ and $v$ are contained in the same partition.}
-	\defitem{Component Independent Set}{Subset of $V$ such that for every pair of nodes $u,v$, $u$ is not adjacent to $v$ and they belong to different partitions.}
-	\defitem{Partition Graph}{The \textit{partition graph} $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v'_k \in V'$ corresponds to a partition $P_k \in P$, and two nodes $v'_i,v'_j \in V'$ are adjacent if and only if every node in $P_i$ in $G$ is adjacent to every node in $P_j$.}
+	\defitem{Partition Degree}{$\delta_P(v)$ is the cardinal of the partition neighbourhood of $v$ (see figure \ref{fig:samplepdegree}). \samplepdegree}
+	\defitem{Color Degree}{Number of different colors used in $N(v)$ for a node $v \in V$; also degree of saturation (see figure \ref{fig:sampledsatur}). \sampledsatur}
+	\defitem{Path}{Subset $P$ of $V$ such that each node is adjacent only to the next one in the path in the subgraph induced by $V'$ in $G$ (see figure \ref{fig:samplepath}). \samplepath}
+	\defitem{Hole}{Subset $H$ of $V$ such that each node is adjacent only to the next one in the hole in the subgraph induced by $V'$ in $G$, and the last node is adjacent to the first (see figure \ref{fig:samplehole}). \samplehole}
+	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $[u,v]$, either $u$ is adjacent to $v$, or $u$ and $v$ are contained in the same partition (see figure \ref{fig:sampleeclique}). \sampleeclique }
+	\defitem{Component Independent Set}{Subset of $V$ such that for every pair of nodes $u,v$, $u$ is not adjacent to $v$ and they belong to different partitions (see figure \ref{fig:sampleiset}). \sampleiset}
+	\defitem{Partition Graph}{The \textit{partition graph} $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v'_k \in V'$ corresponds to a partition $P_k \in P$, and two nodes $v'_i,v'_j \in V'$ are adjacent if and only if every node in $P_i$ in $G$ is adjacent to every node in $P_j$ (see figure \ref{fig:samplegprime}). \samplegprime}
 \end{itemize}

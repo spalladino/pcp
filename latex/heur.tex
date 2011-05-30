@@ -22,6 +22,11 @@ A classical scheme for enumeration algorithms is presented in \ref{alg:enumerati
 	\ELSIF{\textit{painted} equals to $|V|$}
 		\STATE update best coloring with current coloring
 	\ELSE
+		\CALL paintnext(painted,label)
+	\ENDIF
+\ENDPROC
+
+\PROC{paintnext(painted, label)}
 		\STATE pick next uncolored \textit{node} to color		
 		\FOR{j = 1 to \textit{label}}
 			\IF{can paint \textit{node} with color $j$}
@@ -34,7 +39,6 @@ A classical scheme for enumeration algorithms is presented in \ref{alg:enumerati
 		\STATE assign color \textit{label} + 1 to \textit{node}
 		\CALL color(painted+1, label+1)
 		\STATE uncolor \textit{node}
-	\ENDIF
 \ENDPROC
 
 \end{algorithmic}
@@ -60,6 +64,8 @@ The previous scheme must be modified in order to generate valid partitioned colo
 \label{alg:pcpenumerationwrong}
 
 \begin{algorithmic}
+	\STATE [...] \\
+	\PROC{paintnext(painted, label)}
 		\STATE pick next uncolored \textit{partition} to color		
 		\FORALL{\textit{node} in \textit{partition}}
 			\FOR{j = 1 to \textit{label}}
@@ -74,6 +80,7 @@ The previous scheme must be modified in order to generate valid partitioned colo
 			\CALL color(painted+1, label+1)
 			\STATE uncolor \textit{node}
 		\ENDFOR
+	\ENDPROC	
 \end{algorithmic}
 \end{algorithm}
 
@@ -94,6 +101,11 @@ Therefore, we propose another modification, presented in algorithm \ref{alg:pcpe
 	\ELSIF{\textit{painted} equals to $|P|$}
 		\STATE update best coloring with current coloring
 	\ELSE
+		\CALL paintnext(painted, label)
+	\ENDIF
+\ENDPROC
+
+\PROC{paintnext(painted, label)}
 		\STATE pick next uncolored \textit{node} to color	from all uncolored partitions	
 		\FOR{j = 1 to \textit{label}}
 			\IF{can paint \textit{node} with color $j$}
@@ -115,7 +127,6 @@ Therefore, we propose another modification, presented in algorithm \ref{alg:pcpe
 			\STATE mark \textit{node} as available again
 		\ENDIF
 		
-	\ENDIF
 \ENDPROC
 
 \end{algorithmic}
