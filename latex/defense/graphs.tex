@@ -6,11 +6,13 @@
 		hl/.style= {minimum size=3mm,thick,circle,draw=red,fill=red!10},
 		ered/.style= {-,draw=red},
 		part/.style={fill=gray!10,circle},
+		sqpart/.style={fill=gray!10,rounded corners},
 		llpart/.style={fill=gray!5,circle},
 		hlpart/.style={fill=gray!20,circle}] 
 }{
 	\end{tikzpicture}
 }
+
 
 \newenvironment{scaledcoloredgraph}[1]{
 \begin{center}
@@ -22,6 +24,7 @@
 		hl/.style= {minimum size=3mm,thick,circle,draw=red,fill=red!10},
 		ered/.style= {-,draw=red},
 		part/.style={fill=gray!10,circle},
+		sqpart/.style={fill=gray!10,rounded corners},
 		llpart/.style={fill=gray!5,circle},
 		hlpart/.style={fill=gray!20,circle}
 		] 
@@ -29,6 +32,24 @@
 \end{tikzpicture}
 \end{center}
 }
+
+\newenvironment{freescaledcoloredgraph}[1]{
+\begin{tikzpicture}
+		[scale=#1, transform shape,
+		n/.style= {minimum size=3mm,thick,circle,draw=black},
+		b/.style= {minimum size=3mm,thick,circle,draw=black,fill=black},
+		pnt/.style= {minimum size=3mm,thick,circle,draw=black,fill=red!60},
+		hl/.style= {minimum size=3mm,thick,circle,draw=red,fill=red!10},
+		ered/.style= {-,draw=red},
+		part/.style={fill=gray!10,circle},
+		sqpart/.style={fill=gray!10,rounded corners},
+		llpart/.style={fill=gray!5,circle},
+		hlpart/.style={fill=gray!20,circle}
+		] 
+}{
+\end{tikzpicture}
+}
+
 
 \newcommand{\samplegraph}{
 	\begin{tikzpicture}
@@ -63,8 +84,8 @@
 	\end{tikzpicture} 
 }
 
-\newcommand{\samplecoloredgraph}{\begin{tikzpicture} 
-		[n/.style= {thick,circle,draw=black}] 
+\newcommand{\samplecoloredgraph}{
+\begin{scaledcoloredgraph}{1}
 
 		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
 		;
@@ -92,13 +113,11 @@
 			edge [-]	(n0)
 		;
 
-	\end{tikzpicture} 
+	\end{scaledcoloredgraph} 
 }
 
 \newcommand{\samplepartitionedgraph}{
-\begin{tikzpicture} 
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
-
+\begin{scaledcoloredgraph}{1}
 		\node[n] (n0) at ( 0,0) {$v_0$}
 		;
 
@@ -126,16 +145,16 @@
 		;
 		
 		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
+			\node [sqpart,fit=(n0) (n1)] {}; 
+			\node [sqpart,fit=(n2) (n3)] {}; 
+			\node [sqpart,fit=(n4) (n5)] {}; 
 		\end{pgfonlayer}
 
-	\end{tikzpicture} }
+	\end{scaledcoloredgraph} 
+}
 
 \newcommand{\samplepartitionedcoloredgraph}{
-\begin{tikzpicture} 
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+\begin{scaledcoloredgraph}{1}
 
 		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$}
 		;
@@ -164,12 +183,12 @@
 		;
 		
 		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
+			\node [sqpart,fit=(n0) (n1)] {}; 
+			\node [sqpart,fit=(n2) (n3)] {}; 
+			\node [sqpart,fit=(n4) (n5)] {}; 
 		\end{pgfonlayer}
 
-	\end{tikzpicture} 
+	\end{scaledcoloredgraph} 
 }
 
 \newcommand{\samplenetwork}
@@ -376,122 +395,136 @@
 }
 
 
-\newcommand{\samplepartitionedcoloredgraphB}{
-\begin{tikzpicture}
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+\newcommand{\samplepartitionedcoloredgraphA}{
+\begin{freescaledcoloredgraph}{0.5}
 
-		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$}
-		;
+		\node[n,fill=red!40] (n0) at ( 0,0) {$v_0$};
 
 		\node[n] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 
-		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
+		\node[n,fill=green!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1);
 		
 		\node[n] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
+			edge [-]	(n1);
 		
-		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
+		\node[n,fill=red!40] (n4) at ( -2,3) {$v_4$}
 			edge [-]	(n3)
-			edge [-]	(n2)
-		;
+			edge [-]	(n2);
 		
 		\node[n] (n5) at ( -2,1) {$v_5$}
 			edge [-]	(n2)
 			edge [-]	(n4)
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 		
 		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
+			\node [sqpart,fit=(n0) (n1)] {}; 
+			\node [sqpart,fit=(n2) (n3)] {}; 
+			\node [sqpart,fit=(n4) (n5)] {}; 
 		\end{pgfonlayer}
 
-	\end{tikzpicture} 
+	\end{freescaledcoloredgraph} 
+}
+
+
+\newcommand{\samplepartitionedcoloredgraphB}{
+\begin{freescaledcoloredgraph}{0.5}
+
+		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$};
+
+		\node[n] (n1) at ( 2,1) {$v_1$}
+			edge [-]	(n0);
+
+		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1);
+		
+		\node[n] (n3) at ( 0,4) {$v_3$}
+			edge [-]	(n1);
+		
+		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
+			edge [-]	(n3)
+			edge [-]	(n2);
+		
+		\node[n] (n5) at ( -2,1) {$v_5$}
+			edge [-]	(n2)
+			edge [-]	(n4)
+			edge [-]	(n0);
+		
+		\begin{pgfonlayer}{background} 
+			\node [sqpart,fit=(n0) (n1)] {}; 
+			\node [sqpart,fit=(n2) (n3)] {}; 
+			\node [sqpart,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+
+	\end{freescaledcoloredgraph} 
 }
 
 \newcommand{\samplepartitionedcoloredgraphC}{
-\begin{tikzpicture}
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
+\begin{freescaledcoloredgraph}{0.5}
 
-		\node[n,fill=blue!40] (n0) at ( 0,0) {$v_0$}
-		;
+		\node[n,fill=blue!40] (n0) at ( 0,0) {$v_0$};
 
 		\node[n] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 
-		\node[n,fill=red!40] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
+		\node[n,fill=green!40] (n2) at ( 2,3) {$v_2$}
+			edge [-]	(n1);
 		
 		\node[n] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
+			edge [-]	(n1);
 		
 		\node[n,fill=blue!40] (n4) at ( -2,3) {$v_4$}
 			edge [-]	(n3)
-			edge [-]	(n2)
-		;
+			edge [-]	(n2);
 		
 		\node[n] (n5) at ( -2,1) {$v_5$}
 			edge [-]	(n2)
 			edge [-]	(n4)
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 		
 		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
+			\node [sqpart,fit=(n0) (n1)] {}; 
+			\node [sqpart,fit=(n2) (n3)] {}; 
+			\node [sqpart,fit=(n4) (n5)] {}; 
 		\end{pgfonlayer}
 
-	\end{tikzpicture} 
+	\end{freescaledcoloredgraph} 
 }
 
-\newcommand{\samplepartitionedcoloredgraphD}{
-\begin{tikzpicture}
-		[n/.style= {minimum size=3mm,thick,circle,draw=black}] 
 
-		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$}
-		;
+\newcommand{\samplepartitionedcoloredgraphD}{
+\begin{freescaledcoloredgraph}{0.5}
+
+		\node[n,fill=green!40] (n0) at ( 0,0) {$v_0$};
 
 		\node[n] (n1) at ( 2,1) {$v_1$}
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 
 		\node[n,fill=blue!40] (n2) at ( 2,3) {$v_2$}
-			edge [-]	(n1)
-		;
+			edge [-]	(n1);
 		
 		\node[n] (n3) at ( 0,4) {$v_3$}
-			edge [-]	(n1)
-		;
+			edge [-]	(n1);
 		
 		\node[n,fill=green!40] (n4) at ( -2,3) {$v_4$}
 			edge [-]	(n3)
-			edge [-]	(n2)
-		;
+			edge [-]	(n2);
 		
 		\node[n] (n5) at ( -2,1) {$v_5$}
 			edge [-]	(n2)
 			edge [-]	(n4)
-			edge [-]	(n0)
-		;
+			edge [-]	(n0);
 		
 		\begin{pgfonlayer}{background} 
-			\node [fill=black!5,fit=(n0) (n1)] {}; 
-			\node [fill=blue!5,fit=(n2) (n3)] {}; 
-			\node [fill=green!5,fit=(n4) (n5)] {}; 
+			\node [sqpart,fit=(n0) (n1)] {}; 
+			\node [sqpart,fit=(n2) (n3)] {}; 
+			\node [sqpart,fit=(n4) (n5)] {}; 
 		\end{pgfonlayer}
 
-	\end{tikzpicture} 
+	\end{freescaledcoloredgraph} 
 }
+
 
 \newcommand{\adjsrestrictionneighbours}{
 \begin{coloredgraph}
