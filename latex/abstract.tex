@@ -1,6 +1,6 @@
 \begin{abstract}
 
-The partitioned graph coloring problem, \PCP{}, is a generalization of the classic graph coloring problem. In this variant the set of the input graph's nodes is partitioned, and the problem relies in coloring exactly one node per partition using the lowest possible number of different colors, maintaining the constraint that two adjacent nodes can not use the same color.
+The partitioned graph coloring problem, \PCP{}, is a generalization of the classic graph coloring problem. In this variant the set of the input graph's nodes is partitioned, and the problem relies in coloring exactly one node per partition using the lowest possible number of different colors, maintaining the constraint that two adjacent nodes may not use the same color.
 
 This problem was first stated by Li and Simha in the context of the \textit{routing and wavelength assignment} (RWA) problem in \textit{wavelength division multiplexed} (WDM) networks. The authors propose a two-stage resolution: a first stage in which possible \textit{lightpaths} are generated, which are feasible solutions to the routing problem, and a second stage where the lightpaths to be used are selected and each of them is assigned a wavelength, looking to minimize the number of different wavelengths. This last stage can be modelled as an instance of the \PCP{}.
 

@@ -90,7 +90,7 @@ This restriction generates a much lower number of equations in dense graphs, as 
 
 One of the main issues with the model presented is that it allows for multiple symmetric solutions; the same happens with the standard coloring model SCP. 
 
-Since it does not matter which color labels are used in the coloring, any $\chi$ colors can be used, resulting in $P(c,k)$\footnote{Number of different ordered subsets of size $k$ from a set of size $c$, equals to $c! / (c - k)!$} different solutions for every equivalent coloring; therefore, introducing additional constraints with the purpose of removing symmetric solutions is expected to produce an improvement in the algorithm, as it greatly limits the solution space.
+Since it does not matter which color labels are used in the coloring, any $\chi$ colors can be used, resulting in $P(c,k)$\footnote{Number of different ordered subsets of size $k$ from a set of size $c$, equals to $c! / (c - k)!$} different solutions for every equivalent coloring; therefore, introducing additional constraints with the purpose of removing symmetric solutions is expected to produce an improvement in the algorithm, as it greatly limits the solution space. Once again, we adapted some of the constraints presented in \cite{mendez2008cutting} for SCP to our model.
 
 The easiest restriction to generate is to prevent color $j+1$ from being used unless color $j$ is used in the coloring. This ensures that only colors with labels $1 \ldots k$ are used in a k-coloring, leaving always the last $k+1 \ldots c$ unused, thus reducing the number of symmetric solutions from $P(c,k)$ to $k!$.
 

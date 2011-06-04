@@ -226,7 +226,7 @@ x_{ij} = 0 \quad \forall P_k \in P,\ \forall i \in P_k,\ \forall j > k \\
 
 \section{Cuts separation}
 
-For each family of valid inequalities listed in \ref{sec:ineqs}, an heuristic is implemented to find a set of valid inequalities being violated by a solution of the linear relaxation of the model. Note that finding a violated inequality in a solution is NP, so heuristic procedures must be applied. 
+For each family of valid inequalities listed in \ref{sec:ineqs}, an heuristic is implemented to find a set of valid inequalities being violated by a solution of the linear relaxation of the model. Note that finding a violated inequality in a solution is NP-Complete\footnote{Gr\"{o}tschel, Lov\'{a}sz and Schrijver \cite{grotschel1981ellipsoid} related the complexity of the optimization problem being solved to the complexity of the separation problem: the former is polynomial if and only if the latter is also polynomial.}, so heuristic procedures must be applied. 
 
 Since these algorithms are applied frequently during the branch and cut tree, it is imperative that their running time is as fast as possible, in order to minimize the added overhead to the whole algorithm.
 
@@ -403,8 +403,8 @@ v_i \leftarrow j \text{ if } x_{ij} > 0.7 \wedge x_{ij} > x_{kj}\ \forall k \in 
 
 Having chosen a node $v_i$ for branching, we must choose which variable $x_{i^*j^*}$ from the set of candidate $x_{i^*j_0}, x_{i^*j_1}, \ldots, x_{i^*j_c}$ will be branched on. We have implemented two different strategies for this:
 \begin{itemize}
-	\defitem{\textsc{dsatur-2}}{Choose the variable $x_{i^*j^*}$ with the highest value from the set, and branch on $x_{i^*j^*} = 0$ and $x_{i^*j^*} = 1$; this results in a classic $0-1$ branching on the variable corresponding to the most saturated node with its most \textit{likely} color.}
-	\defitem{\textsc{dsatur-(C+1)}}{Create up to $C+1$ subproblems, one for each possible coloring of the node, branching on $x_{i^*j_0} = 1, \ldots, x_{i^*j_c} = 1$, plus another child which sets all $x_{i^*j_0}$ variables to zero, in case the node is not colored within its partition.}
+	\defitem{\textsc{DSatur-2}}{Choose the variable $x_{i^*j^*}$ with the highest value from the set, and branch on $x_{i^*j^*} = 0$ and $x_{i^*j^*} = 1$; this results in a classic $0-1$ branching on the variable corresponding to the most saturated node with its most \textit{likely} color.}
+	\defitem{\textsc{DSatur-(C+1)}}{Create up to $C+1$ subproblems, one for each possible coloring of the node, branching on $x_{i^*j_0} = 1, \ldots, x_{i^*j_c} = 1$, plus another child which sets all $x_{i^*j_0}$ variables to zero, in case the node is not colored within its partition; this idea was first defined in \cite{brelaz1979new}, revisited in \cite{sewell1996improved}, and used in \cite{mendez2006branch}.}
 \end{itemize}
 
 \subsection{Implied bounds}

@@ -46,7 +46,7 @@ A classical scheme for enumeration algorithms is presented in \ref{alg:enumerati
 
 The algorithm picks a node to be colored in each recursive call, attempting to color it with one of the already used labels if possible; it also assigns a fresh color to the node, in order to explore all possible colorings for the graph. Note that several symmetric colorings are left out of the exploration. 
 
-At every iteration, the partial solution is pruned if the coloring is using as many labels as the best coloring found by the algorithm, as this implies that the best solution cannot be improved using the current one.
+At every iteration, the partial solution is pruned if the coloring is using as many labels as the best coloring found by the algorithm, as this implies that the best solution cannot be improved using the current one. The algorithm runs until all possible colorings have been explored, therefore it effectively returns a minimum coloring of the graph.
 
 The strategy used for picking the node to be colored in each recursive call gives place to different algorithms. A very simple strategy is to use the degree of the node, coloring nodes with highest degree first, based on the assumption that difficult nodes should be handled early.
 
@@ -134,7 +134,7 @@ Therefore, we propose another modification, presented in algorithm \ref{alg:pcpe
 
 It is within this scheme that we embedded our two different strategies based on degree of saturation for partition coloring.
 
-\section{Partitioned \textsc{dsatur}}
+\section{Partitioned DSatur}
 \label{subsec:heur:pdsatur}
 
 Classical \textsc{dsatur} picks the node with the highest color degree on each iteration, based on the assumption that nodes difficult to color should be handled first, which usually works well for most heuristics. In the case of partition coloring, as suggested in \cite{Li00thepartition}, nodes with lower degree are easier to color and should be preferred within a partition; also, it is better to color larger partitions first in order to reduce the problem size as early as possible.
@@ -160,15 +160,15 @@ Therefore, in order to determine the hardest partition to color, we experimented
 	\item{Number of uncolored partitions adjacent to the partition, equivalent to the tie breaking criteria used for classic \textsc{dsatur}} 
 \end{itemize}
 
-Note that using the color degree of the easiest node as a criteria, under the premise that a partition can be considered to be as hard as its easiest node, yields the \textit{easiest node} algorithm.
+Note that using the color degree of the easiest node in the partition as a criteria, under the premise that a partition can be considered to be as hard as its easiest node, yields the \textit{easiest node} algorithm.
 
 Different combinations of these criteria, as well as the different variants of the algorithm, will be compared in chapter \ref{subsec:resultspdsatur}.
 
 \subsection{Ad-hoc modifications}
 
-As will be presented in chapter \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
+As it will be presented in chapter \ref{sec:bnc}, bounded versions of this algorithm will be used during the branch and cut algorithm as an initial heuristic, primal heuristic and subtree pruning. As such, certain adaptations were made to the algorithm.
 
-Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. Since we still have to determine which node to color in each partition, we have to try every possible way of picking a single node from each partition to be colored. Therefore, the algorithm colors $P_{K_1},\ldots,P_{K_\omega}$ first, trying all possible node combinations, before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
+Since the preprocessing step identifies a large clique before any coloring is performed, the algorithm supports forcing a set of partitions to be assigned a specific set of colors; therefore all partitions $P_{K_1},\ldots,P_{K_\omega}$ contained in the initial clique are colored with labels $1,\ldots,\omega$. Since we still have to determine which node to color in each partition, we have to try every possible way of picking a single node from each partition to be colored. Therefore, the algorithm colors $P_{K_1},\ldots,P_{K_\omega}$ first, trying all possible $\prod_{i=1}^{\omega} |P_{K_i}|$ node combinations, before proceeding with the partitioned \textsc{dsatur} on the rest of the graph.
 
 Also, since the algorithm is used as a primal heuristic within the branch and cut tree (see \ref{subsec:alg:primal}), it supports forcing the coloring of certain nodes, keeping those assignments fixed during the enumeration process. In case certain node-color combinations are forbidden due to the restrictions imposed during branching, solutions assigning those combinations are not explored in the algorithm.
 

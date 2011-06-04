@@ -1,12 +1,12 @@
 %!TEX root = pcp.tex
 
-\section{Models comparison}
+\section{Model comparison}
 
 We executed a test suite for determining which inequalities to use in the formulation of the problem. Recall from section \ref{sec:model} that there are several restrictions that can be applied to define the model, as well as additional ones that may strengthen the model or reduce the number of symmetrical solutions.
 
 In order to test the effectiveness of the different formulations, we applied a fixed number of cutting planes iterations, using all implemented cuts with a slightly aggressive configuration, and reported the resulting MIP gap and running time (in seconds), as well as how many rounds of cutting planes were executed. It is worth noting that in some cases fewer iterations than total were applied as the separation heuristics were not able to find any more violated inequalities.
 
-For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition and densities from $20\%$ to $80\%$, and powerlaw cluster graphs with the same size with different values of $p$ and $m$. All graphs were preprocessed beforehand.
+For these tests we used binomial graphs with a fixed size of 100 nodes with exactly 2 nodes per partition and densities from $20\%$ to $80\%$, and powerlaw cluster graphs with the same size with different values of $p$ and $m$. Five instances for each density for each random family were used, and the reported values are always the average of the ones obtained. All graphs were preprocessed beforehand.
 
 \subsection{Adjacency constraints}
 
@@ -348,6 +348,6 @@ Throughout this chapter we have tested a significant number of different models,
 
 We arrived to a formulation in \ref{subsubsec:results:model:chosen} based in data reported by a cutting planes algorithm, which will be used throughout the following sections when testing other components of the algorithm. 
 
-However, experimentation in \label{subsec:results:models:bnbtesting} with branch and bound algorithms showed that that formulation may not be the best choice for all scenarios. Although we will stick to the \ref{subsubsec:results:model:chosen} formulation for the following sections, all the data obtained in this last subsection will be used to know which alternative models should be tested under the branch and cut algorithm, once primal heuristic, separation heuristics and branching strategies have been properly set.
+However, experimentation in \ref{subsec:results:models:bnbtesting} with branch and bound algorithms showed that that formulation may not be the best choice for all scenarios. Although we will stick to the \ref{subsubsec:results:model:chosen} formulation for the following sections, all the data obtained in this last subsection will be used to know which alternative models should be tested under the branch and cut algorithm, once primal heuristic, separation heuristics and branching strategies have been properly set.
 
 \clearpage

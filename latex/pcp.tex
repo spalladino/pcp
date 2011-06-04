@@ -115,15 +115,19 @@
 \numberwithin{figure}{chapter}
 \setcounter{tocdepth}{1}
 
-\includeonly{heur}
+%\includeonly{introduction}
 
 % Document start
 \begin{document}
 
+\pagestyle{empty}
 \include{frontpage}
 \include{resumen}
 \include{abstract}
+\include{agradecimientos}
+\include{resumen.ext}
 
+\pagestyle{plain}
 \tableofcontents
 \clearpage
 

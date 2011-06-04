@@ -1,6 +1,3 @@
-%!TEX root 
-= pcp.tex
-
 \chapter{Introduction}
 \label{sec:introduction}
 
@@ -13,22 +10,50 @@
 
 		\node[b] (n1) at (1,0) {};
 		
-		\node[b] (n2) at (4,4) {}
+		\node[b] (n2) at (3,4) {}
 			edge [-]	(n0)
 			edge [-]	(n1);
 		
-		\node[b] (n3) at (5,3) {}
+		\node[b] (n3) at (4,3) {}
 			edge [-]	(n0)
 			edge [-]	(n1);
 
-		\node[b] (n4) at (-3,4) {}
+		\node[b] (n4) at (-2,4) {}
 			edge [-]	(n0)
 			edge [-]	(n1)
 			edge [-]	(n2)
 			edge [-]	(n3);
 		
-		\node[b] (n5) at (-4,3) {}
+		\node[b] (n5) at (-3,3) {}
 			edge [-]	(n0)
+			edge [-]	(n1)
+			edge [-]	(n2)
+			edge [-]	(n3);
+
+		\begin{pgfonlayer}{background} 
+			\node [part,fit=(n0) (n1)] {}; 
+			\node [part,fit=(n2) (n3)] {}; 
+			\node [part,fit=(n4) (n5)] {}; 
+		\end{pgfonlayer}
+	\end{samplegraph}
+}
+
+\newcommand{\samplecclique}{
+	\begin{samplegraph}{fig:samplecclique}{Nodes highlighted in red form a component clique.}
+		\node[b] (n0) at (0,0) {};
+
+		\node[nhl] (n1) at (1,0) {};
+		
+		\node[nhl] (n2) at (3,4) {}
+			edge [-]	(n1);
+		
+		\node[b] (n3) at (4,3) {}
+			edge [-]	(n0);
+
+		\node[b] (n4) at (-2,4) {}
+			edge [-]	(n3);
+		
+		\node[nhl] (n5) at (-3,3) {}
 			edge [-]	(n1)
 			edge [-]	(n2)
 			edge [-]	(n3);
@@ -371,6 +396,8 @@ The coloring of a graph is defined formally as a function that, given an input g
 	\label{fig:samplecoloring}
 \end{figure}
 
+The \textit{chromatic number} $\chi(G)$ of a graph is the minimum number of colors that can be used to color the graph, this is, the minimum $k$ such that a valid k-coloring exists. The \textit{graph coloring problem}, then, is defined as the problem of finding both the minimum number of colors required to color a graph ($\chi(G)$), and a valid $\chi(G)$-coloring.
+
 This problem has been proved to be \textit{NP-Complete}, and has been widely studied in the literature, being approached both by heuristic and exact methods for its resolution.
 
 \subsection*{Previous Work}
@@ -558,9 +585,12 @@ In this section we will define all concepts and conventions to be used throughou
 	\defitem{Degree}{$\delta(v)$ is the cardinal of the neighbourhood of $v$.}
 	\defitem{Partition Degree}{$\delta_P(v)$ is the cardinal of the partition neighbourhood of $v$ (see figure \ref{fig:samplepdegree}). \samplepdegree}
 	\defitem{Color Degree}{Number of different colors used in $N(v)$ for a node $v \in V$; also degree of saturation (see figure \ref{fig:sampledsatur}). \sampledsatur}
-	\defitem{Path}{Subset $P$ of $V$ such that each node is adjacent only to the next one in the path in the subgraph induced by $V'$ in $G$ (see figure \ref{fig:samplepath}). \samplepath}
-	\defitem{Hole}{Subset $H$ of $V$ such that each node is adjacent only to the next one in the hole in the subgraph induced by $V'$ in $G$, and the last node is adjacent to the first (see figure \ref{fig:samplehole}). \samplehole}
-	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $[u,v]$, either $u$ is adjacent to $v$, or $u$ and $v$ are contained in the same partition (see figure \ref{fig:sampleeclique}). \sampleeclique }
+	\defitem{Path}{Subset $P$ of $V$ such that each node is adjacent only to the next one in the path in the subgraph induced by $V'$ in $G$; formally, being $P = \{v_1, \ldots, v_k\}$, $P$ is a path if $G[P]$ has edges $[v_i, v_{i+1}]$ for $1 \leq i < k$, and no more edges between vertices of $P$  (see figure \ref{fig:samplepath}). \samplepath}
+	\defitem{Hole}{Subset $H$ of $V$ such that each node is adjacent only to the next one in the hole in the subgraph induced by $V'$ in $G$, and the last node is adjacent to the first; formally, being $H = \{v_1, \ldots, v_k\}$, $H$ is a hole if $G[H]$ has edges $[v_1,v_k]$ and $[v_i, v_{i+1}]$ for $1 \leq i < k$, and no more edges between vertices of $H$ (see figure \ref{fig:samplehole}). \samplehole}
 	\defitem{Component Independent Set}{Subset of $V$ such that for every pair of nodes $u,v$, $u$ is not adjacent to $v$ and they belong to different partitions (see figure \ref{fig:sampleiset}). \sampleiset}
+	\defitem{Component Path}{Path $P$ in $G$ that verifies that every node in $P$ belongs to a different partition.}
+	\defitem{Component Hole}{Hole $H$ in $G$ that verifies that every node in $H$ belongs to a different partition.}
+	\defitem{Component Clique}{Clique $K$ in $G$ that verifies that every node in $K$ belongs to a different partition (see figure \ref{fig:samplecclique}). \samplecclique}
+	\defitem{Extended Clique}{Subset of $V$ such that for every pair of nodes $[u,v]$, either $u$ is adjacent to $v$, or $u$ and $v$ are contained in the same partition (see figure \ref{fig:sampleeclique}). \sampleeclique }
 	\defitem{Partition Graph}{The \textit{partition graph} $G'$ of a partitioned graph $G$ is a standard graph $G'=<V',E'>$ in which every node $v'_k \in V'$ corresponds to a partition $P_k \in P$, and two nodes $v'_i,v'_j \in V'$ are adjacent if and only if every node in $P_i$ in $G$ is adjacent to every node in $P_j$ (see figure \ref{fig:samplegprime}). \samplegprime}
 \end{itemize}

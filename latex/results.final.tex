@@ -66,7 +66,7 @@ EW 80\% N=90 & 11.8\% & 7200 & 12.0\% & 7200 & 11.3\% & 7200
 
 The obtained results showed that the customizations oriented towards solving the \PCP{} did produce an improvement in the solution. The difference with \textsc{CPLEX}'s traditional branch and cut algorithm is remarkable, requiring $10\%$ of the time to solve to optimality in sparse instances, and achieving more than a $10\%$ improvement in graphs with a high density.
 
-As for \textsc{CPLEX} dynamic search, it is clear that it performs much better than its branch and cut, but there are still improvements attained by out algorithm in graphs with very low and high density, in terms of time and gap respectively.
+As for \textsc{CPLEX} dynamic search, it is clear that it performs much better than its branch and cut, but there are still improvements attained by our algorithm in graphs with very low and high density, in terms of time and gap respectively.
 
 Something interesting to notice is that fixing the initial clique does not always report a benefit when running \textsc{CPLEX} algorithms, even though it did report a significative improvement on our customized algorithm.
 
@@ -162,9 +162,9 @@ dimacsmyciel7 & 7200 & 50.0\% & 7200 & \b{49.7\%}
 \label{table:final:dimacs}
 \end{table}
  
-The results in table \ref{table:final:dimacs} report only one value for \textsc{CPLEX}'s branch and cut, even though we executed it with and without fixing the values for an initial clique. The reason for this is that fixing those values did not report any modification on the obtained results; this could be due to the particular nature of the graphs being tested, since some of them, such as Mycielski's, have no relation between the clique and the chromatic number.
+The results in table \ref{table:final:dimacs} report only one value for \textsc{CPLEX}'s branch and cut, even though we executed it with and without fixing the values for an initial clique. The reason for this is that fixing those values did not report any modification on the obtained results; this could be due to the particular nature of the graphs being tested, since some of them, such as Mycielski's, can have relatively large chromatic numbers while keeping a comparatively very low clique number.
 
-The obtained gaps show there is no winner between both algorithms: depending on the structure of the graph, the custom branch and cut algorithm implemented for \PCP{} performs better than \textsc{CPLEX}'s, or vice-versa. In most cases, obtained gaps were far from zero both algorithms, showing the difficult nature of this graphs for the coloring problem, which is clearly extended to partitioned coloring.
+The obtained gaps show there is no winner between both algorithms: depending on the structure of the graph, the custom branch and cut algorithm implemented for \PCP{} performs better than \textsc{CPLEX}'s, or vice-versa. In most cases, obtained gaps were large for both algorithms, showing the difficult nature of this graphs for the coloring problem, which is clearly extended to partitioned coloring.
  
 \subsection{Comparison with Asymmetric Representatives Branch and Cut}
 
