@@ -1,53 +1,119 @@
-Processing Runid 20110427HIGHDENSDIMACS
+Processing Runid 20110427LOWDENSDIMACS
  Successfully loaded
 Data:
 \begin{itemize}
-\item solution.chi
-\item solution.time
-\item solution.gap
+\item graph.nodes
+\item graph.density
+\item graph.edges
 \end{itemize}
 Series:
 \begin{itemize}
-\item S1: solver.kind: PcpBranchAndCut, solver.useCplexPrimalHeuristic: false, solver.useCplexPreprocess: true, solver.useCplexCuttingPlanes: false, model.variables.boundOnDegree: true, model.variables.boundOnPartitionIndex: true, model.variables.fixClique: true
+\item S1: 
 \end{itemize}
 \begin{tabular}{|c|ccc|}
 \hline
 \multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1}
 \\
- & solution.chi & solution.time & solution.gap
+ & graph.nodes & graph.density & graph.edges
 \\
 \hline
-dimacs1-FullIns_5 &  [6] & ['7200.031'] & ['0.333']
+dimacs1-FullIns_5 & [282] & ['0.082'] & [3247]
 \\
-dimacs1-Insertions_5 &  [6] & ['7200.047'] & ['0.333']
+dimacs1-Insertions_5 & [202] & ['0.060'] & [1227]
 \\
-dimacs1-Insertions_6 &  [7] & ['7200.172'] & ['0.623']
+dimacs1-Insertions_6 & [607] & ['0.034'] & [6337]
 \\
-dimacs2-FullIns_4 &  [6] & ['7200.094'] & ['0.167']
+dimacs2-FullIns_4 & [212] & ['0.072'] & [1621]
 \\
-dimacs2-FullIns_5 &  [7] & ['7200.219'] & ['0.393']
+dimacs2-FullIns_5 & [852] & ['0.034'] & [12201]
 \\
-dimacs2-Insertions_4 &  [5] & ['7200.031'] & ['0.200']
+\hline 
+ \end{tabular}
+Processing Runid 20110427LOWDENSDIMACSCONT
+ Successfully loaded
+Data:
+\begin{itemize}
+\item graph.nodes
+\item graph.density
+\item graph.edges
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: 
+\end{itemize}
+\begin{tabular}{|c|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1}
 \\
-dimacs2-Insertions_5 &  [6] & ['7200.266'] & ['0.567']
+ & graph.nodes & graph.density & graph.edges
 \\
-dimacs3-FullIns_4 &  [7] & ['7200.125'] & ['0.143']
+\hline
+dimacs3-Insertions_4 & [281] & ['0.027'] & [1046]
 \\
-dimacs3-Insertions_4 &  [5] & ['7200.047'] & ['0.400']
+dimacs4-FullIns_4 & [690] & ['0.028'] & [6650]
 \\
-dimacs4-FullIns_4 &  [8] & ['7200.172'] & ['0.125']
+dimacs4-Insertions_3 & [79] & ['0.051'] & [156]
 \\
-dimacs4-Insertions_3 &  [4] & ['774.313'] & ['-']
+dimacs4-Insertions_4 & [475] & ['0.016'] & [1795]
 \\
-dimacs4-Insertions_4 &  [5] & ['7200.188'] & ['0.486']
+dimacsDSJC125 & [125, 125] & ['0.502', '0.898'] & [3891, 6961]
 \\
-dimacsDSJC125 & [20, 45] & ['7200.172', '7200.328'] & ['0.400', '0.145']
+dimacsDSJC250 & [250, 250, 250] & ['0.103', '0.503', '0.896'] & [3218, 15668, 27897]
 \\
-dimacsDSJC250 &  [9] & ['7200.141'] & ['0.494']
+dimacsmyciel7 & [191] & ['0.130'] & [2360]
 \\
-dimacsmyciel6 &  [7] & ['7200.031'] & ['0.286']
+\hline 
+ \end{tabular}
+Processing Runid 20110427HIGHDENSDIMACS
+ Successfully loaded
+Data:
+\begin{itemize}
+\item graph.nodes
+\item graph.density
+\item graph.edges
+\end{itemize}
+Series:
+\begin{itemize}
+\item S1: 
+\end{itemize}
+\begin{tabular}{|c|ccc|}
+\hline
+\multicolumn{1}{|c|}{Id} & \multicolumn{3}{|c|}{S1}
 \\
-dimacsmyciel7 &  [8] & ['7200.578'] & ['0.500']
+ & graph.nodes & graph.density & graph.edges
+\\
+\hline
+dimacs1-FullIns_5 & [282] & ['0.082'] & [3247]
+\\
+dimacs1-Insertions_5 & [202] & ['0.060'] & [1227]
+\\
+dimacs1-Insertions_6 & [607] & ['0.034'] & [6337]
+\\
+dimacs2-FullIns_4 & [212] & ['0.072'] & [1621]
+\\
+dimacs2-FullIns_5 & [852] & ['0.034'] & [12201]
+\\
+dimacs2-Insertions_4 & [149] & ['0.049'] & [541]
+\\
+dimacs2-Insertions_5 & [597] & ['0.022'] & [3936]
+\\
+dimacs3-FullIns_4 & [405] & ['0.043'] & [3524]
+\\
+dimacs3-Insertions_4 & [281] & ['0.027'] & [1046]
+\\
+dimacs4-FullIns_4 & [690] & ['0.028'] & [6650]
+\\
+dimacs4-Insertions_3 & [79] & ['0.051'] & [156]
+\\
+dimacs4-Insertions_4 & [475] & ['0.016'] & [1795]
+\\
+dimacsDSJC125 & [125, 125] & ['0.502', '0.898'] & [3891, 6961]
+\\
+dimacsDSJC250 & [250] & ['0.103'] & [3218]
+\\
+dimacsmyciel6 & [95] & ['0.169'] & [755]
+\\
+dimacsmyciel7 & [191] & ['0.130'] & [2360]
 \\
 \hline 
  \end{tabular}

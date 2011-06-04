@@ -319,6 +319,24 @@ def final_dimacs_latextable():
                     aggr= aggregate.concat 
                     )
 
+def dimacs_data_latextable():
+    
+        series = []
+        datas=['graph.nodes','graph.density','graph.edges']
+        
+        files = ['20110427LOWDENSDIMACS','20110427LOWDENSDIMACSCONT','20110427HIGHDENSDIMACS']
+        
+        for file in files:
+            LatexProcessor(file).process(
+                    ids=[metrics.FileName()],
+                    datas=datas,   
+                    series=series,
+                    datafilter= None,
+                    runfilter= None,
+                    aggr= aggregate.concat 
+                    )
+
+
 def models_graphs_symmetry():
     GnuPlotGapsProcessor('20100629MODELS').process(
         ids=[metrics.FileName()],
@@ -511,7 +529,7 @@ def test_simple():
     )
     
 if __name__ == '__main__':
-    final_dimacs_latextable()
+    dimacs_data_latextable()
     #p.graphprops("graph.nodes", "solution.time", "nodes-time.png")
     #p.graphprops("graph.edges", "solution.time", "edges-time.png")
     #p.graphprops("graph.partitions", "solution.time", "parts-time.png")

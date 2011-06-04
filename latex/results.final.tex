@@ -164,7 +164,9 @@ dimacsmyciel7 & 7200 & 50.0\% & 7200 & \b{49.7\%}
  
 The results in table \ref{table:final:dimacs} report only one value for \textsc{CPLEX}'s branch and cut, even though we executed it with and without fixing the values for an initial clique. The reason for this is that fixing those values did not report any modification on the obtained results; this could be due to the particular nature of the graphs being tested, since some of them, such as Mycielski's, can have relatively large chromatic numbers while keeping a comparatively very low clique number.
 
-The obtained gaps show there is no winner between both algorithms: depending on the structure of the graph, the custom branch and cut algorithm implemented for \PCP{} performs better than \textsc{CPLEX}'s, or vice-versa. In most cases, obtained gaps were large for both algorithms, showing the difficult nature of this graphs for the coloring problem, which is clearly extended to partitioned coloring.
+The obtained gaps show there is no winner between both algorithms: depending on the structure of the graph, the custom branch and cut algorithm implemented for \PCP{} performs better than \textsc{CPLEX}'s, or vice-versa. The former works better than the latter in medium and high density random graphs (DSJC), as most of the developed artifacts were oriented towards these cases; whereas small or sparse graphs derived from Mycielski's (FullIns-5, Insertions-5) are better handled by \textsc{CPLEX}, the only exception being Insertions-6, with $3\%$ density and $600$ nodes.
+
+In most cases, obtained gaps were large for both algorithms, showing the difficult nature of this graphs for the coloring problem, which is clearly extended to partitioned coloring.
  
 \subsection{Comparison with Asymmetric Representatives Branch and Cut}
 
